@@ -1,0 +1,4 @@
+interface:
+  display_name: "XFT Catalog MHTML"
+  short_description: "Parse XFT API MHTML docs and update feature-catalog.json."
+  default_prompt: "Use this skill to extract a XFT API definition from a saved MHTML document and update the LW36 feature catalog with the corresponding feature entry."

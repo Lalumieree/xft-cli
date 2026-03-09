@@ -1,0 +1,90 @@
+{
+  "features": [
+    {
+      "id": "org-list",
+      "name": "获取组织列表",
+      "description": "分页查询组织列表，支持按关键词、组织ID集合、组织编码集合、父组织ID和状态集合过滤。当前已验证需要输入加密。",
+      "method": "POST",
+      "url": "https://api.cmbchina.com/ORG/orgqry/xft-service-organization/org/v1/get/page",
+      "encryptBody": true,
+      "decryptResponse": true,
+      "querySchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "bodySchema": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "number",
+            "required": false,
+            "description": "当前页，起始页为 1，默认值为 1；可不传但不能传空"
+          },
+          "pageSize": {
+            "type": "number",
+            "required": false,
+            "description": "页大小，最大 2000"
+          },
+          "codes": {
+            "type": "array",
+            "required": false,
+            "description": "组织编码集合，最大查询个数为 2000",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ids": {
+            "type": "array",
+            "required": false,
+            "description": "组织 ID 集合，最大查询个数为 2000",
+            "items": {
+              "type": "string"
+            }
+          },
+          "keyword": {
+            "type": "string",
+            "required": false,
+            "description": "搜索关键词"
+          },
+          "status": {
+            "type": "array",
+            "required": false,
+            "description": "生效状态集合；不传时默认查询所有状态，包括已删除",
+            "items": {
+              "type": "string",
+              "enum": ["active", "delete", "stopped"]
+            }
+          },
+          "parentId": {
+            "type": "string",
+            "required": false,
+            "description": "父级组织ID"
+          },
+          "extOptions": {
+            "type": "array",
+            "required": false,
+            "description": "扩展查询选项；不传时默认查询组织负责人、审批主管、组织名称全路径",
+            "items": {
+              "type": "string",
+              "enum": [
+                "leader",
+                "approver",
+                "extData",
+                "namePath",
+                "allDisplayOrderNumber",
+                "leaf"
+              ]
+            }
+          }
+        }
+      },
+      "responseNotes": [
+        "成功时 returnCode 为 SUC0000",
+        "body.records 为组织记录数组",
+        "records 字段包含 id、code、name、namePath、type、leaders、approvers、extData、isLeaf 等信息",
+        "错误码：XFT0003 表示分页参数错误，XFT0004 表示分页过大，XFT0005 表示分页过小",
+        "当前默认空请求体 {} 可返回第一页数据"
+      ]
+    }
+  ]
+}
