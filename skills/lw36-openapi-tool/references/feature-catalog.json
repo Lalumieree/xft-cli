@@ -85,6 +85,91 @@
         "错误码：XFT0003 表示分页参数错误，XFT0004 表示分页过大，XFT0005 表示分页过小",
         "当前默认空请求体 {} 可返回第一页数据"
       ]
+    },
+    {
+      "id": "organization-org-v1-update",
+      "name": "修改组织机构",
+      "description": "修改组织机构信息，支持修改组织的扩展属性值，功能效果与薪福通管理后台组织架构页面的修改一致。根组织只允许修改名称、编码、组织负责人、审批主管、扩展属性。字段传 null 或不传表示不修改，传空字符串或空数组表示将该字段值置空。",
+      "method": "POST",
+      "url": "https://api.cmbchina.com/ORG/orgqry/xft-service-organization/org/v1/update",
+      "encryptBody": true,
+      "decryptResponse": true,
+      "querySchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "bodySchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true,
+            "description": "组织ID"
+          },
+          "name": {
+            "type": "string",
+            "required": false,
+            "description": "组织名称"
+          },
+          "type": {
+            "type": "string",
+            "required": false,
+            "description": "组织类型：G-集团、B-分公司、SP-门店、S-子公司、BD-事业部、D-部门、PT-项目组。默认值：D",
+            "enum": ["G", "B", "SP", "S", "BD", "D", "PT"]
+          },
+          "parentOrgId": {
+            "type": "string",
+            "required": false,
+            "description": "要修改上级组织时，上级组织ID和上级组织编码可任选其一；两个参数都不为空时以上级组织ID为准"
+          },
+          "parentOrgCode": {
+            "type": "string",
+            "required": false,
+            "description": "上级组织编码；参考 parentOrgId 字段说明"
+          },
+          "code": {
+            "type": "string",
+            "required": false,
+            "description": "组织编码"
+          },
+          "number": {
+            "type": "string",
+            "required": false,
+            "description": "机构号"
+          },
+          "leaderStaffIds": {
+            "type": "array",
+            "required": false,
+            "description": "组织负责人员工ID列表，人事侧员工ID（员工序号），数量不能超过 20 个",
+            "items": {
+              "type": "string"
+            }
+          },
+          "approverEnterpriseUserIds": {
+            "type": "array",
+            "required": false,
+            "description": "审批主管企业用户ID列表，企业用户ID（企业用户号），数量不能超过 20 个",
+            "items": {
+              "type": "string"
+            }
+          },
+          "extendData": {
+            "type": "object",
+            "required": false,
+            "description": "组织扩展属性，需配合组织自定义字段元数据列表接口使用"
+          },
+          "remark": {
+            "type": "string",
+            "required": false,
+            "description": "备注"
+          }
+        }
+      },
+      "responseNotes": [
+        "成功时 returnCode 为 SUC0000",
+        "body 为对象，占位返回体通常不包含业务字段",
+        "错误码：ORGCT04 表示组织ID不能为空，ORGCT18 表示该组织不存在，ORGCT02 表示组织名称不能为空，ORGCT03 表示组织类型不能为空，XFTORG0188 表示非根组织的上级组织ID和编码不能为空，XFTORG0186 表示根组织的上级组织ID和编码必须为空，XFTORG0182 表示组织类型不存在，XFTORG0131 表示最多可设置审批主管数量超限，ORGCT19 表示集团组织只允许修改组织名称、组织编码、负责人、审批主管"
+      ]
     }
   ]
 }
