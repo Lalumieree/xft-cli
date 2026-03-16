@@ -5,7 +5,7 @@ description: Use this skill when you need to call CMB XFT LW36 open-api endpoint
 
 # LW36 OpenAPI Tool
 
-Use the bundled Node CLI backed by the TypeScript SDK instead of calling the Java SDK classes directly.
+Use the bundled `xft-cli` package CLI backed by the TypeScript SDK instead of calling the Java SDK classes directly.
 
 ## When to use
 
@@ -19,8 +19,10 @@ Use the bundled Node CLI backed by the TypeScript SDK instead of calling the Jav
 Run:
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs --help
+xft-cli --help
 ```
+
+Assume `xft-cli` is already installed and available on `PATH`.
 
 The main subcommands are:
 
@@ -45,7 +47,7 @@ For API calls, always provide:
 - `--authority-secret`
 - `--url`
 
-Or store `app-id` and `authority-secret` in `local-config.json` next to this skill and omit them on the command line.
+Or store `app-id` and `authority-secret` in `local-config.json` in your current working directory and omit them on the command line.
 
 Provide these only when the target interface needs them:
 

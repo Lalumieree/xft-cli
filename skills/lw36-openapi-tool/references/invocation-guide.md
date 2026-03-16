@@ -67,7 +67,7 @@
 ## Skill command examples
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs post \
+xft-cli post \
   --app-id "$APP_ID" \
   --authority-secret "$AUTHORITY_SECRET" \
   --url "$API_URL" \
@@ -76,7 +76,7 @@ node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_op
 ```
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs post \
+xft-cli post \
   --app-id "$APP_ID" \
   --authority-secret "$AUTHORITY_SECRET" \
   --url "$API_URL" \

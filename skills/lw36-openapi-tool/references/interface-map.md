@@ -18,19 +18,19 @@
 ## Example
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs list-features
+xft-cli list-features
 ```
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs show-feature --feature org-list
+xft-cli show-feature --feature org-list
 ```
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs feature-call --feature org-list
+xft-cli feature-call --feature org-list
 ```
 
 ```bash
-node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_openapi_tool.mjs post \
+xft-cli post \
   --app-id "$APP_ID" \
   --authority-secret "$AUTHORITY_SECRET" \
   --company-id "XFT11728" \
@@ -45,4 +45,4 @@ node /Users/nateshen/Documents/xft-tool/skills/lw36-openapi-tool/scripts/lw36_op
   `sm3withsm2` signing uses the full hex private key.
   `secretMsg` encryption uses the first 32 chars as the SM4 key.
 - The tool emits JSON to stdout so a Skill can inspect or summarize the result.
-- This wrapper is implemented as a Node CLI backed by the TypeScript SDK in `/Users/nateshen/Documents/xft-tool/LW36.20_TS`.
+- This wrapper is implemented as the package CLI in `/Users/nateshen/Documents/Codex/xft-cli/LW36.20_TS`.
