@@ -2,6 +2,8 @@
 
 `xft-cli` is a combined TypeScript SDK and CLI for CMB XFT LW36 open-api calls, login jump verification, file upload/download, and SM4 payload encryption or decryption.
 
+The preferred CLI entrypoint is `feature-call`: skills or local tooling provide a feature definition, and the CLI executes it using local credentials and request payloads.
+
 This package now lives under the repository's `cli/` directory.
 
 ## Install
@@ -61,27 +63,22 @@ Typical fields:
 - `app-id`
 - `authority-secret`
 - `company-id`
-- `usr-uid`
-- `usr-nbr`
-- `eds-company-id`
+
+Keep `company-id` in `local-config.json` when it is a stable default for your environment. Transient identity fields such as `usr-uid`, `usr-nbr`, and `eds-company-id` should be passed only when a specific call needs them.
 
 ## Examples
 
-List built-in feature definitions:
+Call a feature provided by skill or local tooling:
 
 ```bash
-xft-cli list-features
+xft-cli feature-call \
+  --feature-file ./org-list.feature.json \
+  --body-json '{"currentPage":1,"pageSize":20}'
 ```
 
-Call a POST endpoint:
+You can also pass the feature definition inline with `--feature-json`.
 
-```bash
-xft-cli post \
-  --app-id "$APP_ID" \
-  --authority-secret "$AUTHORITY_SECRET" \
-  --url "$API_URL" \
-  --body-json '{"limit":20}'
-```
+Legacy compatibility commands such as `get`, `post`, `upload`, `download-get`, and `download-post` are still available, but new integrations should prefer `feature-call`.
 
 Use the SDK in TypeScript:
 
