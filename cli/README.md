@@ -66,12 +66,15 @@ Typical fields:
 
 Keep `company-id` in `local-config.json` when it is a stable default for your environment. Transient identity fields such as `usr-uid`, `usr-nbr`, and `eds-company-id` should be passed only when a specific call needs them.
 
+For local middleware, prefer `--config /path/to/temp.json` if configuration must be prepared dynamically. `--config-json` is intentionally not supported, so sensitive values do not travel in command-line JSON payloads.
+
 ## CLI
 
 Call a feature provided by skill or local tooling:
 
 ```bash
 xft-cli feature-call \
+  --config /tmp/xft-runtime-config.json \
   --feature-file ./org-list.feature.json \
   --body-json '{"currentPage":1,"pageSize":20}'
 ```

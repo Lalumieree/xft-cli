@@ -54,6 +54,11 @@ async function loadJsonFile(path: string): Promise<unknown> {
 }
 
 async function loadLocalConfig(options: CliOptions): Promise<CliOptions> {
+  if (options["config-json"]) {
+    throw new Error(
+      'unsupported option --config-json. Pass sensitive configuration via --config <path> or local-config.json instead.',
+    );
+  }
   const configPath = options.config ? String(options.config) : DEFAULT_CONFIG_PATH;
   try {
     const config = await loadJsonFile(configPath);
