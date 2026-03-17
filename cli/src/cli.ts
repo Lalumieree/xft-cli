@@ -216,6 +216,22 @@ function printJson(value: unknown): void {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
 }
 
+function printWarning(message: string): void {
+  process.stderr.write(`${message}\n`);
+}
+
+function warnLegacyCommand(command: string): void {
+  printWarning(
+    `[legacy] "${command}" is a compatibility command and may be removed in a future release. Prefer "feature-call" with --feature-json or --feature-file.`,
+  );
+}
+
+function warnInternalCommand(command: string): void {
+  printWarning(
+    `[internal] "${command}" is intended for internal integration and debugging workflows. It is not a stable public CLI contract.`,
+  );
+}
+
 function tryDecryptBody(authoritySecret: string, body: string): string | undefined {
   try {
     return sm4DecryptEcb(authoritySecret.slice(0, 32), body);
@@ -339,6 +355,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "post") {
+    warnLegacyCommand(command);
     const reqInf = getReqInf(options, config);
     let body = await loadBody(options);
     if (options["encrypt-body"]) {
@@ -357,6 +374,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "get") {
+    warnLegacyCommand(command);
     const result = await XftOpenApiReqClient.doCommonGetReq(
       getReqInf(options, config),
       requireOption(options, "url"),
@@ -367,6 +385,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "upload") {
+    warnLegacyCommand(command);
     const reqInf = getReqInf(options, config);
     const url = requireOption(options, "url");
     const query = parseJsonOption(options, "query-json");
@@ -379,6 +398,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "download-get") {
+    warnLegacyCommand(command);
     const reqInf = getReqInf(options, config);
     const output = requireOption(options, "output");
     await XftOpenApiReqClient.downloadGetFileToPath(
@@ -392,6 +412,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "download-post") {
+    warnLegacyCommand(command);
     const reqInf = getReqInf(options, config);
     const output = requireOption(options, "output");
     await XftOpenApiReqClient.downloadPostFileToPath(
@@ -406,6 +427,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "verify-token") {
+    warnInternalCommand(command);
     const client = new XftVerifyTokenClient(
       getReqInf(options, config),
       requireOption(options, "access-token-url"),
@@ -421,6 +443,7 @@ async function main(): Promise<void> {
   }
 
   if (command === "verify-sign") {
+    warnInternalCommand(command);
     const client = new XftVerifySignClient(getReqInf(options, config), requireOption(options, "url"));
     if (options["valid-minute"]) {
       client.setValidMinute(Number(options["valid-minute"]));

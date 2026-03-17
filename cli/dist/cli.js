@@ -170,6 +170,15 @@ async function loadBody(options) {
 function printJson(value) {
     process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
 }
+function printWarning(message) {
+    process.stderr.write(`${message}\n`);
+}
+function warnLegacyCommand(command) {
+    printWarning(`[legacy] "${command}" is a compatibility command and may be removed in a future release. Prefer "feature-call" with --feature-json or --feature-file.`);
+}
+function warnInternalCommand(command) {
+    printWarning(`[internal] "${command}" is intended for internal integration and debugging workflows. It is not a stable public CLI contract.`);
+}
 function tryDecryptBody(authoritySecret, body) {
     try {
         return sm4DecryptEcb(authoritySecret.slice(0, 32), body);
@@ -286,6 +295,7 @@ async function main() {
         return;
     }
     if (command === "post") {
+        warnLegacyCommand(command);
         const reqInf = getReqInf(options, config);
         let body = await loadBody(options);
         if (options["encrypt-body"]) {
@@ -298,11 +308,13 @@ async function main() {
         return;
     }
     if (command === "get") {
+        warnLegacyCommand(command);
         const result = await XftOpenApiReqClient.doCommonGetReq(getReqInf(options, config), requireOption(options, "url"), parseJsonOption(options, "query-json"));
         printJson(result);
         return;
     }
     if (command === "upload") {
+        warnLegacyCommand(command);
         const reqInf = getReqInf(options, config);
         const url = requireOption(options, "url");
         const query = parseJsonOption(options, "query-json");
@@ -314,6 +326,7 @@ async function main() {
         return;
     }
     if (command === "download-get") {
+        warnLegacyCommand(command);
         const reqInf = getReqInf(options, config);
         const output = requireOption(options, "output");
         await XftOpenApiReqClient.downloadGetFileToPath(reqInf, requireOption(options, "url"), parseJsonOption(options, "query-json"), output);
@@ -321,6 +334,7 @@ async function main() {
         return;
     }
     if (command === "download-post") {
+        warnLegacyCommand(command);
         const reqInf = getReqInf(options, config);
         const output = requireOption(options, "output");
         await XftOpenApiReqClient.downloadPostFileToPath(reqInf, requireOption(options, "url"), parseJsonOption(options, "query-json"), await loadBody(options), output);
@@ -328,6 +342,7 @@ async function main() {
         return;
     }
     if (command === "verify-token") {
+        warnInternalCommand(command);
         const client = new XftVerifyTokenClient(getReqInf(options, config), requireOption(options, "access-token-url"), options["login-user-url"] ? String(options["login-user-url"]) : undefined);
         const data = requireOption(options, "data");
         const sign = requireOption(options, "sign");
@@ -338,6 +353,7 @@ async function main() {
         return;
     }
     if (command === "verify-sign") {
+        warnInternalCommand(command);
         const client = new XftVerifySignClient(getReqInf(options, config), requireOption(options, "url"));
         if (options["valid-minute"]) {
             client.setValidMinute(Number(options["valid-minute"]));

@@ -78,7 +78,9 @@ xft-cli feature-call \
 
 You can also pass the feature definition inline with `--feature-json`.
 
-Legacy compatibility commands such as `get`, `post`, `upload`, `download-get`, and `download-post` are still available, but new integrations should prefer `feature-call`.
+Legacy compatibility commands such as `get`, `post`, `upload`, `download-get`, and `download-post` are still available, but they are compatibility-only and new integrations should prefer `feature-call`.
+
+Internal commands such as `verify-token` and `verify-sign` are kept for internal integration and debugging workflows only. They should not be treated as stable public CLI entrypoints.
 
 Use the SDK in TypeScript:
 
