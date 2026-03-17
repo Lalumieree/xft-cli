@@ -20,16 +20,20 @@ export interface HttpResponseData {
   headers: Record<string, string>;
 }
 
+export type FeatureRequestMode = "json" | "upload" | "none";
+
+export type FeatureResponseMode = "json" | "text" | "binary";
+
 export interface FeatureDefinition {
   id?: string;
   name?: string;
   description?: string;
-  method?: "GET" | "POST" | string;
-  url?: string;
-  encryptBody?: boolean;
-  decryptResponse?: boolean;
-  requestMode?: "json" | "upload" | "none" | string;
-  responseMode?: "json" | "text" | "binary" | string;
+  method: "GET" | "POST";
+  url: string;
+  encryptBody: boolean;
+  decryptResponse: boolean;
+  requestMode: FeatureRequestMode;
+  responseMode: FeatureResponseMode;
   useOriginalName?: boolean;
 }
 
@@ -44,8 +48,8 @@ export interface FeatureCallInput {
 
 export interface FeatureCallResult extends Partial<HttpResponseData> {
   feature: FeatureDefinition;
-  requestMode: "json" | "upload" | "none";
-  responseMode: "json" | "text" | "binary";
+  requestMode: FeatureRequestMode;
+  responseMode: FeatureResponseMode;
   plainBody?: string;
   requestBody?: string;
   decryptedBody?: string;

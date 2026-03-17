@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { executeFeatureCall } from "./index.js";
+import { executeFeatureCall, validateFeatureDefinition } from "./index.js";
 const DEFAULT_CONFIG_PATH = resolve(process.cwd(), "local-config.json");
 function parseArgs(argv) {
     const [command, ...rest] = argv;
@@ -58,17 +58,11 @@ async function loadLocalConfig(options) {
 async function loadFeatureDefinition(options) {
     if (options["feature-json"]) {
         const parsed = JSON.parse(String(options["feature-json"]));
-        if (!isRecord(parsed)) {
-            throw new Error("option --feature-json must be a JSON object");
-        }
-        return parsed;
+        return validateFeatureDefinition(parsed);
     }
     if (options["feature-file"]) {
         const parsed = await loadJsonFile(String(options["feature-file"]));
-        if (!isRecord(parsed)) {
-            throw new Error("option --feature-file must point to a JSON object");
-        }
-        return parsed;
+        return validateFeatureDefinition(parsed);
     }
     throw new Error("missing feature definition: provide --feature-json or --feature-file");
 }

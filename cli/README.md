@@ -81,6 +81,21 @@ xft-cli feature-call \
 
 You can also pass the feature definition inline with `--feature-json`.
 
+The minimal execution feature schema is:
+
+```json
+{
+  "method": "POST",
+  "url": "https://api.cmbchina.com/...",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true
+}
+```
+
+Fields such as `id`, `name`, and `description` are optional metadata only.
+
 `xft-cli` only exposes `feature-call` as a public CLI command. Other historical commands are no longer part of the public contract.
 
 ## SDK

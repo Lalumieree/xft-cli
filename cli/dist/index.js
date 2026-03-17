@@ -1,1 +1,1 @@
-export { executeFeatureCall } from "./feature-call.js";
+export { executeFeatureCall, validateFeatureDefinition } from "./feature-call.js";

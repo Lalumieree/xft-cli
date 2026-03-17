@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { executeFeatureCall } from "./index.js";
+import { executeFeatureCall, validateFeatureDefinition } from "./index.js";
 import type { BaseReqInf, FeatureDefinition, QueryParams } from "./types.js";
 
 type CliOptions = Record<string, string | boolean>;
@@ -71,18 +71,12 @@ async function loadLocalConfig(options: CliOptions): Promise<CliOptions> {
 async function loadFeatureDefinition(options: CliOptions): Promise<FeatureDefinition> {
   if (options["feature-json"]) {
     const parsed = JSON.parse(String(options["feature-json"])) as unknown;
-    if (!isRecord(parsed)) {
-      throw new Error("option --feature-json must be a JSON object");
-    }
-    return parsed as FeatureDefinition;
+    return validateFeatureDefinition(parsed);
   }
 
   if (options["feature-file"]) {
     const parsed = await loadJsonFile(String(options["feature-file"]));
-    if (!isRecord(parsed)) {
-      throw new Error("option --feature-file must point to a JSON object");
-    }
-    return parsed as FeatureDefinition;
+    return validateFeatureDefinition(parsed);
   }
 
   throw new Error("missing feature definition: provide --feature-json or --feature-file");

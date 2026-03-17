@@ -1,33 +1,82 @@
 import { basename } from "node:path";
 import { sm4DecryptEcb, sm4EncryptEcb } from "./crypto.js";
 import { XftOpenApiReqClient } from "./open-api-client.js";
-import type { BaseReqInf, FeatureCallInput, FeatureCallResult, FeatureDefinition } from "./types.js";
+import type {
+  BaseReqInf,
+  FeatureCallInput,
+  FeatureCallResult,
+  FeatureDefinition,
+  FeatureRequestMode,
+  FeatureResponseMode,
+} from "./types.js";
 
-function getFeatureRequestMode(feature: FeatureDefinition): "json" | "upload" | "none" {
-  if (feature.requestMode === "upload") {
-    return "upload";
-  }
-  if (feature.requestMode === "none") {
-    return "none";
-  }
-  return "json";
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }
 
-function getFeatureResponseMode(feature: FeatureDefinition): "json" | "text" | "binary" {
-  if (feature.responseMode === "binary") {
-    return "binary";
+function assertStringField(value: unknown, key: string): string {
+  if (typeof value !== "string" || value === "") {
+    throw new Error(`feature-call invalid feature: "${key}" must be a non-empty string`);
   }
-  if (feature.responseMode === "text") {
-    return "text";
-  }
-  return "json";
+  return value;
 }
 
-function requireFeatureUrl(feature: FeatureDefinition): string {
-  if (!feature.url) {
-    throw new Error(`feature is missing url: ${feature.id ?? feature.name ?? "unknown"}`);
+function assertBooleanField(value: unknown, key: string): boolean {
+  if (typeof value !== "boolean") {
+    throw new Error(`feature-call invalid feature: "${key}" must be a boolean`);
   }
-  return feature.url;
+  return value;
+}
+
+function assertMethodField(value: unknown): "GET" | "POST" {
+  if (value === "GET" || value === "POST") {
+    return value;
+  }
+  throw new Error('feature-call invalid feature: "method" must be "GET" or "POST"');
+}
+
+function assertRequestModeField(value: unknown): FeatureRequestMode {
+  if (value === "json" || value === "upload" || value === "none") {
+    return value;
+  }
+  throw new Error('feature-call invalid feature: "requestMode" must be "json", "upload", or "none"');
+}
+
+function assertResponseModeField(value: unknown): FeatureResponseMode {
+  if (value === "json" || value === "text" || value === "binary") {
+    return value;
+  }
+  throw new Error('feature-call invalid feature: "responseMode" must be "json", "text", or "binary"');
+}
+
+export function validateFeatureDefinition(value: unknown): FeatureDefinition {
+  if (!isRecord(value)) {
+    throw new Error("feature-call invalid feature: feature must be a JSON object");
+  }
+
+  const feature: FeatureDefinition = {
+    method: assertMethodField(value.method),
+    url: assertStringField(value.url, "url"),
+    requestMode: assertRequestModeField(value.requestMode),
+    responseMode: assertResponseModeField(value.responseMode),
+    encryptBody: assertBooleanField(value.encryptBody, "encryptBody"),
+    decryptResponse: assertBooleanField(value.decryptResponse, "decryptResponse"),
+  };
+
+  if (typeof value.id === "string" && value.id !== "") {
+    feature.id = value.id;
+  }
+  if (typeof value.name === "string" && value.name !== "") {
+    feature.name = value.name;
+  }
+  if (typeof value.description === "string" && value.description !== "") {
+    feature.description = value.description;
+  }
+  if (typeof value.useOriginalName === "boolean") {
+    feature.useOriginalName = value.useOriginalName;
+  }
+
+  return feature;
 }
 
 function tryDecryptBody(authoritySecret: string, body: string): string | undefined {
@@ -59,10 +108,11 @@ function buildRequestBody(authoritySecret: string, feature: FeatureDefinition, p
 }
 
 export async function executeFeatureCall(reqInf: BaseReqInf, input: FeatureCallInput): Promise<FeatureCallResult> {
-  const { feature, queryParams, filePath, outputPath } = input;
-  const requestMode = getFeatureRequestMode(feature);
-  const responseMode = getFeatureResponseMode(feature);
-  const url = requireFeatureUrl(feature);
+  const feature = validateFeatureDefinition(input.feature);
+  const { queryParams, filePath, outputPath } = input;
+  const requestMode = feature.requestMode;
+  const responseMode = feature.responseMode;
+  const url = feature.url;
 
   if (requestMode === "upload") {
     const resolvedFilePath = filePath;
