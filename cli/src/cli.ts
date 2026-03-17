@@ -1,29 +1,10 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
-import { basename, resolve } from "node:path";
-import {
-  XftOpenApiReqClient,
-  XftVerifySignClient,
-  XftVerifyTokenClient,
-  sm4DecryptEcb,
-  sm4EncryptEcb,
-} from "./index.js";
-import type { BaseReqInf, QueryParams } from "./types.js";
+import { resolve } from "node:path";
+import { executeFeatureCall } from "./index.js";
+import type { BaseReqInf, FeatureDefinition, QueryParams } from "./types.js";
 
 type CliOptions = Record<string, string | boolean>;
-
-type FeatureDefinition = {
-  id?: string;
-  name?: string;
-  description?: string;
-  method?: "GET" | "POST" | string;
-  url?: string;
-  encryptBody?: boolean;
-  decryptResponse?: boolean;
-  requestMode?: "json" | "upload" | "none" | string;
-  responseMode?: "json" | "text" | "binary" | string;
-  useOriginalName?: boolean;
-};
 
 const DEFAULT_CONFIG_PATH = resolve(process.cwd(), "local-config.json");
 
@@ -57,22 +38,7 @@ function helpText(): string {
   return `Usage: xft-cli <command> [options]
 
 Primary commands:
-  feature-call
-
-Legacy compatibility commands:
-  post
-  get
-  upload
-  download-get
-  download-post
-
-Internal integration commands:
-  verify-token
-  verify-sign
-
-Crypto helpers:
-  sm4-encrypt
-  sm4-decrypt`;
+  feature-call`;
 }
 
 function requireOption(options: CliOptions, key: string): string {
@@ -216,61 +182,6 @@ function printJson(value: unknown): void {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
 }
 
-function printWarning(message: string): void {
-  process.stderr.write(`${message}\n`);
-}
-
-function warnLegacyCommand(command: string): void {
-  printWarning(
-    `[legacy] "${command}" is a compatibility command and may be removed in a future release. Prefer "feature-call" with --feature-json or --feature-file.`,
-  );
-}
-
-function warnInternalCommand(command: string): void {
-  printWarning(
-    `[internal] "${command}" is intended for internal integration and debugging workflows. It is not a stable public CLI contract.`,
-  );
-}
-
-function tryDecryptBody(authoritySecret: string, body: string): string | undefined {
-  try {
-    return sm4DecryptEcb(authoritySecret.slice(0, 32), body);
-  } catch {
-    return undefined;
-  }
-}
-
-function parseJsonIfPossible(value: string | undefined): unknown {
-  if (!value) {
-    return undefined;
-  }
-  try {
-    return JSON.parse(value) as unknown;
-  } catch {
-    return undefined;
-  }
-}
-
-function getFeatureRequestMode(feature: FeatureDefinition): "json" | "upload" | "none" {
-  if (feature.requestMode === "upload") {
-    return "upload";
-  }
-  if (feature.requestMode === "none") {
-    return "none";
-  }
-  return "json";
-}
-
-function getFeatureResponseMode(feature: FeatureDefinition): "json" | "text" | "binary" {
-  if (feature.responseMode === "binary") {
-    return "binary";
-  }
-  if (feature.responseMode === "text") {
-    return "text";
-  }
-  return "json";
-}
-
 async function main(): Promise<void> {
   const { command, options } = parseArgs(process.argv.slice(2));
   if (command === "help") {
@@ -283,205 +194,19 @@ async function main(): Promise<void> {
   if (command === "feature-call") {
     const reqInf = getReqInf(options, config);
     const feature = await loadFeatureDefinition(options);
-    const query = parseJsonOption(options, "query-json");
-    const requestMode = getFeatureRequestMode(feature);
-    const responseMode = getFeatureResponseMode(feature);
-    const url = requireFeatureUrl(feature);
-
-    if (requestMode === "upload") {
-      const filePath = requireOption(options, "file");
-      const result =
-        feature.useOriginalName || options["use-original-name"]
-          ? await XftOpenApiReqClient.doFileUploadByFileWithOriginalName(reqInf, url, query, filePath)
-          : await XftOpenApiReqClient.doFileUploadByFileReq(reqInf, url, query, filePath);
-      printJson({
-        feature,
-        requestMode,
-        responseMode,
-        filePath,
-        ...result,
-      });
-      return;
-    }
-
-    if (responseMode === "binary") {
-      const output = requireOption(options, "output");
-      if (feature.method === "GET") {
-        await XftOpenApiReqClient.downloadGetFileToPath(reqInf, url, query, output);
-      } else if (feature.method === "POST") {
-        const plainBody = requestMode === "none" ? "{}" : await loadBody(options);
-        await XftOpenApiReqClient.downloadPostFileToPath(reqInf, url, query, plainBody, output);
-      } else {
-        throw new Error(`unsupported feature method: ${feature.method}`);
-      }
-      printJson({
-        feature,
-        requestMode,
-        responseMode,
-        outputPath: output,
-        fileName: basename(output),
-      });
-      return;
-    }
-
-    const plainBody = requestMode === "none" ? "{}" : await loadBody(options);
-    const requestBody = feature.encryptBody
-      ? JSON.stringify({
-          secretMsg: sm4EncryptEcb(reqInf.authoritySecret.slice(0, 32), plainBody),
-        })
-      : plainBody;
-
-    let result;
-    if (feature.method === "GET") {
-      result = await XftOpenApiReqClient.doCommonGetReq(reqInf, url, query);
-    } else if (feature.method === "POST") {
-      result = await XftOpenApiReqClient.doCommonPostReq(reqInf, url, query, requestBody);
-    } else {
-      throw new Error(`unsupported feature method: ${feature.method}`);
-    }
-
-    const decryptedBody = feature.decryptResponse ? tryDecryptBody(reqInf.authoritySecret, result.body) : undefined;
-    printJson({
+    const result = await executeFeatureCall(reqInf, {
       feature,
-      requestMode,
-      responseMode,
-      plainBody,
-      requestBody,
-      ...result,
-      decryptedBody,
-      parsedDecryptedBody: parseJsonIfPossible(decryptedBody),
+      queryParams: parseJsonOption(options, "query-json"),
+      bodyText: await loadBody(options),
+      filePath: options.file ? String(options.file) : undefined,
+      outputPath: options.output ? String(options.output) : undefined,
+      useOriginalName: Boolean(options["use-original-name"]),
     });
-    return;
-  }
-
-  if (command === "post") {
-    warnLegacyCommand(command);
-    const reqInf = getReqInf(options, config);
-    let body = await loadBody(options);
-    if (options["encrypt-body"]) {
-      body = JSON.stringify({
-        secretMsg: sm4EncryptEcb(reqInf.authoritySecret.slice(0, 32), body),
-      });
-    }
-    const result = await XftOpenApiReqClient.doCommonPostReq(
-      reqInf,
-      requireOption(options, "url"),
-      parseJsonOption(options, "query-json"),
-      body,
-    );
     printJson(result);
     return;
   }
 
-  if (command === "get") {
-    warnLegacyCommand(command);
-    const result = await XftOpenApiReqClient.doCommonGetReq(
-      getReqInf(options, config),
-      requireOption(options, "url"),
-      parseJsonOption(options, "query-json"),
-    );
-    printJson(result);
-    return;
-  }
-
-  if (command === "upload") {
-    warnLegacyCommand(command);
-    const reqInf = getReqInf(options, config);
-    const url = requireOption(options, "url");
-    const query = parseJsonOption(options, "query-json");
-    const filePath = requireOption(options, "file");
-    const result = options["use-original-name"]
-      ? await XftOpenApiReqClient.doFileUploadByFileWithOriginalName(reqInf, url, query, filePath)
-      : await XftOpenApiReqClient.doFileUploadByFileReq(reqInf, url, query, filePath);
-    printJson(result);
-    return;
-  }
-
-  if (command === "download-get") {
-    warnLegacyCommand(command);
-    const reqInf = getReqInf(options, config);
-    const output = requireOption(options, "output");
-    await XftOpenApiReqClient.downloadGetFileToPath(
-      reqInf,
-      requireOption(options, "url"),
-      parseJsonOption(options, "query-json"),
-      output,
-    );
-    printJson({ outputPath: output, fileName: basename(output) });
-    return;
-  }
-
-  if (command === "download-post") {
-    warnLegacyCommand(command);
-    const reqInf = getReqInf(options, config);
-    const output = requireOption(options, "output");
-    await XftOpenApiReqClient.downloadPostFileToPath(
-      reqInf,
-      requireOption(options, "url"),
-      parseJsonOption(options, "query-json"),
-      await loadBody(options),
-      output,
-    );
-    printJson({ outputPath: output, fileName: basename(output) });
-    return;
-  }
-
-  if (command === "verify-token") {
-    warnInternalCommand(command);
-    const client = new XftVerifyTokenClient(
-      getReqInf(options, config),
-      requireOption(options, "access-token-url"),
-      options["login-user-url"] ? String(options["login-user-url"]) : undefined,
-    );
-    const data = requireOption(options, "data");
-    const sign = requireOption(options, "sign");
-    const result = options["login-user-url"]
-      ? await client.getLoginInfo(data, sign)
-      : await client.verifyToken(data, sign);
-    printJson(result);
-    return;
-  }
-
-  if (command === "verify-sign") {
-    warnInternalCommand(command);
-    const client = new XftVerifySignClient(getReqInf(options, config), requireOption(options, "url"));
-    if (options["valid-minute"]) {
-      client.setValidMinute(Number(options["valid-minute"]));
-    }
-    const result = await client.verifySign(requireOption(options, "data"), requireOption(options, "sign"));
-    printJson(result);
-    return;
-  }
-
-  if (command === "sm4-encrypt") {
-    const authoritySecret = getOption(options, config, "authority-secret");
-    if (!authoritySecret) {
-      throw new Error("missing required option --authority-secret and no local config value found");
-    }
-    const body = await loadBody(options);
-    printJson({ secretMsg: sm4EncryptEcb(authoritySecret.slice(0, 32), body) });
-    return;
-  }
-
-  if (command === "sm4-decrypt") {
-    const authoritySecret = getOption(options, config, "authority-secret");
-    if (!authoritySecret) {
-      throw new Error("missing required option --authority-secret and no local config value found");
-    }
-    printJson({
-      body: sm4DecryptEcb(authoritySecret.slice(0, 32), requireOption(options, "ciphertext")),
-    });
-    return;
-  }
-
-  throw new Error(`unsupported command: ${command}`);
-}
-
-function requireFeatureUrl(feature: FeatureDefinition): string {
-  if (!feature.url) {
-    throw new Error(`feature is missing url: ${feature.id ?? feature.name ?? "unknown"}`);
-  }
-  return feature.url;
+  throw new Error(`unsupported command: ${command}. xft-cli only exposes "feature-call".`);
 }
 
 main().catch((error: unknown) => {

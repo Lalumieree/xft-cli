@@ -1,8 +1,8 @@
 # xft-cli
 
-`xft-cli` is a combined TypeScript SDK and CLI for CMB XFT LW36 open-api calls, login jump verification, file upload/download, and SM4 payload encryption or decryption.
+`xft-cli` is a TypeScript SDK and CLI focused on one public execution path: `feature-call`.
 
-The preferred CLI entrypoint is `feature-call`: skills or local tooling provide a feature definition, and the CLI executes it using local credentials and request payloads.
+Skills or local tooling provide a feature definition, and the CLI or SDK executes it using local credentials and request payloads.
 
 This package now lives under the repository's `cli/` directory.
 
@@ -66,7 +66,7 @@ Typical fields:
 
 Keep `company-id` in `local-config.json` when it is a stable default for your environment. Transient identity fields such as `usr-uid`, `usr-nbr`, and `eds-company-id` should be passed only when a specific call needs them.
 
-## Examples
+## CLI
 
 Call a feature provided by skill or local tooling:
 
@@ -78,20 +78,32 @@ xft-cli feature-call \
 
 You can also pass the feature definition inline with `--feature-json`.
 
-Legacy compatibility commands such as `get`, `post`, `upload`, `download-get`, and `download-post` are still available, but they are compatibility-only and new integrations should prefer `feature-call`.
+`xft-cli` only exposes `feature-call` as a public CLI command. Other historical commands are no longer part of the public contract.
 
-Internal commands such as `verify-token` and `verify-sign` are kept for internal integration and debugging workflows only. They should not be treated as stable public CLI entrypoints.
+## SDK
 
-Use the SDK in TypeScript:
+Use the SDK with the same `feature-call` contract:
 
 ```ts
-import { XftOpenApiReqClient } from "xft-cli";
+import { executeFeatureCall } from "xft-cli";
 
-const result = await XftOpenApiReqClient.doCommonGetReq(
+const result = await executeFeatureCall(
   {
     appId: process.env.APP_ID!,
     authoritySecret: process.env.AUTHORITY_SECRET!,
+    companyId: process.env.COMPANY_ID,
   },
-  "https://example.com/api",
+  {
+    feature: {
+      id: "org-list",
+      method: "POST",
+      url: "https://api.cmbchina.com/ORG/orgqry/xft-service-organization/org/v1/get/page",
+      requestMode: "json",
+      responseMode: "json",
+      encryptBody: true,
+      decryptResponse: true,
+    },
+    bodyText: JSON.stringify({ currentPage: 1, pageSize: 20 }),
+  },
 );
 ```

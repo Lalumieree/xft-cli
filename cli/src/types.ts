@@ -20,6 +20,41 @@ export interface HttpResponseData {
   headers: Record<string, string>;
 }
 
+export interface FeatureDefinition {
+  id?: string;
+  name?: string;
+  description?: string;
+  method?: "GET" | "POST" | string;
+  url?: string;
+  encryptBody?: boolean;
+  decryptResponse?: boolean;
+  requestMode?: "json" | "upload" | "none" | string;
+  responseMode?: "json" | "text" | "binary" | string;
+  useOriginalName?: boolean;
+}
+
+export interface FeatureCallInput {
+  feature: FeatureDefinition;
+  queryParams?: QueryParams;
+  bodyText?: string;
+  filePath?: string;
+  outputPath?: string;
+  useOriginalName?: boolean;
+}
+
+export interface FeatureCallResult extends Partial<HttpResponseData> {
+  feature: FeatureDefinition;
+  requestMode: "json" | "upload" | "none";
+  responseMode: "json" | "text" | "binary";
+  plainBody?: string;
+  requestBody?: string;
+  decryptedBody?: string;
+  parsedDecryptedBody?: unknown;
+  filePath?: string;
+  outputPath?: string;
+  fileName?: string;
+}
+
 export interface XftFrameworkResponse<T = unknown> {
   returnCode: string;
   errorMsg?: string;
