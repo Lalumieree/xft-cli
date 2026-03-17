@@ -81,6 +81,22 @@ xft-cli feature-call \
 
 You can also pass the feature definition inline with `--feature-json`.
 
+`feature-call` accepts:
+- `--query-json` for query parameters
+- `--body-json` or `--body-file` for request body payloads
+- `--file` for upload features
+- `--output` for binary download features
+
+For example, a POST feature can send both query and body at the same time:
+
+```bash
+xft-cli feature-call \
+  --config /tmp/xft-runtime-config.json \
+  --feature-json '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
+  --query-json '{"tenant":"t1","includeDeleted":false}' \
+  --body-json '{"currentPage":1,"pageSize":20}'
+```
+
 The minimal execution feature schema is:
 
 ```json

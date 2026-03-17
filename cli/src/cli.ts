@@ -38,7 +38,17 @@ function helpText(): string {
   return `Usage: xft-cli <command> [options]
 
 Primary commands:
-  feature-call`;
+  feature-call
+
+Common feature-call options:
+  --config <path>
+  --feature-file <path>
+  --feature-json <json>
+  --query-json <json>
+  --body-json <json>
+  --body-file <path>
+  --file <path>
+  --output <path>`;
 }
 
 function requireOption(options: CliOptions, key: string): string {
