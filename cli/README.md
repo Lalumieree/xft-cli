@@ -141,7 +141,53 @@ const result = await executeFeatureCall(
       encryptBody: true,
       decryptResponse: true,
     },
+    queryParams: {
+      tenant: "t1",
+    },
     bodyText: JSON.stringify({ currentPage: 1, pageSize: 20 }),
   },
 );
+```
+
+SDK input mapping:
+
+- `queryParams`: query string parameters
+- `bodyText`: request body text for `json` requests
+- `filePath`: local file path for `upload` requests
+- `outputPath`: local output path for `binary` download responses
+
+Upload example:
+
+```ts
+await executeFeatureCall(reqInf, {
+  feature: {
+    method: "POST",
+    url: "https://api.cmbchina.com/example/upload",
+    requestMode: "upload",
+    responseMode: "json",
+    encryptBody: false,
+    decryptResponse: false,
+  },
+  queryParams: {
+    folder: "contracts",
+  },
+  filePath: "/tmp/demo.pdf",
+});
+```
+
+Binary download example:
+
+```ts
+await executeFeatureCall(reqInf, {
+  feature: {
+    method: "POST",
+    url: "https://api.cmbchina.com/example/download",
+    requestMode: "json",
+    responseMode: "binary",
+    encryptBody: true,
+    decryptResponse: false,
+  },
+  bodyText: JSON.stringify({ fileId: "123" }),
+  outputPath: "/tmp/result.pdf",
+});
 ```

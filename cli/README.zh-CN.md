@@ -154,7 +154,53 @@ const result = await executeFeatureCall(
       encryptBody: true,
       decryptResponse: true,
     },
+    queryParams: {
+      tenant: "t1",
+    },
     bodyText: JSON.stringify({ currentPage: 1, pageSize: 20 }),
   },
 );
+```
+
+SDK 输入参数对应关系：
+
+- `queryParams`：query 参数
+- `bodyText`：`json` 请求模式下的 body 文本
+- `filePath`：`upload` 请求模式下的本地文件路径
+- `outputPath`：二进制下载响应的本地输出路径
+
+上传示例：
+
+```ts
+await executeFeatureCall(reqInf, {
+  feature: {
+    method: "POST",
+    url: "https://api.cmbchina.com/example/upload",
+    requestMode: "upload",
+    responseMode: "json",
+    encryptBody: false,
+    decryptResponse: false,
+  },
+  queryParams: {
+    folder: "contracts",
+  },
+  filePath: "/tmp/demo.pdf",
+});
+```
+
+二进制下载示例：
+
+```ts
+await executeFeatureCall(reqInf, {
+  feature: {
+    method: "POST",
+    url: "https://api.cmbchina.com/example/download",
+    requestMode: "json",
+    responseMode: "binary",
+    encryptBody: true,
+    decryptResponse: false,
+  },
+  bodyText: JSON.stringify({ fileId: "123" }),
+  outputPath: "/tmp/result.pdf",
+});
 ```
