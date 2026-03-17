@@ -14,7 +14,8 @@
     "xft-cli": "./dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.zh-CN.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"

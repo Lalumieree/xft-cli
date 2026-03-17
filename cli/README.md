@@ -4,6 +4,8 @@
 
 Skills or local tooling provide a feature definition, and the CLI or SDK executes it using local credentials and request payloads.
 
+Chinese documentation: [README.zh-CN.md](./README.zh-CN.md)
+
 This package now lives under the repository's `cli/` directory.
 
 ## Install
@@ -75,11 +77,13 @@ Call a feature provided by skill or local tooling:
 ```bash
 xft-cli feature-call \
   --config /tmp/xft-runtime-config.json \
-  --feature-file ./org-list.feature.json \
+  --feature ./org-list.feature.json \
   --body-json '{"currentPage":1,"pageSize":20}'
 ```
 
-You can also pass the feature definition inline with `--feature-json`.
+Both `--config` and `--feature` accept either:
+- a path to a JSON file
+- an inline JSON object string
 
 `feature-call` accepts:
 - `--query-json` for query parameters
@@ -92,7 +96,7 @@ For example, a POST feature can send both query and body at the same time:
 ```bash
 xft-cli feature-call \
   --config /tmp/xft-runtime-config.json \
-  --feature-json '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
+  --feature '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
   --query-json '{"tenant":"t1","includeDeleted":false}' \
   --body-json '{"currentPage":1,"pageSize":20}'
 ```

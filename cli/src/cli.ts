@@ -41,9 +41,8 @@ Primary commands:
   feature-call
 
 Common feature-call options:
-  --config <path>
-  --feature-file <path>
-  --feature-json <json>
+  --config <path-or-json>
+  --feature <path-or-json>
   --query-json <json>
   --body-json <json>
   --body-file <path>
@@ -63,15 +62,32 @@ async function loadJsonFile(path: string): Promise<unknown> {
   return JSON.parse(await readFile(path, "utf8")) as unknown;
 }
 
-async function loadLocalConfig(options: CliOptions): Promise<CliOptions> {
-  if (options["config-json"]) {
-    throw new Error(
-      'unsupported option --config-json. Pass sensitive configuration via --config <path> or local-config.json instead.',
-    );
-  }
-  const configPath = options.config ? String(options.config) : DEFAULT_CONFIG_PATH;
+function parseInlineJson(raw: string, optionName: string): unknown {
   try {
-    const config = await loadJsonFile(configPath);
+    return JSON.parse(raw) as unknown;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`option --${optionName} must be valid JSON or a readable JSON file path: ${message}`);
+  }
+}
+
+async function loadJsonValueOrFile(rawValue: string, optionName: string): Promise<unknown> {
+  const trimmed = rawValue.trim();
+  if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+    return parseInlineJson(trimmed, optionName);
+  }
+
+  try {
+    return await loadJsonFile(rawValue);
+  } catch {
+    return parseInlineJson(rawValue, optionName);
+  }
+}
+
+async function loadLocalConfig(options: CliOptions): Promise<CliOptions> {
+  const configValue = options.config ? String(options.config) : DEFAULT_CONFIG_PATH;
+  try {
+    const config = await loadJsonValueOrFile(configValue, "config");
     return isRecord(config) ? toCliOptions(config) : {};
   } catch {
     return {};
@@ -79,17 +95,12 @@ async function loadLocalConfig(options: CliOptions): Promise<CliOptions> {
 }
 
 async function loadFeatureDefinition(options: CliOptions): Promise<FeatureDefinition> {
-  if (options["feature-json"]) {
-    const parsed = JSON.parse(String(options["feature-json"])) as unknown;
+  if (options.feature) {
+    const parsed = await loadJsonValueOrFile(String(options.feature), "feature");
     return validateFeatureDefinition(parsed);
   }
 
-  if (options["feature-file"]) {
-    const parsed = await loadJsonFile(String(options["feature-file"]));
-    return validateFeatureDefinition(parsed);
-  }
-
-  throw new Error("missing feature definition: provide --feature-json or --feature-file");
+  throw new Error("missing feature definition: provide --feature");
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
