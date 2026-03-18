@@ -118,6 +118,6 @@
     "错误码：ORGCT04 表示组织ID不能为空，ORGCT18 表示该组织不存在，ORGCT02 表示组织名称不能为空，ORGCT03 表示组织类型不能为空，XFTORG0188 表示非根组织的上级组织ID和编码不能为空，XFTORG0186 表示根组织的上级组织ID和编码必须为空，XFTORG0182 表示组织类型不存在，XFTORG0131 表示最多可设置审批主管数量超限，ORGCT19 表示集团组织只允许修改组织名称、组织编码、负责人、审批主管"
   ],
   "catalogIndex": {
-    "path": "/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/index.json"
+    "path": "../../index.json"
   }
 }

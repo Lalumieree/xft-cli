@@ -12,11 +12,11 @@ Use this skill to turn a saved XFT API documentation page into one interface JSO
 1. Run the extractor first:
 
 ```bash
-python3 /Users/nateshen/Documents/Codex/xft-cli/skill/xft-feature-catalog-mhtml/scripts/extract_feature_from_mhtml.py /absolute/path/to/doc.mhtml
+python3 scripts/extract_feature_from_mhtml.py /path/to/doc.mhtml
 ```
 
-2. Read `/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/index.json` first, then inspect the target module directory under `/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/`.
-   The main Skill may also use `/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/scripts/search_feature_catalog.py` to search this index, so keep the index fields meaningful.
+2. Read `../xft-openapi-tool/references/feature-catalog/index.json` first, then inspect the target module directory under `../xft-openapi-tool/references/feature-catalog/`.
+   The main Skill may also use `../xft-openapi-tool/scripts/search_feature_catalog.py` to search this index, so keep the index fields meaningful.
 
 3. Upsert the feature file:
    - Pick the business module directory first.
@@ -29,7 +29,7 @@ python3 /Users/nateshen/Documents/Codex/xft-cli/skill/xft-feature-catalog-mhtml/
 4. Validate the updated interface JSON after editing:
 
 ```bash
-node -e "JSON.parse(require('fs').readFileSync('/absolute/path/to/interface.json','utf8')); console.log('ok')"
+node -e "JSON.parse(require('fs').readFileSync('path/to/interface.json','utf8')); console.log('ok')"
 ```
 
 ## Update Rules

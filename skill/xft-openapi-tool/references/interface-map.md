@@ -15,13 +15,13 @@
 ## Example
 
 ```bash
-python3 /Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/scripts/search_feature_catalog.py "修改组织名称"
+python3 scripts/search_feature_catalog.py "修改组织名称"
 ```
 
 ```bash
 xft-openapi-cli feature-call \
   --config /tmp/xft-runtime-config.json \
-  --feature /Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/组织管理/组织机构/org-list.json \
+  --feature references/feature-catalog/组织管理/组织机构/org-list.json \
   --body-json '{"currentPage":1,"pageSize":20}'
 ```
 
@@ -31,4 +31,4 @@ xft-openapi-cli feature-call \
   `sm3withsm2` signing uses the full hex private key.
   `secretMsg` encryption uses the first 32 chars as the SM4 key.
 - The tool emits JSON to stdout so a Skill can inspect or summarize the result.
-- This wrapper is implemented as the package CLI in `/Users/nateshen/Documents/Codex/xft-cli/cli`.
+- This wrapper is implemented by the repository's `cli/` package.

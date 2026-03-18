@@ -14,7 +14,7 @@ Always locate interfaces in this order:
 1. Search `references/feature-catalog/index.json` first. Prefer:
 
 ```bash
-python3 /Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/scripts/search_feature_catalog.py "组织列表"
+python3 scripts/search_feature_catalog.py "组织列表"
 ```
 
 2. If needed, read `references/feature-catalog/index.json` directly.

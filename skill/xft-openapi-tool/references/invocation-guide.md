@@ -4,9 +4,9 @@
 
 - Official portal entry: [招商银行薪福通开放平台](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&mid=10684)
 - Local CLI implementation used for exact request construction:
-  [open-api-client.ts](/Users/nateshen/Documents/Codex/xft-cli/cli/src/open-api-client.ts)
-  [verify-token-client.ts](/Users/nateshen/Documents/Codex/xft-cli/cli/src/verify-token-client.ts)
-  [verify-sign-client.ts](/Users/nateshen/Documents/Codex/xft-cli/cli/src/verify-sign-client.ts)
+  `cli/src/open-api-client.ts`
+  `cli/src/verify-token-client.ts`
+  `cli/src/verify-sign-client.ts`
 
 ## What could be confirmed
 
@@ -69,7 +69,7 @@
 ```bash
 xft-openapi-cli feature-call \
   --config /tmp/xft-runtime-config.json \
-  --feature /Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/组织管理/组织机构/org-list.json \
+  --feature references/feature-catalog/组织管理/组织机构/org-list.json \
   --body-json '{"currentPage":1,"pageSize":20}'
 ```
 

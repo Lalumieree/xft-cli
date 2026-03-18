@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 
-INDEX_PATH = Path("/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/index.json")
+INDEX_PATH = Path(__file__).resolve().parent.parent / "references" / "feature-catalog" / "index.json"
 WEIGHTS = {
     "name": 10,
     "aliases": 8,

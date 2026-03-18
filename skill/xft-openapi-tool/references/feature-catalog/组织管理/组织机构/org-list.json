@@ -112,6 +112,6 @@
     "当前默认空请求体 {} 可返回第一页数据"
   ],
   "catalogIndex": {
-    "path": "/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/index.json"
+    "path": "../../index.json"
   }
 }
