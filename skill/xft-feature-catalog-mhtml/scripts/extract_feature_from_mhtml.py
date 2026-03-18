@@ -253,6 +253,42 @@ def build_response_notes(output_params: list[dict], error_codes: list[dict]) -> 
     return notes
 
 
+def infer_operation(title: str | None, description: str | None) -> str:
+    text = " ".join(part for part in [title, description] if part).lower()
+    if any(token in text for token in ["修改", "更新", "edit", "update"]):
+        return "update"
+    if any(token in text for token in ["删除", "delete", "remove"]):
+        return "delete"
+    if any(token in text for token in ["新增", "创建", "create", "add"]):
+        return "create"
+    return "query"
+
+
+def infer_resource(title: str | None, description: str | None) -> str:
+    text = " ".join(part for part in [title, description] if part)
+    if "组织" in text:
+        return "organization"
+    if "门店" in text:
+        return "store"
+    if "员工" in text:
+        return "employee"
+    return "unknown"
+
+
+def build_keywords(title: str | None, description: str | None, params: list[dict]) -> list[str]:
+    keywords: list[str] = []
+    for part in [title, description]:
+        if part:
+            keywords.extend(token for token in re.split(r"[\s,，、/()]+", part) if token)
+    keywords.extend(param["name"] for param in params if param.get("name"))
+    deduped: list[str] = []
+    for keyword in keywords:
+        normalized = keyword.strip()
+        if normalized and normalized not in deduped:
+            deduped.append(normalized)
+    return deduped[:12]
+
+
 def parse_document(path: Path) -> dict:
     html = load_html_from_mhtml(path)
     text = html_to_text(html)
@@ -282,9 +318,18 @@ def parse_document(path: Path) -> dict:
     feature = {
         "id": derive_feature_id(prod_url or test_url),
         "name": title,
+        "module": None,
+        "submodule": None,
+        "operation": infer_operation(title, api_description),
+        "resource": infer_resource(title, api_description),
+        "aliases": [title] if title else [],
+        "keywords": build_keywords(title, api_description, input_params),
+        "businessScenarios": [title] if title else [],
         "description": api_description,
         "method": extract_method(lines),
         "url": prod_url,
+        "requestMode": "json",
+        "responseMode": "json",
         "encryptBody": True,
         "decryptResponse": True,
         "querySchema": {"type": "object", "properties": {}},

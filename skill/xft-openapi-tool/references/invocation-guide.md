@@ -67,19 +67,16 @@
 ## Skill command examples
 
 ```bash
-xft-cli post \
-  --app-id "$APP_ID" \
-  --authority-secret "$AUTHORITY_SECRET" \
-  --url "$API_URL" \
-  --query-json '{"OPAUID":"XFT11728"}' \
-  --body-json '{"limit":20}'
+xft-openapi-cli feature-call \
+  --config /tmp/xft-runtime-config.json \
+  --feature /Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/组织管理/组织机构/org-list.json \
+  --body-json '{"currentPage":1,"pageSize":20}'
 ```
 
 ```bash
-xft-cli post \
+xft-openapi-cli feature-call \
   --app-id "$APP_ID" \
   --authority-secret "$AUTHORITY_SECRET" \
-  --url "$API_URL" \
-  --body-json '{"limit":20}' \
-  --encrypt-body
+  --feature '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
+  --body-json '{"limit":20}'
 ```

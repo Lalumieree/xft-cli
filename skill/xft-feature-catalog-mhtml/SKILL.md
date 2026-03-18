@@ -1,11 +1,11 @@
 ---
 name: xft-feature-catalog-mhtml
-description: Parse a saved XFT open-platform API MHTML document and update /Users/nateshen/Documents/Codex/xft-cli/skill/lw36-openapi-tool/references/feature-catalog.json with the corresponding feature entry. Use when the user provides a .mhtml doc page from xft.cmbchina.com and asks to add, fix, or sync an interface definition in the LW36 feature catalog.
+description: Use this skill when you need to parse a saved XFT open-platform API MHTML document and update the corresponding module/interface JSON under `xft-openapi-tool/references/feature-catalog`.
 ---
 
 # XFT Feature Catalog From MHTML
 
-Use this skill to turn a saved XFT API documentation page into a `feature-catalog.json` entry.
+Use this skill to turn a saved XFT API documentation page into one interface JSON file in the modular feature catalog used by `xft-openapi-tool`.
 
 ## Workflow
 
@@ -15,17 +15,21 @@ Use this skill to turn a saved XFT API documentation page into a `feature-catalo
 python3 /Users/nateshen/Documents/Codex/xft-cli/skill/xft-feature-catalog-mhtml/scripts/extract_feature_from_mhtml.py /absolute/path/to/doc.mhtml
 ```
 
-2. Read the extractor output, then inspect the existing catalog entry in `/Users/nateshen/Documents/Codex/xft-cli/skill/lw36-openapi-tool/references/feature-catalog.json`.
+2. Read `/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/index.json` first, then inspect the target module directory under `/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/references/feature-catalog/`.
+   The main Skill may also use `/Users/nateshen/Documents/Codex/xft-cli/skill/xft-openapi-tool/scripts/search_feature_catalog.py` to search this index, so keep the index fields meaningful.
 
-3. Upsert the feature entry:
-   - If an entry already matches by `url`, update that entry in place.
-   - Otherwise, if an entry already matches by `name`, update that entry and preserve its existing `id`.
-   - Otherwise, append a new feature entry and choose a short ASCII `id`. Prefer a stable URL-based id and avoid Chinese characters.
+3. Upsert the feature file:
+   - Pick the business module directory first.
+   - Keep `module`, `submodule`, `operation`, `resource`, `aliases`, `keywords`, and `businessScenarios` useful for future lookup.
+   - If an existing interface file already matches by `url`, update that file in place.
+   - Otherwise, if an existing interface file already matches by `name`, update that file and preserve its existing `id`.
+   - Otherwise, create one new JSON file for that interface. Prefer a stable ASCII filename derived from the URL tail.
+   - Update `index.json` in the same change so the main Skill can find the new interface.
 
-4. Validate the catalog JSON after editing:
+4. Validate the updated interface JSON after editing:
 
 ```bash
-node -e "JSON.parse(require('fs').readFileSync('/Users/nateshen/Documents/Codex/xft-cli/skill/lw36-openapi-tool/references/feature-catalog.json','utf8')); console.log('ok')"
+node -e "JSON.parse(require('fs').readFileSync('/absolute/path/to/interface.json','utf8')); console.log('ok')"
 ```
 
 ## Update Rules
@@ -37,8 +41,10 @@ node -e "JSON.parse(require('fs').readFileSync('/Users/nateshen/Documents/Codex/
   - Use `type`, `required`, `description`
   - Add `items` for arrays
   - Add `enum` only when the page explicitly lists allowed values
-- Preserve an existing feature `id` whenever possible. Do not rename unrelated features.
-- Default `encryptBody` and `decryptResponse` to the current LW36 business-interface pattern of `true` unless the existing catalog entry or direct evidence says otherwise.
+- Preserve an existing feature `id` whenever possible. Do not rename unrelated interface files.
+- Keep `index.json` synchronized with every interface JSON addition or update.
+- Default `requestMode` to `json` and `responseMode` to `json` for standard business interfaces unless the document clearly indicates file upload or binary download.
+- Default `encryptBody` and `decryptResponse` to the current XFT business-interface pattern of `true` unless the existing catalog entry or direct evidence says otherwise.
 - Keep `responseNotes` short and operational:
   - success return code
   - key response collection or object shape
