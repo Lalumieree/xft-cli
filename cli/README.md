@@ -1,6 +1,6 @@
-# xft-cli
+# xft-openapi-cli
 
-`xft-cli` is a TypeScript SDK and CLI focused on one public execution path: `feature-call`.
+`xft-openapi-cli` is a TypeScript SDK and CLI focused on one public execution path: `feature-call`.
 
 Skills or local tooling provide a feature definition, and the CLI or SDK executes it using local credentials and request payloads.
 
@@ -13,13 +13,13 @@ This package now lives under the repository's `cli/` directory.
 Global install after publishing:
 
 ```bash
-npm install -g xft-cli
+npm install -g xft-openapi-cli
 ```
 
 Then verify the CLI is on your `PATH`:
 
 ```bash
-xft-cli --help
+xft-openapi-cli --help
 ```
 
 ## Local Development Install
@@ -32,18 +32,18 @@ npm run build
 npm link
 ```
 
-That exposes the local build as the `xft-cli` command on your machine for debugging.
+That exposes the local build as the `xft-openapi-cli` command on your machine for debugging.
 
 After linking, test it with:
 
 ```bash
-xft-cli --help
+xft-openapi-cli --help
 ```
 
 To remove the global symlink later:
 
 ```bash
-npm unlink -g xft-cli
+npm unlink -g xft-openapi-cli
 ```
 
 ## Local Package Usage Without Linking
@@ -75,7 +75,7 @@ For local middleware, prefer `--config /path/to/temp.json` if configuration must
 Call a feature provided by skill or local tooling:
 
 ```bash
-xft-cli feature-call \
+xft-openapi-cli feature-call \
   --config /tmp/xft-runtime-config.json \
   --feature ./org-list.feature.json \
   --body-json '{"currentPage":1,"pageSize":20}'
@@ -94,7 +94,7 @@ Both `--config` and `--feature` accept either:
 For example, a POST feature can send both query and body at the same time:
 
 ```bash
-xft-cli feature-call \
+xft-openapi-cli feature-call \
   --config /tmp/xft-runtime-config.json \
   --feature '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
   --query-json '{"tenant":"t1","includeDeleted":false}' \
@@ -116,14 +116,14 @@ The minimal execution feature schema is:
 
 Fields such as `id`, `name`, and `description` are optional metadata only.
 
-`xft-cli` only exposes `feature-call` as a public CLI command. Other historical commands are no longer part of the public contract.
+`xft-openapi-cli` only exposes `feature-call` as a public CLI command. Other historical commands are no longer part of the public contract.
 
 ## SDK
 
 Use the SDK with the same `feature-call` contract:
 
 ```ts
-import { executeFeatureCall } from "xft-cli";
+import { executeFeatureCall } from "xft-openapi-cli";
 
 const result = await executeFeatureCall(
   {

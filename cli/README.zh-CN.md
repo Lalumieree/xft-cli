@@ -1,6 +1,6 @@
-# xft-cli
+# xft-openapi-cli
 
-`xft-cli` 是一个围绕 `feature-call` 单一公开执行入口设计的 TypeScript SDK 和 CLI。
+`xft-openapi-cli` 是一个围绕 `feature-call` 单一公开执行入口设计的 TypeScript SDK 和 CLI。
 
 上层 Skill 或本地中间层负责提供 feature 定义，CLI/SDK 负责读取本地配置、组装请求并执行调用。
 
@@ -9,13 +9,13 @@
 发布后可全局安装：
 
 ```bash
-npm install -g xft-cli
+npm install -g xft-openapi-cli
 ```
 
 检查命令是否可用：
 
 ```bash
-xft-cli --help
+xft-openapi-cli --help
 ```
 
 本地开发调试：
@@ -70,7 +70,7 @@ CLI 会优先从以下位置读取配置：
 基础调用示例：
 
 ```bash
-xft-cli feature-call \
+xft-openapi-cli feature-call \
   --config /tmp/xft-runtime-config.json \
   --feature ./org-list.feature.json \
   --body-json '{"currentPage":1,"pageSize":20}'
@@ -84,7 +84,7 @@ xft-cli feature-call \
 例如：
 
 ```bash
-xft-cli feature-call \
+xft-openapi-cli feature-call \
   --feature '{"method":"POST","url":"https://api.cmbchina.com/...","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}'
 ```
 
@@ -99,7 +99,7 @@ xft-cli feature-call \
 POST 特性可以同时携带 query 和 body：
 
 ```bash
-xft-cli feature-call \
+xft-openapi-cli feature-call \
   --config /tmp/xft-runtime-config.json \
   --feature '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
   --query-json '{"tenant":"t1","includeDeleted":false}' \
@@ -137,7 +137,7 @@ xft-cli feature-call \
 SDK 和 CLI 共用同一套 `feature-call` 契约：
 
 ```ts
-import { executeFeatureCall } from "xft-cli";
+import { executeFeatureCall } from "xft-openapi-cli";
 
 const result = await executeFeatureCall(
   {

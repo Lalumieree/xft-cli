@@ -1,6 +1,7 @@
 {
-  "name": "xft-cli",
-  "version": "2.0.3",
+  "name": "xft-openapi-cli",
+  "version": "2.0.4",
+  "description": "TypeScript SDK and CLI for executing XFT OpenAPI feature-call requests.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,7 +12,7 @@
     }
   },
   "bin": {
-    "xft-cli": "./dist/cli.js"
+    "xft-openapi-cli": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -22,6 +23,22 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "keywords": [
+    "cli",
+    "sdk",
+    "openapi",
+    "xft",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lalumieree/xft-cli.git"
+  },
+  "homepage": "https://github.com/Lalumieree/xft-cli/tree/main/cli",
+  "bugs": {
+    "url": "https://github.com/Lalumieree/xft-cli/issues"
   },
   "devDependencies": {
     "@types/node": "^20.17.19",

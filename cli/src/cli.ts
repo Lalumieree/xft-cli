@@ -35,7 +35,7 @@ function parseArgs(argv: string[]): { command: string; options: CliOptions } {
 }
 
 function helpText(): string {
-  return `Usage: xft-cli <command> [options]
+  return `Usage: xft-openapi-cli <command> [options]
 
 Primary commands:
   feature-call
@@ -226,7 +226,7 @@ async function main(): Promise<void> {
     return;
   }
 
-  throw new Error(`unsupported command: ${command}. xft-cli only exposes "feature-call".`);
+  throw new Error(`unsupported command: ${command}. xft-openapi-cli only exposes "feature-call".`);
 }
 
 main().catch((error: unknown) => {
