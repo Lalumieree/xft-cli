@@ -4,7 +4,7 @@
 
 Skills or local tooling provide a feature definition, and the CLI or SDK executes it using local credentials and request payloads.
 
-Chinese documentation: [README.zh-CN.md](./README.zh-CN.md)
+Chinese documentation: [README.zh-CN.md](https://github.com/Lalumieree/xft-cli/blob/master/cli/README.zh-CN.md)
 
 This package now lives under the repository's `cli/` directory.
 

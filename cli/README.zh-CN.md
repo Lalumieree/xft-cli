@@ -4,6 +4,8 @@
 
 上层 Skill 或本地中间层负责提供 feature 定义，CLI/SDK 负责读取本地配置、组装请求并执行调用。
 
+英文文档：[`README.md`](https://github.com/Lalumieree/xft-cli/blob/master/cli/README.md)
+
 ## 安装
 
 发布后可全局安装：

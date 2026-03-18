@@ -1,6 +1,6 @@
 {
   "name": "xft-openapi-cli",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "TypeScript SDK and CLI for executing XFT OpenAPI feature-call requests.",
   "type": "module",
   "main": "./dist/index.js",
