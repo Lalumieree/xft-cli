@@ -1,0 +1,137 @@
+{
+  "version": 2,
+  "indexType": "module",
+  "module": "员工管理",
+  "generatedBy": "manual",
+  "features": [
+    {
+      "id": "employeeprofile-employee-staffgeneralapi-addstaff",
+      "name": "创建企业员工",
+      "module": "员工管理",
+      "submodule": "花名册",
+      "path": "员工管理/花名册/create-staff.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "create",
+      "resource": "employee",
+      "aliases": [
+        "创建员工",
+        "新增企业员工",
+        "新增员工",
+        "addStaff"
+      ],
+      "keywords": [
+        "员工",
+        "花名册",
+        "创建",
+        "新增",
+        "staffBasicInfo",
+        "staffHrmInfo",
+        "员工信息"
+      ],
+      "businessScenarios": [
+        "新增花名册员工",
+        "批量创建企业员工",
+        "同步员工花名册主数据"
+      ],
+      "description": "花名册员工新增接口，支持新增员工到薪福通员工管理花名册中。"
+    },
+    {
+      "id": "general-api-modify-staff",
+      "name": "编辑企业员工",
+      "module": "员工管理",
+      "submodule": "花名册",
+      "path": "员工管理/花名册/modify-staff.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "update",
+      "resource": "employee",
+      "aliases": [
+        "编辑员工",
+        "修改企业员工",
+        "修改员工",
+        "modify-staff"
+      ],
+      "keywords": [
+        "员工",
+        "花名册",
+        "编辑",
+        "修改",
+        "staffInfoList",
+        "multiGroupUpdateFlag"
+      ],
+      "businessScenarios": [
+        "编辑花名册员工",
+        "批量修改企业员工",
+        "同步员工花名册变更"
+      ],
+      "description": "花名册员工编辑接口，支持编辑薪福通员工管理花名册中的员工信息。"
+    },
+    {
+      "id": "external-api-query-staffinfo",
+      "name": "获取员工信息",
+      "module": "员工管理",
+      "submodule": "花名册",
+      "path": "员工管理/花名册/query-staff-info.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "employee",
+      "aliases": [
+        "查询员工信息",
+        "获取企业员工信息",
+        "员工信息查询",
+        "staffInfo"
+      ],
+      "keywords": [
+        "员工",
+        "花名册",
+        "查询",
+        "queryFilterList",
+        "queryResultType",
+        "currentPage",
+        "pageSize"
+      ],
+      "businessScenarios": [
+        "查询员工花名册信息",
+        "按条件分页查询员工",
+        "按字段或分组获取员工资料"
+      ],
+      "description": "支持薪福通员工管理花名册信息查询。"
+    },
+    {
+      "id": "general-api-remove-staff",
+      "name": "删除企业员工",
+      "module": "员工管理",
+      "submodule": "花名册",
+      "path": "员工管理/花名册/remove-staff.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "delete",
+      "resource": "employee",
+      "aliases": [
+        "删除员工",
+        "移除企业员工",
+        "移除员工",
+        "remove-staff"
+      ],
+      "keywords": [
+        "员工",
+        "花名册",
+        "删除",
+        "移除",
+        "stfSeqList",
+        "员工序号"
+      ],
+      "businessScenarios": [
+        "删除花名册员工",
+        "批量删除企业员工"
+      ],
+      "description": "可直接删除员工管理花名册中存在且未被删除的员工。"
+    }
+  ]
+}

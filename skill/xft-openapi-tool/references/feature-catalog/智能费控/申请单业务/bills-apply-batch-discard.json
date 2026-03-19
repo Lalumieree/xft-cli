@@ -1,0 +1,65 @@
+{
+  "id": "bills-apply-batch-discard",
+  "name": "批量作废申请单",
+  "module": "智能费控",
+  "submodule": "申请单业务",
+  "operation": "delete",
+  "resource": "application",
+  "aliases": [
+    "申请单批量作废",
+    "批量作废单据",
+    "batch discard apply bill"
+  ],
+  "keywords": [
+    "申请单",
+    "作废",
+    "批量",
+    "applyBillDiscardItemList",
+    "billId"
+  ],
+  "businessScenarios": [
+    "批量作废通用申请单",
+    "批量作废差旅申请单",
+    "批量作废费用申请单",
+    "批量作废招待申请单",
+    "批量作废用车申请单"
+  ],
+  "description": "批量根据单据号作废申请单，支持部分成功，返回成功和失败的单据编号集合。",
+  "method": "POST",
+  "url": "https://api.cmbchina.com/itrip/xft-api/v1/bills/apply/batch-discard",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {
+      "applyBillDiscardItemList": {
+        "type": "array",
+        "required": true,
+        "description": "批量作废单据参数列表，最多 20 条",
+        "items": {
+          "type": "object",
+          "properties": {
+            "billId": {
+              "type": "number",
+              "description": "待作废单据编号"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "body 为批量作废结果对象，支持部分成功",
+    "错误码：E0001 表示具体业务异常提示"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}

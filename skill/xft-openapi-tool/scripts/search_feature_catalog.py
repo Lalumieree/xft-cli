@@ -18,8 +18,29 @@ WEIGHTS = {
 }
 
 
-def load_index() -> dict:
-    return json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+def load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_entries() -> list[dict]:
+    root = load_json(INDEX_PATH)
+    if isinstance(root.get("features"), list):
+        return root["features"]
+
+    modules = root.get("modules", [])
+    entries: list[dict] = []
+    for module in modules:
+        rel_path = module.get("path")
+        if not isinstance(rel_path, str):
+            continue
+        module_index_path = INDEX_PATH.parent / rel_path
+        if not module_index_path.exists():
+            continue
+        module_index = load_json(module_index_path)
+        module_features = module_index.get("features", [])
+        if isinstance(module_features, list):
+            entries.extend(module_features)
+    return entries
 
 
 def normalize_tokens(text: str) -> list[str]:
@@ -64,8 +85,7 @@ def score_entry(entry: dict, query: str) -> tuple[int, list[str]]:
 
 
 def search(query: str, limit: int) -> list[dict]:
-    data = load_index()
-    features = data.get("features", [])
+    features = load_entries()
     ranked = []
     for entry in features:
         score, hits = score_entry(entry, query)

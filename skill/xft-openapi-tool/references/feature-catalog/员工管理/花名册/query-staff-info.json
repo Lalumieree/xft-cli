@@ -1,0 +1,76 @@
+{
+  "id": "external-api-query-staffinfo",
+  "name": "获取员工信息",
+  "module": "员工管理",
+  "submodule": "花名册",
+  "operation": "query",
+  "resource": "employee",
+  "aliases": [
+    "查询员工信息",
+    "获取企业员工信息",
+    "员工信息查询",
+    "staffInfo"
+  ],
+  "keywords": [
+    "员工",
+    "花名册",
+    "查询",
+    "queryFilterList",
+    "queryResultType",
+    "currentPage",
+    "pageSize"
+  ],
+  "businessScenarios": [
+    "查询员工花名册信息",
+    "按条件分页查询员工",
+    "按字段或分组获取员工资料"
+  ],
+  "description": "支持薪福通员工管理花名册信息查询。支持单个或多个条件与查询，支持等值、模糊、范围和日期查询，并支持按字段或按分组返回结果。",
+  "method": "POST",
+  "url": "https://api.cmbchina.com/hrm/hrm2/xft-employeeprofile/employee/external/api/query/staffInfo",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {
+      "queryFilterList": {
+        "type": "array",
+        "required": true,
+        "description": "查询条件对象数组，最多支持 10 个条件的与查询；支持传空数组表示无条件查询",
+        "items": {
+          "type": "object",
+          "description": "单个查询条件对象"
+        }
+      },
+      "queryResultType": {
+        "type": "object",
+        "required": true,
+        "description": "查询结果类型；查询字段值传 FIELD，查询分组信息传 GROUP"
+      },
+      "currentPage": {
+        "type": "number",
+        "required": true,
+        "description": "分页页码，从 1 开始"
+      },
+      "pageSize": {
+        "type": "number",
+        "required": true,
+        "description": "每页查询数量，最大支持 1000"
+      }
+    }
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "body 为分页查询结果对象",
+    "queryFilterList 最多支持 10 个条件，pageSize 最大 1000"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}

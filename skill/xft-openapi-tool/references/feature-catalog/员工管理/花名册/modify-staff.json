@@ -1,0 +1,65 @@
+{
+  "id": "general-api-modify-staff",
+  "name": "编辑企业员工",
+  "module": "员工管理",
+  "submodule": "花名册",
+  "operation": "update",
+  "resource": "employee",
+  "aliases": [
+    "编辑员工",
+    "修改企业员工",
+    "修改员工",
+    "modify-staff"
+  ],
+  "keywords": [
+    "员工",
+    "花名册",
+    "编辑",
+    "修改",
+    "staffInfoList",
+    "multiGroupUpdateFlag"
+  ],
+  "businessScenarios": [
+    "编辑花名册员工",
+    "批量修改企业员工",
+    "同步员工花名册变更"
+  ],
+  "description": "花名册员工编辑接口，支持编辑薪福通员工管理花名册中的员工信息。最大支持一次传入 1000 笔员工信息数据。",
+  "method": "POST",
+  "url": "https://api.cmbchina.com/hrm/hrm2/xft-employeeprofile/employee/staff-general-api/modify-staff",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {
+      "staffInfoList": {
+        "type": "array",
+        "required": true,
+        "description": "员工信息数组，最大支持一次传入 1000 笔员工信息数据",
+        "items": {
+          "type": "object",
+          "description": "单个员工更新对象"
+        }
+      },
+      "multiGroupUpdateFlag": {
+        "type": "string",
+        "required": false,
+        "description": "多记录分组更新方式标志，具体用法需参考员工管理接口字段说明"
+      }
+    }
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "body 为编辑结果数组",
+    "单次最多支持编辑 1000 条员工数据"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}

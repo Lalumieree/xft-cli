@@ -1,0 +1,54 @@
+{
+  "id": "bills-apply-expense-detail",
+  "name": "费用申请单详情查询",
+  "module": "智能费控",
+  "submodule": "申请单业务",
+  "operation": "query",
+  "resource": "expenseApplication",
+  "aliases": [
+    "费用申请详情",
+    "查询费用申请单详情",
+    "expense apply detail"
+  ],
+  "keywords": [
+    "费用申请单",
+    "详情",
+    "查询",
+    "billId",
+    "customFields"
+  ],
+  "businessScenarios": [
+    "按单号查询费用申请单详情",
+    "获取费用申请单自定义字段",
+    "获取费用申请单费用明细"
+  ],
+  "description": "查询单个费用申请单的完整详情，返回基础单据、自定义字段和费用明细信息。",
+  "method": "GET",
+  "url": "https://api.cmbchina.com/itrip/xft-api/v1/bills/apply/expense/detail",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {
+      "billId": {
+        "type": "number",
+        "required": true,
+        "description": "费用申请单编号"
+      }
+    }
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "body 为单据详情对象，包含基础信息、自定义字段和费用明细",
+    "错误码：E0001 表示具体业务异常提示"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}

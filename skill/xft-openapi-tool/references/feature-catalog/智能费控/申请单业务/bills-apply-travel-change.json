@@ -1,0 +1,79 @@
+{
+  "id": "bills-apply-travel-change",
+  "name": "变更差旅申请单(免审批)",
+  "module": "智能费控",
+  "submodule": "申请单业务",
+  "operation": "update",
+  "resource": "travelApplication",
+  "aliases": [
+    "变更差旅申请单",
+    "差旅申请单变更",
+    "travel change"
+  ],
+  "keywords": [
+    "差旅申请单",
+    "变更",
+    "免审批",
+    "billId",
+    "changerNumber",
+    "changeReason",
+    "changeInfo"
+  ],
+  "businessScenarios": [
+    "变更审批通过的差旅申请单",
+    "免审批修改差旅申请单",
+    "更新差旅申请行程和自定义字段"
+  ],
+  "description": "变更审批通过的差旅申请单，不受表单配置中允许变更申请单和不可变更字段配置管控。",
+  "method": "POST",
+  "url": "https://api.cmbchina.com/itrip/xft-api/v1/bills/apply/travel/change",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {
+      "billId": {
+        "type": "number",
+        "required": true,
+        "description": "单据编号"
+      },
+      "changerNumber": {
+        "type": "string",
+        "required": true,
+        "description": "变更人人员编号"
+      },
+      "peerEmpNumbers": {
+        "type": "array",
+        "required": false,
+        "description": "同行人员工编号信息，不可超过 50 个",
+        "items": {
+          "type": "string"
+        }
+      },
+      "changeReason": {
+        "type": "string",
+        "required": true,
+        "description": "变更原因"
+      },
+      "changeInfo": {
+        "type": "object",
+        "required": true,
+        "description": "申请单变更信息对象"
+      }
+    }
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "success 为 true 时表示变更成功",
+    "错误码：EROOR2 表示单据申请费用金额合计存在异常"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}
