@@ -1,3 +1,6 @@
 .DS_Store
 cli/node_modules/
 cli/local-config.json
+
+config.json
+dist/
