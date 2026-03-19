@@ -5,7 +5,7 @@ description: Use this skill when you need to call CMB XFT open-api endpoints thr
 
 # XFT OpenAPI Tool
 
-Use this skill to select the right interface JSON from the modular feature catalog and call the existing `xft-openapi-cli feature-call` command.
+Use this skill to select the right interface JSON from the modular feature catalog and call `xft-openapi-cli feature-call` with credentials already stored through `xft-openapi-cli auth`.
 
 ## Interface Lookup
 
@@ -45,20 +45,42 @@ xft-openapi-cli --help
 
 Assume `xft-openapi-cli` is already installed and available on `PATH`.
 
-The public CLI command is:
+The public CLI commands are:
 
+- `auth`
 - `feature-call`
 
 ## Required inputs
 
+Before the first API call on a machine, make sure credentials have been configured:
+
+```bash
+xft-openapi-cli auth
+```
+
 For API calls, always provide:
 
 - `--feature <path-or-json>`
-- `--app-id`
-- `--authority-secret`
 
-Configuration is provided by the caller. This Skill does not create, store, or maintain config files.
-If the caller already has config JSON, pass it through `--config <path-or-json>`.
+`feature-call` now loads `app-id` and `authority-secret` from the secure credential store created by `auth`.
+Do not pass `--config`, `--app-id`, or `--authority-secret` to `feature-call`.
+If credentials are missing, tell the user to run `xft-openapi-cli auth` first.
+
+Example for Windows PowerShell 5.1:
+
+```bash
+xft-openapi-cli feature-call --feature 'C:\Users\shenxia\.agents\skills\xft-openapi-tool\references\feature-catalog\智能费控\申请单业务\bills-apply-travel-detail.json' --query-json '{\"billId\":2026031934380843}'
+```
+
+Pay special attention to quote escaping. In Windows PowerShell 5.1, passing inline JSON to a native command without escaping inner double quotes will often strip them before the CLI receives the argument.
+
+For example, this form is likely to fail in Windows PowerShell 5.1 because the CLI may receive `{billId:2026031934380843}` instead of valid JSON:
+
+```bash
+xft-openapi-cli feature-call --feature 'C:\Users\shenxia\.agents\skills\xft-openapi-tool\references\feature-catalog\智能费控\申请单业务\bills-apply-travel-detail.json' --query-json '{"billId":2026031934380843}'
+```
+
+When generating commands for this environment, prefer escaped inner quotes such as `'{\"billId\":2026031934380843}'`, or use `--body-file` / temp files for more complex JSON payloads.
 
 Provide these only when the target interface needs them:
 
@@ -71,6 +93,8 @@ Provide these only when the target interface needs them:
 
 ## Operating rules
 
+- Never ask the caller to create or pass a plaintext config file for credentials.
+- Treat `app-id` and `authority-secret` as sensitive values; for manual setup, prefer interactive `xft-openapi-cli auth` over passing `--secret` on the command line.
 - Prefer `--body-file` for large JSON payloads.
 - Prefer `--query-json` as a single JSON object string.
 - Prefer locating the target interface through `references/feature-catalog/index.json` before opening interface JSON files.

@@ -6,3 +6,5 @@ config.json
 dist/
 .roo/
 .npm-cache/
+.agents/
+.tmp/
