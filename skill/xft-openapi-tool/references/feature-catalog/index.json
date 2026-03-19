@@ -78,6 +78,150 @@
         "更新组织扩展属性"
       ],
       "description": "修改组织机构信息，支持修改名称、编码、上级组织、负责人、审批主管和扩展属性。"
+    },
+    {
+      "id": "bills-apply-travel-detail",
+      "name": "差旅申请单详情查询",
+      "module": "智能费控",
+      "submodule": "申请单业务",
+      "path": "智能费控/申请单业务/bills-apply-travel-detail.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "travelApplication",
+      "aliases": [
+        "差旅申请单详情",
+        "查询差旅申请单详情",
+        "差旅申请详情查询",
+        "travel detail"
+      ],
+      "keywords": [
+        "差旅",
+        "申请单",
+        "详情",
+        "查询",
+        "billId",
+        "travel",
+        "apply",
+        "detail"
+      ],
+      "businessScenarios": [
+        "按单号查询单个差旅申请单详情",
+        "获取差旅申请单的行程明细",
+        "获取差旅申请单的预估费用和分摊信息"
+      ],
+      "description": "查询单个差旅申请单的完整详情，返回基础单据信息、自定义字段、关联单据、出差行程、预估费用以及费用分摊明细。"
+    },
+    {
+      "id": "v1-common-city-getallcity",
+      "name": "查询所有城市信息",
+      "module": "智能费控",
+      "submodule": "基础资料",
+      "path": "智能费控/基础资料/get-all-city.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "city",
+      "aliases": [
+        "查询城市信息",
+        "获取所有城市",
+        "城市列表查询",
+        "getAllCity"
+      ],
+      "keywords": [
+        "城市",
+        "城市信息",
+        "城市列表",
+        "差旅",
+        "OPAUID",
+        "cityCode",
+        "cityName",
+        "getAllCity"
+      ],
+      "businessScenarios": [
+        "查询智能费控差旅的全部城市信息",
+        "获取差旅城市基础档案",
+        "按企业标识拉取城市主数据"
+      ],
+      "description": "查询智能费控差旅的所有城市信息，返回城市中英文名称、国家中英文名称和城市编号，适合在线定点查码。"
+    },
+    {
+      "id": "v1-common-city-download",
+      "name": "下载城市信息",
+      "module": "智能费控",
+      "submodule": "基础资料",
+      "path": "智能费控/基础资料/download-city.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "binary",
+      "operation": "download",
+      "resource": "city",
+      "aliases": [
+        "下载城市列表",
+        "下载城市树",
+        "城市信息下载",
+        "city download"
+      ],
+      "keywords": [
+        "城市",
+        "下载",
+        "城市列表",
+        "城市树",
+        "type",
+        "CITY_LIST_DOMESTIC",
+        "CITY_LIST_INTERNATIONAL",
+        "CITY_TREE_DOMESTIC",
+        "CITY_TREE_INTERNATIONAL"
+      ],
+      "businessScenarios": [
+        "下载国内城市列表文件",
+        "下载国际城市列表文件",
+        "下载国内城市树文件",
+        "下载国际城市树文件"
+      ],
+      "description": "根据城市信息类型下载对应的城市信息文件，返回字节流 JSON 文件，适合全量拉取和本地保存。"
+    },
+    {
+      "id": "bills-apply-travel-create",
+      "name": "新建差旅申请单（草稿、审批通过、审批中）",
+      "module": "智能费控",
+      "submodule": "申请单业务",
+      "path": "智能费控/申请单业务/bills-apply-travel-create.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "create",
+      "resource": "travelApplication",
+      "aliases": [
+        "新建差旅申请单",
+        "创建差旅申请单",
+        "新增差旅申请单",
+        "差旅申请单创建",
+        "travel create"
+      ],
+      "keywords": [
+        "差旅",
+        "申请单",
+        "新建",
+        "创建",
+        "草稿",
+        "审批通过",
+        "审批中",
+        "eventNumber",
+        "empNumber",
+        "billStatus",
+        "businessTrip",
+        "spreadInfo"
+      ],
+      "businessScenarios": [
+        "新建草稿状态的差旅申请单",
+        "新建审批通过状态的差旅申请单",
+        "新建审批中状态的差旅申请单",
+        "创建带行程和自定义字段的差旅申请单"
+      ],
+      "description": "新增差旅申请单，支持创建草稿、审批通过和审批中三种状态的单据，可携带自定义字段、行程信息、同行人、关联单据和分摊信息。"
     }
   ]
 }
