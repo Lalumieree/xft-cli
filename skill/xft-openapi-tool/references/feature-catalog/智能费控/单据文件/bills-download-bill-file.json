@@ -1,0 +1,61 @@
+{
+  "id": "bills-download-bill-file",
+  "name": "单据指定附件下载",
+  "module": "智能费控",
+  "submodule": "单据文件",
+  "operation": "download",
+  "resource": "billAttachment",
+  "aliases": [
+    "下载单据附件",
+    "按文件 id 下载附件",
+    "bill file download"
+  ],
+  "keywords": [
+    "单据附件",
+    "下载",
+    "billFileSeqId",
+    "OPAUID"
+  ],
+  "businessScenarios": [
+    "按文件唯一 id 下载单据附件",
+    "补拉单据上的指定附件",
+    "根据详情返回的文件 id 获取原始文件"
+  ],
+  "description": "根据单据文件唯一 id 下载单据上的指定附件。",
+  "method": "GET",
+  "url": "https://api.cmbchina.com/itrip/xft-api/v1/bills/downloadBillFile",
+  "requestMode": "json",
+  "responseMode": "binary",
+  "encryptBody": true,
+  "decryptResponse": false,
+  "querySchema": {
+    "type": "object",
+    "properties": {
+      "OPAUID": {
+        "type": "string",
+        "required": false,
+        "description": "薪福通企业号"
+      },
+      "billFileSeqId": {
+        "type": "string",
+        "required": true,
+        "description": "文件唯一 id"
+      }
+    }
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseNotes": [
+    "成功时返回附件二进制文件流",
+    "调用时需要提供 outputPath 才能保存下载文件"
+  ],
+  "usageNotes": [
+    "通常先从单据详情或附件列表接口拿到 billFileSeqId，再调用本接口下载原文件",
+    "如果下载目标是 PDF 或图片，建议按原始文件后缀保存，便于后续直接预览"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}

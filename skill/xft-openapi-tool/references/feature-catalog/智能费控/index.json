@@ -455,6 +455,350 @@
         "创建带行程和自定义字段的差旅申请单"
       ],
       "description": "新增差旅申请单，支持创建草稿、审批通过和审批中三种状态的单据，可携带自定义字段、行程信息、同行人、关联单据和分摊信息。"
+    },
+    {
+      "id": "reimburse-bill-travel-create",
+      "name": "新建差旅报销单（草稿、审批通过、审批中）",
+      "module": "智能费控",
+      "submodule": "报销单业务",
+      "path": "智能费控/报销单业务/reimburse-bill-travel-create.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "create",
+      "resource": "travelReimbursement",
+      "aliases": [
+        "新建差旅报销单",
+        "创建差旅报销单",
+        "差旅报销单创建",
+        "travel reimburse create"
+      ],
+      "keywords": [
+        "差旅报销单",
+        "创建",
+        "eventNumber",
+        "empNumber",
+        "billStatus",
+        "reimAmount",
+        "expenseList",
+        "businessTrip"
+      ],
+      "businessScenarios": [
+        "新建草稿差旅报销单",
+        "新建审批通过差旅报销单",
+        "新建审批中差旅报销单",
+        "创建带费用明细和行程信息的差旅报销单"
+      ],
+      "description": "新增差旅报销单，支持创建草稿、审批通过和审批中三种状态，可携带自定义字段、费用明细、收款信息、同行人和行程信息。"
+    },
+    {
+      "id": "reimburse-bill-common-detail",
+      "name": "单笔查询日常报销单详情",
+      "module": "智能费控",
+      "submodule": "报销单业务",
+      "path": "智能费控/报销单业务/reimburse-bill-common-detail.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "commonReimbursement",
+      "aliases": [
+        "日常报销单详情",
+        "查询日常报销单详情",
+        "common reimburse detail"
+      ],
+      "keywords": [
+        "日常报销单",
+        "报销单",
+        "详情",
+        "查询",
+        "billId",
+        "customFields",
+        "expenseList"
+      ],
+      "businessScenarios": [
+        "按单号查询单笔日常报销单详情",
+        "获取日常报销单自定义字段和费用明细",
+        "获取日常报销单收款信息和关联单据"
+      ],
+      "description": "查询单笔日常报销单的完整详情，返回基础单据、自定义字段、费用明细、关联单据和收款信息等内容。"
+    },
+    {
+      "id": "reimburse-bill-travel-detail",
+      "name": "单笔查询差旅报销单详情",
+      "module": "智能费控",
+      "submodule": "报销单业务",
+      "path": "智能费控/报销单业务/reimburse-bill-travel-detail.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "travelReimbursement",
+      "aliases": [
+        "差旅报销单详情",
+        "查询差旅报销单详情",
+        "travel reimburse detail"
+      ],
+      "keywords": [
+        "差旅报销单",
+        "报销单",
+        "详情",
+        "查询",
+        "billId",
+        "businessTrip",
+        "expenseList"
+      ],
+      "businessScenarios": [
+        "按单号查询单笔差旅报销单详情",
+        "获取差旅报销单行程和费用明细",
+        "获取差旅报销单自定义字段和收款信息"
+      ],
+      "description": "查询单笔差旅报销单的完整详情，返回基础单据、自定义字段、费用明细、行程信息、关联单据和收款信息。"
+    },
+    {
+      "id": "reimburse-bill-common-create",
+      "name": "新建日常报销单（草稿、审批通过、审批中）",
+      "module": "智能费控",
+      "submodule": "报销单业务",
+      "path": "智能费控/报销单业务/reimburse-bill-common-create.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "create",
+      "resource": "commonReimbursement",
+      "aliases": [
+        "新建日常报销单",
+        "创建日常报销单",
+        "common reimburse create"
+      ],
+      "keywords": [
+        "日常报销单",
+        "创建",
+        "eventNumber",
+        "empNumber",
+        "billStatus",
+        "reimAmount",
+        "expenseList"
+      ],
+      "businessScenarios": [
+        "新建草稿日常报销单",
+        "新建审批通过日常报销单",
+        "新建审批中日常报销单"
+      ],
+      "description": "新增日常报销单，支持创建草稿、审批通过和审批中三种状态，可携带单据与费用自定义字段、费用信息和收款信息。"
+    },
+    {
+      "id": "bills-export-pdf",
+      "name": "单据打印PDF",
+      "module": "智能费控",
+      "submodule": "单据文件",
+      "path": "智能费控/单据文件/bills-export-pdf.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "binary",
+      "operation": "download",
+      "resource": "billDocument",
+      "aliases": [
+        "打印单据 PDF",
+        "导出单据 PDF",
+        "bill export pdf"
+      ],
+      "keywords": [
+        "单据",
+        "PDF",
+        "打印",
+        "导出",
+        "billIds",
+        "templateCode",
+        "printPattern",
+        "invoiceScope"
+      ],
+      "businessScenarios": [
+        "按打印模板导出单据 PDF",
+        "打印单据并附带发票或图片附件",
+        "导出支付回单和审批附件"
+      ],
+      "description": "根据打印模板把单据信息导出为 PDF 流，可选附带发票、图片附件、审批附件、支付回单等内容。"
+    },
+    {
+      "id": "bills-download-bill-file",
+      "name": "单据指定附件下载",
+      "module": "智能费控",
+      "submodule": "单据文件",
+      "path": "智能费控/单据文件/bills-download-bill-file.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "binary",
+      "operation": "download",
+      "resource": "billAttachment",
+      "aliases": [
+        "下载单据附件",
+        "按文件 id 下载附件",
+        "bill file download"
+      ],
+      "keywords": [
+        "单据附件",
+        "下载",
+        "billFileSeqId",
+        "OPAUID"
+      ],
+      "businessScenarios": [
+        "按文件唯一 id 下载单据附件",
+        "补拉单据上的指定附件",
+        "根据详情返回的文件 id 获取原始文件"
+      ],
+      "description": "根据单据文件唯一 id 下载单据上的指定附件。"
+    },
+    {
+      "id": "bills-task-history",
+      "name": "查单据审批历史",
+      "module": "智能费控",
+      "submodule": "单据查询",
+      "path": "智能费控/单据查询/bills-task-history.json",
+      "method": "GET",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "billWorkflow",
+      "aliases": [
+        "查询审批历史",
+        "查单据流转记录",
+        "task history"
+      ],
+      "keywords": [
+        "审批历史",
+        "流程历史",
+        "billId",
+        "OPAUID",
+        "taskHistory"
+      ],
+      "businessScenarios": [
+        "查询单据审批流转历史",
+        "排查单据经过哪些审批节点",
+        "获取单据审批记录列表"
+      ],
+      "description": "根据单据 id 查询审批历史记录，返回流程节点和处理结果等历史信息。"
+    },
+    {
+      "id": "bills-query-by-condition",
+      "name": "根据用户信息查询单据详情",
+      "module": "智能费控",
+      "submodule": "单据查询",
+      "path": "智能费控/单据查询/bills-query-by-condition.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "bill",
+      "aliases": [
+        "按用户信息查单据",
+        "根据手机号查询单据详情",
+        "query bill by condition"
+      ],
+      "keywords": [
+        "单据详情",
+        "用户信息",
+        "手机号",
+        "单据状态",
+        "queryBillByCondition"
+      ],
+      "businessScenarios": [
+        "按用户手机号和单据状态查单据",
+        "从用户维度反查相关单据",
+        "按条件获取用户关联单据详情"
+      ],
+      "description": "根据用户手机号和单据状态查询单据详情。"
+    },
+    {
+      "id": "accessory-custom-field-bind",
+      "name": "单据自定义附件字段附件绑定",
+      "module": "智能费控",
+      "submodule": "单据文件",
+      "path": "智能费控/单据文件/accessory-custom-field-bind.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "update",
+      "resource": "billAttachment",
+      "aliases": [
+        "附件字段绑定",
+        "绑定单据附件字段",
+        "custom field bind"
+      ],
+      "keywords": [
+        "附件绑定",
+        "自定义附件字段",
+        "billId",
+        "fileInfos"
+      ],
+      "businessScenarios": [
+        "把已上传附件绑定到单据自定义附件字段",
+        "向附件字段追加多个文件",
+        "完成上传后的附件字段落单"
+      ],
+      "description": "将附件绑定到单据自定义附件字段，只支持追加，不支持更新或删除已有附件。"
+    },
+    {
+      "id": "accessory-custom-field-upload",
+      "name": "单据自定义附件字段附件上传",
+      "module": "智能费控",
+      "submodule": "单据文件",
+      "path": "智能费控/单据文件/accessory-custom-field-upload.json",
+      "method": "POST",
+      "requestMode": "upload",
+      "responseMode": "json",
+      "operation": "upload",
+      "resource": "billAttachment",
+      "aliases": [
+        "附件字段上传",
+        "上传单据自定义附件",
+        "custom field upload"
+      ],
+      "keywords": [
+        "附件上传",
+        "自定义附件字段",
+        "file",
+        "uploaderNumber",
+        "fileId"
+      ],
+      "businessScenarios": [
+        "上传用于单据附件字段的文件",
+        "先上传附件再绑定到单据字段",
+        "获取附件 fileId 用于后续绑定"
+      ],
+      "description": "上传单据自定义附件字段所需的文件，返回 fileId，可结合附件绑定接口使用。"
+    },
+    {
+      "id": "bills-bill-list",
+      "name": "批量查询单据列表",
+      "module": "智能费控",
+      "submodule": "单据查询",
+      "path": "智能费控/单据查询/bills-bill-list.json",
+      "method": "POST",
+      "requestMode": "json",
+      "responseMode": "json",
+      "operation": "query",
+      "resource": "bill",
+      "aliases": [
+        "查询单据列表",
+        "批量查单",
+        "bill list"
+      ],
+      "keywords": [
+        "单据列表",
+        "批量查询",
+        "eventTypes",
+        "billStatusList",
+        "billIds",
+        "eventNumbers",
+        "submitEmpNumbers"
+      ],
+      "businessScenarios": [
+        "按业务类型和状态分页查询单据列表",
+        "按申请人或提单人筛选单据",
+        "按时间范围批量拉取单据基础信息"
+      ],
+      "description": "根据查询条件分页查询单据基本信息列表，支持申请单、报销单、借还款单、对公单据、财务处理和档案管理等多类业务单据。"
     }
   ]
 }
