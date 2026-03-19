@@ -22,10 +22,13 @@
     {
       "module": "智能费控",
       "path": "智能费控/index.json",
-      "featureCount": 14,
+      "featureCount": 25,
       "submodules": [
         "基础资料",
-        "申请单业务"
+        "申请单业务",
+        "报销单业务",
+        "单据查询",
+        "单据文件"
       ]
     }
   ]

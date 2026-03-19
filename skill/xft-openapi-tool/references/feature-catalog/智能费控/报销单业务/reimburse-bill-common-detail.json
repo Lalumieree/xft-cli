@@ -1,0 +1,60 @@
+{
+  "id": "reimburse-bill-common-detail",
+  "name": "单笔查询日常报销单详情",
+  "module": "智能费控",
+  "submodule": "报销单业务",
+  "operation": "query",
+  "resource": "commonReimbursement",
+  "aliases": [
+    "日常报销单详情",
+    "查询日常报销单详情",
+    "common reimburse detail"
+  ],
+  "keywords": [
+    "日常报销单",
+    "报销单",
+    "详情",
+    "查询",
+    "billId",
+    "customFields",
+    "expenseList"
+  ],
+  "businessScenarios": [
+    "按单号查询单笔日常报销单详情",
+    "获取日常报销单自定义字段和费用明细",
+    "获取日常报销单收款信息和关联单据"
+  ],
+  "description": "查询单笔日常报销单的完整详情，返回基础单据、自定义字段、费用明细、关联单据和收款信息等内容。",
+  "method": "GET",
+  "url": "https://api.cmbchina.com/itrip/xft-api/v1/reimburse/bill/common/detail",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {
+      "billId": {
+        "type": "number",
+        "required": true,
+        "description": "需要查询详情的日常报销单编号"
+      }
+    }
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "body 为日常报销单详情对象",
+    "详情中会返回单据和费用自定义字段的 showValue/sourceValue"
+  ],
+  "usageNotes": [
+    "适合复制报销单、核对费用明细或排查模板自定义字段实际返回值",
+    "返回体中的自定义字段值通常同时包含展示值和原始值，做二次调用时应优先使用原始值字段"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}

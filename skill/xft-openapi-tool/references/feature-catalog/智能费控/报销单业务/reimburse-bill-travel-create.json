@@ -1,0 +1,151 @@
+{
+  "id": "reimburse-bill-travel-create",
+  "name": "新建差旅报销单（草稿、审批通过、审批中）",
+  "module": "智能费控",
+  "submodule": "报销单业务",
+  "operation": "create",
+  "resource": "travelReimbursement",
+  "aliases": [
+    "新建差旅报销单",
+    "创建差旅报销单",
+    "差旅报销单创建",
+    "travel reimburse create"
+  ],
+  "keywords": [
+    "差旅报销单",
+    "创建",
+    "eventNumber",
+    "empNumber",
+    "billStatus",
+    "reimAmount",
+    "expenseList",
+    "businessTrip"
+  ],
+  "businessScenarios": [
+    "新建草稿差旅报销单",
+    "新建审批通过差旅报销单",
+    "新建审批中差旅报销单",
+    "创建带费用明细和行程信息的差旅报销单"
+  ],
+  "description": "新增差旅报销单，支持创建草稿、审批通过和审批中三种状态，可携带自定义字段、费用明细、收款信息、同行人和行程信息。",
+  "method": "POST",
+  "url": "https://api.cmbchina.com/itrip/xft-api/v1/reimburse/bill/travel/create",
+  "requestMode": "json",
+  "responseMode": "json",
+  "encryptBody": true,
+  "decryptResponse": true,
+  "querySchema": {
+    "type": "object",
+    "properties": {}
+  },
+  "bodySchema": {
+    "type": "object",
+    "properties": {
+      "eventNumber": {
+        "type": "string",
+        "required": true,
+        "description": "表单编码"
+      },
+      "outRelId": {
+        "type": "string",
+        "required": false,
+        "description": "外部关联 id"
+      },
+      "empNumber": {
+        "type": "string",
+        "required": true,
+        "description": "申请人的花名册员工号"
+      },
+      "billDepartmentCode": {
+        "type": "string",
+        "required": false,
+        "description": "单据部门编号"
+      },
+      "billCompanyCode": {
+        "type": "string",
+        "required": false,
+        "description": "单据公司编号"
+      },
+      "billStatus": {
+        "type": "string",
+        "required": true,
+        "description": "单据状态：DRAFT 草稿；APPRV_PEND 审批中；APPRV 审批通过",
+        "enum": [
+          "DRAFT",
+          "APPRV_PEND",
+          "APPRV"
+        ]
+      },
+      "reimAmount": {
+        "type": "string",
+        "required": true,
+        "description": "单据报销总金额"
+      },
+      "reimAmountCurrencyCode": {
+        "type": "string",
+        "required": true,
+        "description": "单据报销总金额币种，目前只支持 CNY",
+        "enum": [
+          "CNY"
+        ]
+      },
+      "customFieldValues": {
+        "type": "array",
+        "required": false,
+        "description": "单据自定义字段值列表",
+        "items": {
+          "type": "object",
+          "properties": {
+            "fieldNumber": {
+              "type": "string",
+              "description": "自定义字段编号"
+            },
+            "fieldValue": {
+              "type": "string",
+              "description": "自定义字段值"
+            }
+          }
+        }
+      },
+      "expenseList": {
+        "type": "array",
+        "required": true,
+        "description": "费用信息列表",
+        "items": {
+          "type": "object"
+        }
+      },
+      "billCollectionInfo": {
+        "type": "object",
+        "required": false,
+        "description": "收款信息"
+      },
+      "peerEmpNumbers": {
+        "type": "array",
+        "required": false,
+        "description": "同行人员工编号列表，最多 50 个",
+        "items": {
+          "type": "string"
+        }
+      },
+      "businessTrip": {
+        "type": "object",
+        "required": true,
+        "description": "行程信息"
+      }
+    }
+  },
+  "responseNotes": [
+    "成功时 returnCode 为 SUC0000",
+    "body 为新创建的差旅报销单编号",
+    "错误码：E0001 表示具体业务异常提示"
+  ],
+  "usageNotes": [
+    "eventNumber 是报销单表单模板的固定编号，创建前建议先从平台配置或既有单据反查确认",
+    "customFieldValues 为自定义字段值列表，不同字段类型的 fieldValue 格式需按文档约定传入",
+    "如果要携带收款信息，可结合 billCollectionInfo 传入个人或供应商收款账户"
+  ],
+  "catalogIndex": {
+    "path": "../../index.json"
+  }
+}
