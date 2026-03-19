@@ -1,8 +1,11 @@
 # xft-openapi-cli
 
-`xft-openapi-cli` is a TypeScript SDK and CLI focused on one public execution path: `feature-call`.
+`xft-openapi-cli` is a TypeScript SDK and CLI for executing XFT OpenAPI `feature-call` requests.
 
-Skills or local tooling provide a feature definition, and the CLI or SDK executes it using local credentials and request payloads.
+The CLI now exposes two public commands:
+
+- `auth`: securely store `app-id` and `authority-secret`
+- `feature-call`: execute a feature definition with the stored credentials
 
 Chinese documentation: [README.zh-CN.md](https://github.com/Lalumieree/xft-cli/blob/master/cli/README.zh-CN.md)
 
@@ -32,8 +35,6 @@ npm run build
 npm link
 ```
 
-That exposes the local build as the `xft-openapi-cli` command on your machine for debugging.
-
 After linking, test it with:
 
 ```bash
@@ -56,19 +57,33 @@ npm run build
 node dist/cli.js --help
 ```
 
-## Configuration
+## Credential Storage
 
-For CLI usage, you can pass credentials on the command line or place `local-config.json` in your current working directory.
+Use `auth` once before calling `feature-call`:
 
-Typical fields:
+```bash
+xft-openapi-cli auth
+```
+
+`auth` prompts for:
 
 - `app-id`
-- `authority-secret`
-- `company-id`
+- `secret`
 
-Keep `company-id` in `local-config.json` when it is a stable default for your environment. Transient identity fields such as `usr-uid`, `usr-nbr`, and `eds-company-id` should be passed only when a specific call needs them.
+You can also pass them directly:
 
-For local middleware, prefer `--config /path/to/temp.json` if configuration must be prepared dynamically. `--config-json` is intentionally not supported, so sensitive values do not travel in command-line JSON payloads.
+```bash
+xft-openapi-cli auth --app-id "<app-id>" --secret "<secret>"
+```
+
+Passing `--secret` is supported for automation, but it may expose the value through shell history or process inspection. Interactive input is recommended for manual use.
+
+Stored credentials are written to:
+
+- credential file: `<user-home>/.xft-openai-cli/credentials.enc.json`
+- encryption key: your OS credential store via `keytar`
+
+Running `auth` again overwrites the previous credential file and rotates the stored encryption key.
 
 ## CLI
 
@@ -76,29 +91,39 @@ Call a feature provided by skill or local tooling:
 
 ```bash
 xft-openapi-cli feature-call \
-  --config /tmp/xft-runtime-config.json \
   --feature ./org-list.feature.json \
   --body-json '{"currentPage":1,"pageSize":20}'
 ```
 
-Both `--config` and `--feature` accept either:
+If credentials have not been configured yet, `feature-call` will stop and ask you to run:
+
+```bash
+xft-openapi-cli auth
+```
+
+`feature-call` no longer accepts `--config`, `--app-id`, or `--authority-secret`. Sensitive credentials are always loaded from the secure store.
+
+`--feature` accepts either:
+
 - a path to a JSON file
 - an inline JSON object string
 
 `feature-call` accepts:
+
 - `--query-json` for query parameters
 - `--body-json` or `--body-file` for request body payloads
 - `--file` for upload features
 - `--output` for binary download features
+- `--company-id`, `--eds-company-id`, `--usr-uid`, `--usr-nbr`, `--whr-service` for non-sensitive request context
 
 For example, a POST feature can send both query and body at the same time:
 
 ```bash
 xft-openapi-cli feature-call \
-  --config /tmp/xft-runtime-config.json \
   --feature '{"method":"POST","url":"https://api.cmbchina.com/example","requestMode":"json","responseMode":"json","encryptBody":true,"decryptResponse":true}' \
   --query-json '{"tenant":"t1","includeDeleted":false}' \
-  --body-json '{"currentPage":1,"pageSize":20}'
+  --body-json '{"currentPage":1,"pageSize":20}' \
+  --company-id "COMPANY001"
 ```
 
 The minimal execution feature schema is:
@@ -115,8 +140,6 @@ The minimal execution feature schema is:
 ```
 
 Fields such as `id`, `name`, and `description` are optional metadata only.
-
-`xft-openapi-cli` only exposes `feature-call` as a public CLI command. Other historical commands are no longer part of the public contract.
 
 ## SDK
 

@@ -4,3 +4,5 @@ cli/local-config.json
 
 config.json
 dist/
+.roo/
+.npm-cache/

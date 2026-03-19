@@ -1,14 +1,32 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { createInterface } from "node:readline/promises";
+import { Writable } from "node:stream";
+import { pathToFileURL } from "node:url";
 import { executeFeatureCall, validateFeatureDefinition } from "./index.js";
+import { loadStoredCredentials, saveStoredCredentials, type StoredCredentials } from "./credential-store.js";
 import type { BaseReqInf, FeatureDefinition, QueryParams } from "./types.js";
 
 type CliOptions = Record<string, string | boolean>;
 
-const DEFAULT_CONFIG_PATH = resolve(process.cwd(), "local-config.json");
+interface PromptProvider {
+  close?(): void | Promise<void>;
+  promptSecret(message: string): Promise<string>;
+  promptText(message: string): Promise<string>;
+}
 
-function parseArgs(argv: string[]): { command: string; options: CliOptions } {
+class MutableOutput extends Writable {
+  muted = false;
+
+  _write(chunk: Buffer | string, encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
+    if (!this.muted) {
+      process.stdout.write(chunk, encoding);
+    }
+    callback();
+  }
+}
+
+export function parseArgs(argv: string[]): { command: string; options: CliOptions } {
   const [command, ...rest] = argv;
   if (!command || command === "--help" || command === "-h") {
     return { command: "help", options: {} };
@@ -34,28 +52,26 @@ function parseArgs(argv: string[]): { command: string; options: CliOptions } {
   return { command, options };
 }
 
-function helpText(): string {
+export function helpText(): string {
   return `Usage: xft-openapi-cli <command> [options]
 
 Primary commands:
+  auth
   feature-call
 
-Common feature-call options:
-  --config <path-or-json>
+auth options:
+  --app-id <value>
+  --secret <value>
+
+feature-call options:
   --feature <path-or-json>
   --query-json <json>
   --body-json <json>
   --body-file <path>
   --file <path>
-  --output <path>`;
-}
+  --output <path>
 
-function requireOption(options: CliOptions, key: string): string {
-  const value = options[key];
-  if (value === undefined || value === true || value === "") {
-    throw new Error(`missing required option --${key}`);
-  }
-  return String(value);
+Run "xft-openapi-cli auth" first to store app credentials securely in your user home.`;
 }
 
 async function loadJsonFile(path: string): Promise<unknown> {
@@ -84,16 +100,6 @@ async function loadJsonValueOrFile(rawValue: string, optionName: string): Promis
   }
 }
 
-async function loadLocalConfig(options: CliOptions): Promise<CliOptions> {
-  const configValue = options.config ? String(options.config) : DEFAULT_CONFIG_PATH;
-  try {
-    const config = await loadJsonValueOrFile(configValue, "config");
-    return isRecord(config) ? toCliOptions(config) : {};
-  } catch {
-    return {};
-  }
-}
-
 async function loadFeatureDefinition(options: CliOptions): Promise<FeatureDefinition> {
   if (options.feature) {
     const parsed = await loadJsonValueOrFile(String(options.feature), "feature");
@@ -107,46 +113,66 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-function toCliOptions(value: Record<string, unknown>): CliOptions {
-  const result: CliOptions = {};
-  for (const [key, entry] of Object.entries(value)) {
-    if (typeof entry === "string" || typeof entry === "boolean") {
-      result[key] = entry;
-    } else if (entry !== null && entry !== undefined) {
-      result[key] = String(entry);
-    }
+function getStringOption(options: CliOptions, key: string): string | undefined {
+  const value = options[key];
+  if (value !== undefined && value !== true && value !== "") {
+    return String(value);
   }
-  return result;
-}
-
-function getOption(options: CliOptions, config: CliOptions, key: string): string | undefined {
-  const cliKey = options[key];
-  if (cliKey !== undefined && cliKey !== true && cliKey !== "") {
-    return String(cliKey);
-  }
-
-  const configKey = config[key];
-  if (configKey !== undefined && configKey !== true && configKey !== "") {
-    return String(configKey);
-  }
-
   return undefined;
 }
 
-function getReqInf(options: CliOptions, config: CliOptions): BaseReqInf {
-  const appId = getOption(options, config, "app-id");
-  const authoritySecret = getOption(options, config, "authority-secret");
-  if (!appId) {
-    throw new Error("missing required option --app-id and no local config value found");
-  }
-  if (!authoritySecret) {
-    throw new Error("missing required option --authority-secret and no local config value found");
+function createPromptProvider(): PromptProvider {
+  if (!process.stdin.isTTY || !process.stdout.isTTY) {
+    throw new Error('Interactive auth requires a TTY. Provide both "--app-id" and "--secret" explicitly.');
   }
 
+  const output = new MutableOutput();
+  const rl = createInterface({
+    input: process.stdin,
+    output,
+    terminal: true,
+  });
+
   return {
-    appId,
-    authoritySecret,
-    companyId: getOption(options, config, "company-id"),
+    close(): void {
+      rl.close();
+    },
+    async promptSecret(message: string): Promise<string> {
+      process.stdout.write(message);
+      output.muted = true;
+      try {
+        const answer = await rl.question("");
+        process.stdout.write("\n");
+        return answer.trim();
+      } finally {
+        output.muted = false;
+      }
+    },
+    async promptText(message: string): Promise<string> {
+      const answer = await rl.question(message);
+      return answer.trim();
+    },
+  };
+}
+
+function assertNoLegacyCredentialOptions(options: CliOptions): void {
+  if (options.config) {
+    throw new Error('feature-call no longer supports "--config". Run "xft-openapi-cli auth" and pass non-sensitive options explicitly.');
+  }
+  if (options["app-id"] || options["authority-secret"] || options.secret) {
+    throw new Error(
+      'feature-call no longer accepts credential flags. Run "xft-openapi-cli auth" to store credentials, then retry without "--app-id", "--authority-secret", or "--secret".',
+    );
+  }
+}
+
+export async function buildFeatureCallReqInf(options: CliOptions): Promise<BaseReqInf> {
+  assertNoLegacyCredentialOptions(options);
+  const credentials = await loadStoredCredentials();
+  return {
+    appId: credentials.appId,
+    authoritySecret: credentials.authoritySecret,
+    companyId: getStringOption(options, "company-id"),
     edsCompanyId: getCliOnlyOption(options, "eds-company-id"),
     usrUid: getCliOnlyOption(options, "usr-uid"),
     usrNbr: getCliOnlyOption(options, "usr-nbr"),
@@ -202,17 +228,63 @@ function printJson(value: unknown): void {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
 }
 
-async function main(): Promise<void> {
-  const { command, options } = parseArgs(process.argv.slice(2));
+async function resolveAuthCredentials(options: CliOptions, promptProvider?: PromptProvider): Promise<StoredCredentials> {
+  let managedPromptProvider = promptProvider;
+  try {
+    let appId = getStringOption(options, "app-id");
+    let authoritySecret = getStringOption(options, "secret");
+
+    if (!appId) {
+      managedPromptProvider ??= createPromptProvider();
+      appId = await managedPromptProvider.promptText("App ID: ");
+    }
+    if (!authoritySecret) {
+      managedPromptProvider ??= createPromptProvider();
+      authoritySecret = await managedPromptProvider.promptSecret("Secret: ");
+    }
+
+    if (!appId) {
+      throw new Error('Auth requires a non-empty app id. Provide "--app-id" or enter it interactively.');
+    }
+    if (!authoritySecret) {
+      throw new Error('Auth requires a non-empty secret. Provide "--secret" or enter it interactively.');
+    }
+
+    return {
+      appId,
+      authoritySecret,
+    };
+  } finally {
+    await managedPromptProvider?.close?.();
+  }
+}
+
+export async function executeAuthCommand(options: CliOptions, promptProvider?: PromptProvider): Promise<void> {
+  if (getStringOption(options, "secret")) {
+    process.stderr.write(
+      'Warning: passing "--secret" on the command line can expose it via shell history or process inspection.\n',
+    );
+  }
+
+  const credentials = await resolveAuthCredentials(options, promptProvider);
+  const savedPath = await saveStoredCredentials(credentials);
+  process.stdout.write(`Credentials saved to ${savedPath}\n`);
+}
+
+export async function main(argv = process.argv.slice(2)): Promise<void> {
+  const { command, options } = parseArgs(argv);
   if (command === "help") {
     process.stdout.write(`${helpText()}\n`);
     return;
   }
 
-  const config = await loadLocalConfig(options);
+  if (command === "auth") {
+    await executeAuthCommand(options);
+    return;
+  }
 
   if (command === "feature-call") {
-    const reqInf = getReqInf(options, config);
+    const reqInf = await buildFeatureCallReqInf(options);
     const feature = await loadFeatureDefinition(options);
     const result = await executeFeatureCall(reqInf, {
       feature,
@@ -226,22 +298,28 @@ async function main(): Promise<void> {
     return;
   }
 
-  throw new Error(`unsupported command: ${command}. xft-openapi-cli only exposes "feature-call".`);
+  throw new Error(`unsupported command: ${command}. xft-openapi-cli only exposes "auth" and "feature-call".`);
 }
 
-main().catch((error: unknown) => {
-  const normalizedError = error instanceof Error ? error : new Error(String(error));
-  process.stderr.write(
-    `${JSON.stringify(
-      {
-        error: String(normalizedError),
-        message: normalizedError.message,
-        cause: normalizedError.cause ? String(normalizedError.cause) : undefined,
-        stack: normalizedError.stack,
-      },
-      null,
-      2,
-    )}\n`,
-  );
-  process.exit(1);
-});
+function isDirectExecution(): boolean {
+  return Boolean(process.argv[1]) && import.meta.url === pathToFileURL(process.argv[1]).href;
+}
+
+if (isDirectExecution()) {
+  main().catch((error: unknown) => {
+    const normalizedError = error instanceof Error ? error : new Error(String(error));
+    process.stderr.write(
+      `${JSON.stringify(
+        {
+          error: String(normalizedError),
+          message: normalizedError.message,
+          cause: normalizedError.cause ? String(normalizedError.cause) : undefined,
+          stack: normalizedError.stack,
+        },
+        null,
+        2,
+      )}\n`,
+    );
+    process.exit(1);
+  });
+}
