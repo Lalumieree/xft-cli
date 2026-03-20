@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>自定义字段说明和返回格式</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>自定义字段说明和返回格式</h1>
+
+<p>**单据和费用自定义字段说明和返回格式**</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>字段类型</th><th>说明</th><th>showValue示例</th><th>sourceValue示例</th></tr></thead>
+<tbody>
+<tr><td>单行文本</td><td>value以字符串格式返回</td><td>单行文本11</td><td></td></tr>
+<tr><td>多行文本</td><td>value以字符串格式返回</td><td>多行文本11</td><td></td></tr>
+<tr><td>数字</td><td>value以字符串格式返回</td><td>8.6</td><td></td></tr>
+<tr><td>金额</td><td>value以字符串格式返回</td><td>9.6</td><td></td></tr>
+<tr><td>单选</td><td>value以字符串格式返回</td><td>选项1</td><td></td></tr>
+<tr><td>多选</td><td>value以Json格式字符串返回</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td><td></td></tr>
+<tr><td>下拉选择</td><td>value以Json格式字符串返回</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td><td></td></tr>
+<tr><td>手机号码</td><td>value以字符串格式返回</td><td>18858885666</td><td></td></tr>
+<tr><td>日期选择</td><td>value以字符串格式返回</td><td>2023-08-01 12:30</td><td></td></tr>
+<tr><td>日期区间</td><td>value以yyyy-mm-dd hh:mm格式，用&quot;,&quot;拼接返回字符串</td><td>2023-08-01 12:30,2023-08-02 12:30,1</td><td></td></tr>
+<tr><td>银行卡号</td><td>value以字符串格式返回</td><td>6222252225436456</td><td></td></tr>
+<tr><td>邮箱</td><td>value以字符串格式返回</td><td>123456@163.com</td><td></td></tr>
+<tr><td>附件</td><td>附件编号，value以字符串格式传入</td><td>[{\&quot;fileId\&quot;:\&quot;7e31f235-15a3-4140-883a-25971df3d4b9\&quot;, \&quot;fileName\&quot;:\&quot;7E58ED9B.jpg\&quot;},{\&quot;fileId\&quot;:\&quot;6fb4e980-4fc4-420e-95ee-28914284b52c\&quot;,\&quot;fileName\&quot;:\&quot;8090DB49.jpg\&quot;}]</td><td></td></tr>
+<tr><td>层级选择</td><td>选项值，按照层级顺序的字符串List，以Json格式传入</td><td>[\&quot;选项1\&quot;, \&quot;选项1-1\&quot;]</td><td></td></tr>
+<tr><td>关联字段</td><td>value以字符串格式返回</td><td>关联字段值</td><td></td></tr>
+<tr><td>表格</td><td>value以Json格式字符串返回，每一行根据序号值区分，每一行中，每个表格值包含titleCode和value</td><td>[{\&quot;sequence\&quot;: 1, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;张三\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;26\&quot;}]}, {\&quot;sequence\&quot;: 2, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;李四\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;28\&quot;}]}]</td><td></td></tr>
+<tr><td>人员</td><td>value以Json格式字符串返回</td><td>[{\&quot;empNumber\&quot;:\&quot;88888888\&quot;,\&quot;empName\&quot;:\&quot;小招喵\&quot;},{\&quot;empNumber\&quot;:\&quot;17621112222\&quot;,\&quot;empName\&quot;:\&quot;小威威\&quot;}]</td><td>[\&quot;EMP_NUMBER_01\&quot;, \&quot;EMP_NUMBER_02\&quot;]</td></tr>
+<tr><td>单据部门</td><td>value以Json格式字符串返回</td><td>{\&quot;departmentCode\&quot;:\&quot;00000002\&quot;,\&quot;departmentName\&quot;:\&quot;憨人科技/豆浆油条\&quot;}</td><td>[\&quot;00000002\&quot;]</td></tr>
+<tr><td>单据项目</td><td>value以Json格式字符串返回</td><td>{\&quot;projectCode\&quot;:\&quot;PRJ20210820095218\&quot;,\&quot;projectName\&quot;:\&quot;2222\&quot;}</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>关联单据</td><td>value以Json格式字符串返回</td><td>[{\&quot;aplNam\&quot;:\&quot;张灯结彩\&quot;,\&quot;aplSeqId\&quot;:58702,\&quot;applyTim\&quot;:\&quot;2023-08-07 15:27:13\&quot;,\&quot;applyTotalAmount\&quot;:0.00,\&quot;billId\&quot;:2023080702298807, \&quot;billRemark\&quot;:\&quot;预置内容\&quot;,\&quot;displayAmount\&quot;:0,\&quot;eventNam\&quot;:\&quot;通用申请-jjw\&quot;,\&quot;eventSeqId\&quot;:13904,\&quot;expTotalCnt\&quot;:0.00,\&quot;useType\&quot;:\&quot;1\&quot;}]</td><td></td></tr>
+<tr><td>申请金额</td><td>value以字符串格式返回</td><td>66.6</td><td></td></tr>
+<tr><td>城市</td><td>value以Json格式字符串返回</td><td>[{\&quot;cityCode\&quot;:\&quot;2\&quot;,\&quot;cityName\&quot;:\&quot;天津\&quot;}]</td><td></td></tr>
+<tr><td>供应商</td><td>value以Json格式字符串返回</td><td>[{\&quot;supplierNo\&quot;:\&quot;233\&quot;,\&quot;supplierName\&quot;:\&quot;供应商1\&quot;}]</td><td></td></tr>
+<tr><td>客户</td><td>value以Json格式字符串返回</td><td>[{\&quot;customerNo\&quot;:\&quot;23\&quot;,\&quot;customerName\&quot;:\&quot;客户1\&quot;}]</td><td></td></tr>
+<tr><td>合同</td><td>value以Json格式字符串返回</td><td>[{\&quot;customerNo\&quot;:\&quot;21\&quot;,\&quot;customerName\&quot;:\&quot;合同1\&quot;}]</td><td></td></tr>
+<tr><td>成本中心</td><td>value以Json格式字符串返回</td><td>{\&quot;costCenterCode\&quot;:\&quot;00000211\&quot;,\&quot;costCenterCodeName\&quot;:\&quot;豆浆油条\&quot;}</td><td>center001</td></tr>
+<tr><td>档案选择</td><td>value以Json格式字符串返回</td><td>[{\&quot;optionCode\&quot;: \&quot;ID1\&quot;, &quot;\optionName\&quot;: \&quot;选项1\&quot;},{\&quot;optionCode\&quot;: \&quot;ID2\&quot;, &quot;\optionName\&quot;: \&quot;选项2\&quot;}]</td><td>[\&quot;option01\&quot;, \&quot;option02\&quot;]</td></tr>
+<tr><td>部门</td><td>value以Json格式字符串返回</td><td>[{\&quot;departmentCode\&quot;:\&quot;00000002\&quot;,\&quot;departmentName\&quot;:\&quot;豆浆油条\&quot;}, {\&quot;departmentCode\&quot;:\&quot;60542\&quot;,\&quot;departmentName\&quot;:\&quot;黑黑不黑\&quot;}]</td><td>[\&quot;ORG_01\&quot;, \&quot;ORG_02\&quot;]</td></tr>
+<tr><td>项目</td><td>value以Json格式字符串返回</td><td>[{\&quot;projectCode\&quot;:\&quot;PRJ20210820095218\&quot;,\&quot;projectName\&quot;:\&quot;2222\&quot;}, {\&quot;projectCode\&quot;:\&quot;5555\&quot;,\&quot;projectName\&quot;:\&quot;下一级\&quot;}]</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>事业部</td><td>value以Json格式字符串返回</td><td>{\&quot;departmentCode\&quot;:\&quot;00000211\&quot;,\&quot;departmentName\&quot;:\&quot;豆浆油条\&quot;}</td><td>[\&quot;00000211\&quot;]</td></tr>
+<tr><td>事项</td><td>value以Json格式字符串返回</td><td>{\&quot;matterTypeNumber\&quot;:\&quot;MATTER_TYPE_1\&quot;, \&quot;matterTypeName\&quot;:\&quot;一级业务类型\&quot;,\&quot;matterMissionNumber\&quot;:\&quot;MATTER_MISSION_1\&quot;, \&quot;matterMissionName\&quot;:\&quot;业务事项\&quot;,\&quot;matterDetailNumber\&quot;:\&quot;MATTER_DETAIL_1\&quot;,\&quot;matterDetailName\&quot;:\&quot;业务事由\&quot;}</td><td></td></tr>
+<tr><td>收款账户</td><td>value以Json格式字符串返回</td><td>[{\&quot;accountNumber\&quot;:\&quot;66666666666666666666\&quot;,\&quot;accountName\&quot;:58702,\&quot;depoBankName\&quot;:\&quot;中国银行\&quot;,\&quot;depoAddress\&quot;:\&quot;杭州市滨江区长河街道\&quot;,\&quot;depoBranchBankName\&quot;:\&quot;杭州市滨江区中国银行支行\&quot;}]</td><td></td><td>poBranchBankName&quot;:&quot;杭州市滨江区中国银行支行&quot;}]</td></tr>
+</tbody></table>
+</body>
+</html>

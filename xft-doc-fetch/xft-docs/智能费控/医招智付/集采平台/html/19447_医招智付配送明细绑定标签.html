@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>医招智付配送明细绑定标签</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>医招智付配送明细绑定标签</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-settle/auto-inventory/distribution-detail/bind-tag</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-settle/auto-inventory/distribution-detail/bind-tag</p>
+<h2>接口描述</h2>
+<p>**接口功能：**</p>
+<p>医招智付-集采平台-自动入库模块，用于给药品配送明细绑定自定义标签，比如：临期药品、散装药品等；</p>
+<p>**接口设计：**</p>
+<p>* 批量接口，配送明细最大不超过100条，允许部分成功，部分失败。</p>
+<p>* 每条配送明细可以绑定多个标签，最大不超过10个。</p>
+<p>* 一次报文请求中配送明细不可重复。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>ARRAY</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.distributionCode</td><td>STRING</td><td>是</td><td>药品配送明细编码</td><td>&quot;S2025112700001&quot;</td></tr>
+<tr><td>root.tagInfoList</td><td>ARRAY</td><td>是</td><td>标签编码列表，每个标签编码代表一种标签，比如&quot;临期药品&quot;等<br>标签编码长度最长32位。<br>标签编码查询路径: 医招智付-集采平台-规则设置-匹配规则-自动入库-自定义标签</td><td>[&quot;000001&quot;,&quot;00002&quot;]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>ARRAY</td><td>否</td><td>只返回错误数据列表</td><td></td></tr>
+<tr><td>root.body.distributionCode</td><td>STRING</td><td>否</td><td>配送明细编码</td><td>&quot;S2025112700001&quot;</td></tr>
+<tr><td>root.body.errorMessage</td><td>STRING</td><td>否</td><td>错误信息</td><td>&quot;标签编码不存在&quot;</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>错误码：<br>SUC0000 - 成功；部分成功也算成功<br>E0002 - 业务错误，具体报错参考errorMessage字段</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>接口执行结果<br>true - 执行成功；部分成功也返回true<br>false - 全部失败</td><td>true</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+[
+    {
+        &quot;distributionCode&quot;: &quot;S2025112700001&quot;,
+        &quot;tagInfoList&quot;: [
+            &quot;000001&quot;,
+            &quot;000002&quot;
+        ]
+    }
+]
+</code></pre>
+<h3>响应报文</h3>
+<p>全部成功</p>
+<pre><code>
+{
+    &quot;body&quot;: [],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true
+}
+</code></pre>
+
+<p>部分成功</p>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;distributeCode&quot;: &quot;S13520251217000032&quot;,
+            &quot;errorMessage&quot;: &quot;配送明细不存在;&quot;
+        },
+        {
+            &quot;distributeCode&quot;: &quot;S1352025121700002&quot;,
+            &quot;errorMessage&quot;: &quot;标签25039216020不存在或未启用;&quot;
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true
+}
+</code></pre>
+
+<p>全部失败</p>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;distributeCode&quot;: &quot;S13520251217000032&quot;,
+            &quot;errorMessage&quot;: &quot;配送明细不存在;&quot;
+        }
+    ],
+    &quot;returnCode&quot;: &quot;E0002&quot;,
+    &quot;success&quot;: false
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>&lt;richtable&gt;{&quot;uuid&quot;:&quot;5148b887-fd47-4729-b387-49e24b3d9c9d&quot;,&quot;columns&quot;:[{&quot;title&quot;:&quot;错误码&quot;,&quot;dataIndex&quot;:&quot;0&quot;,&quot;resizable&quot;:true,&quot;width&quot;:108},{&quot;title&quot;:&quot;错误信息&quot;,&quot;dataIndex&quot;:&quot;1&quot;,&quot;resizable&quot;:true,&quot;width&quot;:112},{&quot;title&quot;:&quot;解决方案&quot;,&quot;dataIndex&quot;:&quot;2&quot;,&quot;resizable&quot;:false,&quot;width&quot;:196}],&quot;dataSource&quot;:[{&quot;0&quot;:&quot;E0002&quot;,&quot;1&quot;:&quot;标签数据为空&quot;,&quot;2&quot;:&quot;检查输入报文是否为空&quot;},{&quot;0&quot;:&quot;E0002&quot;,&quot;1&quot;:&quot;配送明细不能超过100条&quot;,&quot;2&quot;:&quot;控制报文数据最大数量&quot;}]}&lt;/richtable&gt;</p>
+</body>
+</html>

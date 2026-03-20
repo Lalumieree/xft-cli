@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>查询单据预算信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>查询单据预算信息</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/budget/query-bill-quota</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/budget/query-bill-quota</p>
+<h2>接口描述</h2>
+<p>支持外部系统通过单据编号获取费控单据的预算使用情况，包括预算方案、预算编制和预算额度等</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>root.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2024103104293230</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.data</td><td>ARRAY</td><td>否</td><td>单据预算信息</td><td></td></tr>
+<tr><td>root.data.budgetName</td><td>STRING</td><td>否</td><td>预算方案名称</td><td>天1028</td></tr>
+<tr><td>root.data.budgetPlanStartDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>2024-09-01</td></tr>
+<tr><td>root.data.budgetPlanEndDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>2024-11-30</td></tr>
+<tr><td>root.data.budgetCycle</td><td>STRING</td><td>否</td><td>1-月度预算<br>2-季度预算<br>3-年度预算</td><td>1</td></tr>
+<tr><td>root.data.budgetDimension</td><td>STRING</td><td>否</td><td>1-按照预算组织<br>2-按照预算科目<br>3-按照预算组织/预算科目</td><td>3</td></tr>
+<tr><td>root.data.budgetWarningType</td><td>STRING</td><td>否</td><td>1-预警提示<br>2-不预警</td><td>1</td></tr>
+<tr><td>root.data.budgetWarningRate</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>30.00</td></tr>
+<tr><td>root.data.period</td><td>LONG</td><td>否</td><td>单据所在预算期数</td><td>2</td></tr>
+<tr><td>root.data.quotaList</td><td>ARRAY</td><td>否</td><td>预算额度列表</td><td></td></tr>
+<tr><td>root.data.quotaList.budgetOrgId</td><td>STRING</td><td>否</td><td>预算组织ID</td><td>BUDGETORG20241028194945</td></tr>
+<tr><td>root.data.quotaList.budgetOrgNam</td><td>STRING</td><td>否</td><td>预算组织名称</td><td>天1028</td></tr>
+<tr><td>root.data.quotaList.subjectName</td><td>STRING</td><td>否</td><td>预算科目名称</td><td>简单科目1028</td></tr>
+<tr><td>root.data.quotaList.budgetExpenses</td><td>ARRAY</td><td>否</td><td>当前预算编制下占用的费用信息</td><td></td></tr>
+<tr><td>root.data.quotaList.budgetExpenses.overBudgetFlag</td><td>STRING</td><td>否</td><td>0-未超额<br>1-超额</td><td>0</td></tr>
+<tr><td>root.data.quotaList.budgetExpenses.overReason</td><td>STRING</td><td>否</td><td>预算超支原因</td><td>额度超额</td></tr>
+<tr><td>root.data.quotaList.budgetExpenses.expNam</td><td>STRING</td><td>否</td><td>费用/补贴名称</td><td>简单费用</td></tr>
+<tr><td>root.data.quotaList.budgetExpenses.dstntOrder</td><td>INTEGER</td><td>否</td><td>所属行程目的地下标</td><td>0</td></tr>
+<tr><td>root.data.quotaList.budgetExpenses.amount</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>100.00</td></tr>
+<tr><td>root.data.quotaList.budgetExpenses.quotaType</td><td>STRING</td><td>否</td><td>0-编制额<br>1-顺延额</td><td>1</td></tr>
+<tr><td>root.data.quotaList.currentQuota</td><td>OBJECT</td><td>否</td><td>预算编制额使用情况</td><td></td></tr>
+<tr><td>root.data.quotaList.currentQuota.initialQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>1000.00</td></tr>
+<tr><td>root.data.quotaList.currentQuota.usedQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>0.00</td></tr>
+<tr><td>root.data.quotaList.currentQuota.frozenQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>0.00</td></tr>
+<tr><td>root.data.quotaList.currentQuota.remainQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>1000.00</td></tr>
+<tr><td>root.data.quotaList.currentQuota.reservedQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>0.00</td></tr>
+<tr><td>root.data.quotaList.remainingQuota</td><td>OBJECT</td><td>否</td><td>预算顺延额使用情况</td><td></td></tr>
+<tr><td>root.data.quotaList.remainingQuota.initialQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>1000.00</td></tr>
+<tr><td>root.data.quotaList.remainingQuota.usedQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>0.00</td></tr>
+<tr><td>root.data.quotaList.remainingQuota.frozenQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>110.00</td></tr>
+<tr><td>root.data.quotaList.remainingQuota.remainQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>790.30</td></tr>
+<tr><td>root.data.quotaList.remainingQuota.reservedQuota</td><td>BIGDECIMAL</td><td>否</td><td>小数点后2位</td><td>99.70</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求实例</h4>
+<p>{BaseURL}/api/v1/budget/query-bill-quota?billId=2024101604247000</p>
+<h4>请求报文</h4>
+<pre><code>
+{}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;data&quot;: [
+        {
+            &quot;budgetName&quot;: &quot;天1028&quot;,
+            &quot;budgetPlanStartDate&quot;: &quot;2024-09-01&quot;,
+            &quot;budgetPlanEndDate&quot;: &quot;2024-11-30&quot;,
+            &quot;budgetCycle&quot;: &quot;1&quot;,
+            &quot;budgetDimension&quot;: &quot;3&quot;,
+            &quot;budgetWarningType&quot;: &quot;1&quot;,
+            &quot;budgetWarningRate&quot;: 30.00,
+            &quot;period&quot;: 2,
+            &quot;quotaList&quot;: [
+                {
+                    &quot;budgetOrgId&quot;: &quot;BUDGETORG20241028194945&quot;,
+                    &quot;budgetOrgNam&quot;: &quot;天1028&quot;,
+                    &quot;subjectName&quot;: &quot;简单科目1028&quot;,
+                    &quot;budgetExpenses&quot;: [
+                        {
+                            &quot;overBudgetFlag&quot;: &quot;1&quot;,
+                            &quot;overReason&quot;: &quot;超额了&quot;,
+                            &quot;expNam&quot;: &quot;简单费用&quot;,
+                            &quot;dstntOrder&quot;: null,
+                            &quot;amount&quot;: 100.00,
+                            &quot;quotaType&quot;: &quot;1&quot;
+                        }
+                    ],
+                    &quot;currentQuota&quot;: {
+                        &quot;initialQuota&quot;: 1000.00,
+                        &quot;usedQuota&quot;: 0.00,
+                        &quot;frozenQuota&quot;: 0.00,
+                        &quot;remainQuota&quot;: 1000.00,
+                        &quot;reservedQuota&quot;: 0.00
+                    },
+                    &quot;remainingQuota&quot;: {
+                        &quot;initialQuota&quot;: 1000.00,
+                        &quot;usedQuota&quot;: 0.00,
+                        &quot;frozenQuota&quot;: 110.00,
+                        &quot;remainQuota&quot;: 790.30,
+                        &quot;reservedQuota&quot;: 99.70
+                    }
+                }
+            ]
+        },
+        {
+            &quot;budgetName&quot;: &quot;LC&quot;,
+            &quot;budgetPlanStartDate&quot;: &quot;2023-12-01&quot;,
+            &quot;budgetPlanEndDate&quot;: &quot;2025-01-01&quot;,
+            &quot;budgetCycle&quot;: &quot;1&quot;,
+            &quot;budgetDimension&quot;: &quot;1&quot;,
+            &quot;budgetWarningType&quot;: &quot;2&quot;,
+            &quot;budgetWarningRate&quot;: null,
+            &quot;period&quot;: 11,
+            &quot;quotaList&quot;: [
+                {
+                    &quot;budgetOrgId&quot;: &quot;BUDGETORG0001&quot;,
+                    &quot;budgetOrgNam&quot;: &quot;二级部门111&quot;,
+                    &quot;subjectName&quot;: null,
+                    &quot;budgetExpenses&quot;: [
+                        {
+                            &quot;overBudgetFlag&quot;: &quot;0&quot;,
+                            &quot;overReason&quot;: null,
+                            &quot;expNam&quot;: &quot;简单费用&quot;,
+                            &quot;dstntOrder&quot;: null,
+                            &quot;amount&quot;: 100.00,
+                            &quot;quotaType&quot;: &quot;0&quot;
+                        }
+                    ],
+                    &quot;currentQuota&quot;: {
+                        &quot;initialQuota&quot;: 714.29,
+                        &quot;usedQuota&quot;: 121.00,
+                        &quot;frozenQuota&quot;: 110.00,
+                        &quot;remainQuota&quot;: 483.29,
+                        &quot;reservedQuota&quot;: 0.00
+                    },
+                    &quot;remainingQuota&quot;: null
+                }
+            ]
+        }
+    ],
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>success 为true为成功 其余都是失败</p>
+</body>
+</html>

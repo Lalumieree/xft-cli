@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>批量查询付款申请单详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>批量查询付款申请单详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v2/bills/corporate/pay/apply/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v2/bills/corporate/pay/apply/detail</p>
+<h2>接口描述</h2>
+<p>批量获取付款申请单的单据详情</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.billIdList</td><td>ARRAY</td><td>是</td><td>单次批量单据查询最多20条</td><td>[2023103000000001]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>ARRAY</td><td>否</td><td>单据详情数据对象集合</td><td></td></tr>
+<tr><td>root.body.comId</td><td>LONG</td><td>是</td><td>企业编号</td><td>3703</td></tr>
+<tr><td>root.body.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2024041802841229</td></tr>
+<tr><td>root.body.billSts</td><td>STRING</td><td>是</td><td>0：草稿 1：待审批 2：审批通过 4：拒绝 5：待财务审核 6：待财务复核 7： 财务审核通过 8： 财务复核通过 9： 财务审核驳回 10：财务复核驳回 11：已撤回 12：已退回 15：已废弃 16：暂存 17：废弃中 18：等待外部处理 19：变更中 20：已停用 21：已删除</td><td>2</td></tr>
+<tr><td>root.body.useType</td><td>STRING</td><td>是</td><td>必定为1，对应申请单类型</td><td>1</td></tr>
+<tr><td>root.body.eventId</td><td>LONG</td><td>是</td><td>单据类型编号</td><td>01240109103725000001</td></tr>
+<tr><td>root.body.eventType</td><td>STRING</td><td>是</td><td>必定为PAY_APPLY，对应付款申请单</td><td>PAY_APPLY</td></tr>
+<tr><td>root.body.eventName</td><td>STRING</td><td>是</td><td>单据业务类型名称</td><td>ltz付款申请</td></tr>
+<tr><td>root.body.applyTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713429107000</td></tr>
+<tr><td>root.body.firstApplyTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713429107000</td></tr>
+<tr><td>root.body.finishTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713429117000</td></tr>
+<tr><td>root.body.billDepCode</td><td>STRING</td><td>是</td><td>单据所属部门编码</td><td>0000</td></tr>
+<tr><td>root.body.billDepName</td><td>STRING</td><td>是</td><td>单据所属部门名称</td><td>四月的零食铺</td></tr>
+<tr><td>root.body.billComLpcCode</td><td>STRING</td><td>否</td><td>单据所属法人公司编码</td><td>COR000001</td></tr>
+<tr><td>root.body.billComLpcName</td><td>STRING</td><td>否</td><td>单据所属法人公司名称</td><td>四月的零食铺</td></tr>
+<tr><td>root.body.billProjectCode</td><td>STRING</td><td>否</td><td>单据所属项目编码</td><td>null</td></tr>
+<tr><td>root.body.billProjectName</td><td>STRING</td><td>否</td><td>单据所属项目名称</td><td>null</td></tr>
+<tr><td>root.body.billCenName</td><td>STRING</td><td>否</td><td>单据成本中心名称</td><td>null</td></tr>
+<tr><td>root.body.billCenCode</td><td>STRING</td><td>否</td><td>单据成本中心编号</td><td>null</td></tr>
+<tr><td>root.body.projectTypeCode</td><td>STRING</td><td>否</td><td>单据所属项目类型编码</td><td>null</td></tr>
+<tr><td>root.body.projectTypeName</td><td>STRING</td><td>否</td><td>单据所属项目类型名称</td><td>null</td></tr>
+<tr><td>root.body.billBDCode</td><td>STRING</td><td>否</td><td>单据所属事业部编码</td><td>null</td></tr>
+<tr><td>root.body.billBDName</td><td>STRING</td><td>否</td><td>单据所属事业部名称</td><td>null</td></tr>
+<tr><td>root.body.aplSeqId</td><td>LONG</td><td>是</td><td>申请人唯一编号</td><td>261742</td></tr>
+<tr><td>root.body.aplName</td><td>STRING</td><td>是</td><td>申请人姓名</td><td>四月</td></tr>
+<tr><td>root.body.aplEmpNumber</td><td>STRING</td><td>否</td><td>申请人员工编号</td><td>2383V123</td></tr>
+<tr><td>root.body.aplDepCode</td><td>STRING</td><td>是</td><td>申请人所属部门编码</td><td>0000</td></tr>
+<tr><td>root.body.aplDepName</td><td>STRING</td><td>是</td><td>申请人所属部门名称</td><td>四月的零食铺</td></tr>
+<tr><td>root.body.wrSeqId</td><td>LONG</td><td>是</td><td>提单人唯一编号</td><td>261742</td></tr>
+<tr><td>root.body.wrEmpNumber</td><td>STRING</td><td>是</td><td>提单人员编码</td><td>2383V123</td></tr>
+<tr><td>root.body.wrName</td><td>STRING</td><td>是</td><td>提单人员姓名</td><td>四月</td></tr>
+<tr><td>root.body.isAgent</td><td>BOOLEAN</td><td>是</td><td>是否代理</td><td>false</td></tr>
+<tr><td>root.body.printStatus</td><td>STRING</td><td>是</td><td>0：不可打印 1：可打印</td><td>1</td></tr>
+<tr><td>root.body.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>合计金额</td><td>3</td></tr>
+<tr><td>root.body.billPayStatus</td><td>STRING</td><td>否</td><td>0：待付款 1：付款中 2：付款成功 3：付款失败 4：部分付款成功 5：已发起 6：已取消 7：取消支付 8：部分取消支付</td><td>0</td></tr>
+<tr><td>root.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList</td><td>ARRAY</td><td>否</td><td>[字段说明](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=12746)</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.fieldNumber</td><td>STRING</td><td>否</td><td>字段编码</td><td>ADV_DEPARTMENT_115657734</td></tr>
+<tr><td>root.body.billCustomFieldList.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>承担部门</td></tr>
+<tr><td>root.body.billCustomFieldList.sourceValue</td><td>STRING</td><td>是</td><td>取值来源</td><td>[&quot;0000&quot;]</td></tr>
+<tr><td>root.body.billCustomFieldList.showValue</td><td>STRING</td><td>是</td><td>自定义字段的值</td><td>[{&quot;departmentCode&quot;:&quot;0000&quot;,&quot;departmentName&quot;:&quot;四月的零食铺/四月的零食铺&quot;}]</td></tr>
+<tr><td>root.body.billCustomFieldList.type</td><td>STRING</td><td>是</td><td>见字段说明</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>root.body.billCustomFieldList.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>root.body.billCustomFieldList.printEnable</td><td>LONG</td><td>是</td><td>是否可打印</td><td>1</td></tr>
+<tr><td>root.body.billCustomFieldList.description</td><td>STRING</td><td>是</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>root.body.billCustomFieldList.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>root.body.billCustomFieldList.options</td><td>ARRAY</td><td>否</td><td>选项数组</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.formColumnList</td><td>ARRAY</td><td>否</td><td>表格表头</td><td>null</td></tr>
+<tr><td>root.body.billCustomFieldList.formColumnList.name</td><td>STRING</td><td></td><td>字段名称</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.formColumnList.code</td><td>STRING</td><td></td><td>字段编码</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.formColumnList.type</td><td>STRING</td><td></td><td>NUM：数字 PERCENT：百分数 TEXT：文本 DATE：日期 CALCULATOR：公式 TABLE_ACCESSORIES：表格附件 INFINITY_SELECT：多选</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.formColumnList.fieldCode</td><td>STRING</td><td></td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>root.body.billPayApply</td><td>OBJECT</td><td>否</td><td>付款申请信息</td><td></td></tr>
+<tr><td>root.body.billPayApply.payApplySeqId</td><td>LONG</td><td>否</td><td>付款申请唯一标识</td><td>1658</td></tr>
+<tr><td>root.body.billPayApply.comId</td><td>LONG</td><td>否</td><td>企业编号</td><td>3703</td></tr>
+<tr><td>root.body.billPayApply.billId</td><td>LONG</td><td>否</td><td>单据编号</td><td>2024041802841229</td></tr>
+<tr><td>root.body.billPayApply.payApplyType</td><td>STRING</td><td>否</td><td>COMMON：通用付款申请 SUPPLIER_COLLECT：供应商汇总结算付款申请</td><td>COMMON</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList</td><td>ARRAY</td><td>否</td><td>（关联）付款明细列表</td><td></td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payApplyDetailSeqId</td><td>LONG</td><td>否</td><td>付款明细唯一标识</td><td>3009</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.comId</td><td>LONG</td><td>否</td><td>企业编号</td><td>3703</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.billId</td><td>LONG</td><td>否</td><td>付款申请单单据编号</td><td>2024041802841229</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payBillId</td><td>STRING</td><td>否</td><td>关联付款明细的单据编号</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.paySeqId</td><td>STRING</td><td>否</td><td>关联付款明细唯一标识</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.actualPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>实际付款金额</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.originalActualPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>实际付款原币金额</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypeSeqId</td><td>LONG</td><td>否</td><td>付款类型唯一标识</td><td>8255</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf</td><td>OBJECT</td><td>否</td><td>付款类型</td><td></td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.payTypSeqId</td><td>LONG</td><td>否</td><td>付款类型唯一标识</td><td>8255</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.comId</td><td>STRING</td><td>否</td><td>企业编号</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.businessScenario</td><td>LONG</td><td>否</td><td>(1-员工报销， 2-对公支付)</td><td>2</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.payType</td><td>LONG</td><td>否</td><td>(1-线上付款、2-线下付款)</td><td>2</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.payMethod</td><td>STRING</td><td>否</td><td>付款方式</td><td>招行网银模板支付</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.status</td><td>STRING</td><td>否</td><td>0: 停用， 1：启用</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.isDefault</td><td>STRING</td><td>否</td><td>0: 否， 1：是</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.typeFlag</td><td>STRING</td><td>否</td><td>AUK-异步网银，CDC-云直连</td><td>CCUKT</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payTypInf.wthrSystemPreset</td><td>STRING</td><td>否</td><td>是否系统预设</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.supSeqId</td><td>LONG</td><td>否</td><td>收款供应商唯一标识</td><td>22732</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.supId</td><td>STRING</td><td>否</td><td>收款供应商编码</td><td>SUP20240418163101</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.supName</td><td>STRING</td><td>否</td><td>收款供应商名称</td><td>ltz新增供应商04180001</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount</td><td>OBJECT</td><td>否</td><td>收款方账户信息</td><td></td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.acctType</td><td>STRING</td><td>否</td><td>0-个人账户，1-对公账户</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.depoBankName</td><td>STRING</td><td>否</td><td>开户行名称</td><td>招商银行</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.depoName</td><td>STRING</td><td>否</td><td>银行户名</td><td>111111</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.acctNo</td><td>STRING</td><td>否</td><td>银行账号</td><td>MTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.depoBank</td><td>STRING</td><td>否</td><td>开户行编码</td><td>30825632158742</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.depoCountry</td><td>STRING</td><td>否</td><td>开户国家</td><td>中国</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.depoProvinceName</td><td>STRING</td><td>否</td><td>开户省名称</td><td>北京市</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.depoCityName</td><td>STRING</td><td>否</td><td>开户城市名称</td><td>北京市</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.receiveAccount.accountMode</td><td>STRING</td><td>否</td><td>BANK：银行账户 DIGITAL_YUAN：数字人民币账户 CUSTOM：自定义账户</td><td>BANK</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>付款金额</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.originalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>付款原币金额</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.planPayDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713369600000</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.sourceApplyDetailSeqId</td><td>STRING</td><td>否</td><td>源头申请明细自增ID</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.payPeriodType</td><td>STRING</td><td>否</td><td>0：到期即付 1：申请支付</td><td>0</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.editSts</td><td>STRING</td><td>否</td><td>0：变更失败 1：变更申请中 2：变更成功</td><td>2</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.billSts</td><td>STRING</td><td>否</td><td>0：草稿 1：待审批 2：审批通过 4：拒绝 5：待财务审核 6：待财务复核 7： 财务审核通过 8： 财务复核通过 9： 财务审核驳回 10：财务复核驳回 11：已撤回 12：已退回 15：已废弃 16：暂存 17：废弃中 18：等待外部处理 19：变更中 20：已停用 21：已删除</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payApplyDetailList.eventType</td><td>STRING</td><td>否</td><td>PAY_APPLY：付款申请<br>SUPPLIER_REIM：对公报账</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount</td><td>OBJECT</td><td>否</td><td>付款账户</td><td></td></tr>
+<tr><td>root.body.billPayApply.payAccount.accountSeqId</td><td>LONG</td><td>否</td><td>收款账户自增ID</td><td>85111</td></tr>
+<tr><td>root.body.billPayApply.payAccount.paySeqId</td><td>STRING</td><td>否</td><td>账户关联ID</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.acctType</td><td>STRING</td><td>否</td><td>0-个人账户，1-对公账户</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.bankCode</td><td>STRING</td><td>否</td><td>银行编码</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.bankName</td><td>STRING</td><td>否</td><td>银行名称</td><td>招商银行</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoBank</td><td>LONG</td><td>否</td><td>开户行编码</td><td>308881029164</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoBankName</td><td>STRING</td><td>否</td><td>开户行名称</td><td>招商银行</td></tr>
+<tr><td>root.body.billPayApply.payAccount.recBankBnr</td><td>STRING</td><td>否</td><td>联行号</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoName</td><td>STRING</td><td>否</td><td>银行户名</td><td>四月的零食铺</td></tr>
+<tr><td>root.body.billPayApply.payAccount.acctNo</td><td>STRING</td><td>否</td><td>银行账号</td><td>MTIzMzIx</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoCountry</td><td>STRING</td><td>否</td><td>开户国家</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoProvince</td><td>STRING</td><td>否</td><td>开户省份编码</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoProvinceName</td><td>STRING</td><td>否</td><td>开户省份名称</td><td>天津市</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoCity</td><td>STRING</td><td>否</td><td>开户城市编码</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.depoCityName</td><td>STRING</td><td>否</td><td>开户城市名称</td><td>天津市</td></tr>
+<tr><td>root.body.billPayApply.payAccount.accountFlag</td><td>STRING</td><td>否</td><td>SP：报账付款账户；SR：报账收款账户 AP：付款申请付款账户；AR：付款申请收款账户 RP：退款单退款账户；RR：退款单收款账户</td><td>AP</td></tr>
+<tr><td>root.body.billPayApply.payAccount.payAccountSeqId</td><td>LONG</td><td>否</td><td>供应商收款账户自增ID</td><td>182</td></tr>
+<tr><td>root.body.billPayApply.payAccount.accountPayType</td><td>STRING</td><td>否</td><td>0-对私，1-对公</td><td>1</td></tr>
+<tr><td>root.body.billPayApply.payAccount.cloudConfigNumber</td><td>STRING</td><td>否</td><td>招行云直联配置标识号</td><td>CD0000000126</td></tr>
+<tr><td>root.body.billPayApply.payAccount.cloudBusinessModel</td><td>STRING</td><td>否</td><td>招行云直联业务模式</td><td>00002</td></tr>
+<tr><td>root.body.billPayApply.payAccount.accountMode</td><td>STRING</td><td>否</td><td>BANK：银行账户 DIGITAL_YUAN：数字人民币账户</td><td>BANK</td></tr>
+<tr><td>root.body.billPayApply.payAccount.accountType</td><td>STRING</td><td>否</td><td>BANK：银行账户 DIGITAL_YUAN：数字人民币账户</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.collectingCompanyName</td><td>STRING</td><td>否</td><td>收款公司名称</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.acctSeqId</td><td>STRING</td><td>否</td><td>收款账户自增ID</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccount.accountRemark</td><td>STRING</td><td>否</td><td>账户备注</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.payAccessories</td><td>STRING</td><td>否</td><td>附件信息</td><td></td></tr>
+<tr><td>root.body.billPayApply.accessories</td><td>ARRAY</td><td>否</td><td>附件详情</td><td>null</td></tr>
+<tr><td>root.body.billPayApply.remark</td><td>STRING</td><td>否</td><td>备注</td><td></td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+    &quot;billIdList&quot;: [
+        2024041802841229
+    ]
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{&quot;body&quot;: [
+        {
+            &quot;comId&quot;: 3703,
+            &quot;billId&quot;: 2024041802841229,
+            &quot;billSts&quot;: &quot;2&quot;,
+            &quot;useType&quot;: &quot;1&quot;,
+            &quot;eventId&quot;: &quot;01240109103725000001&quot;,
+            &quot;eventType&quot;: &quot;PAY_APPLY&quot;,
+            &quot;eventName&quot;: &quot;ltz付款申请&quot;,
+            &quot;applyTim&quot;: 1713429107000,
+            &quot;firstApplyTim&quot;: 1713429107000,
+            &quot;finishTim&quot;: 1713429117000,
+            &quot;billDepCode&quot;: &quot;0000&quot;,
+            &quot;billDepName&quot;: &quot;四月的零食铺&quot;,
+            &quot;billComLpcCode&quot;: &quot;COR000001&quot;,
+            &quot;billComLpcName&quot;: &quot;四月的零食铺&quot;,
+            &quot;billProjectCode&quot;: null,
+            &quot;billProjectName&quot;: null,
+            &quot;billCenName&quot;: null,
+            &quot;billCenCode&quot;: null,
+            &quot;projectTypeCode&quot;: null,
+            &quot;projectTypeName&quot;: null,
+            &quot;billBDCode&quot;: null,
+            &quot;billBDName&quot;: null,
+            &quot;aplSeqId&quot;: 261742,
+            &quot;aplName&quot;: &quot;四月&quot;,
+            &quot;aplEmpNumber&quot;: &quot;2383V123&quot;,
+            &quot;aplDepCode&quot;: &quot;0000&quot;,
+            &quot;aplDepName&quot;: &quot;四月的零食铺&quot;,
+            &quot;wrSeqId&quot;: 261742,
+            &quot;wrEmpNumber&quot;: &quot;2383V123&quot;,
+            &quot;wrName&quot;: &quot;四月&quot;,
+            &quot;isAgent&quot;: false,
+            &quot;printStatus&quot;: &quot;1&quot;,
+            &quot;expTotalCnt&quot;: 3.00,
+            &quot;billPayStatus&quot;: &quot;0&quot;,
+            &quot;billRemark&quot;: &quot;&quot;,
+            &quot;billCustomFieldList&quot;: [
+                {
+                    &quot;fieldNumber&quot;: &quot;ADV_DEPARTMENT_115657734&quot;,
+                    &quot;fieldName&quot;: &quot;承担部门&quot;,
+                    &quot;sourceValue&quot;: &quot;[\&quot;0000\&quot;]&quot;,
+                    &quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;0000\&quot;,\&quot;departmentName\&quot;:\&quot;四月的零食铺/四月的零食铺\&quot;}]&quot;,
+                    &quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,
+                    &quot;required&quot;: true,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                }
+            ],
+            &quot;billPayApply&quot;: {
+                &quot;payApplySeqId&quot;: 1658,
+                &quot;comId&quot;: 3703,
+                &quot;billId&quot;: 2024041802841229,
+                &quot;payApplyType&quot;: &quot;COMMON&quot;,
+                &quot;payApplyDetailList&quot;: [
+                    {
+                        &quot;payApplyDetailSeqId&quot;: 3009,
+                        &quot;comId&quot;: 3703,
+                        &quot;billId&quot;: 2024041802841229,
+                        &quot;payBillId&quot;: null,
+                        &quot;paySeqId&quot;: null,
+                        &quot;actualPayAmount&quot;: null,
+                        &quot;originalActualPayAmount&quot;: null,
+                        &quot;payTypeSeqId&quot;: 8255,
+                        &quot;payTypInf&quot;: {
+                            &quot;payTypSeqId&quot;: 8255,
+                            &quot;comId&quot;: null,
+                            &quot;businessScenario&quot;: &quot;2&quot;,
+                            &quot;payType&quot;: &quot;2&quot;,
+                            &quot;payMethod&quot;: &quot;招行网银模板支付&quot;,
+                            &quot;status&quot;: &quot;1&quot;,
+                            &quot;isDefault&quot;: &quot;1&quot;,
+                            &quot;typeFlag&quot;: &quot;CCUKT&quot;,
+                            &quot;wthrSystemPreset&quot;: &quot;1&quot;
+                        },
+                        &quot;supSeqId&quot;: 22732,
+                        &quot;supId&quot;: &quot;SUP20240418163101&quot;,
+                        &quot;supName&quot;: &quot;ltz新增供应商04180001&quot;,
+                        &quot;receiveAccount&quot;: {
+                            &quot;acctType&quot;: &quot;1&quot;,
+                            &quot;depoBankName&quot;: &quot;招商银行&quot;,
+                            &quot;depoName&quot;: &quot;111111&quot;,
+                            &quot;acctNo&quot;: &quot;MTExMTExMTExMTExMTExMTExMTExMTExMTExMTEx&quot;,
+                            &quot;depoBank&quot;: &quot;30825632158742&quot;,
+                            &quot;depoCountry&quot;: &quot;中国&quot;,
+                            &quot;depoProvinceName&quot;: &quot;北京市&quot;,
+                            &quot;depoCityName&quot;: &quot;北京市&quot;,
+                            &quot;accountMode&quot;: &quot;BANK&quot;
+                        },
+                        &quot;payAmt&quot;: 1.00,
+                        &quot;originalPayAmount&quot;: 1.00,
+                        &quot;currencyCode&quot;: &quot;CNY&quot;,
+                        &quot;planPayDate&quot;: 1713369600000,
+                        &quot;sourceApplyDetailSeqId&quot;: null,
+                        &quot;payPeriodType&quot;: &quot;0&quot;,
+                        &quot;remark&quot;: null,
+                        &quot;editSts&quot;: &quot;2&quot;,
+                        &quot;billSts&quot;: null,
+                        &quot;eventType&quot;: null
+                    },
+                    {
+                        &quot;payApplyDetailSeqId&quot;: 3010,
+                        &quot;comId&quot;: 3703,
+                        &quot;billId&quot;: 2024041802841229,
+                        &quot;payBillId&quot;: null,
+                        &quot;paySeqId&quot;: null,
+                        &quot;actualPayAmount&quot;: null,
+                        &quot;originalActualPayAmount&quot;: null,
+                        &quot;payTypeSeqId&quot;: 8255,
+                        &quot;payTypInf&quot;: {
+                            &quot;payTypSeqId&quot;: 8255,
+                            &quot;comId&quot;: null,
+                            &quot;businessScenario&quot;: &quot;2&quot;,
+                            &quot;payType&quot;: &quot;2&quot;,
+                            &quot;payMethod&quot;: &quot;招行网银模板支付&quot;,
+                            &quot;status&quot;: &quot;1&quot;,
+                            &quot;isDefault&quot;: &quot;1&quot;,
+                            &quot;typeFlag&quot;: &quot;CCUKT&quot;,
+                            &quot;wthrSystemPreset&quot;: &quot;1&quot;
+                        },
+                        &quot;supSeqId&quot;: 22415,
+                        &quot;supId&quot;: &quot;SUP20240412100740&quot;,
+                        &quot;supName&quot;: &quot;ltz测试变更供应商0412001&quot;,
+                        &quot;receiveAccount&quot;: {
+                            &quot;acctType&quot;: &quot;1&quot;,
+                            &quot;depoBankName&quot;: &quot;招商银行&quot;,
+                            &quot;depoName&quot;: &quot;ltz测试变更供应商0412001&quot;,
+                            &quot;acctNo&quot;: &quot;MTIxMjMxMzEzMTIzMTMy&quot;,
+                            &quot;depoBank&quot;: &quot;30825632158742&quot;,
+                            &quot;depoCountry&quot;: &quot;中国&quot;,
+                            &quot;depoProvinceName&quot;: &quot;北京市&quot;,
+                            &quot;depoCityName&quot;: &quot;北京市&quot;,
+                            &quot;accountMode&quot;: &quot;BANK&quot;
+                        },
+                        &quot;payAmt&quot;: 2.00,
+                        &quot;originalPayAmount&quot;: 2.00,
+                        &quot;currencyCode&quot;: &quot;CNY&quot;,
+                        &quot;planPayDate&quot;: 1713369600000,
+                        &quot;sourceApplyDetailSeqId&quot;: null,
+                        &quot;payPeriodType&quot;: &quot;0&quot;,
+                        &quot;remark&quot;: null,
+                        &quot;editSts&quot;: &quot;2&quot;,
+                        &quot;billSts&quot;: null,
+                        &quot;eventType&quot;: null
+                    }
+                ],
+                &quot;payAccount&quot;: {
+                    &quot;accountSeqId&quot;: 85111,
+                    &quot;paySeqId&quot;: null,
+                    &quot;acctType&quot;: null,
+                    &quot;bankCode&quot;: null,
+                    &quot;bankName&quot;: &quot;招商银行&quot;,
+                    &quot;depoBank&quot;: &quot;308881029164&quot;,
+                    &quot;depoBankName&quot;: &quot;招商银行&quot;,
+                    &quot;recBankBnr&quot;: null,
+                    &quot;depoName&quot;: &quot;四月的零食铺&quot;,
+                    &quot;acctNo&quot;: &quot;MTIzMzIx&quot;,
+                    &quot;depoCountry&quot;: null,
+                    &quot;depoProvince&quot;: null,
+                    &quot;depoProvinceName&quot;: &quot;天津市&quot;,
+                    &quot;depoCity&quot;: null,
+                    &quot;depoCityName&quot;: &quot;天津市&quot;,
+                    &quot;accountFlag&quot;: &quot;AP&quot;,
+                    &quot;payAccountSeqId&quot;: 182,
+                    &quot;accountPayType&quot;: &quot;1&quot;,
+                    &quot;cloudConfigNumber&quot;: &quot;CD0000000126&quot;,
+                    &quot;cloudBusinessModel&quot;: &quot;00002&quot;,
+                    &quot;accountMode&quot;: &quot;BANK&quot;,
+                    &quot;accountType&quot;: null,
+                    &quot;collectingCompanyName&quot;: null,
+                    &quot;acctSeqId&quot;: null,
+                    &quot;accountRemark&quot;: null
+                },
+                &quot;payAccessories&quot;: &quot;&quot;,
+                &quot;accessories&quot;: null,
+                &quot;remark&quot;: &quot;&quot;
+            }
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>E0001</td><td>API查询单据详情失败</td></tr>
+</tbody></table>
+</body>
+</html>

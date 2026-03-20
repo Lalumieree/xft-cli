@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>查询员工借款单详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>查询员工借款单详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/emp-lend/bill/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/emp-lend/bill/detail</p>
+<h2>接口描述</h2>
+<p>借款单详情，可以支持其他系统调用接口查询借款单详情</p>
+
+<h3>自定义字段说明和返回格式</h3>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>字段类型</th><th>说明</th><th>showValue示例</th><th>sourceValue示例</th></tr></thead>
+<tbody>
+<tr><td>单行文本</td><td>value以字符串格式返回</td><td>单行文本11</td><td></td></tr>
+<tr><td>多行文本</td><td>value以字符串格式返回</td><td>多行文本11</td><td></td></tr>
+<tr><td>数字</td><td>value以字符串格式返回</td><td>8.6</td><td></td></tr>
+<tr><td>金额</td><td>value以字符串格式返回</td><td>9.6</td><td></td></tr>
+<tr><td>单选</td><td>value以字符串格式返回</td><td>选项1</td><td></td></tr>
+<tr><td>多选</td><td>value以Json格式字符串返回</td><td>[&quot;选项1&quot;, &quot;选项2&quot;]</td><td></td></tr>
+<tr><td>下拉选择</td><td>value以Json格式字符串返回</td><td>[&quot;选项1&quot;, &quot;选项2&quot;]</td><td></td></tr>
+<tr><td>手机号码</td><td>value以字符串格式返回</td><td>18858885666</td><td></td></tr>
+<tr><td>日期选择</td><td>value以字符串格式返回</td><td>2023-08-01 12:30</td><td></td></tr>
+<tr><td>日期区间</td><td>value以yyyy-mm-dd hh:mm格式，用&quot;,&quot;拼接返回字符串</td><td>2023-08-01 12:30,2023-08-02 12:30,1</td><td></td></tr>
+<tr><td>银行卡号</td><td>value以字符串格式返回</td><td>6222252225436456</td><td></td></tr>
+<tr><td>邮箱</td><td>value以字符串格式返回</td><td>123456@163.com</td><td></td></tr>
+<tr><td>附件</td><td>附件编号，value以字符串格式传入</td><td>[{&quot;fileId&quot;:&quot;7e31f235-15a3-4140-883a-25971df3d4b9&quot;, <br> &quot;fileName&quot;:&quot;7E58ED9B.jpg&quot;},{&quot;fileId&quot;:&quot;6fb4e980-4fc4-420e-95ee-28914284b52c&quot;,&quot;fileName&quot;:&quot;8090DB49.jpg&quot;}]</td><td></td></tr>
+<tr><td>层级选择</td><td>选项值，按照层级顺序的字符串List，以Json格式传入</td><td>[&quot;选项1&quot;, &quot;选项1-1&quot;]</td><td></td></tr>
+<tr><td>关联字段</td><td>value以字符串格式返回</td><td>关联字段值</td><td></td></tr>
+<tr><td>表格</td><td>value以Json格式字符串返回，每一行根据序号值区分，每一行中，每个表格值包含titleCode和value</td><td>[{&quot;sequence&quot;: 1, &quot;columnValues&quot;: [{&quot;titleCode&quot;: &quot;NAME&quot;, &quot;value&quot;: &quot;张三&quot;}, {&quot;titleCode&quot;: &quot;AGE&quot;, &quot;value&quot;: &quot;26&quot;}]}, <br>{&quot;sequence&quot;: 2, &quot;columnValues&quot;: [{&quot;titleCode&quot;: &quot;NAME&quot;, &quot;value&quot;: &quot;李四&quot;}, {&quot;titleCode&quot;: &quot;AGE&quot;, &quot;value&quot;: &quot;28&quot;}]}]</td><td></td></tr>
+<tr><td>人员</td><td>value以Json格式字符串返回</td><td>[{&quot;empNumber&quot;:&quot;88888888&quot;,&quot;empName&quot;:&quot;小招喵&quot;},{&quot;empNumber&quot;:&quot;17621112222&quot;,&quot;empName&quot;:&quot;小威威&quot;}]</td><td>[&quot;EMP_NUMBER_01&quot;, &quot;EMP_NUMBER_02&quot;]</td></tr>
+<tr><td>单据部门</td><td>value以Json格式字符串返回</td><td>{&quot;departmentCode&quot;:&quot;00000002&quot;,&quot;departmentName&quot;:&quot;憨人科技/豆浆油条&quot;}</td><td>[&quot;00000002&quot;]</td></tr>
+<tr><td>单据项目</td><td>value以Json格式字符串返回</td><td>{&quot;projectCode&quot;:&quot;PRJ20210820095218&quot;,&quot;projectName&quot;:&quot;2222&quot;}</td><td>[&quot;PROJECT_1&quot;, &quot;PROJECT_2&quot;]</td></tr>
+<tr><td>关联单据</td><td>value以Json格式字符串返回</td><td>[{&quot;aplNam&quot;:&quot;张灯结彩&quot;,&quot;aplSeqId&quot;:58702,&quot;applyTim&quot;:&quot;2023-08-07 15:27:13&quot;,&quot;applyTotalAmount&quot;:0.00,&quot;billId&quot;:2023080702298807, <br> &quot;billRemark&quot;:&quot;预置内容&quot;,&quot;displayAmount&quot;:0,&quot;eventNam&quot;:&quot;通用申请-jjw&quot;,&quot;eventSeqId&quot;:13904,&quot;expTotalCnt&quot;:0.00,&quot;useType&quot;:&quot;1&quot;}]</td><td></td></tr>
+<tr><td>申请金额</td><td>value以字符串格式返回</td><td>66.6</td><td></td></tr>
+<tr><td>城市</td><td>value以Json格式字符串返回</td><td>[{&quot;cityCode&quot;:&quot;2&quot;,&quot;cityName&quot;:&quot;天津&quot;}]</td><td></td></tr>
+<tr><td>供应商</td><td>value以Json格式字符串返回</td><td>[{&quot;supplierNo&quot;:&quot;233&quot;,&quot;supplierName&quot;:&quot;供应商1&quot;}]</td><td></td></tr>
+<tr><td>客户</td><td>value以Json格式字符串返回</td><td>[{&quot;customerNo&quot;:&quot;23&quot;,&quot;customerName&quot;:&quot;客户1&quot;}]</td><td></td></tr>
+<tr><td>合同</td><td>value以Json格式字符串返回</td><td>[{&quot;customerNo&quot;:&quot;21&quot;,&quot;customerName&quot;:&quot;合同1&quot;}]</td><td></td></tr>
+<tr><td>成本中心</td><td>value以Json格式字符串返回</td><td>{&quot;costCenterCode&quot;:&quot;00000211&quot;,&quot;costCenterCodeName&quot;:&quot;豆浆油条&quot;}</td><td>center001</td></tr>
+<tr><td>档案选择</td><td>value以Json格式字符串返回</td><td>[{&quot;optionCode&quot;: &quot;ID1&quot;, &quot;\optionName&quot;: &quot;选项1&quot;},{&quot;optionCode&quot;: &quot;ID2&quot;, &quot;\optionName&quot;: &quot;选项2&quot;}]</td><td>[&quot;option01&quot;, &quot;option02&quot;]</td></tr>
+<tr><td>部门</td><td>value以Json格式字符串返回</td><td>[{&quot;departmentCode&quot;:&quot;00000002&quot;,&quot;departmentName&quot;:&quot;豆浆油条&quot;}, <br>{&quot;departmentCode&quot;:&quot;60542&quot;,&quot;departmentName&quot;:&quot;黑黑不黑&quot;}]</td><td>[&quot;ORG_01&quot;, &quot;ORG_02&quot;]</td></tr>
+<tr><td>项目</td><td>value以Json格式字符串返回</td><td>[{&quot;projectCode&quot;:&quot;PRJ20210820095218&quot;,&quot;projectName&quot;:&quot;2222&quot;}, <br> {&quot;projectCode&quot;:&quot;5555&quot;,&quot;projectName&quot;:&quot;下一级&quot;}]</td><td>[&quot;PROJECT_1&quot;, &quot;PROJECT_2&quot;]</td></tr>
+<tr><td>事业部</td><td>value以Json格式字符串返回</td><td>{&quot;departmentCode&quot;:&quot;00000211&quot;,&quot;departmentName&quot;:&quot;豆浆油条&quot;}</td><td>[&quot;00000211&quot;]</td></tr>
+<tr><td>事项</td><td>value以Json格式字符串返回</td><td>{\&quot;matterTypeNumber\&quot;:\&quot;MATTER_TYPE_1\&quot;, \&quot;matterTypeName\&quot;:\&quot;一级业务类型\&quot;,\&quot;matterMissionNumber\&quot;:\&quot;MATTER_MISSION_1\&quot;, \&quot;matterMissionName\&quot;:\&quot;业务事项\&quot;,\&quot;matterDetailNumber\&quot;:\&quot;MATTER_DETAIL_1\&quot;,\&quot;matterDetailName\&quot;:\&quot;业务事由\&quot;}</td><td></td></tr>
+<tr><td>收款账户</td><td>value以Json格式字符串返回</td><td>[{&quot;accountNumber&quot;:&quot;66666666666666666666&quot;,&quot;accountName&quot;:58702,&quot;depoBankName&quot;:&quot;中国银行&quot;,&quot;depoAddress&quot;:&quot;杭州市滨江区长河街道&quot;,&quot;depoBranchBankName&quot;:&quot;杭州市滨江区中国银行支行&quot;}]</td><td></td></tr>
+</tbody></table>
+
+
+
+<h2>调用方式</h2>
+<p>METHOD: GET</p>
+<p>CONTENT-TYPE: form-data</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>root.billId</td><td>LONG</td><td>是</td><td>单据号</td><td>2024060303585008</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>否</td><td>返回体</td><td></td></tr>
+<tr><td>root.body.billId</td><td>LONG</td><td>是</td><td>单据号</td><td>2024052903568610</td></tr>
+<tr><td>root.body.billSts</td><td>LONG</td><td>是</td><td>* 0 - 草稿<br>* 1 - 待审批<br>* 2 - 审批通过<br>* 4 - 拒绝<br>* 5 - 待财务审核<br>* 6 - 待财务复核<br>* 7 - 财务审核通过<br>* 8 - 财务复核通过<br>* 9 - 财务审核驳回<br>* 10 - 财务复核驳回<br>* 11 - 已撤回<br>* 12 - 已退回<br>* 15 - 已废弃<br>* 16 - 暂存<br>* 17 - 废弃中<br>* 18 - 等待外部处理<br>* 19 - 变更中<br>* 20 - 已停用<br>* 21 - 已删除</td><td>2</td></tr>
+<tr><td>root.body.useType</td><td>LONG</td><td>是</td><td>固定值 ： 3 - 借款单</td><td>3</td></tr>
+<tr><td>root.body.eventId</td><td>LONG</td><td>是</td><td>单据业务类型编号</td><td>03231025090953000001</td></tr>
+<tr><td>root.body.eventType</td><td>STRING</td><td>是</td><td>固定值 ： EMP_LEND</td><td>EMP_LEND</td></tr>
+<tr><td>root.body.eventName</td><td>STRING</td><td>是</td><td>单据业务类型名称</td><td>借款单</td></tr>
+<tr><td>root.body.applyTim</td><td>LONG</td><td>是</td><td>时间戳 13位</td><td>1716984825000</td></tr>
+<tr><td>root.body.firstApplyTim</td><td>LONG</td><td>是</td><td>时间戳 13位</td><td>1716984825000</td></tr>
+<tr><td>root.body.finishTim</td><td>LONG</td><td>是</td><td>时间戳 13位</td><td>1716986018000</td></tr>
+<tr><td>root.body.billDepCode</td><td>STRING</td><td>是</td><td>单据所属部门编码</td><td>0000</td></tr>
+<tr><td>root.body.billDepName</td><td>STRING</td><td>是</td><td>单据所属部门名称</td><td>憨人科技</td></tr>
+<tr><td>root.body.billComLpcCode</td><td>STRING</td><td>是</td><td>单据所属法人公司编码</td><td>CORx60000</td></tr>
+<tr><td>root.body.billComLpcName</td><td>STRING</td><td>是</td><td>单据所属法人公司名称</td><td>憨人科技</td></tr>
+<tr><td>root.body.billProjectCode</td><td>STRING</td><td>否</td><td>单据所属项目编码</td><td>PRJ20240509100852</td></tr>
+<tr><td>root.body.billProjectName</td><td>STRING</td><td>否</td><td>单据所属项目名称</td><td>XXX的项目</td></tr>
+<tr><td>root.body.billCenName</td><td>STRING</td><td>否</td><td>单据成本中心名称</td><td>XXX成本中心</td></tr>
+<tr><td>root.body.billCenCode</td><td>LONG</td><td>否</td><td>单据成本中心编号</td><td>123232322</td></tr>
+<tr><td>root.body.projectTypeCode</td><td>STRING</td><td>否</td><td>单据所属项目类型编码</td><td>null</td></tr>
+<tr><td>root.body.projectTypeName</td><td>STRING</td><td>否</td><td>单据所属项目类型名称</td><td>XXX类型</td></tr>
+<tr><td>root.body.billBDCode</td><td>STRING</td><td>否</td><td>单据所属事业部编码</td><td>null</td></tr>
+<tr><td>root.body.billBDName</td><td>STRING</td><td>否</td><td>单据所属事业部名称</td><td>null</td></tr>
+<tr><td>root.body.wrEmpNumber</td><td>STRING</td><td>否</td><td>提单人员工编号</td><td>6666</td></tr>
+<tr><td>root.body.wrName</td><td>STRING</td><td>否</td><td>提单人姓名</td><td>张xx</td></tr>
+<tr><td>root.body.isAgent</td><td>BOOLEAN</td><td>否</td><td>* true - 是<br>* false - 否</td><td>false</td></tr>
+<tr><td>root.body.printStatus</td><td>STRING</td><td>否</td><td>* 0 - 不可打印 <br>* 1 - 可打印</td><td>1</td></tr>
+<tr><td>root.body.printedState</td><td>STRING</td><td>否</td><td>* 0 - 未打印；<br>* 1 - 已打印</td><td>0</td></tr>
+<tr><td>root.body.billPayStatus</td><td>STRING</td><td>否</td><td>* 0-未操作<br>* 1-待付款 <br>* 2-付款成功 <br>* 3-付款失败<br>* 4-部分付款成功</td><td>null</td></tr>
+<tr><td>root.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td>null</td></tr>
+<tr><td>root.body.billCustomFieldList</td><td>ARRAY</td><td>否</td><td>单据自定义字段</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.fieldNumber</td><td>STRING</td><td>否</td><td>字段编码</td><td></td></tr>
+<tr><td>root.body.billCustomFieldList.fieldName</td><td>STRING</td><td>否</td><td>自定义字段名称</td><td>单据项目</td></tr>
+<tr><td>root.body.billCustomFieldList.sourceValue</td><td>STRING</td><td>否</td><td>自定义字段值数据源</td><td>[&quot;PRJ20240509100852&quot;]</td></tr>
+<tr><td>root.body.billCustomFieldList.showValue</td><td>STRING</td><td>否</td><td>自定义字段值</td><td>[{&quot;projectCode&quot;:&quot;PRJ20240509100852&quot;,&quot;projectName&quot;:&quot;测试含有日期选择的项目&quot;}]</td></tr>
+<tr><td>root.body.billCustomFieldList.type</td><td>STRING</td><td>否</td><td>* NUM- 数字输入框<br>* INPUT- 单行输入框<br>* MULTI_INPUT- 多行输入框<br>* SELECT- 单选<br>* MULTI_SELECT- 多选<br>* INFINITY_SELECT- 下拉选择<br>* DATE- 日期选择框<br>* EMAIL- 邮箱输入框<br>* PHONE- 手机号输入框<br>* BANK_CARD- 银行卡号输入框<br>* ACCESSORIES- 附件<br>* MULTI_LEVEL_SELECT- 层级选择<br>* ADV_DEPARTMENT- 部门<br>* ADV_COST_CENTER- 成本中心<br>* ADV_STAFF- 人员<br>* ADV_CITY- 城市<br>* ADV_PROJECT- 项目<br>* ADV_ACCOUNT_ENTRY- 会计科目<br>* ADV_BANK- 银行名称<br>* ADV_CURRENCY- 币种<br>* ADV_FORM- 表格<br>* AMOUNT- 金额<br>* ADV_REL_EVENT- 关联单据<br>* TIME_RANGE- 日期区间<br>* ADV_RECEIVE_ACCOUNT- 收款账户<br>* ADV_SIGNATURE- 手写签名<br>* CAPTION- 文字说明<br>* ADV_CALCULATOR- 计算公式<br>* ADV_SUPPLIER- 供应商<br>* ADV_CONTRACT- 合同<br>* ADV_CUSTOMER- 客户<br>* ADV_CUSTOM_FILE- 档案选择<br>* ADV_BD- 事业部<br>* CUSTOM_ELEMENT- 自定义组件</td><td>ADV_PROJECT</td></tr>
+<tr><td>root.body.billCustomFieldList.required</td><td>BOOLEAN</td><td>否</td><td>是否必填</td><td>true</td></tr>
+<tr><td>root.body.billCustomFieldList.printEnable</td><td>LONG</td><td>否</td><td>* 1 - 开<br>* 0 - 关</td><td>1</td></tr>
+<tr><td>root.body.billCustomFieldList.description</td><td>STRING</td><td>否</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>root.body.billCustomFieldList.multiple</td><td>BOOLEAN</td><td>否</td><td>* true - 是<br>* false - 否</td><td>false</td></tr>
+<tr><td>root.body.billCustomFieldList.options</td><td>ARRAY</td><td>否</td><td>自定义选项 没固定枚举值</td><td>[&quot;aaa&quot;,&quot;bbb&quot;]</td></tr>
+<tr><td>root.body.billCustomFieldList.formColumnList</td><td>STRING</td><td>否</td><td>表头</td><td>null</td></tr>
+<tr><td>root.body.lendBillApiViewDTO</td><td>OBJECT</td><td>否</td><td>单据借款信息</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.repaymentDate</td><td>LONG</td><td>否</td><td>时间戳 13位</td><td>1716940800000</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.arriveTicketDate</td><td>LONG</td><td>否</td><td>时间戳 13位</td><td>1716940800000</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.lendReason</td><td>STRING</td><td>否</td><td>提单时填写的借款理由</td><td>理由</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.lendTypeName</td><td>STRING</td><td>否</td><td>借款类型名称</td><td>qqq</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.lendTypeId</td><td>LONG</td><td>否</td><td>借款单类型id</td><td>302</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.receiveAccountName</td><td>STRING</td><td>否</td><td>收款方名称</td><td>张XX</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.lendAmount</td><td>BIGDECIMAL</td><td>否</td><td>1. 小数点后2位<br>2. 默认是人民币CNY</td><td>466.75</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.currencyCode</td><td>STRING</td><td></td><td>币种</td><td>AUD</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.originalLendAmount</td><td>BIGDECIMAL</td><td></td><td>小数点后两位</td><td>100</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.rate</td><td>BIGDECIMAL</td><td></td><td>小数点后6位</td><td>4.6675</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.billLendRelExpType</td><td>OBJECT</td><td></td><td>费用类型</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.billLendRelExpType.expTypeCode</td><td>STRING</td><td></td><td>费用类型编码</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.billLendRelExpType.expTypeName</td><td>STRING</td><td></td><td>费用类型名称</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo</td><td>OBJECT</td><td></td><td>分摊信息</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.seqId</td><td>LONG</td><td></td><td>分摊唯一编号</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadBusinessType</td><td>STRING</td><td></td><td>EMP_LEND：借款单</td><td>EMP_LEND</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadBusinessId</td><td>STRING</td><td></td><td>分摊业务唯一编号</td><td>10000000001</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.totalAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.originalTotalAmount</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.currencyCode</td><td>STRING</td><td></td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList</td><td>ARRAY</td><td></td><td>分摊条目</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.id</td><td>LONG</td><td></td><td>分摊条目的唯一ID</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.originalSpreadAmount</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.currencyCode</td><td>STRING</td><td></td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.priceTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>0.09</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.priceWithoutTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>54.01</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.departmentCode</td><td>STRING</td><td></td><td>部门编号</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.departmentName</td><td>STRING</td><td></td><td>部门名称</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.empName</td><td>STRING</td><td></td><td>员工姓名</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.empNumber</td><td>STRING</td><td></td><td>员工工号</td><td>00000001</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.empSeqId</td><td>LONG</td><td></td><td>员工唯一编号</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.projectCode</td><td>STRING</td><td></td><td>项目编码</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.projectName</td><td>STRING</td><td></td><td>项目名称</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.proportion</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后4位</td><td>33.3333</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.overBudgetFlag</td><td>STRING</td><td></td><td>* 0：不超<br>* 1：超</td><td>0</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList</td><td>ARRAY</td><td></td><td>自定义分摊的字段取值集合，与分摊方方式的分摊字段配置一一对应</td><td></td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.spreadItemId</td><td>LONG</td><td></td><td>所属分摊条目的唯一ID</td><td>10000</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldName</td><td>STRING</td><td></td><td>该字段值为系统设置 -&gt; 分摊方式页面中具体的分摊字段的字段名称</td><td>部门</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldType</td><td>STRING</td><td></td><td>* system：系统字段<br>* custom：自定义字段</td><td>system</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldBizType</td><td>STRING</td><td></td><td>* 员工：EMPLOYEE<br>* 客户：CUSTOMER<br>* 部门：DEPARTMENT<br>* 项目：PROJECT<br>* 成本中心：COSTCENTER<br>* 业务分组：BUSINESSGROUP<br>* 自定义档案：CUSTOMFILE</td><td>DEPARTMENT</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSeqId</td><td>LONG</td><td></td><td>字段取值自增id</td><td>10001</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueCode</td><td>STRING</td><td></td><td>字段取值编号</td><td>0000</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueName</td><td>STRING</td><td></td><td>字段取值名称</td><td>部门1</td></tr>
+<tr><td>root.body.lendBillApiViewDTO.empLendSpreadInfo.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSourceCode</td><td>STRING</td><td></td><td>字段取值来源, 目前只有自定义档案的编码</td><td></td></tr>
+<tr><td>root.body.billAccountApiViewDTO</td><td>OBJECT</td><td>否</td><td>收款账户</td><td></td></tr>
+<tr><td>root.body.billAccountApiViewDTO.unitName</td><td>STRING</td><td>否</td><td>单位名称</td><td>null</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.accountMode</td><td>STRING</td><td>否</td><td>* 银行账户 - BANK<br>* 数字人民币账户 - DIGITAL_YUAN<br>* 自定义账户 - BANK</td><td>BANK</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.depoBank</td><td>STRING</td><td>否</td><td>开户行</td><td>xxx村镇银行</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.depoAddress</td><td>STRING</td><td>否</td><td>开户地</td><td></td></tr>
+<tr><td>root.body.billAccountApiViewDTO.depoBranchBank</td><td>STRING</td><td>否</td><td>开户支行</td><td></td></tr>
+<tr><td>root.body.billAccountApiViewDTO.depoName</td><td>STRING</td><td>否</td><td>开户名</td><td>境内主账户</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.account</td><td>LONG</td><td>否</td><td>账户号</td><td>12346</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.temporaryUnitAccount</td><td>LONG</td><td>否</td><td>* 1-为临时收款账户<br>* 0-非临时收款账户</td><td>0</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.depoBankCode</td><td>STRING</td><td>否</td><td>开户行CODE</td><td>24234</td></tr>
+<tr><td>root.body.billAccountApiViewDTO.depoBranchBankCode</td><td>STRING</td><td>否</td><td>开户支行CODE（联行号）</td><td>4234234235432323</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO</td><td>OBJECT</td><td>否</td><td>欠款统计</td><td></td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.lendTotalAmountList</td><td>ARRAY</td><td>否</td><td>总计欠款组合</td><td></td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.lendTotalAmountList.lendTotalAmount</td><td>DOUBLE</td><td>否</td><td>小数点后2位</td><td>1087154.17</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.lendTotalAmountList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.approvingLendAmountList</td><td>ARRAY</td><td>否</td><td>在途借款组合</td><td></td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.approvingLendAmountList.lendTotalAmount</td><td>DOUBLE</td><td>否</td><td>小数点后2位</td><td>1012413.67</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.approvingLendAmountList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.repaymentInProgressAmountList</td><td>ARRAY</td><td>否</td><td>还款、核销中 金额组合</td><td></td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.repaymentInProgressAmountList.lendTotalAmount</td><td>DOUBLE</td><td>否</td><td>小数点后2位</td><td>30474.04</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.repaymentInProgressAmountList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.remainingLendAmountList</td><td>ARRAY</td><td>否</td><td>待还借款</td><td></td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.remainingLendAmountList.lendTotalAmount</td><td>DOUBLE</td><td>否</td><td>小数点后2位</td><td>74740.5</td></tr>
+<tr><td>root.body.lendSummaryApiViewDTO.remainingLendAmountList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;billId&quot;: 2024052903568610,
+        &quot;billSts&quot;: &quot;2&quot;,
+        &quot;useType&quot;: &quot;3&quot;,
+        &quot;eventId&quot;: &quot;03231025090953000001&quot;,
+        &quot;eventType&quot;: &quot;EMP_LEND&quot;,
+        &quot;eventName&quot;: &quot;借款单&quot;,
+        &quot;applyTim&quot;: 1716984825000,
+        &quot;firstApplyTim&quot;: 1716984825000,
+        &quot;finishTim&quot;: 1716986018000,
+        &quot;billDepCode&quot;: &quot;0000&quot;,
+        &quot;billDepName&quot;: &quot;XX科技&quot;,
+        &quot;billComLpcCode&quot;: &quot;CORx60000&quot;,
+        &quot;billComLpcName&quot;: &quot;XX科技&quot;,
+        &quot;billProjectCode&quot;: &quot;PRJ20240509100852&quot;,
+        &quot;billProjectName&quot;: &quot;XXX的项目&quot;,
+        &quot;billCenName&quot;: &quot;XXX成本中心&quot;,
+        &quot;billCenCode&quot;: &quot;123232322&quot;,
+        &quot;projectTypeCode&quot;: null,
+        &quot;projectTypeName&quot;: &quot;XXX类型&quot;,
+        &quot;billBDCode&quot;: null,
+        &quot;billBDName&quot;: null,
+        &quot;wrEmpNumber&quot;: null,
+        &quot;wrName&quot;: &quot;张三&quot;,
+        &quot;isAgent&quot;: false,
+        &quot;printStatus&quot;: &quot;1&quot;,
+        &quot;printedState&quot;: &quot;0&quot;,
+        &quot;billPayStatus&quot;: null,
+        &quot;billRemark&quot;: null,
+        &quot;billCustomFieldList&quot;: [
+            {
+                &quot;fieldNumber&quot;: &quot;&quot;,
+                &quot;fieldName&quot;: &quot;单据项目&quot;,
+                &quot;sourceValue&quot;: &quot;[\&quot;PRJ20240509100852\&quot;]&quot;,
+                &quot;showValue&quot;: &quot;[{\&quot;projectCode\&quot;:\&quot;PRJ20240509100852\&quot;,\&quot;projectName\&quot;:\&quot;XXX的项目\&quot;}]&quot;,
+                &quot;type&quot;: &quot;ADV_PROJECT&quot;,
+                &quot;required&quot;: true,
+                &quot;printEnable&quot;: &quot;1&quot;,
+                &quot;description&quot;: null,
+                &quot;multiple&quot;: false,
+                &quot;options&quot;: [],
+                &quot;formColumnList&quot;: null
+            },
+            {
+                &quot;fieldNumber&quot;: &quot;&quot;,
+                &quot;fieldName&quot;: &quot;单选&quot;,
+                &quot;sourceValue&quot;: null,
+                &quot;showValue&quot;: &quot;选项2&quot;,
+                &quot;type&quot;: &quot;SELECT&quot;,
+                &quot;required&quot;: false,
+                &quot;printEnable&quot;: &quot;1&quot;,
+                &quot;description&quot;: null,
+                &quot;multiple&quot;: false,
+                &quot;options&quot;: [
+                    &quot;选项1&quot;,
+                    &quot;选项2&quot;,
+                    &quot;选项3&quot;
+                ],
+                &quot;formColumnList&quot;: null
+            }
+        ],
+        &quot;lendBillApiViewDTO&quot;: {
+            &quot;repaymentDate&quot;: 1716940800000,
+            &quot;arriveTicketDate&quot;: 1716940800000,
+            &quot;lendReason&quot;: &quot;借款原因&quot;,
+            &quot;lendTypeName&quot;: &quot;qqq&quot;,
+            &quot;lendTypeId&quot;: 10001,
+            &quot;receiveAccountName&quot;: &quot;张三&quot;,
+            &quot;lendAmount&quot;: 466.75,
+            &quot;currencyCode&quot;: &quot;CNY&quot;,
+            &quot;originalLendAmount&quot;: 100,
+            &quot;rate&quot;: 4.6675,
+            &quot;billLendRelExpType&quot;: {
+                &quot;expTypeCode&quot;: &quot;01&quot;,
+                &quot;expTypeName&quot;: &quot;机票费&quot;
+            }
+        },
+        &quot;billAccountViewDTO&quot;: {
+            &quot;unitName&quot;: null,
+            &quot;accountMode&quot;: &quot;BANK&quot;,
+            &quot;enterpriseProperty&quot;: null,
+            &quot;depoBank&quot;: &quot;xxx村镇银行&quot;,
+            &quot;depoAddress&quot;: &quot;&quot;,
+            &quot;depoBranchBank&quot;: &quot;&quot;,
+            &quot;depoName&quot;: &quot;境内主账户&quot;,
+            &quot;account&quot;: &quot;12346&quot;,
+            &quot;temporaryUnitAccount&quot;: &quot;0&quot;,
+            &quot;depoBankCode&quot;: null,
+            &quot;depoBranchBankCode&quot;: null
+        },
+        &quot;lendSummaryViewDTO&quot;: {
+            &quot;lendTotalAmountList&quot;: [
+                {
+                    &quot;lendTotalAmount&quot;: 1087154.17,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;
+                }
+            ],
+            &quot;approvingLendAmountList&quot;: [
+                {
+                    &quot;lendTotalAmount&quot;: 1012413.67,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;
+                }
+            ],
+            &quot;repaymentInProgressAmountList&quot;: [
+                {
+                    &quot;lendTotalAmount&quot;: 30474.04,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;
+                }
+            ],
+            &quot;remainingLendAmountList&quot;: [
+                {
+                    &quot;lendTotalAmount&quot;: 74740.5,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;
+                }
+            ]
+        }
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>SUC0000</td><td>成功</td></tr>
+<tr><td>E0001</td><td>具体业务异常提示</td></tr>
+</tbody></table>
+</body>
+</html>

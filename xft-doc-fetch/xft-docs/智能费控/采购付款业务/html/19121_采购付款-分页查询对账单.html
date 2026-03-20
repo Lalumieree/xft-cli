@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>采购付款-分页查询对账单</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>采购付款-分页查询对账单</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-pay/reconciliation/core/statistic/page</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-pay/reconciliation/core/statistic/page</p>
+<h2>接口描述</h2>
+<p>分页查询采购付款对账单</p>
+
+<p>1. 生成对账单起止日期为必填项</p>
+<p>2. 查询结果按对账单更新时间降序排列</p>
+<p>3. 分页起止行数从0开始；页大小默认10，最大500</p>
+<p>4. 使用对账发起时间和对账完成时间进行筛选时，请注意以下事项：</p>
+<p>- 对账发起时间：仅在采购付款对账单状态为“对账中”或“已对账”时有值</p>
+<p>- 对账完成时间：仅在采购付款对账单状态为“已对账”时有值</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.start</td><td>INTEGER</td><td>否</td><td>分页开始行数，从0开始，默认0</td><td>0</td></tr>
+<tr><td>root.limit</td><td>INTEGER</td><td>否</td><td>每页查询大小，默认10，最大500</td><td>50</td></tr>
+<tr><td>root.createDateMin</td><td>STRING</td><td>是</td><td>时间格式： yyyy-MM-dd</td><td>2025-10-01</td></tr>
+<tr><td>root.createDateMax</td><td>STRING</td><td>是</td><td>时间格式： yyyy-MM-dd</td><td>2025-10-31</td></tr>
+<tr><td>root.billId</td><td>LONG</td><td></td><td>模糊搜索</td><td>2025052204290063</td></tr>
+<tr><td>root.companyCode</td><td>STRING</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-基础设置-法人公司<br>- 精准搜索</td><td>COR000001</td></tr>
+<tr><td>root.companyName</td><td>STRING</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-基础设置-法人公司<br>- 精准搜索</td><td>采购付款测试公司</td></tr>
+<tr><td>root.supplierCode</td><td>STRING</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-供应商档案<br>- 精准搜索</td><td>SUP20251001152010</td></tr>
+<tr><td>root.supplierName</td><td>STRING</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-供应商档案<br>- 精准搜索</td><td>采购付款供应商测试公司</td></tr>
+<tr><td>root.settleStatusList</td><td>ARRAY</td><td></td><td>编码\</td><td>名称<br>-\</td><td>-<br>noSettle\</td><td>未结算<br>settling\</td><td>结算中<br>settled\</td><td>已结算<br><br>编码最大长度20</td><td>[&quot;noSettle&quot;]</td></tr>
+<tr><td>root.reconciliationStatusList</td><td>ARRAY</td><td></td><td>\</td><td>编码\</td><td>名称\</td><td><br>\</td><td>-\</td><td>-\</td><td><br>waitReconciling\</td><td>待对账<br>recalled\</td><td>已撤回<br>rebacked\</td><td>已退回<br>reconciling\</td><td>对账中<br>reconciled\</td><td>已对账<br><br>编码最大长度16</td><td>[&quot;reconciled&quot;]</td></tr>
+<tr><td>root.reconciliationStartTimeMin</td><td>STRING</td><td></td><td>- 采购付款发起对账的时间， 时间格式： yyyy-MM-dd HH:mm:ss<br>- 当采购付款撤回对账中的对账单，或供应商端退回待对账的对账单时，会删除发起对账时间</td><td>2025-10-01 08:30:01</td></tr>
+<tr><td>root.reconciliationStartTimeMax</td><td>STRING</td><td></td><td>- 采购付款发起对账的时间， 时间格式： yyyy-MM-dd HH:mm:ss<br>- 当采购付款撤回对账中的对账单，或供应商端退回待对账的对账单时，会删除发起对账时间</td><td>2025-10-07 08:30:01</td></tr>
+<tr><td>root.reconciliationFinishTimeMin</td><td>STRING</td><td></td><td>- 供应商端推送对账单至发起方时间，时间格式： yyyy-MM-dd HH:mm:ss<br>- 当采购付款退回已对账对账单时，会删除对账完成时间</td><td>2025-10-01 17:29:59</td></tr>
+<tr><td>root.reconciliationFinishTimeMax</td><td>STRING</td><td></td><td>- 供应商端推送对账单至发起方时间，时间格式： yyyy-MM-dd HH:mm:ss<br>- 当采购付款退回已对账对账单时，会删除对账完成时间</td><td>2025-10-07 08:30:01</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td>是</td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>提示信息</td><td>成功</td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>是</td><td>查询结果</td><td></td></tr>
+<tr><td>root.body.total</td><td>INTEGER</td><td>是</td><td>对账单数量</td><td>1</td></tr>
+<tr><td>root.body.list</td><td>ARRAY</td><td>是</td><td>对账单列表</td><td></td></tr>
+<tr><td>root.body.list.billId</td><td>LONG</td><td>是</td><td>对账单号</td><td>2025052204290063</td></tr>
+<tr><td>root.body.list.companyCode</td><td>STRING</td><td>是</td><td>法人公司编码</td><td>COR000001</td></tr>
+<tr><td>root.body.list.companyName</td><td>STRING</td><td>是</td><td>法人公司名称</td><td>采购付款测试公司</td></tr>
+<tr><td>root.body.list.supplierCode</td><td>STRING</td><td>是</td><td>供应商编码</td><td>SUP20251001152010</td></tr>
+<tr><td>root.body.list.supplierName</td><td>STRING</td><td>是</td><td>供应商名称</td><td>采购付款供应商测试公司</td></tr>
+<tr><td>root.body.list.invoiceValidStatus</td><td>STRING</td><td>是</td><td>编码\</td><td>名称<br>-\</td><td>-<br>equal\</td><td>一致<br>notEqual\</td><td>不一致</td><td>equal</td></tr>
+<tr><td>root.body.list.inventoryTotalAmount</td><td>STRING</td><td>是</td><td>decimal(17,2)</td><td>1000.21</td></tr>
+<tr><td>root.body.list.inboundAmount</td><td>STRING</td><td>是</td><td>decimal(17,2)</td><td>1000.21</td></tr>
+<tr><td>root.body.list.returnAmount</td><td>STRING</td><td>是</td><td>decimal(17,2)</td><td>0</td></tr>
+<tr><td>root.body.list.invoiceAmount</td><td>STRING</td><td>是</td><td>decimal(21,6)</td><td>1000.21</td></tr>
+<tr><td>root.body.list.reconciliationStatus</td><td>STRING</td><td>是</td><td>\</td><td>编码\</td><td>名称\</td><td><br>\</td><td>-\</td><td>-\</td><td><br>waitReconciling\</td><td>待对账<br>recalled\</td><td>已撤回<br>rebacked\</td><td>已退回<br>reconciling\</td><td>对账中<br>reconciled\</td><td>已对账</td><td>waitReconciling</td></tr>
+<tr><td>root.body.list.settleStatus</td><td>STRING</td><td>是</td><td>编码\</td><td>名称<br>-\</td><td>-<br>noSettle\</td><td>未结算<br>settling\</td><td>结算中<br>settled\</td><td>已结算</td><td>noSettle</td></tr>
+<tr><td>root.body.list.firstCategoryCodeList</td><td>ARRAY</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-入库单设置（系统预设字段）<br>- 编码最大长度50</td><td>[&quot;one&quot;]</td></tr>
+<tr><td>root.body.list.secondCategoryCodeList</td><td>ARRAY</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-入库单设置（系统预设字段）<br>- 编码最大长度50</td><td>[&quot;two&quot;]</td></tr>
+<tr><td>root.body.list.thirdCategoryCodeList</td><td>ARRAY</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-入库单设置（系统预设字段）<br>- 编码最大长度50</td><td>[&quot;three&quot;]</td></tr>
+<tr><td>root.body.list.fourthCategoryCodeList</td><td>ARRAY</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-入库单设置（系统预设字段）<br>- 编码最大长度50</td><td>[&quot;four]</td></tr>
+<tr><td>root.body.list.fifthCategoryCodeList</td><td>ARRAY</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-入库单设置（系统预设字段）<br>- 编码最大长度50</td><td>[&quot;five&quot;]</td></tr>
+<tr><td>root.body.list.goodsTypeList</td><td>ARRAY</td><td></td><td>- 数据查看菜单路径：采购付款-系统设置-档案设置-入库单设置（系统预设字段）<br>- 编码最大长度16</td><td>[ &quot;PRO2025051900002&quot;，&quot;PRO2025051900001&quot; ]</td></tr>
+<tr><td>root.body.list.inventoryIdList</td><td>ARRAY</td><td>否</td><td>入库单号列表</td><td>[ &quot;20250206001&quot;, &quot;20250206002&quot;, &quot;20250206003&quot; ]</td></tr>
+<tr><td>root.body.list.orderApplyDateMin</td><td>STRING</td><td>否</td><td>时间格式：yyyy-MM-dd</td><td>2025-10-01</td></tr>
+<tr><td>root.body.list.orderApplyDateMax</td><td>STRING</td><td>否</td><td>时间格式：yyyy-MM-dd</td><td>2025-10-07</td></tr>
+<tr><td>root.body.list.reconciliationStartTime</td><td>STRING</td><td></td><td>时间格式： yyyy-MM-dd HH:mm:ss</td><td>2025-10-01 08:30:01</td></tr>
+<tr><td>root.body.list.reconciliationFinishTime</td><td>STRING</td><td></td><td>时间格式： yyyy-MM-dd HH:mm:ss</td><td>2025-10-07 17:29:59</td></tr>
+<tr><td>root.body.list.createTime</td><td>STRING</td><td>是</td><td>时间格式： yyyy-MM-dd HH:mm:ss</td><td>2025-10-01 07:30:01</td></tr>
+<tr><td>root.body.list.updateTime</td><td>STRING</td><td>是</td><td>时间格式： yyyy-MM-dd HH:mm:ss</td><td>2025-10-07 17:29:59</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;start&quot;: &quot;0&quot;,
+    &quot;limit&quot;: &quot;100&quot;,
+    &quot;createDateMin&quot;: &quot;2025-10-01&quot;,
+    &quot;createDateMax&quot;: &quot;2025-10-31&quot;,
+    &quot;billId&quot;: &quot;2025052204290063&quot;,
+    &quot;companyCode&quot;: &quot;COR000001&quot;,
+    &quot;companyName&quot;: &quot;采购付款测试公司&quot;,
+    &quot;supplierCode&quot;: &quot;SUP20251001152010&quot;,
+    &quot;supplierName&quot;: &quot;采购付款供应商测试公司&quot;,
+    &quot;settleStatusList&quot;: [
+        &quot;noSettle&quot;
+    ],
+    &quot;reconciliationStatusList&quot;: [
+        &quot;reconciled&quot;
+    ],
+    &quot;reconciliationStartTimeMin&quot;: &quot;2025-10-01 08:30:00&quot;,
+    &quot;reconciliationStartTimeMax&quot;: &quot;2025-10-31 17:29:59&quot;,
+    &quot;reconciliationFinishTimeMin&quot;: &quot;2025-10-01 08:30:00&quot;,
+    &quot;reconciliationFinishTimeMax&quot;: &quot;2025-10-31 17:29:59&quot;
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: &quot;true&quot;,
+    &quot;message&quot;: &quot;成功&quot;,
+    &quot;body&quot;: {
+        &quot;total&quot;: 1,
+        &quot;list&quot;: [
+            {
+                &quot;billId&quot;: &quot;2025052204290063&quot;,
+                &quot;companyCode&quot;: &quot;COR000001&quot;,
+                &quot;companyName&quot;: &quot;采购付款测试公司&quot;,
+                &quot;supplierCode&quot;: &quot;SUP20251001152010&quot;,
+                &quot;supplierName&quot;: &quot;采购付款供应商测试公司&quot;,
+                &quot;invoiceValidStatus&quot;: &quot;equal&quot;,
+                &quot;inventoryTotalAmount&quot;: &quot;1000.21&quot;,
+                &quot;inboundAmount&quot;: &quot;1000.21&quot;,
+                &quot;returnAmount&quot;: &quot;0&quot;,
+                &quot;invoiceAmount&quot;: &quot;1000.21&quot;,
+                &quot;reconciliationStatus&quot;: &quot;reconciled&quot;,
+                &quot;settleStatus&quot;: &quot;noSettle&quot;,
+                &quot;firstCategoryCodeList&quot;: [
+                    &quot;one&quot;
+                ],
+                &quot;secondCategoryCodeList&quot;: [
+                    &quot;two&quot;
+                ],
+                &quot;thirdCategoryCodeList&quot;: [
+                    &quot;three&quot;
+                ],
+                &quot;fourthCategoryCodeList&quot;: [
+                    &quot;four&quot;
+                ],
+                &quot;fifthCategoryCodeList&quot;: [
+                    &quot;five&quot;
+                ],
+                &quot;goodsTypeList&quot;: [
+                    &quot;PRO2025051900002&quot;,
+                    &quot;PRO2025051900001&quot;
+                ],
+                &quot;inventoryIdList&quot;: [
+                    &quot;20250206001&quot;,
+                    &quot;20250206002&quot;,
+                    &quot;20250206003&quot;
+                ],
+                &quot;orderApplyDateMin&quot;: &quot;2025-10-01&quot;,
+                &quot;orderApplyDateMax&quot;: &quot;2025-10-07&quot;,
+                &quot;reconciliationStartTime&quot;: &quot;2025-10-01 08:30:01&quot;,
+                &quot;reconciliationFinishTime&quot;: &quot;2025-10-07 17:29:59&quot;,
+                &quot;createTime&quot;: &quot;2025-10-01 09:30:01&quot;,
+                &quot;updateTime&quot;: &quot;2025-10-07 11:29:59&quot;
+            }
+        ]
+    }
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>错误码	|错误信息|解决方案</p>
+<p>-|-|-</p>
+<p>EROOR1|系统错误|请稍后再试，或联系开发人员</p>
+<p>EROOR2|对账单生成时间-起始日期不能为空;对账单生成时间-终止日期不能为空|对账单生产时间起止区间必填，日期格式：yyyy-MM-dd</p>
+<p>E0002|页大小最大为500|请调整limit参数大小</p>
+<p>E0002|对账状态编码不合法|请参照字段备注，输入指定编码</p>
+<p>E0002|结算状态编码不合法|请参照字段备注，输入指定编码</p>
+<p>E0002|法人公司不存在|请检查法人公司名称或编码</p>
+<p>E0002|供应商不存在|请检查供应商名称或编码</p>
+</body>
+</html>

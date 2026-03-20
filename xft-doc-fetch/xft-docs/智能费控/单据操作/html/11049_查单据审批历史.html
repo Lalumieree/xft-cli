@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>查单据审批历史</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>查单据审批历史</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/taskHistory/{billId}</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/taskHistory/{billId}</p>
+<h2>接口描述</h2>
+<p>根据单据id查询单据审批历史记录</p>
+<h2>调用方式</h2>
+<p>METHOD: GET</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td>否</td><td>薪福通企业号</td><td>XFT00001</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.data</td><td>ARRAY</td><td>否</td><td>数据</td><td></td></tr>
+<tr><td>body.data.nodeId</td><td>STRING</td><td>否</td><td>节点Id</td><td></td></tr>
+<tr><td>body.data.nodeName</td><td>STRING</td><td>否</td><td>节点名称</td><td>发起申请</td></tr>
+<tr><td>body.data.futureNode</td><td>STRING</td><td>否</td><td>未来节点id</td><td></td></tr>
+<tr><td>body.data.nodeType</td><td>OBJECT</td><td>否</td><td>节点类型</td><td></td></tr>
+<tr><td>body.data.nodeType.type</td><td>STRING</td><td>否</td><td>类型</td><td>START</td></tr>
+<tr><td>body.data.nodeType.subType</td><td>STRING</td><td>否</td><td>节点子类型</td><td></td></tr>
+<tr><td>body.data.nodeType.actionType</td><td>STRING</td><td>否</td><td>操作类型</td><td></td></tr>
+<tr><td>body.data.nodeType.completeCondition</td><td>STRING</td><td>否</td><td>完成条件</td><td></td></tr>
+<tr><td>body.data.startTime</td><td>DATE</td><td>否</td><td>开始时间</td><td></td></tr>
+<tr><td>body.data.actions</td><td>ARRAY</td><td>否</td><td>节点操作</td><td></td></tr>
+<tr><td>body.data.actions.userId</td><td>STRING</td><td>否</td><td>用户Id</td><td></td></tr>
+<tr><td>body.data.actions.userName</td><td>STRING</td><td>否</td><td>用户花名册员工号</td><td></td></tr>
+<tr><td>body.data.actions.userNumber</td><td>STRING</td><td>否</td><td>用户名</td><td></td></tr>
+<tr><td>body.data.actions.empThirdPartId</td><td>STRING</td><td>否</td><td>部门</td><td></td></tr>
+<tr><td>body.data.actions.action</td><td>STRING</td><td>否</td><td>操作行为</td><td></td></tr>
+<tr><td>body.data.actions.comment</td><td>STRING</td><td>否</td><td>备注</td><td></td></tr>
+<tr><td>body.data.actions.finishTime</td><td>DATE</td><td>否</td><td>完成时间</td><td></td></tr>
+<tr><td>body.data.actions.message</td><td>STRING</td><td>否</td><td>信息</td><td></td></tr>
+<tr><td>body.data.actions.taskId</td><td>STRING</td><td>否</td><td>任务Id</td><td></td></tr>
+<tr><td>body.data.actions.id</td><td>STRING</td><td>否</td><td>ID</td><td></td></tr>
+<tr><td>body.data.actions.approveSignature</td><td>STRING</td><td>否</td><td>审批签名</td><td></td></tr>
+<tr><td>body.data.commentList</td><td>ARRAY</td><td>否</td><td>评论集合</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>true-成功，false-失败</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>调用信息</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+
+<p>{BaseURL}/api/v1/bills/taskHistory/{billId}?OPAUID=XFT00001</p>
+
+<h3>返回示例</h3>
+<pre><code>
+{
+  &quot;data&quot;: [
+    {
+      &quot;nodeId&quot;: null,
+      &quot;nodeName&quot;: &quot;发起申请&quot;,
+      &quot;futureNode&quot;: null,
+      &quot;nodeType&quot;: {
+        &quot;type&quot;: &quot;START&quot;,
+        &quot;subType&quot;: null,
+        &quot;actionType&quot;: null,
+        &quot;completeCondition&quot;: null
+      },
+      &quot;startTime&quot;: 1654828453361,
+      &quot;actions&quot;: [
+        {
+          &quot;userId&quot;: &quot;U0000&quot;,
+          &quot;userName&quot;: &quot;test1&quot;,
+          &quot;userNumber&quot;: &quot;41904&quot;,
+          &quot;empThirdPartId&quot;: null,
+          &quot;action&quot;: null,
+          &quot;comment&quot;: null,
+          &quot;finishTime&quot;: 1654828453361,
+          &quot;message&quot;: null,
+          &quot;taskId&quot;: null,
+          &quot;id&quot;: null,
+          &quot;approveSignature&quot;: null
+        }
+      ],
+      &quot;commentList&quot;: []
+    },
+    {
+      &quot;nodeId&quot;: &quot;withdraw&quot;,
+      &quot;nodeName&quot;: &quot;撤回任务&quot;,
+      &quot;futureNode&quot;: null,
+      &quot;nodeType&quot;: {
+        &quot;type&quot;: &quot;WITHDRAW&quot;,
+        &quot;subType&quot;: null,
+        &quot;actionType&quot;: null,
+        &quot;completeCondition&quot;: null
+      },
+      &quot;startTime&quot;: 1655210388325,
+      &quot;actions&quot;: [
+        {
+          &quot;userId&quot;: &quot;U0000&quot;,
+          &quot;userName&quot;: &quot;test1&quot;,
+          &quot;userNumber&quot;: &quot;41904&quot;,
+          &quot;empThirdPartId&quot;: null,
+          &quot;action&quot;: &quot;withdraw&quot;,
+          &quot;comment&quot;: &quot;撤回&quot;,
+          &quot;finishTime&quot;: 1655210388327,
+          &quot;message&quot;: null,
+          &quot;taskId&quot;: &quot;2131221&quot;,
+          &quot;id&quot;: &quot;15962&quot;,
+          &quot;approveSignature&quot;: null
+        }
+      ],
+      &quot;commentList&quot;: []
+    },
+    {
+      &quot;nodeId&quot;: &quot;restart&quot;,
+      &quot;nodeName&quot;: &quot;重新发起申请&quot;,
+      &quot;futureNode&quot;: null,
+      &quot;nodeType&quot;: {
+        &quot;type&quot;: &quot;RESTART&quot;,
+        &quot;subType&quot;: null,
+        &quot;actionType&quot;: null,
+        &quot;completeCondition&quot;: null
+      },
+      &quot;startTime&quot;: 1655210431337,
+      &quot;actions&quot;: [
+        {
+          &quot;userId&quot;: &quot;U0000&quot;,
+          &quot;userName&quot;: &quot;test1&quot;,
+          &quot;userNumber&quot;: &quot;41904&quot;,
+          &quot;empThirdPartId&quot;: null,
+          &quot;action&quot;: &quot;restart&quot;,
+          &quot;comment&quot;: null,
+          &quot;finishTime&quot;: 1655210431340,
+          &quot;message&quot;: null,
+          &quot;taskId&quot;: &quot;2131222&quot;,
+          &quot;id&quot;: &quot;15963&quot;,
+          &quot;approveSignature&quot;: null
+        }
+      ],
+      &quot;commentList&quot;: []
+    },
+    {
+      &quot;nodeId&quot;: &quot;d6b9dbb0e48e4515a42189a4f64ca25b&quot;,
+      &quot;nodeName&quot;: &quot;审批节点&quot;,
+      &quot;futureNode&quot;: null,
+      &quot;nodeType&quot;: {
+        &quot;type&quot;: &quot;APPROVE&quot;,
+        &quot;subType&quot;: null,
+        &quot;actionType&quot;: &quot;oneByOne&quot;,
+        &quot;completeCondition&quot;: {
+          &quot;type&quot;: &quot;passNumber&quot;,
+          &quot;value&quot;: &quot;all&quot;
+        }
+      },
+      &quot;startTime&quot;: 1655210431375,
+      &quot;actions&quot;: [
+        {
+          &quot;userId&quot;: &quot;U0000&quot;,
+          &quot;userName&quot;: &quot;test1&quot;,
+          &quot;userNumber&quot;: &quot;41904&quot;,
+          &quot;empThirdPartId&quot;: null,
+          &quot;action&quot;: &quot;agree&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;finishTime&quot;: 1655253260869,
+          &quot;message&quot;: null,
+          &quot;taskId&quot;: &quot;2131231&quot;,
+          &quot;id&quot;: &quot;15966&quot;,
+          &quot;approveSignature&quot;: null
+        }
+      ],
+      &quot;commentList&quot;: []
+    },
+    {
+      &quot;nodeId&quot;: null,
+      &quot;nodeName&quot;: &quot;流程结束&quot;,
+      &quot;futureNode&quot;: null,
+      &quot;nodeType&quot;: {
+        &quot;type&quot;: &quot;END&quot;,
+        &quot;subType&quot;: null,
+        &quot;actionType&quot;: null,
+        &quot;completeCondition&quot;: null
+      },
+      &quot;startTime&quot;: 1655253260937,
+      &quot;actions&quot;: null,
+      &quot;commentList&quot;: []
+    }
+  ],
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>200</td><td>成功</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

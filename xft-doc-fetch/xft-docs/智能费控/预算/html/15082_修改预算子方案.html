@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>修改预算子方案</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>修改预算子方案</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/budget/budget-sub-plan/edit</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/budget/budget-sub-plan/edit</p>
+<h2>接口描述</h2>
+<p>本接口提供预算方案下预算子方案的修改功能。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.budgetParentPlanSeqId</td><td>LONG</td><td>是</td><td>预算方案id</td><td>1286</td></tr>
+<tr><td>root.budgetPlanSeqId</td><td>LONG</td><td>是</td><td>预算子方案id</td><td>2003</td></tr>
+<tr><td>root.budgetTurnType</td><td>STRING</td><td>是</td><td>0不顺延,1每个编著周期末自动顺延</td><td>1</td></tr>
+<tr><td>root.budgetWarningType</td><td>STRING</td><td>是</td><td>1预警提示,2不预警</td><td>2</td></tr>
+<tr><td>root.budgetCycle</td><td>STRING</td><td>是</td><td>1月度预算,2季度预算,3年度预算</td><td>2</td></tr>
+<tr><td>root.budgetControlType</td><td>STRING</td><td>是</td><td>1不得提交,2不控制</td><td>1</td></tr>
+<tr><td>root.cycleControl</td><td>STRING</td><td>是</td><td>1月度 2季度 3年度</td><td>1</td></tr>
+<tr><td>root.budgetName</td><td>STRING</td><td>是</td><td>预算方案名称</td><td>异常1118</td></tr>
+<tr><td>root.budgetStartDate</td><td>DATE</td><td>是</td><td>yyyy-MM-dd</td><td>2024-10-01</td></tr>
+<tr><td>root.budgetEndDate</td><td>DATE</td><td>是</td><td>yyyy-MM-dd</td><td>2024-12-31</td></tr>
+<tr><td>root.budgetDimension</td><td>STRING</td><td>是</td><td>预算编制维度</td><td>1</td></tr>
+<tr><td>root.opsEmpNumber</td><td>STRING</td><td>是</td><td>操作人花名册编码</td><td>18351911114</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.data</td><td>OBJECT</td><td>否</td><td>接口返回修改结果</td><td></td></tr>
+<tr><td>root.data.budgetPlanSeqId</td><td>LONG</td><td>否</td><td>预算子方案id</td><td>2003</td></tr>
+<tr><td>root.data.budgetParentPlanSeqId</td><td>LONG</td><td>否</td><td>预算方案id</td><td>1286</td></tr>
+<tr><td>root.data.budgetName</td><td>STRING</td><td>否</td><td>预算方案名称</td><td>异常1118</td></tr>
+<tr><td>root.data.budgetDimension</td><td>STRING</td><td>否</td><td>1按照预算部门,2按照预算科目,3按照预算部门/预算科目</td><td>1</td></tr>
+<tr><td>root.data.budgetEventControl</td><td>STRING</td><td>否</td><td>0部分,1全部</td><td>0</td></tr>
+<tr><td>root.data.budgetState</td><td>STRING</td><td>否</td><td>0未启用,1启用</td><td>1</td></tr>
+<tr><td>root.data.budgetCycle</td><td>STRING</td><td>否</td><td>1月度预算,2季度预算,3年度预算</td><td>2</td></tr>
+<tr><td>root.data.budgetControlType</td><td>STRING</td><td>否</td><td>1不得提交,2不控制</td><td>1</td></tr>
+<tr><td>root.data.budgetWarningType</td><td>STRING</td><td>否</td><td>1预警提示,2不预警</td><td>2</td></tr>
+<tr><td>root.data.budgetWarningRate</td><td>STRING</td><td>否</td><td>预算预警百分比</td><td>null</td></tr>
+<tr><td>root.data.budgetTurnType</td><td>STRING</td><td>否</td><td>0不顺延,1每个编著周期末自动顺延</td><td>1</td></tr>
+<tr><td>root.data.cycleControl</td><td>STRING</td><td>否</td><td>1月度 2季度 3年度</td><td>1</td></tr>
+<tr><td>root.data.crtId</td><td>STRING</td><td>否</td><td>创建人ID</td><td>42603</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>true说明接口调用成功 false说明接口调用失败</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>接口调用返回信息</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+  &quot;budgetParentPlanSeqId&quot;: &quot;1286&quot;,
+  &quot;budgetPlanSeqId&quot;: 2003,
+  &quot;budgetTurnType&quot;: &quot;1&quot;,
+  &quot;budgetWarningType&quot;: 2,
+  &quot;budgetCycle&quot;: 2,
+  &quot;budgetControlType&quot;: 1,
+  &quot;cycleControl&quot;:&quot;1&quot;,
+  &quot;opsEmpNumber&quot;:&quot;18351911114&quot;,
+  &quot;budgetName&quot;:&quot;异常1118&quot;,&quot;budgetStartDate&quot;:&quot;2024-10-01&quot;,&quot;budgetEndDate&quot;:&quot;2024-12-31&quot;,&quot;budgetDimension&quot;:&quot;1&quot;
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;budgetPlanSeqId&quot;: 2003,
+        &quot;budgetParentPlanSeqId&quot;: 1286,
+        &quot;budgetName&quot;: &quot;异常1118&quot;,
+        &quot;budgetDimension&quot;: &quot;1&quot;,
+        &quot;budgetEventControl&quot;: &quot;0&quot;,
+        &quot;budgetState&quot;: &quot;1&quot;,
+        &quot;budgetCycle&quot;: &quot;2&quot;,
+        &quot;budgetControlType&quot;: &quot;1&quot;,
+        &quot;budgetWarningType&quot;: &quot;2&quot;,
+        &quot;budgetWarningRate&quot;: null,
+        &quot;budgetTurnType&quot;: &quot;1&quot;,
+        &quot;cycleControl&quot;: &quot;1&quot;,
+        &quot;crtId&quot;: 42603
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h3>更新失败的响应报文，示例仅为其中一部分失败样例</h3>
+<pre><code>
+{  
+    &quot;returnCode&quot;: &quot;E0001&quot;,  
+    &quot;success&quot;: false,  
+    &quot;message&quot;: &quot;业务错误: 预算方案不存在，请检查后重试！&quot;  
+} 
+</code></pre>
+<h3>更新失败的响应报文，示例仅为其中一部分失败样例</h3>
+<pre><code>
+{  
+    &quot;code&quot;: &quot;E0002&quot;,  
+    &quot;message&quot;: &quot;预算方案自增ID不能为空;&quot;  
+}    
+</code></pre>
+<h2>错误码说明</h2>
+<p>sucess为更新成功状态， true为成功 其余都是失败</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>常见报错</th></tr></thead>
+<tbody>
+<tr><td>预算预警百分比不能为空</td></tr>
+<tr><td>控制周期类型不能小于预算周期</td></tr>
+<tr><td>方案周期类型或控制周期类型不能为空</td></tr>
+<tr><td>控制周期力度必须大于方案周期，请检查输入</td></tr>
+</tbody></table>
+</body>
+</html>

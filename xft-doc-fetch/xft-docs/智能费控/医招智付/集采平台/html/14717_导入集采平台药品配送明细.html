@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>导入集采平台药品配送明细</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>导入集采平台药品配送明细</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-settle/auto-inventory/drug/distribution-detail/import</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-settle/auto-inventory/drug/distribution-detail/import</p>
+<h2>接口描述</h2>
+<p>药品配送明细导入，将集采平台业务系统中的药品配送明细数据推送至医招智付应用。</p>
+
+<p>以药品配送明细编码作为唯一键，重复导入时进行更新操作。</p>
+
+<p>批量接口，允许部分成功。</p>
+
+<p>单次导入上限为1000。</p>
+
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>ARRAY</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.approveNo</td><td>STRING</td><td>否</td><td>批准文号</td><td>&quot;国药准字H20183260&quot;</td></tr>
+<tr><td>root.batchNumber</td><td>STRING</td><td>否</td><td>批次号</td><td>&quot;241216005&quot;</td></tr>
+<tr><td>root.contactName</td><td>STRING</td><td></td><td>联系人</td><td>&quot;中医院会计部&quot;</td></tr>
+<tr><td>root.deliverEnterpriseCode</td><td>STRING</td><td>否</td><td>配送企业代码</td><td>&quot;P03066&quot;</td></tr>
+<tr><td>root.deliverEnterpriseName</td><td>STRING</td><td>否</td><td>配送企业名称</td><td>&quot;南京华东医药有限责任公司&quot;</td></tr>
+<tr><td>root.deliverStatus</td><td>STRING</td><td>否</td><td>sended - 已发货； received - 已收货<br>标识集采平台药品配送明细的发货状态，不填则默认为已发货状态</td><td>&quot;sended&quot;</td></tr>
+<tr><td>root.deliveryAmount</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>2400</td></tr>
+<tr><td>root.deliveryCount</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>12</td></tr>
+<tr><td>root.deliveryTime</td><td>STRING</td><td>否</td><td>&quot;yyyy-MM-dd HH:mm:ss&quot;</td><td>&quot;2024-12-16 19:26:33&quot;</td></tr>
+<tr><td>root.distributionCode</td><td>STRING</td><td>是</td><td>唯一编码</td><td>&quot;S1352024121600004&quot;</td></tr>
+<tr><td>root.expiredDate</td><td>STRING</td><td>否</td><td>&quot;yyyy-MM-dd HH:mm:ss&quot;</td><td>&quot;2024-12-27 08:29:19&quot;</td></tr>
+<tr><td>root.hospListCode</td><td>STRING</td><td></td><td>院内目录编码</td><td>&quot;HS12345456&quot;</td></tr>
+<tr><td>root.selInvoiceTwo</td><td>STRING</td><td>否</td><td>销售发票号（第二票）</td><td>&quot;24332000000415737631&quot;</td></tr>
+<tr><td>root.selInvoiceOne</td><td>STRING</td><td></td><td>销售发票号（第一票）</td><td>&quot;24332000000415737631&quot;</td></tr>
+<tr><td>root.mod</td><td>STRING</td><td>否</td><td>型号</td><td>&quot;滴剂&quot;</td></tr>
+<tr><td>root.orderCode</td><td>STRING</td><td>否</td><td>订单编号</td><td>&quot;O1352024121600001&quot;</td></tr>
+<tr><td>root.produceEnterpriseCode</td><td>STRING</td><td>否</td><td>生产企业代码</td><td>&quot;91330000742906207U&quot;</td></tr>
+<tr><td>root.produceEnterpriseName</td><td>STRING</td><td>否</td><td>生产企业名称</td><td>&quot;浙江我武生物科技股份有限公司&quot;</td></tr>
+<tr><td>root.productCode</td><td>STRING</td><td>否</td><td>产品编码</td><td>&quot;XL01XES267E001010178672&quot;</td></tr>
+<tr><td>root.productName</td><td>STRING</td><td>否</td><td>产品名称</td><td>&quot;塞瑞替尼胶囊&quot;</td></tr>
+<tr><td>root.productPackage</td><td>STRING</td><td>否</td><td>包装</td><td>&quot;黄花蒿花粉变应原舌下滴剂3号:总变应原活性640BU/ml,装量为2ml×1瓶/盒&quot;</td></tr>
+<tr><td>root.receiveAddress</td><td>STRING</td><td>否</td><td>收货地址</td><td>&quot;达道路药品科&quot;</td></tr>
+<tr><td>root.receiveCount</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>0</td></tr>
+<tr><td>root.sendTime</td><td>STRING</td><td>否</td><td>&quot;yyyy-MM-dd HH:mm:ss&quot;</td><td>&quot;2024-12-17 08:29:19&quot;</td></tr>
+<tr><td>root.spec</td><td>STRING</td><td>否</td><td>规格</td><td>&quot;黄花蒿花粉变应原舌下滴剂3号:总变应原活性640BU/ml&quot;</td></tr>
+<tr><td>root.storageRoom</td><td>STRING</td><td>否</td><td>库房</td><td>&quot;中药房&quot;</td></tr>
+<tr><td>root.traceCodes</td><td>STRING</td><td></td><td>多个追溯码使用英文分号;拼接</td><td>&quot;123354645656;434354545657&quot;</td></tr>
+<tr><td>root.orderCount</td><td>BIGDECIMAL</td><td></td><td>整数位不能超过15位，小数位不能超过6位</td><td>12</td></tr>
+<tr><td>root.hospPurchasePrice</td><td>BIGDECIMAL</td><td></td><td>整数位不能超过15位，小数位不能超过6位</td><td>50</td></tr>
+<tr><td>root.highSelLimitPrice</td><td>BIGDECIMAL</td><td></td><td>整数位不能超过15位，小数位不能超过6位</td><td>50</td></tr>
+<tr><td>root.selInvoiceDateOne</td><td>DATE</td><td></td><td>&quot;yyyy-MM-dd&quot;</td><td>&quot;2025-08-06&quot;</td></tr>
+<tr><td>root.selInvoiceDateTwo</td><td>DATE</td><td></td><td>&quot;yyyy-MM-dd&quot;</td><td>&quot;2025-08-06&quot;</td></tr>
+<tr><td>root.marketingAuthHolder</td><td>STRING</td><td></td><td>上市许可人</td><td>强生公司（Johnson &amp; Johnson）</td></tr>
+<tr><td>root.remark</td><td>STRING</td><td></td><td>药品入库列表、详情使用多行文本展示，多行内容请使用换行符进行换行，换行符支持：“<br>”或“\r<br>”</td><td>采购计划编号：1345600099872238<br>存储条件：零下5°</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.result</td><td>BOOLEAN</td><td>否</td><td>true - 导入成功，包含全部成功或者部分成功<br>false - 导入失败</td><td>true</td></tr>
+<tr><td>root.succeedSize</td><td>INTEGER</td><td>否</td><td>成功条数</td><td>10</td></tr>
+<tr><td>root.failedSize</td><td>INTEGER</td><td>否</td><td>失败条数</td><td>0</td></tr>
+<tr><td>root.errorMessage</td><td>STRING</td><td>否</td><td>全局错误信息</td><td>单次导入上限不能超过1000</td></tr>
+<tr><td>root.errorList</td><td>ARRAY</td><td>否</td><td>部分成功时，这里返回所有失败的数据列表</td><td></td></tr>
+<tr><td>root.errorList.distributeCode</td><td>STRING</td><td>否</td><td>配送明细编码</td><td>S1352024121600004</td></tr>
+<tr><td>root.errorList.errorMessage</td><td>STRING</td><td>否</td><td>错误信息</td><td>配送企业代码长度不能超过100位</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+
+<h3>输入示例</h3>
+<pre><code>
+  [
+    {
+        &quot;approveNo&quot;: &quot;国药准字H20183260&quot;,
+        &quot;batchNumber&quot;: &quot;241216005&quot;,
+        &quot;deliverEnterpriseCode&quot;: &quot;S12443545&quot;,
+        &quot;deliverEnterpriseName&quot;: &quot;奥特莱斯&quot;,
+        &quot;deliverStatus&quot;: &quot;sended&quot;,
+        &quot;deliveryAmount&quot;: 2400.00,
+        &quot;deliveryCount&quot;: 12,
+        &quot;deliveryTime&quot;: &quot;2024-12-11 19:26:31&quot;,
+        &quot;distributionCode&quot;: &quot;S2024121900001&quot;,
+        &quot;expiredDate&quot;: &quot;2024-12-27 08:29:19&quot;,
+        &quot;selInvoiceOne&quot;: &quot;24332000000415737631&quot;,
+        &quot;selInvoiceTwo&quot;: &quot;24332000000415737631&quot;,
+        &quot;hospListCode&quot;: &quot;1243434&quot;,
+        &quot;mod&quot;: &quot;滴剂&quot;,
+        &quot;orderCode&quot;: &quot;O1352024121600001&quot;,
+        &quot;produceEnterpriseCode&quot;: &quot;91330000742906207U&quot;,
+        &quot;produceEnterpriseName&quot;: &quot;浙江我武生物科技股份有限公司&quot;,
+        &quot;productCode&quot;: &quot;XL01XES267E001010178672&quot;,
+        &quot;productName&quot;: &quot;塞瑞替尼胶囊&quot;,
+        &quot;productPackage&quot;: &quot;黄花蒿花粉变应原舌下滴剂3号:总变应原活性640BU/ml,装量为2ml×1瓶/盒&quot;,
+        &quot;receiveAddress&quot;: &quot;达道路药品科&quot;,
+        &quot;receiveCount&quot;: 0,
+        &quot;sendTime&quot;: &quot;2024-12-17 08:29:19&quot;,
+        &quot;spec&quot;: &quot;黄花蒿花粉变应原舌下滴剂3号:总变应原活性640BU/ml&quot;,
+        &quot;contactName&quot;: &quot;中医院会计部&quot;,
+        &quot;storageRoom&quot;: &quot;中药房&quot;,
+        &quot;traceCodes&quot;: &quot;1231334;12243454646567&quot;,
+        &quot;orderCount&quot;: 12.456,
+        &quot;hospPurchasePrice&quot;: 3445,
+        &quot;highSelLimitPrice&quot;: 12435,
+        &quot;selInvoiceDateOne&quot;: &quot;2024-12-27&quot;,
+        &quot;selInvoiceDateTwo&quot;: &quot;2024-12-17&quot;,
+        &quot;marketingAuthHolder&quot;:&quot;强生公司（Johnson &amp; Johnson）&quot;,
+        &quot;remark&quot;:&quot;采购计划编号：1345600099872238\n存储条件：零下5°&quot;
+    }
+]
+</code></pre>
+<h3>输出示例</h3>
+<p>导入成功</p>
+<pre><code>
+{
+    &quot;result&quot;: true,
+    &quot;succeedSize&quot;: 1,
+    &quot;failedSize&quot;: 0,
+    &quot;errorMessage&quot;: null,
+    &quot;errorList&quot;: []
+}
+</code></pre>
+<p>导入失败</p>
+<pre><code>
+{  
+    &quot;result&quot;: false,
+    &quot;succeedSize&quot;: 0,
+    &quot;failedSize&quot;: 2,
+    &quot;errorMessage&quot;: null,
+    &quot;errorList&quot;: [
+        {
+            &quot;distributeCode&quot;: &quot;S1352024121600004&quot;,
+            &quot;errorMessage&quot;: &quot;配送企业代码长度不能超过100位;配送企业名称长度不能超过200位;&quot;
+        },
+        {
+            &quot;distributeCode&quot;: &quot;S2024121900001&quot;,
+            &quot;errorMessage&quot;: &quot;发货时间格式错误;&quot;
+        }
+    ]
+}  
+</code></pre>
+
+<h2>错误码说明</h2>
+<p>无</p>
+</body>
+</html>

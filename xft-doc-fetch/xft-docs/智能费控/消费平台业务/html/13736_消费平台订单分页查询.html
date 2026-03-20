@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>消费平台订单分页查询</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>消费平台订单分页查询</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/travel/orders/page</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/travel/orders/page</p>
+<h2>接口描述</h2>
+<p>分页查询订单详情</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.start</td><td>INTEGER</td><td>是</td><td>页数从0开始</td><td>0</td></tr>
+<tr><td>body.limit</td><td>INTEGER</td><td>是</td><td>最大值100</td><td>20</td></tr>
+<tr><td>body.queryDto</td><td>OBJECT</td><td>是</td><td>订单查询条件</td><td></td></tr>
+<tr><td>body.queryDto.orderSeqIdList</td><td>ARRAY</td><td>否</td><td>单次最多查询100条订单</td><td>[123,124]</td></tr>
+<tr><td>body.queryDto.thirdOrderIdList</td><td>ARRAY</td><td>否</td><td>单次最多查询100条订单</td><td>[&quot;HO123456&quot;，“HO345656”]</td></tr>
+<tr><td>body.queryDto.platform</td><td>STRING</td><td>否</td><td>CTRIP 携程；<br>DTTRIP 同程商旅；<br>FEIHEAIR 飞鹤商旅；<br>MEITUAN_SQT 美团；<br>MBTRIP SCO云旅；<br>E_MEAL E餐通；<br>TRAVEL_ONE_NO 差旅壹号；<br>ZAI_TU 在途商旅；<br>DI_DI 滴滴企业版；<br>SHENG_YI 胜意商旅；<br>GAO_DE 高德打车企业版</td><td>CTRIP</td></tr>
+<tr><td>body.queryDto.startDate</td><td>STRING</td><td></td><td>按照交易时间查询<br>格式：yyyy-MM-dd HH:mm:ss</td><td>2024-05-01 10:10:10</td></tr>
+<tr><td>body.queryDto.endDate</td><td>STRING</td><td></td><td>按照交易时间查询<br>格式：yyyy-MM-dd HH:mm:ss</td><td>2024-05-10 10:10:10</td></tr>
+<tr><td>body.queryDto.tripApplyBillIdList</td><td>ARRAY</td><td></td><td>单次最多查询50条事前申请单关联的订单</td><td>[202507171212121212]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>OBJECT</td><td>是</td><td>返回数据</td><td></td></tr>
+<tr><td>body.body.total</td><td>LONG</td><td>是</td><td>总条数</td><td></td></tr>
+<tr><td>body.body.list</td><td>ARRAY</td><td></td><td>订单列表</td><td></td></tr>
+<tr><td>body.body.list.orderSeqId</td><td>LONG</td><td>是</td><td>订单系统唯一编号</td><td></td></tr>
+<tr><td>body.body.list.thirdOrderId</td><td>STRING</td><td>是</td><td>差旅平台订单号</td><td></td></tr>
+<tr><td>body.body.list.parentOrderId</td><td>STRING</td><td></td><td>退改签单的原始订单号</td><td></td></tr>
+<tr><td>body.body.list.orderStatus</td><td>STRING</td><td>是</td><td>N 预订单；<br>T 退款单；<br>C 改签单；</td><td></td></tr>
+<tr><td>body.body.list.financialReimStatus</td><td>STRING</td><td>是</td><td>0 未提报；<br>1 已提报</td><td></td></tr>
+<tr><td>body.body.list.empReimStatus</td><td>STRING</td><td>是</td><td>0 未提报；<br>1 已提报</td><td></td></tr>
+<tr><td>body.body.list.settleStatus</td><td>STRING</td><td>是</td><td>0 未结算；<br>1 已结算</td><td></td></tr>
+<tr><td>body.body.list.budgetUseFlag</td><td>STRING</td><td>是</td><td>0 未占用;<br>1 占用成功;<br>2 占用失败</td><td></td></tr>
+<tr><td>body.body.list.payType</td><td>STRING</td><td>是</td><td>1 公司授信(月结)；<br>2 个人支付</td><td></td></tr>
+<tr><td>body.body.list.platform</td><td>STRING</td><td>是</td><td>CTRIP 携程；<br>DTTRIP 同程商旅；<br>FEIHEAIR 飞鹤商旅；<br>MEITUAN_SQT 美团；</td><td></td></tr>
+<tr><td>body.body.list.productType</td><td>STRING</td><td>是</td><td>FLIGHT 飞机；<br>HOTEL 酒店；<br>TRAIN 火车；<br>CAR 打车；<br>MEAL 餐食</td><td></td></tr>
+<tr><td>body.body.list.amount</td><td>BIGDECIMAL</td><td>是</td><td>精确到两位小数<br><br>amount = excludeServiceFee+serviceFee+refundChangeFee</td><td></td></tr>
+<tr><td>body.body.list.excludeServiceFee</td><td>BIGDECIMAL</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.body.list.serviceFee</td><td>BIGDECIMAL</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.body.list.refundChangeServiceFee</td><td>BIGDECIMAL</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.body.list.postCommission</td><td>BIGDECIMAL</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.body.list.orderTime</td><td>STRING</td><td>是</td><td>yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.body.list.tripStartTime</td><td>STRING</td><td>是</td><td>yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.body.list.tripEndTime</td><td>STRING</td><td>是</td><td>yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.body.list.bookEmpNumber</td><td>STRING</td><td>是</td><td>预订人花名册编号</td><td></td></tr>
+<tr><td>body.body.list.bookEmpName</td><td>STRING</td><td>是</td><td>预订人姓名</td><td></td></tr>
+<tr><td>body.body.list.useUserName</td><td>STRING</td><td>是</td><td>多使用人逗号拼接</td><td></td></tr>
+<tr><td>body.body.list.tripApplyBillId</td><td>LONG</td><td></td><td>关联事前申请单号</td><td></td></tr>
+<tr><td>body.body.list.departCityCode</td><td>STRING</td><td>是</td><td>出发城市编码</td><td></td></tr>
+<tr><td>body.body.list.departCityName</td><td>STRING</td><td>是</td><td>出发城市名称</td><td></td></tr>
+<tr><td>body.body.list.destinationCityCode</td><td>STRING</td><td>是</td><td>到达城市编码</td><td></td></tr>
+<tr><td>body.body.list.destinationCityName</td><td>STRING</td><td>是</td><td>到达城市名称</td><td></td></tr>
+<tr><td>body.body.list.orderAbstract</td><td>STRING</td><td>是</td><td>订单摘要信息</td><td></td></tr>
+<tr><td>body.body.list.orderUseEmpList</td><td>ARRAY</td><td>是</td><td>订单人员信息</td><td></td></tr>
+<tr><td>body.body.list.orderUseEmpList.useEmpNumber</td><td>STRING</td><td></td><td>花名册员工号</td><td></td></tr>
+<tr><td>body.body.list.orderUseEmpList.useEmpName</td><td>STRING</td><td>是</td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.list.orderUseEmpList.userType</td><td>STRING</td><td>是</td><td>USE_USER：订单使用人<br>RESERVE_USER：订单预订人</td><td></td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>是</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>是</td><td>请求结果</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>是</td><td>错误信息</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+    &quot;start&quot;:0,
+    &quot;limit&quot;: 100,
+    &quot;queryDto&quot;: {
+        &quot;orderSeqIdList&quot;: [],
+        &quot;thirdOrderIdList&quot;: [&quot;DC24040769184573614&quot;],
+        &quot;platform&quot;: &quot;DTTRIP&quot;,
+        &quot;startDate&quot;: null,
+        &quot;endDate&quot;: null,
+	&quot;tripApplyBillIdList&quot;:[]
+    }
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;total&quot;: 1,
+        &quot;list&quot;: [
+            {
+                &quot;orderSeqId&quot;: 80291971677,
+                &quot;thirdOrderId&quot;: &quot;DC24040769184573614&quot;,
+                &quot;parentOrderId&quot;: null,
+                &quot;orderStatus&quot;: &quot;N&quot;,
+                &quot;financialReimStatus&quot;: &quot;0&quot;,
+                &quot;empReimStatus&quot;: &quot;0&quot;,
+                &quot;settleStatus&quot;: &quot;0&quot;,
+                &quot;budgetUseFlag&quot;: &quot;0&quot;,
+                &quot;payType&quot;: &quot;1&quot;,
+                &quot;platform&quot;: &quot;DTTRIP&quot;,
+                &quot;productType&quot;: &quot;CAR&quot;,
+                &quot;amount&quot;: 18.56,
+                &quot;excludeServiceFee&quot;: 18.56,
+                &quot;serviceFee&quot;: 0.00,
+                &quot;refundChangeServiceFee&quot;: 0.00,
+                &quot;postCommission&quot;: 0.00,
+                &quot;orderTime&quot;: &quot;1&quot;,
+                &quot;tripStartTime&quot;: &quot;2024-04-07&quot;,
+                &quot;tripEndTime&quot;: &quot;2024-04-07&quot;,
+                &quot;bookEmpNumber&quot;: &quot;6666666&quot;,
+                &quot;bookEmpName&quot;: &quot;刘邦&quot;,
+                &quot;useUserName&quot;: &quot;王振宇&quot;,
+                &quot;tripApplyBillId&quot;: null,
+                &quot;departCityCode&quot;: &quot;78&quot;,
+                &quot;departCityName&quot;: &quot;苏州市&quot;,
+                &quot;destinationCityCode&quot;: &quot;78&quot;,
+                &quot;destinationCityName&quot;: &quot;苏州市&quot;,
+                &quot;orderAbstract&quot;: &quot;打车时间：2024-04-07 15:04:45;车型名称：广汽埃安·AION S;出发时间：2024-04-07 15:07:06;到达时间：2024-04-07 15:17:16;出发地详细地址：华府·壹区东区;到达地详细地址：英诺赛科西门宿舍19栋;支付方式：公司支付;&quot;,
+                &quot;orderUseEmpList&quot;: [
+                    {
+                        &quot;useEmpNumber&quot;: &quot;EMP1&quot;,
+                        &quot;useEmpName&quot;: &quot;陈一&quot;,
+                        &quot;userType&quot;: &quot;USE_USER&quot;
+                    },
+                    {
+                        &quot;useEmpNumber&quot;: &quot;EMP1&quot;,
+                        &quot;useEmpName&quot;: &quot;陈一&quot;,
+                        &quot;userType&quot;: &quot;RESERVE_USER&quot;
+                    }
+                ]
+            }
+        ]
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>SUC0000</td><td>成功</td></tr>
+</tbody></table>
+</body>
+</html>

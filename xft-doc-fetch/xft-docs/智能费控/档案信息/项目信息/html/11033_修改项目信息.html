@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>修改项目信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>修改项目信息</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/project/update</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/project/update</p>
+<h2>接口描述</h2>
+<p>修改项目信息</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.projectSeqId</td><td>LONG</td><td>是</td><td>项目自增ID</td><td>239</td></tr>
+<tr><td>body.comId</td><td>LONG</td><td>否</td><td>公司ID</td><td>3100</td></tr>
+<tr><td>body.projectId</td><td>STRING</td><td>否</td><td>项目编码</td><td>20211020094758b09bf</td></tr>
+<tr><td>body.projectName</td><td>STRING</td><td>否</td><td>项目名称</td><td>API导入项目456</td></tr>
+<tr><td>body.projectParentId</td><td>STRING</td><td>否</td><td>上级项目编码</td><td>202110200947588754d</td></tr>
+<tr><td>body.projectParentName</td><td>STRING</td><td>否</td><td>上级项目名称</td><td>API导入项目123</td></tr>
+<tr><td>body.projectStatus</td><td>BOOLEAN</td><td>否</td><td>项目状态</td><td>true</td></tr>
+<tr><td>body.projectLevel</td><td>LONG</td><td>否</td><td>项目层级</td><td>2</td></tr>
+<tr><td>body.projectTypeName</td><td>STRING</td><td>否</td><td>项目类型名称</td><td>API导入项目类型</td></tr>
+<tr><td>body.projectTypeId</td><td>STRING</td><td>否</td><td>项目类型编码</td><td>PRJTYPE20220408112737</td></tr>
+<tr><td>body.projectType</td><td>OBJECT</td><td>否</td><td>项目类型</td><td></td></tr>
+<tr><td>body.projectType.prjTypeId</td><td>STRING</td><td>否</td><td>项目类型编码</td><td>PRJTYPE20230602113257</td></tr>
+<tr><td>body.projectRoles</td><td>ARRAY</td><td>否</td><td>项目角色</td><td></td></tr>
+<tr><td>body.projectRoles.prjRoleSeqId</td><td>LONG</td><td>否</td><td>项目角色自增ID</td><td>1388</td></tr>
+<tr><td>body.projectRoles.prjRoleNam</td><td>STRING</td><td>否</td><td>项目角色名称</td><td>demoData</td></tr>
+<tr><td>body.projectRoles.userGroup</td><td>ARRAY</td><td>否</td><td>项目角色可见用户组</td><td></td></tr>
+<tr><td>body.projectRoles.userGroup.prjTypeSeqId</td><td>LONG</td><td>否</td><td>项目类型自增ID</td><td>1388</td></tr>
+<tr><td>body.projectRoles.userGroup.typeSeqId</td><td>LONG</td><td>否</td><td>项目角色类型自增ID</td><td>41856</td></tr>
+<tr><td>body.projectRoles.userGroup.type</td><td>STRING</td><td>否</td><td>类型</td><td>EMPLOYEE</td></tr>
+<tr><td>body.visibleType</td><td>BOOLEAN</td><td>否</td><td>可见范围（true为全部可见）</td><td>true</td></tr>
+<tr><td>body.userGroup</td><td>ARRAY</td><td>否</td><td>可见用户组</td><td></td></tr>
+<tr><td>body.userGroup.type</td><td>STRING</td><td>否</td><td>类型</td><td>EMPLOYEE</td></tr>
+<tr><td>body.userGroup.staff</td><td>OBJECT</td><td>否</td><td>员工信息</td><td></td></tr>
+<tr><td>body.userGroup.staff.empId</td><td>STRING</td><td>否</td><td>员工id</td><td>U0000</td></tr>
+<tr><td>body.userGroup.staff.empNumber</td><td>STRING</td><td>否</td><td>员工花名册编码</td><td>A0001</td></tr>
+<tr><td>body.userGroup.staff.empNam</td><td>STRING</td><td>否</td><td>员工名称</td><td>员工名</td></tr>
+<tr><td>body.userGroup.staff.phoneNbr</td><td>LONG</td><td>否</td><td>员工手机号</td><td>18111111111</td></tr>
+<tr><td>body.startDate</td><td>STRING</td><td>否</td><td>起始日期</td><td>2021-10-18</td></tr>
+<tr><td>body.endDate</td><td>STRING</td><td>否</td><td>终止日期</td><td>2021-11-18</td></tr>
+<tr><td>body.customFieldValues</td><td>ARRAY</td><td>否</td><td>自定义字段值</td><td></td></tr>
+<tr><td>body.customFieldValues.customFieldCode</td><td>STRING</td><td>否</td><td>字段编号</td><td>MULTI_INPUT_094518693</td></tr>
+<tr><td>body.customFieldValues.customFieldValue</td><td>LONG</td><td>否</td><td>自定义字段填写值</td><td>123456</td></tr>
+<tr><td>body.overdue</td><td>BOOLEAN</td><td>否</td><td>逾期状态</td><td>false</td></tr>
+<tr><td>body.projectStageDto</td><td>OBJECT</td><td></td><td>项目状态</td><td></td></tr>
+<tr><td>body.projectStageDto.projectStageCode</td><td>STRING</td><td></td><td>项目状态编码</td><td>code</td></tr>
+<tr><td>body.projectStageDto.projectStageName</td><td>STRING</td><td></td><td>项目状态名称</td><td>状态名称</td></tr>
+<tr><td>body.applyUserConfig</td><td>OBJECT</td><td></td><td>适用范围对象</td><td></td></tr>
+<tr><td>body.applyUserConfig.applyUser</td><td>STRING</td><td></td><td>* 全部：“1”<br>* 部分：“0”</td><td>&quot;0&quot;</td></tr>
+<tr><td>body.applyUserConfig.departIncludeChild</td><td>BOOLEAN</td><td></td><td>* 是：true<br>* 否：false</td><td>false</td></tr>
+<tr><td>body.applyUserConfig.statisticsType</td><td>STRING</td><td></td><td>* 并集：UNION_SET<br>* 交集：INTERSECTION</td><td>UNION_SET</td></tr>
+<tr><td>body.applyUserConfig.applyUserConfigDtoList</td><td>ARRAY</td><td></td><td>支持 员工（EMPLOYEE），部门（DEPARTMENT），角色（ROLE），职级（RANK），岗位（POST），职位（JOB）配置</td><td></td></tr>
+<tr><td>body.applyUserConfig.applyUserConfigDtoList.authType</td><td>STRING</td><td></td><td>支持 如下适用类型的配置：<br>* 员工：EMPLOYEE<br>* 部门：DEPARTMENT<br>* 角色：ROLE<br>* 职级：RANK<br>* 岗位：POST<br>* 职位：JOB</td><td>EMPLOYEE</td></tr>
+<tr><td>body.applyUserConfig.applyUserConfigDtoList.typeCode</td><td>STRING</td><td></td><td>* 当authType为EMPLOYEE 当前字段传企业自己的员工号（门户维护）<br>* 当authType为DEPARTMENT当前字段传企业自己的部门号（门户维护）<br>* 当authType为ROLE当前字段传企业自己的角色号（门户维护）<br>* 当authType为RANK当前字段传企业自己的职级号（门户维护）<br>* 当authType为POST当前字段传企业自己的岗位号（门户维护）<br>* 当authType为JOB当前字段传企业自己的职位号（门户维护）</td><td>800000000</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td></td><td>成功标志</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td></td><td>错误信息</td><td>调用成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+<p>` {BaseURL}/api/v1/project/update</p>
+<pre><code>
+{
+    &quot;projectSeqId&quot;: 239,
+    &quot;comId&quot;: 3100,
+    &quot;projectId&quot;: &quot;20211020094758b09bf&quot;,
+    &quot;projectName&quot;: &quot;API导入项目456&quot;,
+    &quot;projectParentId&quot;: &quot;202110200947588754d&quot;,
+    &quot;projectParentName&quot;: &quot;API导入项目123&quot;,
+    &quot;projectStatus&quot;: true,
+    &quot;projectLevel&quot;: &quot;2&quot;,
+    &quot;projectTypeName&quot;: &quot;API导入项目类型&quot;,
+    &quot;projectTypeId&quot;: &quot;PRJTYPE20220408112737&quot;,
+    &quot;projectType&quot;: {
+        &quot;prjTypeId&quot;: &quot;PRJTYPE20230602113257&quot;
+    },
+    &quot;projectRoles&quot;: [
+        {
+            &quot;prjRoleSeqId&quot;: 1388,
+            &quot;prjRoleNam&quot;: &quot;demoData&quot;,
+            &quot;userGroup&quot;: [
+                {
+                    &quot;prjTypeSeqId&quot;: 1388,
+                    &quot;typeSeqId&quot;: 41856,
+                    &quot;type&quot;: &quot;EMPLOYEE&quot;
+                },
+                {
+                    &quot;prjTypeSeqId&quot;: 1388,
+                    &quot;type&quot;: &quot;EMPLOYEE&quot;,
+                    &quot;staff&quot;: {
+                        &quot;empId&quot;: &quot;V0001&quot;
+                    }
+                }
+            ]
+        },
+        {
+            &quot;prjRoleSeqId&quot;: null,
+            &quot;prjRoleNam&quot;: &quot;demoData111&quot;,
+            &quot;userGroup&quot;: [
+                {
+                    &quot;prjTypeSeqId&quot;: 1388,
+                    &quot;typeSeqId&quot;: 41856,
+                    &quot;type&quot;: &quot;EMPLOYEE&quot;
+                },
+                {
+                    &quot;prjTypeSeqId&quot;: 1388,
+                    &quot;type&quot;: &quot;EMPLOYEE&quot;,
+                    &quot;staff&quot;: {
+                        &quot;empId&quot;: &quot;V0001&quot;
+                    }
+                }
+            ]
+        }
+    ],
+    &quot;visibleType&quot;: true,
+    &quot;userGroup&quot;: [
+        {
+            &quot;type&quot;: &quot;EMPLOYEE&quot;,
+            &quot;staff&quot;: {
+                &quot;empId&quot;: &quot;U0000&quot;,
+                &quot;empNumber&quot;: &quot;A0001&quot;,
+                &quot;empNam&quot;: &quot;员工名&quot;,
+                &quot;phoneNbr&quot;: &quot;18111111111&quot;
+            }
+        }
+    ],
+    &quot;startDate&quot;: &quot;2021-10-18&quot;,
+    &quot;endDate&quot;: &quot;2021-10-18&quot;,
+    &quot;customFieldValues&quot;: [
+        {
+            &quot;customFieldCode&quot;: &quot;MULTI_INPUT_094518693&quot;,
+            &quot;customFieldValue&quot;: &quot;123456&quot;
+        },
+        {
+            &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_094551901&quot;,
+            &quot;multiValues&quot;: [
+                {
+                    &quot;id&quot;: &quot;选项1&quot;
+                },
+                {
+                    &quot;id&quot;: &quot;选项2&quot;
+                }
+            ]
+        }
+    ],
+    &quot;overdue&quot;: false,
+    &quot;applyUserConfig&quot;: {
+        &quot;applyUser&quot;: &quot;0&quot;,
+        &quot;applyUserConfigDtoList&quot;: [
+            {
+                &quot;authType&quot;: &quot;EMPLOYEE&quot;,
+                &quot;typeCode&quot;: &quot;010585&quot;
+            },
+            {
+                &quot;authType&quot;: &quot;DEPARTMENT&quot;,
+                &quot;typeCode&quot;: &quot;1024&quot;
+            }
+        ],
+        &quot;departIncludeChild&quot;: false,
+        &quot;statisticsType&quot;: &quot;UNION_SET&quot;
+    }
+}
+</code></pre>
+<h3>返回示例</h3>
+<pre><code>
+{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>200</td><td>成功</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

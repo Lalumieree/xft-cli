@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>更新数据源及选项</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>更新数据源及选项</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/dataSource/updateMultilevelSourceAndOption</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/dataSource/updateMultilevelSourceAndOption</p>
+<h2>接口描述</h2>
+<p>**用于费控单据配置下的自定义字段的自定义选项数据源的更新**</p>
+
+<p>更新 费控 单据配置 --&gt; 自定义字段 --&gt; 层级选择 --&gt; 数据源及选项</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.id</td><td>STRING</td><td>是</td><td>数据源id</td><td>SOUR02</td></tr>
+<tr><td>body.selectSourceName</td><td>STRING</td><td>是</td><td>自定义数据源名称</td><td>数据源1号</td></tr>
+<tr><td>body.optionSaveDtoList</td><td>ARRAY</td><td>否</td><td>树形结构。选项层级，最多支持三层</td><td>[{&quot;selectOptionName&quot;: &quot;选项12&quot;}]</td></tr>
+<tr><td>body.optionSaveDtoList.selectOptionName</td><td>STRING</td><td>否</td><td>选项名称</td><td>选项1</td></tr>
+<tr><td>body.optionSaveDtoList.optionSaveDtoList</td><td>ARRAY</td><td>否</td><td>子选项集合<br>层级字段一致（与上一级结构、字段一样）<br>会存在不固定的多级<br>最多支持3级</td><td>[{&quot;selectOptionName&quot;: &quot;选项12&quot;}]</td></tr>
+<tr><td>body.optionSaveDtoList.optionSaveDtoList.selectOptionName</td><td>STRING</td><td></td><td>子级选项名称</td><td>子选项1</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>true: 请求成功<br>false：请求失败</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>成功时：调用成功<br>失败时：失败的具体信息</td><td>调用成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+<p>{BaseURL}/api/itrip-gateway/v1/dataSource/updateMultilevelSourceAndOption</p>
+<pre><code>
+{
+        &quot;id&quot;: &quot;SOUR02&quot;,
+        &quot;selectSourceName&quot;: &quot;数据源1号&quot;,
+        &quot;optionSaveDtoList&quot;: [
+            {
+                &quot;selectOptionName&quot;: &quot;选项1&quot;,
+                &quot;optionSaveDtoList&quot;: [
+                    {
+                        &quot;selectOptionName&quot;: &quot;选项11&quot;,
+                        &quot;optionSaveDtoList&quot;: [
+                            {
+                                &quot;selectOptionName&quot;: &quot;选项12&quot;,
+                                &quot;optionSaveDtoList&quot;: null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+</code></pre>
+<h3>返回示例</h3>
+<pre><code>
+{ 
+	   &quot;success&quot;:  true,
+	   &quot;message&quot;:  &quot;调用成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>400</td><td>请联系管理员配置企业信息</td><td>无</td></tr>
+<tr><td>ERR0000</td><td>解密失败</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

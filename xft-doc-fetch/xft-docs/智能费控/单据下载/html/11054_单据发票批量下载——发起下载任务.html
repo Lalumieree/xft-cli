@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>单据发票批量下载——发起下载任务</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>单据发票批量下载——发起下载任务</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/invoice/batchInvoiceExport</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/invoice/batchInvoiceExport</p>
+<h2>接口描述</h2>
+<p>此接口用于发起下载任务，下载结果通过回调接口获取,最大支持发起50条单据的下载任务。</p>
+
+<p>关联接口使用说明：</p>
+<p>1.使用接口/v1/invoice/batchInvoiceExport发起下载任务，返回批次号；</p>
+<p>2. 根据改批次号可以调用接口/v1/invoice/queryProcess查询该批次每个单据的下载进度（下载中或者已完成）；</p>
+<p>3. 下载完成的单据可以通过接口/v1/invoice/downloadHisInvoice 下载对应的压缩文件。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>ARRAY</td><td>是</td><td>请求体根节点<br>单据编号数组 最多50个<br>[2021063000806212]</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td>是</td><td>薪福通企业号</td><td>XFT00001</td></tr>
+<tr><td>query.restart</td><td>BOOLEAN</td><td></td><td>发票任务存在问题时再使用，默认请求请勿携带</td><td>false</td></tr>
+<tr><td>query.detail</td><td>STRING</td><td></td><td>如果为1，导出的excel会多一个发票明细的sheet</td><td>1</td></tr>
+<tr><td>query.callbackUrl</td><td>STRING</td><td></td><td>优先级最高，否则取默认回调地址</td><td></td></tr>
+<tr><td>query.option</td><td>INTEGER</td><td></td><td>默认值为1，仅下载发票附件；值为2时，可以下载发票附件和单据中的附件。</td><td>1</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.success</td><td>STRING</td><td></td><td>调用结果</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td></td><td>调用结果信息</td><td>调用成功</td></tr>
+<tr><td>body.data</td><td>INTEGER</td><td></td><td>每一次请求返回一个请求序号</td><td>121331313</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+<p>` {BaseURL}/api/v1/invoice/batchInvoiceExport?OPAUID=XFT00001`</p>
+<pre><code>
+[2021000000000000]
+</code></pre>
+
+<h3>返回示例</h3>
+<pre><code>
+{
+ &quot;success&quot;: true,
+ &quot;message&quot;: &quot;调用成功！&quot;,
+ &quot;data&quot;:121331313
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>200</td><td>成功</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>新建付款申请单</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>新建付款申请单</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/pay-apply/create</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/pay-apply/create</p>
+<h2>接口描述</h2>
+<p>支持系统调用接口新增付款申请单，支持创建草稿和审批完结状态的付款申请单</p>
+
+<p>自定义字段传值格式和说明如下：</p>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>字段类型</th><th>说明</th><th>fieldValue示例</th></tr></thead>
+<tbody>
+<tr><td>单行文本</td><td>长度限制以自定义字段配置为准，value以字符串格式传入</td><td>单行文本11</td></tr>
+<tr><td>多行文本</td><td>长度限制以自定义字段配置为准，value以字符串格式传入</td><td>多行文本11</td></tr>
+<tr><td>数字</td><td>小数位和整数位以自定义字段配置为准，value以字符串格式传入</td><td>8.6</td></tr>
+<tr><td>金额</td><td>小数位和整数位以自定义字段配置为准，value以字符串格式传入</td><td>9.6</td></tr>
+<tr><td>单选</td><td>选项值，value以字符串格式传入</td><td>选项1</td></tr>
+<tr><td>多选</td><td>选项值，value以Json格式字符串传入</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td></tr>
+<tr><td>下拉选择</td><td>支持单/多选，以自定义字段配置为准, value 以选项值传入 Json格式字符串</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td></tr>
+<tr><td>手机号码</td><td>value以字符串格式传入</td><td>11111111111</td></tr>
+<tr><td>日期选择</td><td>以自定义字段配置为准, value以yyyy-mm-dd hh:mm格式传入</td><td>2023-08-01 12:30</td></tr>
+<tr><td>日期区间</td><td>以自定义字段配置为准, value以yyyy-mm-dd hh:mm格式，用&quot;,&quot;拼接传入</td><td>2023-08-01 12:30,2023-08-02 12:30</td></tr>
+<tr><td>银行卡号</td><td>value以字符串格式传入</td><td>1111111111111111</td></tr>
+<tr><td>邮箱</td><td>value以字符串格式传入</td><td>123456@163.com</td></tr>
+<tr><td>附件</td><td>附件编号，value以字符串格式传入</td><td>[\&quot;4960216b-8dd9-499e-86f2-3035c9445c96\&quot;, \&quot;4960216b-8dd9-499e-86f2-3035c9445c96\&quot;]</td></tr>
+<tr><td>层级选择</td><td>选项层级、选项值，以及和选项路径所有节点的选项层级、选项值。选项层级以数字传入，选项值为字符串</td><td>[{\&quot;level\&quot;: \&quot;1\&quot;, \&quot;value\&quot;: \&quot;选项1\&quot;}, {\&quot;level\&quot;: \&quot;2\&quot;, \&quot;value:\&quot;: \&quot;选项1-1\&quot;}]</td></tr>
+<tr><td>关联字段</td><td>value以字符串格式传入</td><td>关联字段值</td></tr>
+<tr><td>表格</td><td>每一行根据序号值区分，每一行中，每个表格值将titleCode和value 传入 Json格式字符串</td><td>[{\&quot;sequence\&quot;: 1, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;张三\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;26\&quot;}]},{\&quot;sequence\&quot;: 2, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;李四\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;28\&quot;}]}]</td></tr>
+<tr><td>人员</td><td>value 以花名册编号传入 Json格式字符串</td><td>[\&quot;EMP_NUMBER_01\&quot;, \&quot;EMP_NUMBER_02\&quot;]</td></tr>
+<tr><td>单据部门</td><td>组织编码以字符串形式传入</td><td>00000001</td></tr>
+<tr><td>单据项目</td><td>value以项目编码传入 Json格式字符串</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>关联单据</td><td>费控系统单据编号，以字符串形式传入</td><td>2023080202288221</td></tr>
+<tr><td>申请金额</td><td>小数位和整数位以自定义字段配置为准，value以字符串格式传入</td><td>66.6</td></tr>
+<tr><td>城市</td><td>城市编码，以字符串形式传入</td><td>20</td></tr>
+<tr><td>供应商</td><td>value以供应商编号传入</td><td>SUP20211109091900</td></tr>
+<tr><td>客户</td><td>value以客户编号传入 Json格式字符串</td><td>[\&quot;CUSTOMER_01\&quot;, \&quot;CUSTOMER_02\&quot;]</td></tr>
+<tr><td>合同</td><td>value以合同编号传入</td><td>8768768768768</td></tr>
+<tr><td>成本中心</td><td>value以成本中心编号传入</td><td>center001</td></tr>
+<tr><td>档案选择</td><td>value以自定义档案选项编码传入</td><td>option01</td></tr>
+<tr><td>部门</td><td>value以薪福通组织编码传入 Json格式字符串</td><td>[\&quot;ORG_01\&quot;, \&quot;ORG_02\&quot;]</td></tr>
+<tr><td>项目</td><td>value以项目编码传入 Json格式字符串</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>事业部</td><td>value以薪福通组织编码传入</td><td>00000211</td></tr>
+<tr><td>事项</td><td>配置为必填时，业务类型编码必传，且下级存在事项和事由时，事项编码和事由编码必传。value以“业务类型编码,事项编码,事由编码”传入 Json格式字符串</td><td>[\&quot;MATTER_TYPE_1\&quot;, \&quot;MATTER_MISSION_1\&quot;, \&quot;MATTER_DETAIL_1\&quot;]</td></tr>
+<tr><td>收款账户</td><td>value以个人或供应商银行账户号，开户行，户名传入 Json格式字符串；匹配启用状态的个人或供应商收款账户</td><td>[\&quot;1111111111111111\&quot;, \&quot;中国银行\&quot;, \&quot;小朱\&quot;]</td></tr>
+</tbody></table>
+
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.eventNumber</td><td>STRING</td><td>是</td><td>单据表单编号</td><td>01240109103725000001</td></tr>
+<tr><td>body.empNumber</td><td>STRING</td><td>是</td><td>申请人薪福通花名册员工号</td><td>11111111</td></tr>
+<tr><td>body.billCompanyCode</td><td>STRING</td><td>否</td><td>薪福通法人公司编码，不传默认为申请人所属公司；<br><br>传入的单据公司与申请人不一致时，单据部门编号必传<br><br>billDepartmentCode和billCompanyCode需要同时指定或者同时为空</td><td>COR000001</td></tr>
+<tr><td>body.billDepartmentCode</td><td>STRING</td><td>否</td><td>薪福通部门组织编码，不传默认为申请人所属部门；<br><br>传入的单据部门与申请人不一致时，单据公司编号必传<br><br>billDepartmentCode和billCompanyCode需要同时指定或者同时为空</td><td>0000001</td></tr>
+<tr><td>body.billStatus</td><td>STRING</td><td>是</td><td>DRAFT：草稿；APPRV：审批通过；APPRV_PEND： 审批中；</td><td>DRAFT</td></tr>
+<tr><td>body.outRelId</td><td>STRING</td><td>否</td><td>外部单据编号</td><td>66666</td></tr>
+<tr><td>body.checkDuplicateOutRelId</td><td>BOOLEAN</td><td></td><td>true:校验， false：不校验， 不传值时默认false</td><td>true</td></tr>
+<tr><td>body.customFieldValues</td><td>ARRAY</td><td>否</td><td>配置为必填时，不能为空</td><td></td></tr>
+<tr><td>body.customFieldValues.fieldNumber</td><td>STRING</td><td></td><td>需要在表单配置对应的自定义字段，随机生成字段编码并保存后才可以使用<br><br>外层customFieldValues不为空时，该字段非空</td><td>MULTI_INPUT_170948711</td></tr>
+<tr><td>body.customFieldValues.fieldValue</td><td>STRING</td><td></td><td>请参考接口描述中自定义字段传值格式和说明</td><td>多行文本</td></tr>
+<tr><td>body.billPayApply</td><td>OBJECT</td><td>是</td><td>付款申请组件</td><td></td></tr>
+<tr><td>body.billPayApply.payAccessories</td><td>STRING</td><td>否</td><td>附件上传接口返回的附件自增ID<br><br>免审接口，且表单配置要求附件必填时非空</td><td>11111</td></tr>
+<tr><td>body.billPayApply.remark</td><td>STRING</td><td>否</td><td>免审接口，且表单配置要求备注必填时非空</td><td>这是付款申请组件里的备注</td></tr>
+<tr><td>body.billPayApply.payAccount</td><td>OBJECT</td><td>否</td><td>付款申请单表单配置中，付款账户和付款方式维护模式分为制单人填写和财务人员填写<br><br>配置为制单人填写时，表单上会有公司付款账户，此时如果不传payAccount，会塞默认的账户，请提单前注意核对<br><br>配置为财务人员填写时，表单上没有公司付款账户，此时即使传入payAccount，回填仍为payAccount:null</td><td></td></tr>
+<tr><td>body.billPayApply.payAccount.acctNo</td><td>STRING</td><td>否</td><td>公司付款账户的银行卡号<br>如果传银行卡号或者开户名，则两个都必须传<br><br>外层payAccount信息不为空时，该字段非空</td><td>1111111111111111</td></tr>
+<tr><td>body.billPayApply.payAccount.depoName</td><td>STRING</td><td>否</td><td>公司付款账户的开户名<br>如果传银行卡号或者开户名，则两个都必须传<br><br>外层payAccount信息不为空时，该字段非空</td><td>这是开户名</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList</td><td>ARRAY</td><td>否</td><td>付款申请明细<br><br>除非传值null或者[]，否则只要有字段传入，就会触发校验<br><br>校验包含：<br><br>供应商是否存在，是否适用当前单据公司<br><br>传入的付款方式中是否存在启用的对公的付款方式<br><br>付款金额是否为负数<br><br>供应商是否绑定收款账户，收款账户信息是否与供应商信息匹配<br><br>每条明细中的付款方式是否为存在的对公的付款方式</td><td></td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>最多9位整数，2位小数<br><br>无付款金额时，传0兜底</td><td>111.11</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.payTypInf</td><td>OBJECT</td><td>否</td><td>付款账户payAccount不为空时非空</td><td></td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.payTypInf.payMethod</td><td>STRING</td><td>否</td><td>付款方式需要传启用的对公的付款方式，如果要传值就必须不为空<br><br>付款账户payAccount不为空时非空</td><td>付款方式</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.planPayDate</td><td>DATE</td><td>否</td><td>日期格式yyyy-MM-dd</td><td>2024-05-26</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.supId</td><td>STRING</td><td>否</td><td>供应商新增、维护时设置<br><br>外层payApplyDetailList不为空时该字段非空</td><td>SUP11111111111111</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.receiveAccount</td><td>OBJECT</td><td>否</td><td>外层非空时不能为空</td><td></td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.receiveAccount.acctNo</td><td>STRING</td><td>否</td><td>付款申请明细中的收款账户银行卡号<br><br>外层receiveAccount不为空时该字段非空<br><br>如果传银行卡号或者开户名，则两个都必须传</td><td>1111111111111111</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.receiveAccount.depoName</td><td>STRING</td><td>否</td><td>付款申请明细中的收款账户开户名<br><br>外层receiveAccount不为空时该字段非空<br><br>如果传银行卡号或者开户名，则两个都必须传</td><td>这是开户名</td></tr>
+<tr><td>body.billPayApply.payApplyDetailList.remark</td><td>STRING</td><td>否</td><td>付款明细里的备注</td><td>这是付款明细里的备注</td></tr>
+<tr><td>body.billApplyAuthCheckType</td><td>STRING</td><td></td><td>Y需要校验 N 不需要校验<br>只有免审批单据才可以传N不校验</td><td>Y</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>LONG</td><td>否</td><td>单据编号</td><td>2024030502646401</td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>SUC0000-成功，E0001-系统错误</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否成功</td><td>true-成功 false-失败</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;eventNumber&quot;: &quot;01240109103725000001&quot;,
+    &quot;empNumber&quot;: &quot;00000001&quot;,
+    &quot;billCompanyCode&quot;: &quot;&quot;,
+    &quot;billDepartmentCode&quot;: &quot;&quot;,
+    &quot;customFieldValues&quot;: [
+        {
+            &quot;fieldNumber&quot;: &quot;INPUT_145920390&quot;,
+            &quot;fieldValue&quot;: &quot;这是单行文本&quot;
+        },
+        {
+            &quot;fieldNumber&quot;: &quot;INFINITY_SELECT_145945623&quot;,
+            &quot;fieldValue&quot;: &quot;[\&quot;选项3\&quot;]&quot;
+        },
+        {
+            &quot;fieldNumber&quot;: &quot;ADV_STAFF_150310586&quot;,
+            &quot;fieldValue&quot;: &quot;[\&quot;00010\&quot;]&quot;
+        }
+    ],
+    &quot;billStatus&quot;: &quot;DRAFT&quot;,
+    &quot;outRelId&quot;: &quot;1233211&quot;,
+    &quot;checkDuplicateOutRelId&quot;: false,
+    &quot;billApplyAuthCheckType&quot;: &quot;N&quot;,
+    &quot;billPayApply&quot;: {
+        &quot;payAccessories&quot;: &quot;11111&quot;,
+        &quot;remark&quot;: &quot;这是付款申请组件里的备注&quot;,
+        &quot;payAccount&quot;: {
+            &quot;acctNo&quot;: &quot;0000000000000001&quot;,
+            &quot;depoName&quot;: &quot;公司付款账户开户名&quot;
+        },
+        &quot;payApplyDetailList&quot;: [
+            {
+                &quot;payAmt&quot;: 111.1,
+                &quot;payTypInf&quot;: {
+                    &quot;payMethod&quot;: &quot;付款方式1&quot;
+                },
+                &quot;planPayDate&quot;: &quot;2024-05-26&quot;,
+                &quot;supId&quot;: &quot;SUP11111111111111&quot;,
+                &quot;receiveAccount&quot;: {
+                    &quot;acctNo&quot;: &quot;0000000000000002&quot;,
+                    &quot;depoName&quot;: &quot;付款申请明细开户名&quot;
+                },
+                &quot;remark&quot;: &quot;这是付款明细里的备注&quot;
+            }
+        ]
+    }
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: 2024030502646401,
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>E0001</td><td>具体业务异常提示</td></tr>
+<tr><td>E0001</td><td>单据公司和单据部门需要同时指定或者同时为空</td></tr>
+<tr><td>E0001</td><td>请传入企业用户ID</td></tr>
+<tr><td>E0001</td><td>请传入花名册员工号</td></tr>
+<tr><td>E0001</td><td>请传入正确的员工匹配规则</td></tr>
+<tr><td>E0001</td><td>创建付款申请单失败</td></tr>
+<tr><td>E0001</td><td>表单不存在</td></tr>
+<tr><td>E0001</td><td>传入的付款申请信息为空</td></tr>
+<tr><td>E0001</td><td>暂不支持除草稿、待审批、审批通过之外的单据状态</td></tr>
+<tr><td>E0001</td><td>非免审批的单据必须校验发起权限</td></tr>
+<tr><td>E0001</td><td>银行账号和银行开户名必须同时传入</td></tr>
+<tr><td>E0001</td><td>不存在单据公司下的付款账户信息！</td></tr>
+<tr><td>E0001</td><td>传入的供应商编码不存在对应的供应商</td></tr>
+<tr><td>E0001</td><td>传入的供应商编码不存在对应的适用于当前单据公司的供应商</td></tr>
+<tr><td>E0001</td><td>公司下没有启用的付款方式</td></tr>
+<tr><td>E0001</td><td>传入的供应商没有绑定收款账户</td></tr>
+<tr><td>E0001</td><td>收款账户与供应商信息不匹配或者账户未启用</td></tr>
+<tr><td>E0001</td><td>单据状态已更新，请刷新后重试</td></tr>
+<tr><td>E0001</td><td>当前单据状态不可提交，请刷新后重试</td></tr>
+<tr><td>E0001</td><td>付款账户必填，请确认后重试</td></tr>
+<tr><td>E0001</td><td>付款账户应由财务人员填写，请检查</td></tr>
+<tr><td>E0001</td><td>付款明细不能重复关联，请检查输入</td></tr>
+<tr><td>E0001</td><td>付款申请金额不正确，请检查</td></tr>
+<tr><td>E0001</td><td>您选择的付款明细币种不可用,请确认后重试</td></tr>
+<tr><td>E0001</td><td>付款明细中，本位币计算出错，请刷新后重试</td></tr>
+</tbody></table>
+</body>
+</html>

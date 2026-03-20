@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>根据用户信息查询单据详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>根据用户信息查询单据详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/queryBillByCondition</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/queryBillByCondition</p>
+<h2>接口描述</h2>
+<p>根据用户手机号和单据状态查询单据详情</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**参数**</th><th>**类型**</th><th>**必填**</th><th>**位置**</th><th>**长度**</th><th>**说明**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>OPAUID</td><td>String</td><td>是</td><td>param</td><td>8</td><td>公司标识</td><td>传薪福通企业号</td></tr>
+<tr><td>queryCondition</td><td>Object:BillExtDetailQueryConditionDto</td><td>是</td><td>body</td><td></td><td>单据查询条件</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;billApprSts</td><td>String</td><td>否</td><td>body</td><td>-</td><td>单据审批状态</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;billStatus</td><td>String</td><td>否</td><td>body</td><td>-</td><td>单据状态枚举类型</td><td>[参考字典](https://xft.cmbchina.com/open/#/home/open-document?anchor11%E5%8D%95%E6%8D%AE%E7%8A%B6%E6%80%81%E6%9E%9A%E4%B8%BE&amp;id=10692&amp;mid=11585)</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;empId</td><td>String</td><td>否</td><td>body</td><td>20</td><td>操作人员编号</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;empSeqId</td><td>Long</td><td>否</td><td>body</td><td>20</td><td>操作人员自增ID</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;phoneNumber</td><td>String</td><td>否</td><td>body</td><td>-</td><td>手机号</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;comId</td><td>Long</td><td>否</td><td>body</td><td>20</td><td>所属公司ID</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;limit</td><td>int</td><td>否</td><td>body</td><td>-</td><td>分页数量</td><td>-</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;ensp;start</td><td>int</td><td>否</td><td>body</td><td>-</td><td>分页起始</td><td>-</td></tr>
+</tbody></table>
+<h2>接口输出参数</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**参数**</th><th>**类型**</th><th>**说明**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>list</td><td>Array: Long</td><td>单据ID列表</td><td>-</td></tr>
+<tr><td>totalCount</td><td>String</td><td>分页需要的总数</td><td>-</td></tr>
+</tbody></table>
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+<pre><code>
+{BaseURL}/api/itrip-gateway/v1/bills/queryBillByCondition?OPAUID={OPAUID}
+{
+  &quot;billApprSts&quot;: null,
+  &quot;billStatus&quot;: &quot;1&quot;,
+  &quot;comId&quot;: null,
+  &quot;empId&quot;: null,
+  &quot;empSeqId&quot;: null,
+  &quot;phoneNumber&quot;: 14900000010,
+  &quot;limit&quot;: 10,
+  &quot;start&quot;: 0
+}
+</code></pre>
+
+<h3>返回示例</h3>
+<pre><code>
+{
+	list: [2021092800903820, 2021092800903821],
+	&quot;totalCount&quot;: 2
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>400</td><td>请联系管理员配置企业信息</td><td>无</td></tr>
+<tr><td>ERR0000</td><td>解密失败</td><td>无</td></tr>
+<tr><td>400</td><td>对应的员工信息不存在</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

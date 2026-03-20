@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>医招智付供应商端配送明细导入</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>医招智付供应商端配送明细导入</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-settle/supplier/distribution-detail/import</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-settle/supplier/distribution-detail/import</p>
+<h2>接口描述</h2>
+<p>药品配送明细导入，将集采平台业务系统中的药品配送明细数据推送至医招智付（供应商端）应用。</p>
+
+<p>以药品配送明细编码作为唯一键，重复导入时进行更新操作。</p>
+
+<p>注意：</p>
+<p>1. 批量接口，允许部分成功；</p>
+<p>2. 单次导入上限为1000；</p>
+<p>3. 已从供应商端推送至医院端的数据，不支持更新。</p>
+
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.hospitalXftCode</td><td>STRING</td><td>是</td><td>导入医院的薪福通企业号</td><td>&quot;XFT00001&quot;</td></tr>
+<tr><td>root.distributionDetails</td><td>ARRAY</td><td>是</td><td>导入的配送明细数据，上限为1000</td><td></td></tr>
+<tr><td>root.distributionDetails.distributionCode</td><td>STRING</td><td>是</td><td>唯一标识</td><td>&quot;S2025072922215&quot;</td></tr>
+<tr><td>root.distributionDetails.orderCode</td><td>STRING</td><td>否</td><td>订单编码</td><td>&quot;O202507111&quot;</td></tr>
+<tr><td>root.distributionDetails.productName</td><td>STRING</td><td>否</td><td>产品名称</td><td>&quot;布洛芬&quot;</td></tr>
+<tr><td>root.distributionDetails.productCode</td><td>STRING</td><td>否</td><td>产品编码</td><td>&quot;PROD202507777&quot;</td></tr>
+<tr><td>root.distributionDetails.projectName</td><td>STRING</td><td>否</td><td>项目名称</td><td>&quot;联合限价阳光采购&quot;</td></tr>
+<tr><td>root.distributionDetails.tradeName</td><td>STRING</td><td>否</td><td>商品名称</td><td>&quot;通用止痛药&quot;</td></tr>
+<tr><td>root.distributionDetails.hospListCode</td><td>STRING</td><td>否</td><td>院内目录编码</td><td>&quot;CSBESTGAME20250729&quot;</td></tr>
+<tr><td>root.distributionDetails.productSpec</td><td>STRING</td><td>否</td><td>产品规格</td><td>&quot;20ml:10mg&quot;</td></tr>
+<tr><td>root.distributionDetails.productMod</td><td>STRING</td><td>否</td><td>产品剂型</td><td>&quot;注射剂&quot;</td></tr>
+<tr><td>root.distributionDetails.productPackage</td><td>STRING</td><td>否</td><td>产品包装</td><td>&quot;100ml:10g(精制鱼油):1.2g(卵磷脂)×1瓶/瓶&quot;</td></tr>
+<tr><td>root.distributionDetails.approveNo</td><td>STRING</td><td>否</td><td>批准文号</td><td>&quot;国药准字J20150040&quot;</td></tr>
+<tr><td>root.distributionDetails.batchNumber</td><td>STRING</td><td>否</td><td>批次号</td><td>&quot;100-3333&quot;</td></tr>
+<tr><td>root.distributionDetails.pacConvRat</td><td>STRING</td><td>否</td><td>转换比</td><td>&quot;1.0/1&quot;</td></tr>
+<tr><td>root.distributionDetails.purchaseCount</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>200.5</td></tr>
+<tr><td>root.distributionDetails.deliveryCount</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>12.4</td></tr>
+<tr><td>root.distributionDetails.deliveryAmount</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>1888.5</td></tr>
+<tr><td>root.distributionDetails.deliveryTime</td><td>STRING</td><td>否</td><td>yyyy-MM-dd HH:mm:ss</td><td>&quot;2024-07-10 15:24:00&quot;</td></tr>
+<tr><td>root.distributionDetails.deliverEnterpriseName</td><td>STRING</td><td>否</td><td>配送企业名称</td><td>&quot;南京新时代药业有限公司&quot;</td></tr>
+<tr><td>root.distributionDetails.produceEnterpriseName</td><td>STRING</td><td>否</td><td>生产企业名称</td><td>&quot;上饶新时代建设有限公司&quot;</td></tr>
+<tr><td>root.distributionDetails.purchasePrice</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>18.5</td></tr>
+<tr><td>root.distributionDetails.highSelLmtPrice</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过15位，小数位不能超过6位</td><td>20.87</td></tr>
+<tr><td>root.distributionDetails.expiredDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>&quot;2024-12-27&quot;</td></tr>
+<tr><td>root.distributionDetails.receiveAddress</td><td>STRING</td><td>否</td><td>收货地址</td><td>&quot;江西省上饶市重阳大道999号&quot;</td></tr>
+<tr><td>root.distributionDetails.storageRoom</td><td>STRING</td><td>否</td><td>库房</td><td>&quot;一号库房&quot;</td></tr>
+<tr><td>root.distributionDetails.contactName</td><td>STRING</td><td>否</td><td>联系人</td><td>&quot;TOM&quot;</td></tr>
+<tr><td>root.distributionDetails.selInvoiceTwo</td><td>STRING</td><td>否</td><td>发票号码（二票）</td><td>&quot;202507290000&quot;</td></tr>
+<tr><td>root.distributionDetails.selInvoiceDateTwo</td><td>STRING</td><td>否</td><td>yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-08-28 19:00:00&quot;</td></tr>
+<tr><td>root.distributionDetails.selInvoiceOne</td><td>STRING</td><td>否</td><td>发票号码（一票）</td><td>&quot;12345678901234657890&quot;</td></tr>
+<tr><td>root.distributionDetails.selInvoiceDateOne</td><td>STRING</td><td>否</td><td>yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-08-28 19:00:00&quot;</td></tr>
+<tr><td>root.distributionDetails.traceCodes</td><td>STRING</td><td>否</td><td>多个追溯码使用英文逗号,拼接</td><td>&quot;123354645656,434354545657&quot;</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>调用失败：EROOR1； <br>执行失败：EROOR2；<br>执行成功：SUC0000；<br>参数错误：E0002</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>成功时 返回true；<br>失败时 返回false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>调用成功时，返回“成功”；<br>调用失败时，返回错误消息。</td><td>&quot;成功&quot;</td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>是</td><td>导入结果</td><td></td></tr>
+<tr><td>root.body.succeedSize</td><td>INTEGER</td><td>是</td><td>导入成功条数</td><td>100</td></tr>
+<tr><td>root.body.failedSize</td><td>INTEGER</td><td>是</td><td>导入失败条数</td><td>0</td></tr>
+<tr><td>root.body.result</td><td>BOOLEAN</td><td>是</td><td>导入部分成功、全部成功：true；<br>全部失败：false</td><td>true</td></tr>
+<tr><td>root.body.errorList</td><td>ARRAY</td><td></td><td>导入失败的数据</td><td></td></tr>
+<tr><td>root.body.errorList.distributeCode</td><td>STRING</td><td></td><td>配送明细编码</td><td>&quot;S123456789&quot;</td></tr>
+<tr><td>root.body.errorList.errorMessage</td><td>STRING</td><td></td><td>错误信息</td><td>&quot;配送企业名称长度不能超过200位&quot;</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;hospitalXftCode&quot;: &quot;XFT00001&quot;,
+     &quot;distributionDetails&quot;: [
+        {
+            &quot;distributionCode&quot;: &quot;DIS-20230101-001&quot;,
+            &quot;orderCode&quot;: &quot;ORD-20230101-001&quot;,
+            &quot;productName&quot;: &quot;感冒清热颗粒&quot;,
+            &quot;productCode&quot;: &quot;MED-001&quot;,
+            &quot;projectName&quot;: &quot;医院采购项目&quot;,
+            &quot;tradeName&quot;: &quot;感冒清热颗粒&quot;,
+            &quot;hospListCode&quot;: &quot;HOSP-001&quot;,
+            &quot;productSpec&quot;: &quot;10g/袋&quot;,
+            &quot;productMod&quot;: &quot;颗粒剂&quot;,
+            &quot;productPackage&quot;: &quot;铝塑包装&quot;,
+            &quot;approveNo&quot;: &quot;国药准字Z20230001&quot;,
+            &quot;batchNumber&quot;: &quot;20230101&quot;,
+            &quot;pacConvRat&quot;: &quot;1.000000&quot;,
+            &quot;purchaseCount&quot;: 100.00,
+            &quot;deliveryCount&quot;: 100.00,
+            &quot;deliveryAmount&quot;: 1000.00,
+            &quot;deliveryTime&quot;: &quot;2023-01-01 12:00:00&quot;,
+            &quot;deliverEnterpriseName&quot;: &quot;配送公司&quot;,
+            &quot;produceEnterpriseName&quot;: &quot;制药公司&quot;,
+            &quot;purchasePrice&quot;: 10.00,
+            &quot;highSelLmtPrice&quot;: 15.00,
+            &quot;expiredDate&quot;: &quot;2025-12-31&quot;,
+            &quot;receiveAddress&quot;: &quot;医院药房&quot;,
+            &quot;storageRoom&quot;: &quot;药品库房&quot;,
+            &quot;contactName&quot;: &quot;张经理&quot;,
+            &quot;selInvoiceTwo&quot;: &quot;INV-20230101-001&quot;,
+            &quot;selInvoiceDateTwo&quot;: &quot;2023-01-01 10:00:00&quot;,
+            &quot;selInvoiceOne&quot;: &quot;INV-20230101-002&quot;,
+            &quot;selInvoiceDateOne&quot;: &quot;2023-01-01 10:00:00&quot;,
+            &quot;traceCodes&quot;: &quot;123456789,987654321,1234567891&quot;
+        },
+        {
+            &quot;distributionCode&quot;: &quot;DIS-20230101-002&quot;,
+            &quot;orderCode&quot;: &quot;DIS-20230101-001&quot;,
+            &quot;productName&quot;: &quot;感冒清热颗粒&quot;,
+            &quot;deliveryTime&quot;: &quot;2023-01-01 12:00&quot;,
+            &quot;deliverEnterpriseName&quot;: &quot;配送公司&quot;,
+            &quot;traceCodes&quot;: &quot;123456789,987654321,1234567891&quot;
+        }
+    ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;result&quot;: true,
+        &quot;succeedSize&quot;: 1,
+        &quot;failedSize&quot;: 1,
+        &quot;errorList&quot;: [
+            {
+                &quot;distributeCode&quot;: &quot;DIS-20230101-002&quot;,
+                &quot;errorMessage&quot;: &quot;发货时间格式错误&quot;
+            }
+        ]
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>E0002</td><td>导入的配送明细不能为空</td><td>输入需要导入的配送明细</td></tr>
+<tr><td>E0002</td><td>医院薪福通企业号不存在</td><td>输入正确的医院薪福通企业号</td></tr>
+<tr><td>E0002</td><td>导入医院的薪福通企业号不能为空</td><td>输入导入配送明细对应的医院薪福通企业号</td></tr>
+<tr><td>E0002</td><td>配送明细编码不能为空</td><td>输入每条导入配送明细对应的配送明细编码</td></tr>
+<tr><td>EROOR1</td><td>系统错误</td><td>稍后再试，或联系开发人员</td></tr>
+<tr><td>EROOR2</td><td>导入数据超过最大限制1000条</td><td>调整导入数据至1000以下</td></tr>
+<tr><td>EROOR2</td><td>暂未与该医院建立绑定关系，请联系医院绑定</td><td>联系医院建立绑定关系</td></tr>
+<tr><td>EROOR2</td><td>以下配送明细编码重复：xxxx</td><td>检查导入数据，修改导入的配送明细编码</td></tr>
+</tbody></table>
+</body>
+</html>

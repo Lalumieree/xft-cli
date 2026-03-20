@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>分页查询支付明细</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>分页查询支付明细</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/pay-detail/page-query</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/pay-detail/page-query</p>
+<h2>接口描述</h2>
+<p>通过单据编号，支付状态，支付场景（对公，对私），支付完成时间范围，发起支付时间范围，分页查询费控支付工作台的支付明细数据，主要包括明细状态、金额、支付完成时间（如果已经支付成功）和收、付款账户以及支付发送时间、支付类型和拓展字段等信息</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.start</td><td>INTEGER</td><td>是</td><td>从0开始</td><td>0</td></tr>
+<tr><td>root.limit</td><td>INTEGER</td><td>是</td><td>限制最大500</td><td>20</td></tr>
+<tr><td>root.billIdList</td><td>ARRAY</td><td>否</td><td>最多支持100条单据id查询</td><td>[2023102000440205]</td></tr>
+<tr><td>root.payDetailStatusList</td><td>ARRAY</td><td>否</td><td>待支付UNPAID、冻结FREEZE、支付中IN_PAYMENT、支付失败PAY_FAIL、支付退票PAY_REFUND、支付成功PAY_SUCCESS、取消支付PAY_CANCEL</td><td>[&quot;UNPAID&quot;,&quot;PAY_SUCCESS&quot;,&quot;IN_PAYMENT&quot;]</td></tr>
+<tr><td>root.businessScenario</td><td>STRING</td><td></td><td>对私individual，对公corporate</td><td>&quot;corporate&quot;</td></tr>
+<tr><td>root.paySendTimeStart</td><td>STRING</td><td></td><td>发起支付时间开始时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-03-25 15:45:59&quot;</td></tr>
+<tr><td>root.paySendTimeEnd</td><td>STRING</td><td></td><td>发起支付时间结束时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-03-25 15:45:59&quot;</td></tr>
+<tr><td>root.payFinishTimeStart</td><td>STRING</td><td></td><td>支付完成时间开始时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-03-25 15:45:59&quot;</td></tr>
+<tr><td>root.payFinishTimeEnd</td><td>STRING</td><td></td><td>支付完成时间结束时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-03-25 15:45:59&quot;</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.list</td><td>ARRAY</td><td>是</td><td>数据</td><td></td></tr>
+<tr><td>root.list.oboSeqId</td><td>LONG</td><td></td><td>支付明细自增ID</td><td>12</td></tr>
+<tr><td>root.list.billId</td><td>LONG</td><td></td><td>单据编号</td><td>2025021800027584</td></tr>
+<tr><td>root.list.payIndex</td><td>INTEGER</td><td></td><td>付款行号</td><td>1</td></tr>
+<tr><td>root.list.payFinishTime</td><td>STRING</td><td></td><td>时间格式为yyyy-MM-dd hh:mm:ss</td><td>2025-01-02 03:04:05</td></tr>
+<tr><td>root.list.payDetailStatus</td><td>STRING</td><td></td><td>UNPAID 未支付<br>PAY_FREEZE 支付冻结<br>IN_PAYMENT 支付中<br>PAY_SUCCESS 支付成功<br>PAY_FAIL 支付失败<br>PAY_REFUND 支付退票<br>PAY_CANCEL 取消支付<br><br>其中 与payStatus的对应为<br>UNPAID、PAY_FREEZE --0<br>IN_PAYMENT--1<br>PAY_SUCCESS--2<br>PAY_FAIL、PAY_REFUND--3<br>PAY_CANCEL--4</td><td>UNPAID</td></tr>
+<tr><td>root.list.payDetailBusinessNumber</td><td>STRING</td><td></td><td>发起支付的业务参考号，组成为 单据编号-付款行号</td><td>2025021800027584-1</td></tr>
+<tr><td>root.list.remark</td><td>STRING</td><td></td><td>付款备注</td><td>备注</td></tr>
+<tr><td>root.list.settlementMethodCode</td><td>STRING</td><td></td><td>结算方式编码</td><td>01</td></tr>
+<tr><td>root.list.amount</td><td>BIGDECIMAL</td><td></td><td>17位整数，2位小数</td><td>100</td></tr>
+<tr><td>root.list.payAccountMode</td><td>STRING</td><td></td><td>BANK-境内银行类型<br>DIGITAL_YUAN-数字人民币类型<br>CUSTOM-自定义类型<br>OVERSEAS_BANK-境外银行账户类型</td><td>BANK</td></tr>
+<tr><td>root.list.payAcctNo</td><td>STRING</td><td></td><td>付款账户卡号</td><td>111111111111111</td></tr>
+<tr><td>root.list.bankName</td><td>STRING</td><td></td><td>付款银行名称</td><td>招商银行</td></tr>
+<tr><td>root.list.bankNumber</td><td>STRING</td><td></td><td>付款银行编码</td><td>308</td></tr>
+<tr><td>root.list.payDepoBank</td><td>STRING</td><td></td><td>付款银行支行编码</td><td>308584000013</td></tr>
+<tr><td>root.list.payDepoBankName</td><td>STRING</td><td></td><td>付款银行支行名称</td><td>招商银行深圳分行</td></tr>
+<tr><td>root.list.payDepoAddress</td><td>STRING</td><td></td><td>开户行/开户市</td><td>广东省/深圳市</td></tr>
+<tr><td>root.list.receiveSupCode</td><td>STRING</td><td></td><td>收款供应商编码</td><td>SUP20240201104853</td></tr>
+<tr><td>root.list.operateUserEmpNumber</td><td>STRING</td><td></td><td>操作人工号</td><td>001</td></tr>
+<tr><td>root.list.operateUserEmpId</td><td>STRING</td><td></td><td>操作人ID</td><td>U0000</td></tr>
+<tr><td>root.list.operateUserEmpName</td><td>STRING</td><td></td><td>操作人名称</td><td>天</td></tr>
+<tr><td>root.list.payStatus</td><td>STRING</td><td></td><td>0-待支付<br>1-支付中<br>2-支付成功<br>3-支付失败<br>4-取消支付</td><td>0</td></tr>
+<tr><td>root.list.payAccountName</td><td>STRING</td><td></td><td>付款银行开户名</td><td>cbs直联分行测试</td></tr>
+<tr><td>root.list.receiveAccountMode</td><td>STRING</td><td></td><td>BANK-境内银行类型 DIGITAL_YUAN-数字人民币类型 CUSTOM-自定义类型 OVERSEAS_BANK-境外银行账户类型</td><td>BANK</td></tr>
+<tr><td>root.list.receiveName</td><td>STRING</td><td></td><td>收款账户开户名</td><td>开户名</td></tr>
+<tr><td>root.list.receiveAccount</td><td>STRING</td><td></td><td>收款账户卡号</td><td>222222222222222</td></tr>
+<tr><td>root.list.receiveBank</td><td>STRING</td><td></td><td>收款银行名称</td><td>招商银行</td></tr>
+<tr><td>root.list.receiveDepoBranchBankName</td><td>STRING</td><td></td><td>收款银行支行名称</td><td>招商银行深圳支行</td></tr>
+<tr><td>root.list.receiveDepoBranchBankCode</td><td>STRING</td><td></td><td>收款银行支行编码</td><td>308584000013</td></tr>
+<tr><td>root.list.receiveAddress</td><td>STRING</td><td></td><td>开户省/开户市</td><td>广东省/深圳市</td></tr>
+<tr><td>root.list.paySendTime</td><td>STRING</td><td></td><td>时间格式为yyyy-MM-dd hh:mm:ss</td><td>2025-01-02 03:04:05</td></tr>
+<tr><td>root.list.billComSeqId</td><td>LONG</td><td></td><td>单据公司</td><td>71190</td></tr>
+<tr><td>root.list.billComNam</td><td>STRING</td><td></td><td>单据所属公司名称</td><td>产品部</td></tr>
+<tr><td>root.list.applyEmpNumber</td><td>STRING</td><td></td><td>申请人工号</td><td>01145614</td></tr>
+<tr><td>root.list.applyEmpName</td><td>STRING</td><td></td><td>申请人名称</td><td>王维康</td></tr>
+<tr><td>root.list.billTyp</td><td>STRING</td><td></td><td>单据类型</td><td>到票付款</td></tr>
+<tr><td>root.list.billRemark</td><td>STRING</td><td></td><td>单据事由</td><td>备注测试接口</td></tr>
+<tr><td>root.list.currencyCode</td><td>STRING</td><td></td><td>CNY：人民币</td><td>CNY</td></tr>
+<tr><td>root.list.payType</td><td>STRING</td><td></td><td>付款类型（1-线上付款，2-线下付款）</td><td>2</td></tr>
+<tr><td>root.list.payTypeName</td><td>STRING</td><td></td><td>付款方式名称</td><td>招行网银付款单</td></tr>
+<tr><td>root.list.reimAccountType</td><td>STRING</td><td></td><td>收款账户类型：员工个人账户（对私）0，员工临时账户（对私）1，供应商账户（对公）2，供应商临时账户（对公）</td><td>2</td></tr>
+<tr><td>root.list.reimDepoName</td><td>STRING</td><td></td><td>收款人/供应商</td><td>CBS测试供应商</td></tr>
+<tr><td>root.list.planPayDate</td><td>STRING</td><td></td><td>1:时间格式为yyyy-MM-dd hh:mm:ss<br> 2:精准到天</td><td>2024-05-14 00:00:00</td></tr>
+<tr><td>root.list.applyTime</td><td>STRING</td><td></td><td>时间格式为yyyy-MM-dd hh:mm:ss</td><td>2024-05-14 19:57:31</td></tr>
+<tr><td>root.list.finishTime</td><td>STRING</td><td></td><td>时间格式为yyyy-MM-dd hh:mm:ss</td><td>2024-05-14 19:58:11</td></tr>
+<tr><td>root.list.rebatedAmount</td><td>BIGDECIMAL</td><td></td><td>17位整数，2位小数</td><td>20.00</td></tr>
+<tr><td>root.list.payStatusDescription</td><td>STRING</td><td></td><td>支付状态说明</td><td>未到计划付款日期</td></tr>
+<tr><td>root.list.extendFieldValue1</td><td>STRING</td><td></td><td>扩展字段1</td><td>拓展字段1</td></tr>
+<tr><td>root.list.extendFieldValue2</td><td>STRING</td><td></td><td>扩展字段2</td><td>拓展字段2</td></tr>
+<tr><td>root.list.extendFieldValue3</td><td>STRING</td><td></td><td>扩展字段3</td><td>拓展字段3</td></tr>
+<tr><td>root.list.paySendEmpSeqId</td><td>LONG</td><td></td><td>发送人id</td><td>261742</td></tr>
+<tr><td>root.list.paySendEmpName</td><td>STRING</td><td></td><td>发送人名称</td><td>四月</td></tr>
+<tr><td>root.list.existBankReceiptFile</td><td>STRING</td><td></td><td>存在银行回单文件：是；不存在银行回单文件：否。</td><td>否</td></tr>
+<tr><td>root.list.transferAcceptanceTime</td><td>STRING</td><td></td><td>时间格式为yyyy-MM-dd hh:mm:ss</td><td>2025-05-31 14:18:01</td></tr>
+<tr><td>root.total</td><td>LONG</td><td>是</td><td>符合筛选条件的数据总数</td><td>100</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;start&quot;: 0,
+    &quot;limit&quot;: 100,
+    &quot;payDetailStatusList&quot;: [],
+    &quot;billIdList&quot;: [
+        2024051402965205
+    ],
+    &quot;paySendTimeEnd&quot;: null,
+    &quot;paySendTimeStart&quot;: null,
+    &quot;payFinishTimeEnd&quot;: null,
+    &quot;payFinishTimeStart&quot;: null,
+    &quot;businessScenario&quot;: &quot;&quot;
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;total&quot;: 1,
+    &quot;list&quot;: [
+        {
+            &quot;oboSeqId&quot;: 119159,
+            &quot;billId&quot;: 2024051402965205,
+            &quot;payIndex&quot;: 1,
+            &quot;payFinishTime&quot;: null,
+            &quot;payStatus&quot;: &quot;0&quot;,
+            &quot;payDetailStatus&quot;: &quot;PAY_CANCEL&quot;,
+            &quot;payDetailBusinessNumber&quot;: &quot;2024051402965205-1&quot;,
+            &quot;remark&quot;: &quot;2024051402965205&quot;,
+            &quot;settlementMethodCode&quot;: &quot;01&quot;,
+            &quot;amount&quot;: 1.0,
+            &quot;payAccountMode&quot;: &quot;BANK&quot;,
+            &quot;payAcctNo&quot;: &quot;1233214&quot;,
+            &quot;payAccountName&quot;: &quot;四月的零食铺&quot;,
+            &quot;bankName&quot;: &quot;中国工商银行&quot;,
+            &quot;bankNumber&quot;: &quot;102&quot;,
+            &quot;payDepoBank&quot;: &quot;102305502528&quot;,
+            &quot;payDepoBankName&quot;: &quot;中国工商银行常熟招商支行&quot;,
+            &quot;payDepoAddress&quot;: &quot;江苏省/苏州市&quot;,
+            &quot;receiveAccountMode&quot;: &quot;BANK&quot;,
+            &quot;receiveName&quot;: &quot;移植户续作-普通场景-X86移植户&quot;,
+            &quot;receiveAccount&quot;: &quot;755936495310221&quot;,
+            &quot;receiveSupCode&quot;: null,
+            &quot;receiveBank&quot;: &quot;招商银行&quot;,
+            &quot;receiveDepoBranchBankName&quot;: &quot;招商银行&quot;,
+            &quot;receiveDepoBranchBankCode&quot;: &quot;308881029165&quot;,
+            &quot;receiveAddress&quot;: &quot;天津市/天津市/天津市&quot;,
+            &quot;operateUserEmpNumber&quot;: null,
+            &quot;operateUserEmpId&quot;: null,
+            &quot;operateUserEmpName&quot;: null,
+            &quot;paySendTime&quot;: null,
+            &quot;billComSeqId&quot;: 72837,
+            &quot;billComNam&quot;: &quot;四月的零食铺&quot;,
+            &quot;applyEmpNumber&quot;: &quot;2383V12999&quot;,
+            &quot;applyEmpName&quot;: &quot;四月&quot;,
+            &quot;billTyp&quot;: &quot;到票付款&quot;,
+            &quot;billRemark&quot;: &quot;备注测试接口&quot;,
+            &quot;currencyCode&quot;: &quot;CNY&quot;,
+            &quot;payType&quot;: &quot;2&quot;,
+            &quot;payTypeName&quot;: &quot;招行网银付款单&quot;,
+            &quot;reimAccountType&quot;: &quot;2&quot;,
+            &quot;reimDepoName&quot;: &quot;CBS测试供应商&quot;,
+            &quot;planPayDate&quot;: &quot;2024-05-14 00:00:00&quot;,
+            &quot;applyTime&quot;: &quot;2024-05-14 19:57:31&quot;,
+            &quot;finishTime&quot;: &quot;2024-05-14 19:58:11&quot;,
+            &quot;rebatedAmount&quot;: 20.00,
+            &quot;payStatusDescription&quot;: &quot;未到计划付款日期&quot;,
+            &quot;extendFieldValue1&quot;: &quot;拓展字段1&quot;,
+            &quot;extendFieldValue2&quot;: &quot;拓展字段2&quot;,
+            &quot;extendFieldValue3&quot;: &quot;拓展字段3&quot;,
+            &quot;paySendEmpSeqId&quot;: 261742,
+            &quot;paySendEmpName&quot;: &quot;四月&quot;,
+            &quot;existBankReceiptFile&quot;: &quot;否&quot;,
+            &quot;transferAcceptanceTime&quot;: &quot;2025-05-31 14:18:01&quot;
+        }
+    ]
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>E0002</td><td>查询每页大小不能为空</td><td>输入每页大小</td></tr>
+<tr><td>E0002</td><td>查询每页大小最小为1</td><td>调整每页大小</td></tr>
+<tr><td>E0002</td><td>最大支持100条一页</td><td>调整每页大小</td></tr>
+<tr><td>E0002</td><td>查询起始行不能为空</td><td>输入起始行</td></tr>
+<tr><td>E0002</td><td>查询起始行最小从0开始</td><td>调整起始行大小</td></tr>
+<tr><td>E0002</td><td>单据Id集合不能超过100个</td><td>调整单据集合数量</td></tr>
+<tr><td>E0002</td><td>最大支付发起时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>调整最大支付时间格式</td></tr>
+<tr><td>E0002</td><td>最小支付发起时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>调整最小支付时间格式</td></tr>
+<tr><td>E0002</td><td>最大支付完成时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>调整最大支付完成时间格式</td></tr>
+<tr><td>E0002</td><td>最小支付完成时间格式必须为yyyy-MM-dd HH:mm:ss</td><td>调整最小支付完成时间格式</td></tr>
+</tbody></table>
+</body>
+</html>

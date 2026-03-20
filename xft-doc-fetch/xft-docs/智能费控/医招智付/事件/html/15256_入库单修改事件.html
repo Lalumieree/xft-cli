@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>入库单修改事件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>入库单修改事件</h1>
+
+<h2>基本信息</h2>
+
+<p>事件名称: 入库单修改事件</p>
+<p>事件编号: ITRIPINVC</p>
+<h2>事件描述</h2>
+<p>入库单修改及金额发票状态发生变化时，发送该事件，用于通知入库单修改的场景</p>
+<h2>触发情况</h2>
+<p>1、入库单手工修改并产生修改记录</p>
+<p>2、入库单与发票金额匹配状态发生变更后</p>
+<h2>事件报文说明</h2>
+<p>&lt;eventparamstable&gt;[{&quot;elementData&quot;:{&quot;name&quot;:&quot;root&quot;,&quot;type&quot;:&quot;OBJECT&quot;,&quot;label&quot;:&quot;%E8%99%9A%E6%8B%9F%E6%A0%B9%E8%8A%82%E7%82%B9&quot;},&quot;children&quot;:[{&quot;elementData&quot;:{&quot;type&quot;:&quot;STRING&quot;,&quot;name&quot;:&quot;changeType&quot;,&quot;required&quot;:true,&quot;label&quot;:&quot;%E4%BF%AE%E6%94%B9%E7%B1%BB%E5%9E%8B&quot;,&quot;exampleValue&quot;:&quot;manual_modify%E3%80%81invoice_amount_status_change&quot;,&quot;desc&quot;:&quot;%20invoice_amount_status_change%EF%BC%9A%E5%8F%91%E7%A5%A8%E9%87%91%E9%A2%9D%E5%8C%B9%E9%85%8D%E7%8A%B6%E6%80%81%E4%BF%AE%E6%94%B9%0Amanual_modify%EF%BC%9A%E6%89%8B%E5%8A%A8%E4%BF%AE%E6%94%B9%E4%BF%A1%E6%81%AF&quot;,&quot;maxLength&quot;:&quot;50&quot;}},{&quot;elementData&quot;:{&quot;type&quot;:&quot;ARRAY&quot;,&quot;name&quot;:&quot;inventoryInfoList&quot;,&quot;required&quot;:true,&quot;label&quot;:&quot;%E5%85%A5%E5%BA%93%E5%8D%95%E4%BF%A1%E6%81%AF%E5%88%97%E8%A1%A8&quot;,&quot;exampleValue&quot;:&quot;&quot;,&quot;desc&quot;:&quot;&quot;},&quot;children&quot;:[{&quot;elementData&quot;:{&quot;type&quot;:&quot;STRING&quot;,&quot;name&quot;:&quot;inveOrderId&quot;,&quot;required&quot;:true,&quot;label&quot;:&quot;%E5%85%A5%E5%BA%93%E5%8D%95%E5%8F%B7&quot;,&quot;exampleValue&quot;:&quot;20250418163254&quot;,&quot;desc&quot;:&quot;&quot;,&quot;maxLength&quot;:&quot;100&quot;}},{&quot;elementData&quot;:{&quot;type&quot;:&quot;STRING&quot;,&quot;name&quot;:&quot;invoiceAmountMatchStatus&quot;,&quot;required&quot;:true,&quot;label&quot;:&quot;%E9%87%91%E9%A2%9D%E5%8C%B9%E9%85%8D%E7%8A%B6%E6%80%81&quot;,&quot;exampleValue&quot;:&quot;notEqual&quot;,&quot;desc&quot;:&quot;%20notEqual%EF%BC%9A%E4%B8%8D%E4%B8%80%E8%87%B4%0Aequal%EF%BC%9A%E4%B8%80%E8%87%B4&quot;,&quot;maxLength&quot;:&quot;10&quot;}}]}]}]&lt;/eventparamstable&gt;</p>
+<h2>事件报文示例</h2>
+<pre><code>
+{
+    &quot;changeType&quot;: &quot;manual_modify&quot;,
+    &quot;inventoryInfoList&quot;: [
+        {
+            &quot;inveOrderId&quot;: &quot;20250418163254&quot;,
+            &quot;invoiceAmountMatchStatus&quot;: &quot;notEqual&quot;
+        }
+    ]
+}
+</code></pre>
+<pre><code>
+</code></pre>
+</body>
+</html>

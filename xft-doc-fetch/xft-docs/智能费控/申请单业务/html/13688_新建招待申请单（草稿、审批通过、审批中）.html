@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>新建招待申请单（草稿、审批通过、审批中）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>新建招待申请单（草稿、审批通过、审批中）</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/apply/entertainment/create</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/apply/entertainment/create</p>
+<h2>接口描述</h2>
+<p>支持调用此接口新增草稿、审批通过的招待申请单</p>
+<h3>自定义字段传值格式和说明如下：</h3>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>字段类型</th><th>说明</th><th>fieldValue示例</th></tr></thead>
+<tbody>
+<tr><td>单行文本</td><td>长度限制以自定义字段配置为准，value以字符串格式传入</td><td>单行文本11</td></tr>
+<tr><td>多行文本</td><td>长度限制以自定义字段配置为准，value以字符串格式传入</td><td>多行文本11</td></tr>
+<tr><td>数字</td><td>小数位和整数位以自定义字段配置为准，value以字符串格式传入</td><td>8.6</td></tr>
+<tr><td>金额</td><td>小数位和整数位以自定义字段配置为准，value以字符串格式传入</td><td>9.6</td></tr>
+<tr><td>单选</td><td>选项值，value以字符串格式传入</td><td>选项1</td></tr>
+<tr><td>多选</td><td>选项值，value以Json格式字符串传入</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td></tr>
+<tr><td>下拉选择</td><td>支持单/多选，以自定义字段配置为准, value 以选项值传入 Json格式字符串</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td></tr>
+<tr><td>手机号码</td><td>value以字符串格式传入</td><td>18858885666</td></tr>
+<tr><td>日期选择</td><td>以自定义字段配置为准, value以yyyy-mm-dd hh:mm格式传入</td><td>2023-08-01 12:30</td></tr>
+<tr><td>日期区间</td><td>以自定义字段配置为准, value以yyyy-mm-dd hh:mm格式，用&quot;,&quot;拼接传入</td><td>2023-08-01 12:30,2023-08-02 12:30</td></tr>
+<tr><td>银行卡号</td><td>value以字符串格式传入</td><td>6222252225436456</td></tr>
+<tr><td>邮箱</td><td>value以字符串格式传入</td><td>123456@163.com</td></tr>
+<tr><td>附件</td><td>附件编号，value以字符串格式传入</td><td>4960216b-8dd9-499e-86f2-3035c9445c96</td></tr>
+<tr><td>层级选择</td><td>选项层级、选项值，以及和选项路径所有节点的选项层级、选项值。选项层级以数字传入，选项值为字符串</td><td>[{\&quot;level\&quot;: \&quot;1\&quot;, \&quot;value\&quot;: \&quot;选项1\&quot;}, {\&quot;level\&quot;: \&quot;2\&quot;, \&quot;value:\&quot;: \&quot;选项1-1\&quot;}]</td></tr>
+<tr><td>关联字段</td><td>value以字符串格式传入</td><td>关联字段值</td></tr>
+<tr><td>表格</td><td>每一行根据序号值区分，每一行中，每个表格值将titleCode和value 传入 Json格式字符串</td><td>[{\&quot;sequence\&quot;: 1, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;张三\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;26\&quot;}]},{\&quot;sequence\&quot;: 2, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;李四\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;28\&quot;}]}]</td></tr>
+<tr><td>人员</td><td>value 以花名册编号传入 Json格式字符串</td><td>[\&quot;EMP_NUMBER_01\&quot;, \&quot;EMP_NUMBER_02\&quot;]</td></tr>
+<tr><td>单据部门</td><td>组织编码以字符串形式传入</td><td>00000001</td></tr>
+<tr><td>单据项目</td><td>value以项目编码传入 Json格式字符串</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>关联单据</td><td>费控系统单据编号，以字符串形式传入</td><td>2023080202288221</td></tr>
+<tr><td>申请金额</td><td>小数位和整数位以自定义字段配置为准，value以字符串格式传入</td><td>66.6</td></tr>
+<tr><td>城市</td><td>城市编码，以字符串形式传入</td><td>20</td></tr>
+<tr><td>供应商</td><td>value以供应商编号传入</td><td>SUP20211109091900</td></tr>
+<tr><td>客户</td><td>value以客户编号传入 Json格式字符串</td><td>[\&quot;CUSTOMER_01\&quot;, \&quot;CUSTOMER_02\&quot;]</td></tr>
+<tr><td>合同</td><td>value以合同编号传入</td><td>8768768768768</td></tr>
+<tr><td>成本中心</td><td>value以成本中心编号传入</td><td>center001</td></tr>
+<tr><td>档案选择</td><td>value以自定义档案选项编码传入</td><td>option01</td></tr>
+<tr><td>部门</td><td>value以薪福通组织编码传入 Json格式字符串</td><td>[\&quot;ORG_01\&quot;, \&quot;ORG_02\&quot;]</td></tr>
+<tr><td>项目</td><td>value以项目编码传入 Json格式字符串</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>事业部</td><td>value以薪福通组织编码传入</td><td>00000211</td></tr>
+<tr><td>事项</td><td>配置为必填时，业务类型编码必传，且下级存在事项和事由时，事项编码和事由编码必传。value以“业务类型编码,事项编码,事由编码”传入 Json格式字符串</td><td>[\&quot;MATTER_TYPE_1\&quot;, \&quot;MATTER_MISSION_1\&quot;, \&quot;MATTER_DETAIL_1\&quot;]</td></tr>
+<tr><td>收款账户</td><td>value以个人或供应商银行账户号，开户行，户名传入 Json格式字符串；匹配启用状态的个人或供应商收款账户</td><td>[\&quot;62256255478532541\&quot;, \&quot;中国银行\&quot;, \&quot;小朱\&quot;]</td></tr>
+</tbody></table>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.eventNumber</td><td>STRING</td><td>是</td><td>单据表单编号</td><td>01230704093727000001</td></tr>
+<tr><td>body.outRelId</td><td>STRING</td><td>否</td><td>外部单据编号</td><td></td></tr>
+<tr><td>body.billCompanyCode</td><td>STRING</td><td>否</td><td>薪福通法人公司编码，不传默认为申请人所属公司；<br>传入的单据公司与申请人不一致时，单据部门编号必传</td><td></td></tr>
+<tr><td>body.billDepartmentCode</td><td>STRING</td><td>否</td><td>薪福通部门组织编码，不传默认为申请人所属部门；<br>传入的单据部门与申请人不一致时，单据公司编号必传</td><td></td></tr>
+<tr><td>body.empNumber</td><td>STRING</td><td>是</td><td>申请人薪福通花名册员工号</td><td>00751658</td></tr>
+<tr><td>body.billStatus</td><td>STRING</td><td>是</td><td>DRAFT：草稿；APPRV：审批通过；APPRV_PEND：审批中</td><td>APPRV</td></tr>
+<tr><td>body.customFieldValues</td><td>ARRAY</td><td>否</td><td>自定义字段值列表</td><td></td></tr>
+<tr><td>body.customFieldValues.fieldNumber</td><td>STRING</td><td>是</td><td>自定义字段编码</td><td>MULTI_INPUT_170948711</td></tr>
+<tr><td>body.customFieldValues.fieldValue</td><td>STRING</td><td>否</td><td>请参考接口描述中自定义字段传值格式和说明</td><td>多行文本</td></tr>
+<tr><td>body.entertainmentApplyApiCreateDTO</td><td>OBJECT</td><td>是</td><td>业务招待组件信息</td><td></td></tr>
+<tr><td>body.entertainmentApplyApiCreateDTO.entertainmentCityCode</td><td>STRING</td><td>是</td><td>招待城市编码</td><td></td></tr>
+<tr><td>body.entertainmentApplyApiCreateDTO.entertainmentPersonCount</td><td>LONG</td><td>是</td><td>招待人数</td><td></td></tr>
+<tr><td>body.entertainmentApplyApiCreateDTO.entertainmentStartTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd</td><td>2023-08-11</td></tr>
+<tr><td>body.entertainmentApplyApiCreateDTO.entertainmentEndTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd</td><td>2023-08-13</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>LONG</td><td>否</td><td>单据编号</td><td>2023100901857208</td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>SUC0000-成功，E0001-系统错误</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否成功</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+  &quot;eventNumber&quot;: &quot;01230724193250000002&quot;,
+  &quot;outRelId&quot;: &quot;mealApply123-&quot;,
+  &quot;billCompanyCode&quot;: &quot;Fx60000&quot;,
+  &quot;billDepartmentCode&quot;: &quot;00000004&quot;,
+  &quot;billStatus&quot;: &quot;APPRV&quot;,
+  &quot;empNumber&quot;: &quot;111&quot;,
+  &quot;entertainmentApplyApiCreateDTO&quot;: {
+    &quot;entertainmentCityCode&quot;: &quot;1&quot;,
+    &quot;entertainmentPersonCount&quot;: 1,
+    &quot;entertainmentStartTime&quot;: &quot;2023-09-04&quot;,
+    &quot;entertainmentEndTime&quot;: &quot;2023-09-05&quot;
+  }
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{  
+    &quot;body&quot;: 2023100901857208,  
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,  
+    &quot;success&quot;: true,  
+    &quot;message&quot;: &quot;成功&quot;  
+}   
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>E0001</td><td>具体业务异常提示</td></tr>
+</tbody></table>
+</body>
+</html>

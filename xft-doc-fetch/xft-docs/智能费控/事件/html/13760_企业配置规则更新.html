@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>企业配置规则更新	</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>企业配置规则更新</h1>
+
+<h2>基本信息</h2>
+
+<p>事件名称: 企业配置规则更新</p>
+<p>事件编号: ITRIPCRU</p>
+<h2>事件描述</h2>
+<p>企业在费控开通消费平台后，编辑消费平台设置规则，规则内容以事件形式发出，事件内容包括配置推送到第三方平台的单据类型编号和单据推送状态。第三方平台可按需订阅事件，获取需要的信息。</p>
+<h2>触发情况</h2>
+<p>消费平台与费控采用接口方式对接，企业在费控开通消费平台后，编辑设置规则并保存，即会触发改事件。</p>
+
+<p>![image.png](https://s3gw.cmbchina.com/lw36.01-public-prd/public-27cea19b-3b3a-4022-98fb-8a63e47e08a8)</p>
+
+<h2>事件报文说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**参数**</th><th>**类型**</th><th>**必填**</th><th>**长度**</th><th>**说明**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>eventInfs</td><td>Array：String</td><td>否</td><td></td><td>推送单据类型编号</td><td></td></tr>
+<tr><td>pushSts</td><td>String</td><td>否</td><td></td><td>推送单据状态</td><td>提交后推送：1，审批通过后推送2</td></tr>
+</tbody></table>
+<h2>事件报文示例</h2>
+<pre><code>
+{
+    &quot;appId&quot;: &quot;c0fa75a9-7021-4f0c-aa88-1574093b9b67&quot;,
+    &quot;businessKey&quot;: &quot;ITRIPCRU:XFV1123:DI_DI:20240501113452&quot;,
+    &quot;eventId&quot;: &quot;ITRIPCRU&quot;,
+    &quot;eventRcdInf&quot;: &quot;[\&quot;{\\\&quot;eventInfs\\\&quot;:[\\\&quot;310763\\\&quot;],\\\&quot;pushSts\\\&quot;:\\\&quot;1\\\&quot;}\&quot;]&quot;,
+    &quot;eventTime&quot;: &quot;2024-05-01T03:34:52.331&quot;
+}
+</code></pre>
+</body>
+</html>

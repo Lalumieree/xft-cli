@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>批量更新供应商</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>批量更新供应商</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/supplier/batch-update</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/supplier/batch-update</p>
+<h2>接口描述</h2>
+<p>批量更新供应商，一个批次最大支持50个供应商进行批量修改，修改时，根据传入的uniqueKey去匹配已经存在的供应商编号</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>ARRAY</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.availableOrgCodeList</td><td>ARRAY</td><td></td><td>数据来源：智能费控-档案设置-档案导出-导出法人公司<br>可见法人公司编码列表<br>若availableOrgIdList列表为空，则使用本Code列表对应的公司作为可见法人公司列表</td><td>[&quot;Fx00000&quot;]</td></tr>
+<tr><td>root.availableOrgIdList</td><td>ARRAY</td><td></td><td>数据来源：智能费控-档案设置-档案导出-导出法人公司<br>可见法人公司id列表<br> 优先使用id对应的可见法人公司列表</td><td>[&quot;CORx80000&quot;]</td></tr>
+<tr><td>root.availableOrgType</td><td>STRING</td><td>是</td><td>1-部分公司 0-全部公司</td><td>0</td></tr>
+<tr><td>root.corOrgNbr</td><td>STRING</td><td></td><td>统一信用代码</td><td></td></tr>
+<tr><td>root.customFieldValues</td><td>ARRAY</td><td></td><td>自定义字段需要填入的值</td><td></td></tr>
+<tr><td>root.customFieldValues.customFieldCode</td><td>STRING</td><td></td><td>智能费控-档案设置=字段设置-供应商字段编码</td><td>SELECT_140332273</td></tr>
+<tr><td>root.customFieldValues.customFieldValue</td><td>STRING</td><td></td><td>自定义字段是单值情况下填入，如果是多值，无需填入</td><td></td></tr>
+<tr><td>root.customFieldValues.multiValues</td><td>ARRAY</td><td></td><td>自定义字段是多值情况下填入，如果是单值，无需填入</td><td></td></tr>
+<tr><td>root.customFieldValues.multiValues.id</td><td>STRING</td><td></td><td>与自定义多选选项名称一致</td><td>选项1</td></tr>
+<tr><td>root.customFieldValues.multiValues.name</td><td>STRING</td><td></td><td>自定义多选选项名称</td><td>选项1</td></tr>
+<tr><td>root.enableDate</td><td>STRING</td><td></td><td>格式：yyyy-MM-dd</td><td>2023-11-11</td></tr>
+<tr><td>root.recAccList</td><td>ARRAY</td><td></td><td>收款账户集合</td><td></td></tr>
+<tr><td>root.recAccList.accountMode</td><td>STRING</td><td></td><td>账户类型:<br>BANK-银行账户<br>DIGITAL_YUAN-数字人民币</td><td>BANK</td></tr>
+<tr><td>root.recAccList.acctNo</td><td>STRING</td><td>是</td><td>银行账号不能为空<br>银行账号需是不能超过30位的字母或数字</td><td>6217847384349543545</td></tr>
+<tr><td>root.recAccList.acctType</td><td>STRING</td><td>是</td><td>1-对公账户 0-个人账户</td><td>1</td></tr>
+<tr><td>root.recAccList.collectingCompanyName</td><td>STRING</td><td></td><td>数字人民币账户字段，银行账户无需处理</td><td>测试中心</td></tr>
+<tr><td>root.recAccList.depoBank</td><td>STRING</td><td>是</td><td>银行支行联行号，可通过公共接口中的银行接口获取</td><td>105399100293</td></tr>
+<tr><td>root.recAccList.depoName</td><td>STRING</td><td>是</td><td>银行户名不能为空</td><td>测试账户</td></tr>
+<tr><td>root.recAccList.mainAcct</td><td>STRING</td><td>是</td><td>1-是 0-否</td><td>1</td></tr>
+<tr><td>root.recAccList.remark</td><td>STRING</td><td></td><td>备注</td><td>测试新增</td></tr>
+<tr><td>root.recAccList.state</td><td>STRING</td><td>是</td><td>1-是 0-否</td><td>1</td></tr>
+<tr><td>root.recAccList.wthrDigitalYuanMainAcct</td><td>STRING</td><td></td><td>数字人民币账户字段，银行账户无需处理<br><br>1-是，0-否</td><td>0</td></tr>
+<tr><td>root.supId</td><td>STRING</td><td></td><td>供应商编号必须是50位以内的字母或数字</td><td>SUP20231110123456</td></tr>
+<tr><td>root.supNam</td><td>STRING</td><td>是</td><td>供应商名称不能为空</td><td>测试供应商</td></tr>
+<tr><td>root.supSts</td><td>STRING</td><td>是</td><td>供应商状态<br>1-启用 0-停用</td><td>1</td></tr>
+<tr><td>root.supTypeId</td><td>STRING</td><td>是</td><td>智能费控-档案设置-字段设置-供应商-供应商类型</td><td>s1</td></tr>
+<tr><td>root.uniqueKey</td><td>STRING</td><td>是</td><td>需要更新的目标供应商现有的供应商编码</td><td>SUP20231110123453</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>STRING</td><td>否</td><td>返回体</td><td>批量更新供应商成功！</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>错误码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否调用成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>错误提示</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+[
+    {
+        &quot;availableOrgType&quot;: 1,
+        &quot;availableOrgCodeList&quot;: [
+            &quot;Fx00000&quot;
+        ],
+        &quot;availableOrgIdList&quot;: [
+            &quot;CORx80000&quot;
+        ],
+        &quot;supNam&quot;: &quot;更新测试5&quot;,
+        &quot;supSts&quot;: &quot;1&quot;,
+        &quot;supTypeId&quot;: &quot;0&quot;,
+        &quot;uniqueKey&quot;: &quot;czc003&quot;,
+        &quot;recAccList&quot;: [
+            {
+                &quot;acctNo&quot;: &quot;11111111111111&quot;,
+                &quot;acctType&quot;: &quot;0&quot;,
+                &quot;depoBank&quot;: &quot;313584004006&quot;,
+                &quot;depoName&quot;: &quot;gk&quot;,
+                &quot;accountMode&quot;: &quot;BANK&quot;,
+                &quot;mainAcct&quot;: 1,
+                &quot;state&quot;: 1
+            },
+            {
+                &quot;acctNo&quot;: &quot;11111111111112&quot;,
+                &quot;acctType&quot;: &quot;0&quot;,
+                &quot;depoBank&quot;: &quot;313584004006&quot;,
+                &quot;depoName&quot;: &quot;gk&quot;,
+                &quot;accountMode&quot;: &quot;BANK&quot;,
+                &quot;mainAcct&quot;: 0,
+                &quot;state&quot;: 1
+            },
+            {
+                &quot;accountMode&quot;: &quot;DIGITAL_YUAN&quot;,
+                &quot;acctNo&quot;: &quot;0042000513411121&quot;,
+                &quot;collectingCompanyName&quot;: &quot;11&quot;,
+                &quot;mainAcct&quot;: 0,
+                &quot;state&quot;: 1,
+                &quot;depoName&quot;: 1,
+                &quot;acctType&quot;: 1,
+                &quot;wthrDigitalYuanMainAcct&quot;: 1
+            }
+        ],
+        &quot;customFieldValues&quot;: [
+            {
+                &quot;customFieldCode&quot;: &quot;INPUT_171429202&quot;,
+                &quot;customFieldValue&quot;: &quot;1111&quot;,
+                &quot;multiValues&quot;: null
+            },
+            {
+                &quot;customFieldCode&quot;: &quot;3333&quot;,
+                &quot;customFieldValue&quot;: &quot;123&quot;,
+                &quot;multiValues&quot;: null
+            },
+            {
+                &quot;customFieldCode&quot;: &quot;SELECT_100608826&quot;,
+                &quot;customFieldValue&quot;: &quot;选项1&quot;,
+                &quot;multiValues&quot;: null
+            },
+            {
+                &quot;customFieldCode&quot;: &quot;MULTI_SELECT_143702725&quot;,
+                &quot;customFieldValue&quot;: null,
+                &quot;multiValues&quot;: [
+                    {
+                        &quot;id&quot;: &quot;选项1&quot;,
+                        &quot;name&quot;: &quot;选项1&quot;
+                    },
+                    {
+                        &quot;id&quot;: &quot;选项2&quot;,
+                        &quot;name&quot;: &quot;选项2&quot;
+                    },
+                    {
+                        &quot;id&quot;: &quot;选项3&quot;,
+                        &quot;name&quot;: &quot;选项3&quot;
+                    }
+                ]
+            },
+            {
+                &quot;customFieldCode&quot;: &quot;DATE_102601543&quot;,
+                &quot;customFieldValue&quot;: &quot;2023-08-31&quot;,
+                &quot;multiValues&quot;: null
+            },
+            {
+                &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_142739315&quot;,
+                &quot;customFieldValue&quot;: null,
+                &quot;multiValues&quot;: [
+                    {
+                        &quot;id&quot;: &quot;选项1&quot;,
+                        &quot;name&quot;: &quot;选项1&quot;
+                    },
+                    {
+                        &quot;id&quot;: &quot;选项2&quot;,
+                        &quot;name&quot;: &quot;选项2&quot;
+                    }
+                ]
+            }
+        ]
+    }
+]
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: &quot;批量更新供应商成功！&quot;,
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>EROOR1</td><td>调用失败</td></tr>
+<tr><td>EROOR2</td><td>执行失败</td></tr>
+<tr><td>SUC0000</td><td>执行成功</td></tr>
+</tbody></table>
+</body>
+</html>

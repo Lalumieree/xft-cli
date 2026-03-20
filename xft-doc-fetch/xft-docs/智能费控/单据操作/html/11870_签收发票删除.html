@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>签收发票删除</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>签收发票删除</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/invoice/deleteInvoice</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/invoice/deleteInvoice</p>
+<h2>接口描述</h2>
+<p>将已签收的发票设置为未签收，并改变关联单据的签收状态。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>ARRAY</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.billType</td><td>STRING</td><td>是</td><td>取值参考[发票类型枚举](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=11585)</td><td>G</td></tr>
+<tr><td>body.invoiceNo</td><td>STRING</td><td>否</td><td>发票类型为1，2，3，4，8，9，A,B,C,D,G,H时有值</td><td>12002361</td></tr>
+<tr><td>body.invoiceCode</td><td>STRING</td><td>否</td><td>发票类型为1，2，3，4，8，9，A,B,C,D,G,H时有值</td><td>21010122</td></tr>
+<tr><td>body.trafficNo</td><td>STRING</td><td></td><td>发票类型为7,E,F时为票据号码 ，发票类型为5，6时为票号</td><td>04829364</td></tr>
+<tr><td>body.trafficCode</td><td>STRING</td><td></td><td>发票类型为7,E,F时有值</td><td>044031900111</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td>是</td><td>新福通企业号</td><td>XFT00001</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td></td><td>请求结果</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td></td><td>返回信息</td><td>调用成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>{BaseURL}/api/itrip-gateway/v1/invoice/deleteInvoice?OPAUID=XFT00001</p>
+<h3>**请求示例**</h3>
+<pre><code>
+[
+    {
+        &quot;billType&quot;: &quot;G&quot;,
+        &quot;invoiceCode&quot;: &quot;21010122&quot;,
+        &quot;invoiceNo&quot;: &quot;12002361&quot;,
+        &quot;trafficCode&quot;: null,
+        &quot;trafficNo&quot;: null
+    },
+    {
+        &quot;billType&quot;: &quot;E&quot;,
+        &quot;invoiceCode&quot;: null,
+        &quot;invoiceNo&quot;: null,
+        &quot;trafficCode&quot;: 044031900111,
+        &quot;trafficNo&quot;: 04829364
+    }
+]
+</code></pre>
+
+<h3>**返回示例**</h3>
+<p>正常：</p>
+<pre><code>
+{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<p>异常：</p>
+<p>如果没有传发票信息，返回样例：</p>
+<pre><code>
+{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;发票信息为空或不完整&quot;
+}
+</code></pre>
+<p>如果传入了其他公司的发票信息，返回样例：</p>
+<pre><code>
+{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;存在其他公司的发票&quot;
+}
+</code></pre>
+<p>如果发票完全不属于当前公司，返回样例：</p>
+<pre><code>
+{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;发票不在当前公司下&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>200</td><td>成功</td><td>无</td><td></td></tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>费用申请单详情查询</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>费用申请单详情查询</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/apply/expense/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/apply/expense/detail</p>
+<h2>接口描述</h2>
+<p>支持调用此接口根据单据编号查询“费用申请”类型的单据详情</p>
+
+<h3>单据和费用自定义字段说明和返回格式</h3>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>字段类型</th><th>说明</th><th>showValue示例</th><th>sourceValue示例</th></tr></thead>
+<tbody>
+<tr><td>单行文本</td><td>value以字符串格式返回</td><td>单行文本11</td><td></td></tr>
+<tr><td>多行文本</td><td>value以字符串格式返回</td><td>多行文本11</td><td></td></tr>
+<tr><td>数字</td><td>value以字符串格式返回</td><td>8.6</td><td></td></tr>
+<tr><td>金额</td><td>value以字符串格式返回</td><td>9.6</td><td></td></tr>
+<tr><td>单选</td><td>value以字符串格式返回</td><td>选项1</td><td></td></tr>
+<tr><td>多选</td><td>value以Json格式字符串返回</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td><td></td></tr>
+<tr><td>下拉选择</td><td>value以Json格式字符串返回</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td><td></td></tr>
+<tr><td>手机号码</td><td>value以字符串格式返回</td><td>18858885666</td><td></td></tr>
+<tr><td>日期选择</td><td>value以字符串格式返回</td><td>2023-08-01 12:30</td><td></td></tr>
+<tr><td>日期区间</td><td>value以yyyy-mm-dd hh:mm格式，用&quot;,&quot;拼接返回字符串</td><td>2023-08-01 12:30,2023-08-02 12:30,1</td><td></td></tr>
+<tr><td>银行卡号</td><td>value以字符串格式返回</td><td>6222252225436456</td><td></td></tr>
+<tr><td>邮箱</td><td>value以字符串格式返回</td><td>123456@163.com</td><td></td></tr>
+<tr><td>附件</td><td>附件编号，value以字符串格式传入</td><td>[{\&quot;fileId\&quot;:\&quot;7e31f235-15a3-4140-883a-25971df3d4b9\&quot;, \&quot;fileName\&quot;:\&quot;7E58ED9B.jpg\&quot;},{\&quot;fileId\&quot;:\&quot;6fb4e980-4fc4-420e-95ee-28914284b52c\&quot;,\&quot;fileName\&quot;:\&quot;8090DB49.jpg\&quot;}]</td><td></td></tr>
+<tr><td>层级选择</td><td>选项值，按照层级顺序的字符串List，以Json格式传入</td><td>[\&quot;选项1\&quot;, \&quot;选项1-1\&quot;]</td><td></td></tr>
+<tr><td>关联字段</td><td>value以字符串格式返回</td><td>关联字段值</td><td></td></tr>
+<tr><td>表格</td><td>value以Json格式字符串返回，每一行根据序号值区分，每一行中，每个表格值包含titleCode和value</td><td>[{\&quot;sequence\&quot;: 1, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;张三\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;26\&quot;}]}, {\&quot;sequence\&quot;: 2, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;李四\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;28\&quot;}]}]</td><td></td></tr>
+<tr><td>人员</td><td>value以Json格式字符串返回</td><td>[{\&quot;empNumber\&quot;:\&quot;88888888\&quot;,\&quot;empName\&quot;:\&quot;小招喵\&quot;},{\&quot;empNumber\&quot;:\&quot;17621112222\&quot;,\&quot;empName\&quot;:\&quot;小威威\&quot;}]</td><td>[\&quot;EMP_NUMBER_01\&quot;, \&quot;EMP_NUMBER_02\&quot;]</td></tr>
+<tr><td>单据部门</td><td>value以Json格式字符串返回</td><td>{\&quot;departmentCode\&quot;:\&quot;00000002\&quot;,\&quot;departmentName\&quot;:\&quot;憨人科技/豆浆油条\&quot;}</td><td>[\&quot;00000002\&quot;]</td></tr>
+<tr><td>单据项目</td><td>value以Json格式字符串返回</td><td>{\&quot;projectCode\&quot;:\&quot;PRJ20210820095218\&quot;,\&quot;projectName\&quot;:\&quot;2222\&quot;}</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>关联单据</td><td>value以Json格式字符串返回</td><td>[{\&quot;aplNam\&quot;:\&quot;张灯结彩\&quot;,\&quot;aplSeqId\&quot;:58702,\&quot;applyTim\&quot;:\&quot;2023-08-07 15:27:13\&quot;,\&quot;applyTotalAmount\&quot;:0.00,\&quot;billId\&quot;:2023080702298807, \&quot;billRemark\&quot;:\&quot;预置内容\&quot;,\&quot;displayAmount\&quot;:0,\&quot;eventNam\&quot;:\&quot;通用申请-jjw\&quot;,\&quot;eventSeqId\&quot;:13904,\&quot;expTotalCnt\&quot;:0.00,\&quot;useType\&quot;:\&quot;1\&quot;}]</td><td></td></tr>
+<tr><td>申请金额</td><td>value以字符串格式返回</td><td>66.6</td><td></td></tr>
+<tr><td>城市</td><td>value以Json格式字符串返回</td><td>[{\&quot;cityCode\&quot;:\&quot;2\&quot;,\&quot;cityName\&quot;:\&quot;天津\&quot;}]</td><td></td></tr>
+<tr><td>供应商</td><td>value以Json格式字符串返回</td><td>[{\&quot;supplierNo\&quot;:\&quot;233\&quot;,\&quot;supplierName\&quot;:\&quot;供应商1\&quot;}]</td><td></td></tr>
+<tr><td>客户</td><td>value以Json格式字符串返回</td><td>[{\&quot;customerNo\&quot;:\&quot;23\&quot;,\&quot;customerName\&quot;:\&quot;客户1\&quot;}]</td><td></td></tr>
+<tr><td>合同</td><td>value以Json格式字符串返回</td><td>[{\&quot;customerNo\&quot;:\&quot;21\&quot;,\&quot;customerName\&quot;:\&quot;合同1\&quot;}]</td><td></td></tr>
+<tr><td>成本中心</td><td>value以Json格式字符串返回</td><td>{\&quot;costCenterCode\&quot;:\&quot;00000211\&quot;,\&quot;costCenterCodeName\&quot;:\&quot;豆浆油条\&quot;}</td><td>center001</td></tr>
+<tr><td>档案选择</td><td>value以Json格式字符串返回</td><td>[{\&quot;optionCode\&quot;: \&quot;ID1\&quot;, &quot;\optionName\&quot;: \&quot;选项1\&quot;},{\&quot;optionCode\&quot;: \&quot;ID2\&quot;, &quot;\optionName\&quot;: \&quot;选项2\&quot;}]</td><td>[\&quot;option01\&quot;, \&quot;option02\&quot;]</td></tr>
+<tr><td>部门</td><td>value以Json格式字符串返回</td><td>[{\&quot;departmentCode\&quot;:\&quot;00000002\&quot;,\&quot;departmentName\&quot;:\&quot;豆浆油条\&quot;}, {\&quot;departmentCode\&quot;:\&quot;60542\&quot;,\&quot;departmentName\&quot;:\&quot;黑黑不黑\&quot;}]</td><td>[\&quot;ORG_01\&quot;, \&quot;ORG_02\&quot;]</td></tr>
+<tr><td>项目</td><td>value以Json格式字符串返回</td><td>[{\&quot;projectCode\&quot;:\&quot;PRJ20210820095218\&quot;,\&quot;projectName\&quot;:\&quot;2222\&quot;}, {\&quot;projectCode\&quot;:\&quot;5555\&quot;,\&quot;projectName\&quot;:\&quot;下一级\&quot;}]</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>事业部</td><td>value以Json格式字符串返回</td><td>{\&quot;departmentCode\&quot;:\&quot;00000211\&quot;,\&quot;departmentName\&quot;:\&quot;豆浆油条\&quot;}</td><td>[\&quot;00000211\&quot;]</td></tr>
+<tr><td>事项</td><td>value以Json格式字符串返回</td><td>{\&quot;matterTypeNumber\&quot;:\&quot;MATTER_TYPE_1\&quot;, \&quot;matterTypeName\&quot;:\&quot;一级业务类型\&quot;,\&quot;matterMissionNumber\&quot;:\&quot;MATTER_MISSION_1\&quot;, \&quot;matterMissionName\&quot;:\&quot;业务事项\&quot;,\&quot;matterDetailNumber\&quot;:\&quot;MATTER_DETAIL_1\&quot;,\&quot;matterDetailName\&quot;:\&quot;业务事由\&quot;}</td><td></td></tr>
+<tr><td>收款账户</td><td>value以Json格式字符串返回</td><td>[{\&quot;accountNumber\&quot;:\&quot;66666666666666666666\&quot;,\&quot;accountName\&quot;:58702,\&quot;depoBankName\&quot;:\&quot;中国银行\&quot;,\&quot;depoAddress\&quot;:\&quot;杭州市滨江区长河街道\&quot;,\&quot;depoBranchBankName\&quot;:\&quot;杭州市滨江区中国银行支行\&quot;}]</td><td></td></tr>
+</tbody></table>
+<h2>调用方式</h2>
+<p>METHOD: GET</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.billId</td><td>LONG</td><td>是</td><td>费用申请单编号</td><td>2024033001982407</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>OBJECT</td><td>否</td><td>单据详情数据对象</td><td></td></tr>
+<tr><td>body.body.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2024033001982407</td></tr>
+<tr><td>body.body.billSts</td><td>STRING</td><td>是</td><td>* 0：草稿<br>* 1：待审批<br>* 2：审批通过<br>* 4：拒绝<br>* 5：待财务审核<br>* 6：待财务复核<br>* 7： 财务审核通过<br>* 8： 财务复核通过<br>* 9： 财务审核驳回<br>* 10：财务复核驳回<br>* 11：已撤回<br>* 12：已退回<br>* 15：已废弃<br>* 16：暂存<br>* 17：废弃中<br>* 18：等待外部处理<br>* 19：变更中 <br>* 20：已停用<br>* 21：已删除</td><td>1</td></tr>
+<tr><td>body.body.eventNumber</td><td>LONG</td><td>是</td><td>单据类型编号</td><td>02231025140327000002</td></tr>
+<tr><td>body.body.eventType</td><td>STRING</td><td>是</td><td>只会返回费用申请单<br>* EXPENSE_APPLY：费用申请单</td><td>EXPENSE_APPLY</td></tr>
+<tr><td>body.body.eventName</td><td>STRING</td><td>是</td><td>单据业务类型名称</td><td>费用申请单</td></tr>
+<tr><td>body.body.applyTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698656241000</td></tr>
+<tr><td>body.body.firstApplyTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698656241000</td></tr>
+<tr><td>body.body.finishTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>null</td></tr>
+<tr><td>body.body.billDepCode</td><td>STRING</td><td>是</td><td>单据所属部门编码</td><td>00000005</td></tr>
+<tr><td>body.body.billDepName</td><td>STRING</td><td>是</td><td>单据所属部门名称</td><td>天行1组</td></tr>
+<tr><td>body.body.billComLpcCode</td><td>STRING</td><td>否</td><td>单据所属法人公司编码</td><td>0004</td></tr>
+<tr><td>body.body.billComLpcName</td><td>STRING</td><td>否</td><td>单据所属法人公司名称</td><td>天行</td></tr>
+<tr><td>body.body.billProjectCode</td><td>STRING</td><td>否</td><td>单据所属项目编码</td><td>null</td></tr>
+<tr><td>body.body.billProjectName</td><td>STRING</td><td>否</td><td>单据所属项目名称</td><td>null</td></tr>
+<tr><td>body.body.billCenName</td><td>STRING</td><td>否</td><td>单据成本中心名称</td><td>null</td></tr>
+<tr><td>body.body.billCenCode</td><td>STRING</td><td>否</td><td>单据成本中心编号</td><td>null</td></tr>
+<tr><td>body.body.projectTypeCode</td><td>STRING</td><td>否</td><td>单据所属项目类型编码</td><td>null</td></tr>
+<tr><td>body.body.projectTypeName</td><td>STRING</td><td>否</td><td>单据所属项目类型名称</td><td>null</td></tr>
+<tr><td>body.body.billBDCode</td><td>STRING</td><td>否</td><td>单据所属事业部编码</td><td>null</td></tr>
+<tr><td>body.body.billBDName</td><td>STRING</td><td>否</td><td>单据所属事业部名称</td><td>null</td></tr>
+<tr><td>body.body.aplName</td><td>STRING</td><td>是</td><td>申请人姓名</td><td>null</td></tr>
+<tr><td>body.body.aplEmpNumber</td><td>STRING</td><td>否</td><td>申请人员工编号</td><td></td></tr>
+<tr><td>body.body.aplDepCode</td><td>LONG</td><td>是</td><td>申请人所属部门编码</td><td>00000001</td></tr>
+<tr><td>body.body.aplDepName</td><td>STRING</td><td>是</td><td>申请人所属部门名称</td><td>研发部</td></tr>
+<tr><td>body.body.wrEmpNumber</td><td>STRING</td><td>是</td><td>提单人员工编号</td><td></td></tr>
+<tr><td>body.body.wrName</td><td>STRING</td><td>是</td><td>提单人员姓名</td><td>张益</td></tr>
+<tr><td>body.body.isAgent</td><td>BOOLEAN</td><td>是</td><td>是否代理</td><td>false</td></tr>
+<tr><td>body.body.printStatus</td><td>STRING</td><td>是</td><td>* 0：不可打印 <br>* 1：可打印</td><td>1</td></tr>
+<tr><td>body.body.printedState</td><td>STRING</td><td>否</td><td>* 0: 否 <br>* 1: 是</td><td>0</td></tr>
+<tr><td>body.body.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>费用合计</td><td>732.00</td></tr>
+<tr><td>body.body.applyTotalAmount</td><td>BIGDECIMAL</td><td></td><td>申请单费用合计金额</td><td>732.00</td></tr>
+<tr><td>body.body.billPayStatus</td><td>STRING</td><td>否</td><td>* 0：待付款<br>* 1：付款中<br>* 2：付款成功<br>* 3：付款失败<br>* 4：部分付款成功<br>* 5：已发起<br>* 6：已取消<br>* 7：取消支付<br>* 8：部分取消支付</td><td>0</td></tr>
+<tr><td>body.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td>null</td></tr>
+<tr><td>body.body.outRelId</td><td>STRING</td><td></td><td>外部单据编号</td><td></td></tr>
+<tr><td>body.body.customFields</td><td>ARRAY</td><td>否</td><td>请参考接口描述中自定义字段说明和返回格式</td><td></td></tr>
+<tr><td>body.body.customFields.fieldNumber</td><td>STRING</td><td>是</td><td>字段编码</td><td>null</td></tr>
+<tr><td>body.body.customFields.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>单据部门</td></tr>
+<tr><td>body.body.customFields.sourceValue</td><td>STRING</td><td>否</td><td>取值来源</td><td>[&quot;00000005&quot;]</td></tr>
+<tr><td>body.body.customFields.showValue</td><td>STRING</td><td>是</td><td>自定义字段的值</td><td>[{&quot;departmentCode&quot;:&quot;00000005&quot;,&quot;departmentName&quot;:&quot;天行/天行1组&quot;}]</td></tr>
+<tr><td>body.body.customFields.type</td><td>STRING</td><td>是</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.customFields.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>body.body.customFields.printEnable</td><td>STRING</td><td>是</td><td>* 0：不可打印 <br>* 1：可打印</td><td>1</td></tr>
+<tr><td>body.body.customFields.description</td><td>STRING</td><td>是</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>body.body.customFields.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>body.body.customFields.optionList</td><td>ARRAY</td><td>否</td><td>选项数组</td><td></td></tr>
+<tr><td>body.body.customFields.formColumnList</td><td>ARRAY</td><td>否</td><td>表格表头</td><td>null</td></tr>
+<tr><td>body.body.customFields.formColumnList.name</td><td>STRING</td><td>是</td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.customFields.formColumnList.code</td><td>STRING</td><td>是</td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.customFields.formColumnList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.customFields.formColumnList.fieldCode</td><td>STRING</td><td>是</td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.relatedBill</td><td>OBJECT</td><td>否</td><td>关联单据信息</td><td></td></tr>
+<tr><td>body.body.relatedBill.comId</td><td>LONG</td><td>是</td><td>企业唯一编号</td><td>4426</td></tr>
+<tr><td>body.body.relatedBill.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.relatedBill.empSeqId</td><td>LONG</td><td>是</td><td>员工唯一编号</td><td>10915426</td></tr>
+<tr><td>body.body.relatedBill.relBillId</td><td>LONG</td><td>是</td><td>关联单据唯一编号</td><td>2023103001981419</td></tr>
+<tr><td>body.body.relatedBill.relType</td><td>STRING</td><td>否</td><td>* REL_APPLY_BILL：关联申请单组件<br>* REL_BILL： 关联单据自定义字段</td><td>REL_APPLY_BILL</td></tr>
+<tr><td>body.body.relatedBill.usedState</td><td>STRING</td><td>是</td><td>* 1：已使用<br>* 0：未使用</td><td>1</td></tr>
+<tr><td>body.body.expenseApplyViewDto</td><td>ARRAY</td><td></td><td>事前申请费用信息</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.billId</td><td>LONG</td><td></td><td>单据编号ID</td><td>2024033001982407</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseName</td><td>STRING</td><td></td><td>费用类型名称</td><td>费用申请测试</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseAttribute</td><td>STRING</td><td></td><td>AIRCRAFT-机票<br>HOTEL-住宿<br>TRAIN-火车<br>SHIP-轮船<br>CAR-用车<br>MEAL-用餐<br>PHONE-通讯<br>OTHER-其他</td><td>AIRCRAFT</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseNumber</td><td>STRING</td><td></td><td>费用类型编号</td><td>001</td></tr>
+<tr><td>body.body.expenseApplyViewDto.remind</td><td>STRING</td><td></td><td>费用类型说明</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.violatePolicyReason</td><td>STRING</td><td></td><td>政策违规原因</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.violatePolicyFlag</td><td>STRING</td><td></td><td>0-未违规，1-违规</td><td>0</td></tr>
+<tr><td>body.body.expenseApplyViewDto.participantNum</td><td>INTEGER</td><td></td><td>参与人数</td><td>2</td></tr>
+<tr><td>body.body.expenseApplyViewDto.merchantName</td><td>STRING</td><td></td><td>商户名称</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.occurrenceDate</td><td>DATE</td><td></td><td>yyyy-MM-dd</td><td>2023-08-14</td></tr>
+<tr><td>body.body.expenseApplyViewDto.payCityCode</td><td>STRING</td><td></td><td>消费城市编码</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.remark</td><td>STRING</td><td></td><td>备注</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.amount</td><td>BIGDECIMAL</td><td></td><td>费用金额</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.departureCityCode</td><td>STRING</td><td></td><td>出发地城市编码</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.destinationCityCode</td><td>STRING</td><td></td><td>目的地城市编码</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.beginTime</td><td>DATE</td><td></td><td>yyyy-MM-dd</td><td>2023-08-11</td></tr>
+<tr><td>body.body.expenseApplyViewDto.endTime</td><td>DATE</td><td></td><td>yyyy-MM-dd</td><td>2023-08-13</td></tr>
+<tr><td>body.body.expenseApplyViewDto.aircraftCabin</td><td>STRING</td><td></td><td>当费用类型的费用属性为“机票”时可以配置该字段，头等舱：&quot;1&quot;，公务舱：&quot;2&quot;，经济舱：&quot;3&quot;，超级经济舱：&quot;4</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.airlineCompany</td><td>STRING</td><td></td><td>航空公司</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.flightFullPrice</td><td>BIGDECIMAL</td><td></td><td>机票全价</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.civilAviationFund</td><td>BIGDECIMAL</td><td></td><td>民航发展基金</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.discount</td><td>DOUBLE</td><td></td><td>折扣</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.airlineNo</td><td>STRING</td><td></td><td>航班号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.flightETicketNo</td><td>STRING</td><td></td><td>机票电子客票号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.hotelStar</td><td>STRING</td><td></td><td>当费用类型的费用属性为“住宿”时可以配置该字段，五星：&quot;1&quot;，四星：&quot;2&quot;，三星：&quot;3&quot;，其他：&quot;4&quot;</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.checkInDate</td><td>DATE</td><td></td><td>yyyy-MM-dd</td><td>2023-08-11</td></tr>
+<tr><td>body.body.expenseApplyViewDto.checkOutDate</td><td>DATE</td><td></td><td>yyyy-MM-dd</td><td>2023-08-13</td></tr>
+<tr><td>body.body.expenseApplyViewDto.peerEmpNumbers</td><td>STRING</td><td></td><td>同住人花名册员工号列表</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.trainCabin</td><td>STRING</td><td></td><td>当费用类型的费用属性为“火车”时可以配置该字段，商务座：&quot;1&quot;， 特等座：&quot;2&quot;， 一等座：&quot;3&quot;， 二等座：&quot;4&quot;， 高级软卧：&quot;5&quot;， 软卧：&quot;6&quot;， 硬卧：&quot;7&quot;， 软座：&quot;8&quot;， 硬座：&quot;9&quot;， 站票：&quot;10&quot;， 动卧：&quot;11&quot;， 一等软座：&quot;12&quot;， 二等软座：&quot;13&quot;， 一人软包：&quot;14&quot;， 高级动卧：&quot;15&quot;</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.trainNo</td><td>STRING</td><td></td><td>列车号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.trainTicketNo</td><td>STRING</td><td></td><td>火车票票号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.shipCabin</td><td>STRING</td><td></td><td>当费用类型的费用属性为“轮船”时可以配置该字段，一等舱：&quot;1&quot;，二等舱：&quot;2&quot;，三等舱：&quot;3&quot;</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS</td><td>ARRAY</td><td></td><td>费用自定义字段配置和值</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.fieldNumber</td><td>STRING</td><td></td><td>字段编码</td><td>bill_depart</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.fieldName</td><td>STRING</td><td></td><td>自定义字段名称</td><td>单据部门</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.sourceValue</td><td>STRING</td><td></td><td>自定义字段值数据源</td><td>[&quot;00000004&quot;]</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.showValue</td><td>STRING</td><td></td><td>请参考接口描述中自定义字段说明和返回格式</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.type</td><td>STRING</td><td></td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.required</td><td>BOOLEAN</td><td></td><td>true-必填，false-非必填</td><td>true</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.printEnable</td><td>STRING</td><td></td><td>0-不可打印<br>1-可打印</td><td>1</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.description</td><td>STRING</td><td></td><td>自定义字段描述文本</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.multiple</td><td>STRING</td><td></td><td>是否多选</td><td>false</td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.options</td><td>ARRAY</td><td></td><td>选项数组</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.formColumns</td><td>ARRAY</td><td></td><td>表格表头</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.formColumns.name</td><td>STRING</td><td></td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.formColumns.code</td><td>STRING</td><td></td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.formColumns.type</td><td>STRING</td><td></td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.customFieldApiViewDTOS.formColumns.fieldCode</td><td>STRING</td><td></td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread</td><td>OBJECT</td><td></td><td>事前费用分摊信息</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.seqId</td><td>LONG</td><td>是</td><td>分摊唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadBusinessType</td><td>STRING</td><td>是</td><td>EXPENSE：事前费用</td><td>EXPENSE</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadBusinessId</td><td>STRING</td><td>是</td><td>分摊业务唯一编号</td><td>10000000001</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.totalAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.originalTotalAmount</td><td>STRING</td><td>是</td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.currencyCode</td><td>STRING</td><td>是</td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList</td><td>ARRAY</td><td>是</td><td>分摊条目</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.id</td><td>LONG</td><td>是</td><td>分摊条目的唯一ID</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.originalSpreadAmount</td><td>STRING</td><td>是</td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.currencyCode</td><td>STRING</td><td>是</td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.priceTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>0.09</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.priceWithoutTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>54.01</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.departmentCode</td><td>STRING</td><td></td><td>部门编号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.departmentName</td><td>STRING</td><td></td><td>部门名称</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.empName</td><td>STRING</td><td></td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.empNumber</td><td>STRING</td><td></td><td>员工工号</td><td>00000001</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.empSeqId</td><td>LONG</td><td></td><td>员工唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.projectCode</td><td>STRING</td><td></td><td>项目编码</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.projectName</td><td>STRING</td><td></td><td>项目名称</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.proportion</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后4位</td><td>33.3333</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.overBudgetFlag</td><td>STRING</td><td></td><td>* 0：不超<br>* 1：超</td><td>0</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList</td><td>ARRAY</td><td>是</td><td>自定义分摊的字段取值集合，与分摊方方式的分摊字段配置一一对应</td><td></td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.spreadItemId</td><td>LONG</td><td>是</td><td>所属分摊条目的唯一ID</td><td>10000</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldName</td><td>STRING</td><td>是</td><td>该字段值为系统设置 -&gt; 分摊方式页面中具体的分摊字段的字段名称</td><td>部门</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldType</td><td>STRING</td><td>是</td><td>* system：系统字段<br>* custom：自定义字段</td><td>system</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldBizType</td><td>STRING</td><td>是</td><td>* 员工：EMPLOYEE<br>* 客户：CUSTOMER<br>* 部门：DEPARTMENT<br>* 项目：PROJECT<br>* 成本中心：COSTCENTER<br>* 业务分组：BUSINESSGROUP<br>* 自定义档案：CUSTOMFILE</td><td>DEPARTMENT</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSeqId</td><td>LONG</td><td>是</td><td>字段取值自增id</td><td>10001</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueCode</td><td>STRING</td><td>是</td><td>字段取值编号</td><td>0000</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueName</td><td>STRING</td><td>是</td><td>字段取值名称</td><td>部门1</td></tr>
+<tr><td>body.body.expenseApplyViewDto.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSourceCode</td><td>STRING</td><td></td><td>字段取值来源, 目前只有自定义档案的编码</td><td></td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;billId&quot;: 2023102702548607,
+        &quot;useType&quot;: &quot;1&quot;,
+        &quot;subUseType&quot;: &quot;0&quot;,
+        &quot;applyTotalAmount&quot;: null,
+        &quot;billRemark&quot;: null,
+        &quot;appRsn&quot;: null,
+        &quot;eventType&quot;: &quot;EXPENSE_APPLY&quot;,
+        &quot;eventId&quot;: &quot;13801---&quot;,
+        &quot;eventNam&quot;: &quot;费用申请1234&quot;,
+        &quot;remark&quot;: &quot;&quot;,
+        &quot;applyTim&quot;: 1698373051000,
+        &quot;firstApplyTim&quot;: null,
+        &quot;finishTim&quot;: null,
+        &quot;billNam&quot;: null,
+        &quot;billDepCod&quot;: &quot;00000004&quot;,
+        &quot;billDepNam&quot;: &quot;少冰三分甜&quot;,
+        &quot;billComDepCod&quot;: &quot;0000&quot;,
+        &quot;billComLpcCode&quot;: &quot;Fx60000&quot;,
+        &quot;billComNam&quot;: &quot;憨人科技&quot;,
+        &quot;billProjectId&quot;: &quot;PRJ20220425202044\&quot;&quot;,
+        &quot;billProject&quot;: &quot;项目3及&quot;,
+        &quot;billCenName&quot;: null,
+        &quot;billCenNbr&quot;: null,
+        &quot;billProjectStartTim&quot;: 1649289600000,
+        &quot;billProjectEndTim&quot;: 1714003200000,
+        &quot;projectTypeId&quot;: &quot;PRJTYPE20220425201940&quot;,
+        &quot;projectTypeName&quot;: &quot;测二级&quot;,
+        &quot;billBDId&quot;: null,
+        &quot;billBDNam&quot;: null,
+        &quot;billSts&quot;: &quot;0&quot;,
+        &quot;aplNam&quot;: &quot;张灯结彩&quot;,
+        &quot;aplJobName&quot;: null,
+        &quot;aplDepId&quot;: &quot;0000&quot;,
+        &quot;aplDepNam&quot;: &quot;憨人科技&quot;,
+        &quot;aplComNam&quot;: null,
+        &quot;aplPosId&quot;: &quot;PP000001&quot;,
+        &quot;aplPosNam&quot;: &quot;总裁&quot;,
+        &quot;aplCenId&quot;: 0,
+        &quot;aplCenName&quot;: null,
+        &quot;aplCenNbr&quot;: null,
+        &quot;aplEmail&quot;: null,
+        &quot;aplPhone&quot;: null,
+        &quot;aplEmpNumber&quot;: &quot;111&quot;,
+        &quot;aplDepCod&quot;: &quot;0000&quot;,
+        &quot;aplComDepCod&quot;: null,
+        &quot;aplEmpThirdPartId&quot;: null,
+        &quot;wrEmail&quot;: &quot;&quot;,
+        &quot;wrRankCode&quot;: &quot;M1&quot;,
+        &quot;wrRankName&quot;: &quot;主管&quot;,
+        &quot;wrEmpThirdPartId&quot;: null,
+        &quot;wrEmpNumber&quot;: &quot;111&quot;,
+        &quot;wrDepCod&quot;: &quot;0000&quot;,
+        &quot;wrNam&quot;: &quot;张灯结彩&quot;,
+        &quot;wrDepNam&quot;: &quot;憨人科技&quot;,
+        &quot;wrComNam&quot;: &quot;憨人科技&quot;,
+        &quot;wrPosId&quot;: &quot;PP000001&quot;,
+        &quot;wrPosNam&quot;: &quot;总裁&quot;,
+        &quot;wrCenId&quot;: 0,
+        &quot;wrCenName&quot;: null,
+        &quot;wrCenNbr&quot;: null,
+        &quot;wrComDepCod&quot;: &quot;0000&quot;,
+        &quot;wrJobNam&quot;: null,
+        &quot;subFlag&quot;: &quot;1&quot;,
+        &quot;backTypeFlag&quot;: &quot;0&quot;,
+        &quot;billAuthFlag&quot;: &quot;0&quot;,
+        &quot;appRsnOth&quot;: null,
+        &quot;autoAprFlag&quot;: &quot;1&quot;,
+        &quot;bgtOutFlag&quot;: null,
+        &quot;plcIlgFlag&quot;: null,
+        &quot;isAgent&quot;: false,
+        &quot;channel&quot;: &quot;XFT&quot;,
+        &quot;businessType&quot;: &quot;0&quot;,
+        &quot;verifySts&quot;: null,
+        &quot;fncAuditStatus&quot;: null,
+        &quot;signTim&quot;: null,
+        &quot;printStatus&quot;: &quot;1&quot;,
+        &quot;printedState&quot;: &quot;0&quot;,
+        &quot;tempSaveFlg&quot;: &quot;0&quot;,
+        &quot;visibleRange&quot;: &quot;0&quot;,
+        &quot;outRelId&quot;: null,
+        &quot;outChangeStatus&quot;: &quot;0&quot;,
+        &quot;outChangeTime&quot;: null,
+        &quot;deleteFlag&quot;: &quot;0&quot;,
+        &quot;othBillRelFlag&quot;: &quot;0&quot;,
+        &quot;formSrc&quot;: null,
+        &quot;expTotalCnt&quot;: 0.0,
+        &quot;billApplyAmount&quot;: null,
+        &quot;fromApi&quot;: false,
+        &quot;modifyFlg&quot;: &quot;0&quot;,
+        &quot;billPayStatus&quot;: null,
+        &quot;customFieldValues&quot;: null,
+        &quot;billFileList&quot;: null,
+        &quot;billFileCount&quot;: null,
+        &quot;relatedBill&quot;: {
+            &quot;relFlag&quot;: null,
+            &quot;forceRelFlag&quot;: null,
+            &quot;relEventSeqId&quot;: null,
+            &quot;relBillSeqId&quot;: null,
+            &quot;relBillId&quot;: null,
+            &quot;relEventNam&quot;: null,
+            &quot;relWrNam&quot;: null,
+            &quot;relDepart&quot;: null,
+            &quot;relDestination&quot;: null,
+            &quot;relSubUseType&quot;: null,
+            &quot;relApplyTim&quot;: null
+        },
+        &quot;baseConfigSnap&quot;: {
+            &quot;billConfig&quot;: {
+                &quot;customFieldConfigList&quot;: [
+                    {
+                        &quot;seqId&quot;: 524119,
+                        &quot;name&quot;: &quot;多选&quot;,
+                        &quot;type&quot;: &quot;MULTI_SELECT&quot;,
+                        &quot;required&quot;: false,
+                        &quot;printEnable&quot;: &quot;1&quot;,
+                        &quot;summaryEnable&quot;: &quot;0&quot;,
+                        &quot;description&quot;: null,
+                        &quot;length&quot;: null,
+                        &quot;suffix&quot;: null,
+                        &quot;integerDigits&quot;: null,
+                        &quot;decimalDigits&quot;: null,
+                        &quot;accessoriesNum&quot;: null,
+                        &quot;multiple&quot;: false,
+                        &quot;showHourAndMinute&quot;: false,
+                        &quot;needTime&quot;: &quot;0&quot;,
+                        &quot;searchable&quot;: false,
+                        &quot;currentAndChildDepartmentsOnly&quot;: false,
+                        &quot;autoComputeDiff&quot;: false,
+                        &quot;timeDiffName&quot;: null,
+                        &quot;accountType&quot;: null,
+                        &quot;useLastSignature&quot;: &quot;0&quot;,
+                        &quot;options&quot;: [
+                            &quot;选项1&quot;,
+                            &quot;选项2&quot;,
+                            &quot;选项3&quot;
+                        ],
+                        &quot;fieldNumber&quot;: &quot;multi_select&quot;
+                    }
+                ]
+            },
+            &quot;billFlowList&quot;: null,
+            &quot;nodes&quot;: null,
+            &quot;typInfSnapList&quot;: null
+        },
+        &quot;formRuleConfigDTO&quot;: {
+            &quot;eventRuleSeqId&quot;: 1772,
+            &quot;amountLimitSwitch&quot;: &quot;ON&quot;,
+            &quot;amountLimitType&quot;: &quot;CAN_NOT_SUBMIT&quot;,
+            &quot;amountExceedPercent&quot;: 0
+        },
+        &quot;customFieldApiViewDTOS&quot;: [
+            {
+                &quot;fieldNumber&quot;: &quot;multi_level_select&quot;,
+                &quot;fieldName&quot;: &quot;层级选择&quot;,
+                &quot;sourceValue&quot;: null,
+                &quot;showValue&quot;: &quot;[\&quot;酒店\&quot;,\&quot;如家\&quot;]&quot;,
+                &quot;type&quot;: &quot;MULTI_LEVEL_SELECT&quot;,
+                &quot;src&quot;: &quot;EXP_PRIOR_APPLY&quot;,
+                &quot;srcId&quot;: 165217,
+                &quot;required&quot;: false,
+                &quot;printEnable&quot;: &quot;1&quot;,
+                &quot;summaryEnable&quot;: &quot;0&quot;,
+                &quot;description&quot;: null,
+                &quot;length&quot;: null,
+                &quot;suffix&quot;: null,
+                &quot;integerDigits&quot;: null,
+                &quot;decimalDigits&quot;: null,
+                &quot;accessoriesNum&quot;: null,
+                &quot;multiple&quot;: false,
+                &quot;showHourAndMinute&quot;: false,
+                &quot;needTime&quot;: &quot;0&quot;,
+                &quot;searchable&quot;: false,
+                &quot;currentAndChildDepartmentsOnly&quot;: false,
+                &quot;autoComputeDiff&quot;: false,
+                &quot;timeDiffName&quot;: null,
+                &quot;accountType&quot;: null,
+                &quot;useLastSignature&quot;: &quot;0&quot;,
+                &quot;options&quot;: [],
+                &quot;formColumns&quot;: null,
+                &quot;colorEnable&quot;: &quot;0&quot;,
+                &quot;writeOnly&quot;: &quot;0&quot;,
+                &quot;captionContent&quot;: &quot;&quot;,
+                &quot;formulaDisplay&quot;: null,
+                &quot;relatedPayment&quot;: null,
+                &quot;capitalizationNumber&quot;: null,
+                &quot;columnAuth&quot;: &quot;editable&quot;,
+                &quot;conditionUseFlag&quot;: null,
+                &quot;multiLevelSourceSeqId&quot;: 298,
+                &quot;multiLevelSourceName&quot;: &quot;住宿方式&quot;,
+                &quot;asBillDepartment&quot;: null,
+                &quot;presetContent&quot;: null,
+                &quot;asBillProject&quot;: null,
+                &quot;packFieldsBelong&quot;: null,
+                &quot;useAccount&quot;: &quot;0&quot;,
+                &quot;conditionConfigFlag&quot;: &quot;0&quot;,
+                &quot;asBillRemark&quot;: &quot;0&quot;,
+                &quot;displayCustomer&quot;: &quot;0&quot;,
+                &quot;displayPrjStage&quot;: &quot;0&quot;,
+                &quot;displayExpField&quot;: &quot;0&quot;,
+                &quot;cenRange&quot;: &quot;0&quot;,
+                &quot;unrequiredWhileNoProject&quot;: &quot;0&quot;,
+                &quot;isStandardField&quot;: &quot;0&quot;,
+                &quot;isDisplay&quot;: &quot;0&quot;,
+                &quot;fieldCode&quot;: &quot;0&quot;,
+                &quot;fieldOrderNum&quot;: 0,
+                &quot;conditionConfigs&quot;: null,
+                &quot;customElementUrl&quot;: null,
+                &quot;customElementId&quot;: null,
+                &quot;moduleType&quot;: null,
+                &quot;fillRule&quot;: &quot;0&quot;,
+                &quot;hintText&quot;: &quot;请输入字段名称&quot;,
+                &quot;placeholderText&quot;: null,
+                &quot;hintTextPosition&quot;: &quot;0&quot;,
+                &quot;customFieldOrder&quot;: null,
+                &quot;virtualProportion&quot;: &quot;ONE&quot;,
+                &quot;realProportion&quot;: &quot;ONE&quot;,
+                &quot;requirementResult&quot;: null,
+                &quot;relType&quot;: null,
+                &quot;relFieldType&quot;: null,
+                &quot;relCode&quot;: null,
+                &quot;relProperty&quot;: null,
+                &quot;displayFieldList&quot;: null,
+                &quot;relFileList&quot;: null
+            }
+        ],
+        &quot;expenseApplyViewDto&quot;: [
+            {
+                &quot;comId&quot;: 3327,
+                &quot;billBodySeqId&quot;: 6017568,
+                &quot;billId&quot;: 2023102702548607,
+                &quot;expenseName&quot;: &quot;事前费用1&quot;,
+                &quot;expenseAttribute&quot;: &quot;AIRCRAFT&quot;,
+                &quot;expenseNumber&quot;: &quot;001l&quot;,
+                &quot;remind&quot;: null,
+                &quot;violatePolicyReason&quot;: &quot;&quot;,
+                &quot;violatePolicyFlag&quot;: &quot;0&quot;,
+                &quot;participantNum&quot;: 1,
+                &quot;merchantName&quot;: &quot;1&quot;,
+                &quot;occurrenceDate&quot;: &quot;2023-08-14&quot;,
+                &quot;payCityCode&quot;: &quot;1&quot;,
+                &quot;remark&quot;: &quot;备注1&quot;,
+                &quot;amount&quot;: 1234.0,
+                &quot;departureCityCode&quot;: &quot;1&quot;,
+                &quot;destinationCityCode&quot;: &quot;2&quot;,
+                &quot;departureDate&quot;: &quot;2023-08-11&quot;,
+                &quot;arriveDate&quot;: &quot;2023-08-13&quot;,
+                &quot;aircraftCabin&quot;: &quot;1&quot;,
+                &quot;airlineCompany&quot;: &quot;1&quot;,
+                &quot;flightFullPrice&quot;: 0.00,
+                &quot;civilAviationFund&quot;: 12.00,
+                &quot;discount&quot;: 1.0,
+                &quot;airlineNo&quot;: &quot;1&quot;,
+                &quot;flightETicketNo&quot;: &quot;1&quot;,
+                &quot;hotelStar&quot;: &quot;1&quot;,
+                &quot;checkInDate&quot;: &quot;2023-08-11&quot;,
+                &quot;checkOutDate&quot;: &quot;2023-08-13&quot;,
+                &quot;peerEmpNumbers&quot;: null,
+                &quot;trainCabin&quot;: &quot;1&quot;,
+                &quot;trainNo&quot;: &quot;1&quot;,
+                &quot;trainTicketNo&quot;: null,
+                &quot;shipCabin&quot;: &quot;1&quot;,
+                &quot;customFieldApiViewDTOS&quot;: null,
+                &quot;expenseSpread&quot;: {
+                    &quot;seqId&quot;: 4527,
+                    &quot;spreadBusinessType&quot;: &quot;expense&quot;,
+                    &quot;spreadBusinessId&quot;: &quot;268731&quot;,
+                    &quot;totalAmount&quot;: 1234.00,
+                    &quot;originalTotalAmount&quot;: 1234.00,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;spreadItemList&quot;: [
+                        {
+                            &quot;id&quot;: 9270,
+                            &quot;spreadAmount&quot;: 1234.00,
+                            &quot;originalSpreadAmount&quot;: 1234.00,
+                            &quot;currencyCode&quot;: &quot;CNY&quot;,
+                            &quot;departmentCode&quot;: 00000009,
+                            &quot;departmentName&quot;: &quot;00000009-混沌分公司&quot;,
+                            &quot;empName&quot;: null,
+                            &quot;empNumber&quot;: null,
+                            &quot;empSeqId&quot;: null,
+                            &quot;projectCode&quot;: null,
+                            &quot;projectName&quot;: null,
+                            &quot;proportion&quot;: 100,
+                            &quot;overBudgetFlag&quot;: &quot;0&quot;,
+                            &quot;spreadFieldValueApiViewDTOList&quot;: [
+                                {
+                                    &quot;spreadItemId&quot;: 11101,
+                                    &quot;fieldName&quot;: &quot;部门&quot;,
+                                    &quot;fieldType&quot;: &quot;system&quot;,
+                                    &quot;fieldBizType&quot;: &quot;DEPARTMENT&quot;,
+                                    &quot;fieldValueSeqId&quot;: 1000,
+                                    &quot;fieldValueCode&quot;: &quot;00000009&quot;,
+                                    &quot;fieldValueName&quot;: &quot;00000009-混沌分公司&quot;,
+                                    &quot;fieldValueSourceCode&quot;: null
+                                },
+                                {
+                                    &quot;spreadItemId&quot;: 11102,
+                                    &quot;fieldName&quot;: &quot;自定义档案测试&quot;,
+                                    &quot;fieldType&quot;: &quot;custom&quot;,
+                                    &quot;fieldBizType&quot;: &quot;CUSTOMFILE&quot;,
+                                    &quot;fieldValueSeqId&quot;: 1001,
+                                    &quot;fieldValueCode&quot;: &quot;01&quot;,
+                                    &quot;fieldValueName&quot;: &quot;档案选项1&quot;,
+                                    &quot;fieldValueSourceCode&quot;: &quot;dd001&quot;
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    &quot;comId&quot;: 3327,
+                    &quot;billBodySeqId&quot;: 6017569,
+                    &quot;billId&quot;: 2023102702548607,
+                    &quot;expenseName&quot;: &quot;事前费用2&quot;,
+                    &quot;expenseAttribute&quot;: &quot;AIRCRAFT&quot;,
+                    &quot;expenseNumber&quot;: &quot;001l&quot;,
+                    &quot;remind&quot;: null,
+                    &quot;violatePolicyReason&quot;: &quot;&quot;,
+                    &quot;violatePolicyFlag&quot;: &quot;0&quot;,
+                    &quot;participantNum&quot;: 1,
+                    &quot;merchantName&quot;: &quot;1&quot;,
+                    &quot;occurrenceDate&quot;: &quot;2023-08-13&quot;,
+                    &quot;payCityCode&quot;: &quot;1&quot;,
+                    &quot;remark&quot;: &quot;备注1&quot;,
+                    &quot;amount&quot;: 1234.0,
+                    &quot;departureCityCode&quot;: &quot;1&quot;,
+                    &quot;destinationCityCode&quot;: &quot;2&quot;,
+                    &quot;departureDate&quot;: &quot;2023-08-12&quot;,
+                    &quot;arriveDate&quot;: &quot;2023-08-13&quot;,
+                    &quot;aircraftCabin&quot;: &quot;1&quot;,
+                    &quot;airlineCompany&quot;: &quot;1&quot;,
+                    &quot;flightFullPrice&quot;: 0.00,
+                    &quot;civilAviationFund&quot;: 12.00,
+                    &quot;discount&quot;: 1.0,
+                    &quot;airlineNo&quot;: &quot;1&quot;,
+                    &quot;flightETicketNo&quot;: &quot;1&quot;,
+                    &quot;hotelStar&quot;: &quot;1&quot;,
+                    &quot;checkInDate&quot;: &quot;2023-08-14&quot;,
+                    &quot;checkOutDate&quot;: &quot;2023-08-18&quot;,
+                    &quot;peerEmpNumbers&quot;: null,
+                    &quot;trainCabin&quot;: &quot;1&quot;,
+                    &quot;trainNo&quot;: &quot;1&quot;,
+                    &quot;trainTicketNo&quot;: null,
+                    &quot;shipCabin&quot;: &quot;1&quot;,
+                    &quot;customFieldApiViewDTOS&quot;: [
+                        {
+                            &quot;fieldNumber&quot;: &quot;multi_level_select&quot;,
+                            &quot;fieldName&quot;: &quot;层级选择&quot;,
+                            &quot;sourceValue&quot;: null,
+                            &quot;showValue&quot;: &quot;[\&quot;酒店\&quot;,\&quot;如家\&quot;]&quot;,
+                            &quot;type&quot;: &quot;MULTI_LEVEL_SELECT&quot;,
+                            &quot;src&quot;: &quot;EXP_PRIOR_APPLY&quot;,
+                            &quot;srcId&quot;: 165217,
+                            &quot;required&quot;: false,
+                            &quot;printEnable&quot;: &quot;1&quot;,
+                            &quot;summaryEnable&quot;: &quot;0&quot;,
+                            &quot;description&quot;: null,
+                            &quot;length&quot;: null,
+                            &quot;suffix&quot;: null,
+                            &quot;integerDigits&quot;: null,
+                            &quot;decimalDigits&quot;: null,
+                            &quot;accessoriesNum&quot;: null,
+                            &quot;multiple&quot;: false,
+                            &quot;showHourAndMinute&quot;: false,
+                            &quot;needTime&quot;: &quot;0&quot;,
+                            &quot;searchable&quot;: false,
+                            &quot;currentAndChildDepartmentsOnly&quot;: false,
+                            &quot;autoComputeDiff&quot;: false,
+                            &quot;timeDiffName&quot;: null,
+                            &quot;accountType&quot;: null,
+                            &quot;useLastSignature&quot;: &quot;0&quot;,
+                            &quot;options&quot;: [],
+                            &quot;formColumns&quot;: null,
+                            &quot;colorEnable&quot;: &quot;0&quot;,
+                            &quot;writeOnly&quot;: &quot;0&quot;,
+                            &quot;captionContent&quot;: &quot;&quot;,
+                            &quot;formulaDisplay&quot;: null,
+                            &quot;relatedPayment&quot;: null,
+                            &quot;capitalizationNumber&quot;: null,
+                            &quot;columnAuth&quot;: &quot;editable&quot;,
+                            &quot;conditionUseFlag&quot;: null,
+                            &quot;multiLevelSourceSeqId&quot;: 298,
+                            &quot;multiLevelSourceName&quot;: &quot;住宿方式&quot;,
+                            &quot;asBillDepartment&quot;: null,
+                            &quot;presetContent&quot;: null,
+                            &quot;asBillProject&quot;: null,
+                            &quot;packFieldsBelong&quot;: null,
+                            &quot;useAccount&quot;: &quot;0&quot;,
+                            &quot;conditionConfigFlag&quot;: &quot;0&quot;,
+                            &quot;asBillRemark&quot;: &quot;0&quot;,
+                            &quot;displayCustomer&quot;: &quot;0&quot;,
+                            &quot;displayPrjStage&quot;: &quot;0&quot;,
+                            &quot;displayExpField&quot;: &quot;0&quot;,
+                            &quot;cenRange&quot;: &quot;0&quot;,
+                            &quot;unrequiredWhileNoProject&quot;: &quot;0&quot;,
+                            &quot;isStandardField&quot;: &quot;0&quot;,
+                            &quot;isDisplay&quot;: &quot;0&quot;,
+                            &quot;fieldCode&quot;: &quot;0&quot;,
+                            &quot;fieldOrderNum&quot;: 0,
+                            &quot;conditionConfigs&quot;: null,
+                            &quot;customElementUrl&quot;: null,
+                            &quot;customElementId&quot;: null,
+                            &quot;moduleType&quot;: null,
+                            &quot;fillRule&quot;: &quot;0&quot;,
+                            &quot;hintText&quot;: &quot;请输入字段名称&quot;,
+                            &quot;placeholderText&quot;: null,
+                            &quot;hintTextPosition&quot;: &quot;0&quot;,
+                            &quot;customFieldOrder&quot;: null,
+                            &quot;virtualProportion&quot;: &quot;ONE&quot;,
+                            &quot;realProportion&quot;: &quot;ONE&quot;,
+                            &quot;requirementResult&quot;: null,
+                            &quot;relType&quot;: null,
+                            &quot;relFieldType&quot;: null,
+                            &quot;relCode&quot;: null,
+                            &quot;relProperty&quot;: null,
+                            &quot;displayFieldList&quot;: null,
+                            &quot;relFileList&quot;: null
+                        }
+                    }
+                ]
+            }
+        ],
+        &quot;expChangeViewDto&quot;: null
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+
+</code></pre>
+<pre><code>
+## 错误码说明 
+| 错误码| 错误信息|
+  | --- | --- |
+  | E0001 | 具体业务异常提示 |
+</body>
+</html>

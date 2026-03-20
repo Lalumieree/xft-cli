@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>预算编制额导入</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>预算编制额导入</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/budget/import/quota</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/budget/import/quota</p>
+<h2>接口描述</h2>
+<p>支持外部系统将预算方案编制额度导入系统。</p>
+<p>支持导入编制额进行覆盖和追加两种。</p>
+<p>预算导入额度不能超过1000条。</p>
+<p>不支持部分成功。</p>
+
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.budgetPlanName</td><td>STRING</td><td>是</td><td>预算方案名称</td><td>招待预算</td></tr>
+<tr><td>root.budgetCycle</td><td>STRING</td><td>是</td><td>1 月度预算<br>2 季度预算<br>3 年度预算</td><td>1</td></tr>
+<tr><td>root.budgetPlanId</td><td>STRING</td><td>是</td><td>预算方案编码</td><td>XXX0001</td></tr>
+<tr><td>root.operationType</td><td>STRING</td><td>否</td><td>0-覆盖编制额<br>1-追加编制额<br>不传默认为覆盖编制额</td><td>0</td></tr>
+<tr><td>root.budgetPlanEstablishQuotas</td><td>ARRAY</td><td>是</td><td>最多支持1000条预算编制</td><td></td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.orgId</td><td>STRING</td><td>否</td><td>预算维度为1、3时必填。当预算组织为“其他”时填“#”</td><td>BUDGETORG20230317154944</td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.orgName</td><td>STRING</td><td>否</td><td>预算组织名称</td><td>测试招待</td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.subjectName</td><td>STRING</td><td>否</td><td>预算维度为2、3时必填</td><td>测试预算科目</td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.quotaOfEachPeriods</td><td>ARRAY</td><td>是</td><td>最多支持60期</td><td></td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.quotaOfEachPeriods.periodNumber</td><td>INTEGER</td><td>是</td><td>值应在所在方案的预算期数内</td><td>1</td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.quotaOfEachPeriods.initialQuota</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过9位，小数位不能超过2位<br><br>操作类型为0-覆盖，或者没有传操作类型时，预算编制初始额不可为空</td><td>1000.00</td></tr>
+<tr><td>root.budgetPlanEstablishQuotas.quotaOfEachPeriods.addQuota</td><td>BIGDECIMAL</td><td>否</td><td>整数位不能超过9位，小数位不能超过2位<br>操作类型为1-追加时，预算编制追加额不可为空</td><td>1000.00</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td></td><td>是否导入成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td></td><td>明细信息</td><td>调用成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>编制额覆盖请求报文</h3>
+<pre><code>
+{
+  &quot;budgetPlanName&quot;: &quot;222&quot;,
+  &quot;budgetCycle&quot;: &quot;1&quot;,
+  &quot;budgetPlanId&quot;: &quot;2222&quot;,
+  &quot;operationType&quot;:&quot;0&quot;
+  &quot;budgetPlanEstablishQuotas&quot;: [
+    {
+      &quot;orgId&quot;: &quot;BUDGETORG20230317154944&quot;,
+      &quot;orgName&quot;: &quot;测试招待&quot;,
+      &quot;quotaOfEachPeriods&quot;: [
+          {
+            &quot;periodNumber&quot;: 0,
+            &quot;initialQuota&quot;: 10000000.00
+          }
+       ]
+    }
+  ]
+}
+</code></pre>
+<h3>编制额追加请求报文</h3>
+<pre><code>
+{
+  &quot;budgetPlanName&quot;: &quot;222&quot;,
+  &quot;budgetCycle&quot;: &quot;1&quot;,
+  &quot;budgetPlanId&quot;: &quot;2222&quot;,
+  &quot;operationType&quot;:&quot;1&quot;
+  &quot;budgetPlanEstablishQuotas&quot;: [
+    {
+      &quot;orgId&quot;: &quot;BUDGETORG20230317154944&quot;,
+      &quot;orgName&quot;: &quot;测试招待&quot;,
+      &quot;quotaOfEachPeriods&quot;: [
+          {
+            &quot;periodNumber&quot;: 0,
+            &quot;addQuota&quot;: 10000000.00
+          }
+       ]
+    }
+  ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;调用成功！&quot;
+}
+  
+## 错误码说明 
+| 错误码| 错误信息|
+  | --- | --- |
+  | Data | Data |
+</body>
+</html>

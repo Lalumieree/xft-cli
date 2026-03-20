@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>导入预算组织</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>导入预算组织</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/budget/import/organization</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/budget/import/organization</p>
+<h2>接口描述</h2>
+<p>支持外部系统通过接口导入预算组织信息进入费控，支持新增和更新（以组织id为唯一值进行更新），支持导入或条件，不支持部分成功</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.organizations</td><td>ARRAY</td><td>是</td><td>导入的预算组织列表，最多支持100条</td><td></td></tr>
+<tr><td>root.organizations.adminUsers</td><td>STRING</td><td>否</td><td>填写员工花名册编码，以英文逗号,分割</td><td>001,002</td></tr>
+<tr><td>root.organizations.budgetId</td><td>STRING</td><td>否</td><td>不填会默认生成<br>仅支持数字和字母<br>如果填写的组织id与系统内的组织id一致，将按传入信息对组织进行更新</td><td>orgId</td></tr>
+<tr><td>root.organizations.budgetName</td><td>STRING</td><td>是</td><td>预算组织名称</td><td>api导入测试6</td></tr>
+<tr><td>root.organizations.budgetOrgTypeId</td><td>STRING</td><td>是</td><td>传入系统已有的预算组织分类id</td><td>BGTTYP20241129084711</td></tr>
+<tr><td>root.organizations.budgetOrgTypeName</td><td>STRING</td><td>是</td><td>传入系统已有的预算组织分类名称</td><td>部门分类</td></tr>
+<tr><td>root.organizations.budgetParentId</td><td>STRING</td><td>否</td><td>如果传了值，则导入的预算组织为该组织下级组织<br>如果没传值，则导入的预算组织为第一级</td><td>424124</td></tr>
+<tr><td>root.organizations.priority</td><td>LONG</td><td>是</td><td>支持1-99的整数</td><td>99</td></tr>
+<tr><td>root.organizations.reportUsers</td><td>STRING</td><td>否</td><td>填写员工花名册编码，以英文逗号,分割</td><td>003,004</td></tr>
+<tr><td>root.organizations.conditions</td><td>ARRAY</td><td>是</td><td>1、承担条件不可全为空，即承担部门、项目、项目分类等承担项，必须有一个有值<br>2、list存在多个条件时，条件之间为或关系</td><td></td></tr>
+<tr><td>root.organizations.conditions.projectTypes</td><td>STRING</td><td>否</td><td>填写项目分类编码，以英文逗号,分割</td><td>PRJTYPe20210,PRJTYPE2024</td></tr>
+<tr><td>root.organizations.conditions.projects</td><td>STRING</td><td>否</td><td>填写项目编码，以英文逗号,分割</td><td>PRJ1,PRJ2</td></tr>
+<tr><td>root.organizations.conditions.costCenters</td><td>STRING</td><td>否</td><td>填写成本中心编码，以英文逗号,分割</td><td>CENTER1,CENTER2</td></tr>
+<tr><td>root.organizations.conditions.depWithChildren</td><td>STRING</td><td>否</td><td>填写部门编码，以英文逗号,分割</td><td>00000001234,00000002</td></tr>
+<tr><td>root.organizations.conditions.departments</td><td>STRING</td><td>否</td><td>填写部门编码，以英文逗号,分割</td><td>00000001234,00000002</td></tr>
+<tr><td>root.organizations.conditions.matterTypeName</td><td>STRING</td><td>否</td><td>填写业务分类名称，以英文逗号,分割</td><td>天蓝1,天蓝2</td></tr>
+<tr><td>root.organizations.conditions.matterMissionName</td><td>STRING</td><td>否</td><td>填写业务分类名称，以英文逗号,分割</td><td>天蓝11,天蓝22</td></tr>
+<tr><td>root.organizations.conditions.matterDetailName</td><td>STRING</td><td>否</td><td>填写业务分类名称，以英文逗号,分割</td><td>天蓝111,天蓝222</td></tr>
+<tr><td>root.organizations.conditions.persons</td><td>STRING</td><td>否</td><td>填写员工花名册编码，以英文逗号,分割</td><td>003,004</td></tr>
+<tr><td>root.opsEmpNumber</td><td>STRING</td><td>是</td><td>填写员工花名册编码</td><td>001</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.data</td><td>OBJECT</td><td>否</td><td>接口返回导入结果</td><td></td></tr>
+<tr><td>root.data.success</td><td>BOOLEAN</td><td>否</td><td>true说明导入成功<br>false说明导入失败</td><td>false</td></tr>
+<tr><td>root.data.errors</td><td>ARRAY</td><td>否</td><td>如果导入失败，这里会返回具体的导入失败原因<br>如果是导入成功，则为这里为空</td><td></td></tr>
+<tr><td>root.data.errors.index</td><td>LONG</td><td>否</td><td>导入失败的组织序号</td><td>1</td></tr>
+<tr><td>root.data.errors.budgetOrgError</td><td>STRING</td><td>否</td><td>具体的导入失败原因</td><td>校验第1行预算组织失败：预算组织所属上级编码不存在；预算组织承担项目不存在</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>true说明接口调用成功<br>false说明接口调用失败</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>接口调用返回信息</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;organizations&quot;: [
+        {
+            &quot;adminUsers&quot;: &quot;001,002&quot;,
+            &quot;budgetId&quot;: &quot;1&quot;,
+            &quot;budgetName&quot;: &quot;api导入测试1&quot;,
+            &quot;budgetOrgTypeId&quot;: &quot;BGTTYP20241129084711&quot;,
+            &quot;budgetOrgTypeName&quot;: &quot;自定义档案&quot;,
+            &quot;budgetParentId&quot;: &quot;parentId&quot;,
+            &quot;priority&quot;: &quot;99&quot;,
+            &quot;reportUsers&quot;: &quot;003,005&quot;,
+            &quot;conditions&quot;: [
+                {
+                    &quot;projectTypes&quot;: &quot;PRJTYPe2021082311343311,PRJTYPE20210823113433&quot;,
+                    &quot;projects&quot;: &quot;001,002&quot;,
+                    &quot;costCenters&quot;: &quot;CENTER2023041401967608,0000003&quot;,
+                    &quot;depWithChildren&quot;: &quot;00000001234,00000002,00000028&quot;,
+                    &quot;departments&quot;: &quot;00000001234,00000002,00000028,0009,00000042&quot;,
+                    &quot;matterDetailName&quot;: &quot;天蓝1,天蓝2&quot;,
+                    &quot;matterMissionName&quot;: &quot;天蓝1,天蓝2&quot;,
+                    &quot;matterTypeName&quot;: &quot;天蓝1,天蓝2&quot;,
+                    &quot;persons&quot;: &quot;003,004&quot;
+                }
+            ]
+        },
+        {
+            &quot;adminUsers&quot;: &quot;001,002&quot;,
+            &quot;budgetId&quot;: &quot;2&quot;,
+            &quot;budgetName&quot;: &quot;api导入测试2&quot;,
+            &quot;budgetOrgTypeId&quot;: &quot;BGTTYP20241129084711&quot;,
+            &quot;budgetOrgTypeName&quot;: &quot;自定义档案&quot;,
+            &quot;budgetParentId&quot;: &quot;parentId&quot;,
+            &quot;priority&quot;: &quot;99&quot;,
+            &quot;reportUsers&quot;: &quot;003,005&quot;,
+            &quot;conditions&quot;: [
+                {
+                    &quot;projectTypes&quot;: &quot;PRJTYPe2021082311343311,PRJTYPE20210823113433&quot;,
+                    &quot;projects&quot;: &quot;001,002&quot;,
+                    &quot;costCenters&quot;: &quot;CENTER2023041401967608,0000003&quot;,
+                    &quot;depWithChildren&quot;: &quot;00000001234,00000002,00000028&quot;,
+                    &quot;departments&quot;: &quot;00000001234,00000002,00000028,0009,00000042&quot;,
+                    &quot;matterDetailName&quot;: &quot;天蓝1,天蓝2&quot;,
+                    &quot;matterMissionName&quot;: &quot;天蓝1,天蓝2&quot;,
+                    &quot;matterTypeName&quot;: &quot;天蓝1,天蓝2&quot;,
+                    &quot;persons&quot;: &quot;003,004&quot;
+                }
+            ]
+        }
+    ],
+    &quot;opsEmpNumber&quot;: &quot;001&quot;
+}
+</code></pre>
+<h3>响应报文</h3>
+<h3>接口调用失败的报文，示例仅为其中一部分失败样例</h3>
+<pre><code>
+{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;预算组织的承担条件不可为空，请修改后重试&quot;
+}
+</code></pre>
+<h3>导入成功的报文</h3>
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;success&quot;: true,
+        &quot;errors&quot;: []
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h3>导入失败的报文，示例仅为其中一部分失败样例</h3>
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;success&quot;: false,
+        &quot;errors&quot;: [
+            {
+                &quot;index&quot;: 1,
+                &quot;budgetOrgError&quot;: &quot;校验第1行预算组织失败：预算组织所属上级编码不存在；预算组织承担项目不存在&quot;
+            },
+            {
+                &quot;index&quot;: 2,
+                &quot;budgetOrgError&quot;: &quot;校验第2行预算组织失败：预算组织所属上级编码不存在；预算组织承担项目不存在&quot;
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>外层success为接口调用状态 true为成功 其余都是失败</p>
+<p>data内的sucess为实际导入成功状态， true为成功 其余都是失败</p>
+<p>常见报错如下：</p>
+<p>未设置预算组织名称，不予上传</p>
+<p>预算组织编号仅支持数字和字母，且长度不可超过50位</p>
+<p>预算组织名称长度不可超过120位</p>
+<p>预算组织名称不可为&#x27;其他&#x27;</p>
+<p>优先级必须为1-99的整数</p>
+<p>预算组织编码重复</p>
+<p>预算组织所属分类的编码和名称不一致</p>
+<p>预算组织所属上级编码不存在</p>
+<p>预算组织所属分类必须与所属上级的分类保持一致</p>
+<p>xx（表示承担元素）存在重复值</p>
+<p>xx（表示承担元素）不存在</p>
+</body>
+</html>

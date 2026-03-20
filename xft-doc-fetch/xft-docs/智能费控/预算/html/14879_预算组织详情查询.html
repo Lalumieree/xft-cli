@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>预算组织详情查询</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>预算组织详情查询</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/budget/organization/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/budget/organization/detail</p>
+<h2>接口描述</h2>
+<p>本接口适用于查询预算组织详情信息，包含预算组织基础信息、承担条件、组织负责人和报表查询人。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.orgSeqId</td><td>LONG</td><td>否</td><td>预算组织自增id和预算组织编码集合查询条件不可同时为空</td><td>100</td></tr>
+<tr><td>root.organizationIds</td><td>ARRAY</td><td></td><td>预算组织自增id和预算组织编码集合查询条件不可同时为空，<br>预算组织编码集合查询条件不可超过100</td><td>[ &quot;BUDGETORG20231212084255521eedcd&quot; ]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.data</td><td>OBJECT</td><td>否</td><td>预算组织数据</td><td></td></tr>
+<tr><td>root.data.budgetSeqId</td><td>LONG</td><td>否</td><td>预算组织自增id</td><td>10</td></tr>
+<tr><td>root.data.budgetId</td><td>STRING</td><td>否</td><td>预算组织编码</td><td>all0101</td></tr>
+<tr><td>root.data.budgetParentId</td><td>STRING</td><td>否</td><td>上级预算组织编码</td><td>parent01</td></tr>
+<tr><td>root.data.budgetName</td><td>STRING</td><td>否</td><td>预算组织名称</td><td>全条件组织</td></tr>
+<tr><td>root.data.priority</td><td>LONG</td><td>否</td><td>预算组织优先级</td><td>1</td></tr>
+<tr><td>root.data.typeSeqId</td><td>LONG</td><td>否</td><td>预算组织所属分类自增id</td><td>20</td></tr>
+<tr><td>root.data.orderNum</td><td>DOUBLE</td><td>否</td><td>预算组织页面排序</td><td>0</td></tr>
+<tr><td>root.data.admins</td><td>ARRAY</td><td>否</td><td>预算组织负责人列表</td><td></td></tr>
+<tr><td>root.data.admins.empSeqId</td><td>LONG</td><td>否</td><td>负责人自增id</td><td>1</td></tr>
+<tr><td>root.data.admins.empId</td><td>STRING</td><td>否</td><td>负责人Id</td><td>U0000</td></tr>
+<tr><td>root.data.admins.empNam</td><td>STRING</td><td>否</td><td>负责人名称</td><td>天</td></tr>
+<tr><td>root.data.admins.phoneNbr</td><td>STRING</td><td>否</td><td>手机号将脱敏展示，脱敏规则为手机号中间4位转为*</td><td>183****1111</td></tr>
+<tr><td>root.data.admins.depSeqId</td><td>LONG</td><td>否</td><td>负责人所属部门自增id</td><td>1</td></tr>
+<tr><td>root.data.admins.onJobFlag</td><td>STRING</td><td>否</td><td>ON-在职<br>OFF-离职</td><td>ON</td></tr>
+<tr><td>root.data.reportUsers</td><td>ARRAY</td><td>否</td><td>报表查询人</td><td></td></tr>
+<tr><td>root.data.reportUsers.empSeqId</td><td>LONG</td><td>否</td><td>报表查询人自增id</td><td>1</td></tr>
+<tr><td>root.data.reportUsers.empId</td><td>STRING</td><td>否</td><td>报表查询人Id</td><td>U0000</td></tr>
+<tr><td>root.data.reportUsers.empNam</td><td>STRING</td><td>否</td><td>报表查询人名称</td><td>天</td></tr>
+<tr><td>root.data.reportUsers.phoneNbr</td><td>STRING</td><td>否</td><td>手机号将脱敏展示，脱敏规则为手机号中间4位转为*</td><td>183****1111</td></tr>
+<tr><td>root.data.reportUsers.depSeqId</td><td>LONG</td><td>否</td><td>报表查询人所属部门自增id</td><td>1</td></tr>
+<tr><td>root.data.reportUsers.onJobFlag</td><td>STRING</td><td>否</td><td>ON-在职<br>OFF-离职</td><td>ON</td></tr>
+<tr><td>root.data.budgetConditionGroups</td><td>ARRAY</td><td>否</td><td>预算组织承担条件是两层list嵌套标识<br><br>承担条件：<br>[<br> [ (表示条件组1)<br> {条件1},{条件2}<br> ],<br> [ <br> (表示条件组2) <br> ]<br>]<br>其中条件组1和条件组2为或关系<br>其中条件1和条件2为且关系</td><td>[[],[],[]]</td></tr>
+<tr><td>root.data.budgetConditionGroups.groupSeqId</td><td>LONG</td><td></td><td>条件组自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.groupType</td><td>STRING</td><td></td><td>DEPARTMENT-部门<br>DEP_WITH_CHILDREN-部门含下属部门<br>PROJECT-项目<br>COST_CENTER-成本中心<br>PROJECT_TYPE-项目类型<br>PERSONAL-人员<br>MATTER_DETAIL-事项<br>CUSTOM_FILE-自定义档案</td><td>DEPARTMENT</td></tr>
+<tr><td>root.data.budgetConditionGroups.budgetSeqId</td><td>LONG</td><td></td><td>预算组织自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.groupTypeRelId</td><td>LONG</td><td></td><td>当承担条件为档案时，表示档案自增id<br>其余情况为空</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.groupTypeName</td><td>STRING</td><td></td><td>当承担条件为档案时，表示档案名称<br>其余情况为空</td><td>档案</td></tr>
+<tr><td>root.data.budgetConditionGroups.relation</td><td>STRING</td><td></td><td>IN-属于<br>NOTIN-不属于</td><td>IN</td></tr>
+<tr><td>root.data.budgetConditionGroups.itemId</td><td>LONG</td><td></td><td>条件项自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup</td><td>ARRAY</td><td></td><td>具体承担条件</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.type</td><td>STRING</td><td></td><td>DEPARTMENT-部门<br> DEP_WITH_CHILDREN-部门（含下级部门）<br> PROJECT-项目<br> COST_CENTER-成本中心<br> PROJECT_TYPE-项目类型<br> EMPLOYEE-人员<br> JOB-职位<br> POST-岗位<br> MATTER_TYPE-业务分类<br> MATTER_MISSION-业务事项<br> MATTER_DETAIL-业务事由<br> RANK-职级<br> ROLE-角色<br> MEMBER_GROUP-成员组<br> BUSINESS_GROUP-业务分组（人员）<br> CUSTOM_FILE-自定义档案</td><td>DEPARTMENT</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.typeSeqId</td><td>LONG</td><td></td><td>如果是部门条件，这里是部门自增id，其他类型类似</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff</td><td>OBJECT</td><td></td><td>条件类型为EMPLOYEE时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff.empSeqId</td><td>LONG</td><td></td><td>人员自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff.empId</td><td>STRING</td><td></td><td>人员ID</td><td>U0000</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff.empNam</td><td>STRING</td><td></td><td>人员名称</td><td>天</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff.phoneNbr</td><td>STRING</td><td></td><td>手机号将脱敏展示，脱敏规则为手机号中间4位转为*</td><td>183****1111</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff.depSeqId</td><td>LONG</td><td></td><td>人员所属部门自增id</td><td>2</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.staff.onJobFlag</td><td>STRING</td><td></td><td>ON-在职<br>OFF-离职</td><td>ON</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.comOrg</td><td>OBJECT</td><td></td><td>条件类型为DEPARTMENT或DEP_WITH_CHILDREN时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.comOrg.depSeqId</td><td>LONG</td><td></td><td>部门自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.comOrg.depId</td><td>STRING</td><td></td><td>部门Id</td><td>001</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.comOrg.depParentId</td><td>STRING</td><td></td><td>上级部门id</td><td>000</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.comOrg.depName</td><td>STRING</td><td></td><td>部门名称</td><td>部门</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.comOrg.depCode</td><td>STRING</td><td></td><td>部门编码</td><td>code01</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.post</td><td>OBJECT</td><td></td><td>条件类型为POST时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.post.posSeqId</td><td>LONG</td><td></td><td>岗位自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.post.posId</td><td>STRING</td><td></td><td>岗位ID</td><td>001</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.post.posNam</td><td>STRING</td><td></td><td>岗位名称</td><td>岗位1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.post.posStatus</td><td>STRING</td><td></td><td>0-停用<br>1-启用</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.job</td><td>OBJECT</td><td></td><td>条件类型为JOB时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.job.jobSeqId</td><td>LONG</td><td></td><td>职位自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.job.jobId</td><td>STRING</td><td></td><td>职位id</td><td>JOB1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.job.jobNam</td><td>STRING</td><td></td><td>职位名称</td><td>职位1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.job.jobStatus</td><td>STRING</td><td></td><td>0-停用<br>1-启用</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectInf</td><td>OBJECT</td><td></td><td>条件类型为PROJECT时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectInf.projectSeqId</td><td>LONG</td><td></td><td>项目自增id</td><td>20</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectInf.projectId</td><td>STRING</td><td></td><td>项目id</td><td>PRJ01</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectInf.projectName</td><td>STRING</td><td></td><td>项目名称</td><td>项目01</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.costCenter</td><td>OBJECT</td><td></td><td>条件类型为COST_CENTER时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.costCenter.cenId</td><td>STRING</td><td></td><td>成本中心ID</td><td>01</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.costCenter.cenName</td><td>STRING</td><td></td><td>成本中心名称</td><td>成本名称</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.costCenter.cenNbr</td><td>STRING</td><td></td><td>成本中心编码</td><td>number1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectType</td><td>OBJECT</td><td></td><td>条件类型为PROJECT_TYPE时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectType.prjTypeSeqId</td><td>LONG</td><td></td><td>项目类型自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectType.prjTypeId</td><td>STRING</td><td></td><td>项目类型id</td><td>prjtype1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectType.prjTypeParentId</td><td>STRING</td><td></td><td>上级项目类型id</td><td>prjtype0</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectType.prjTypeName</td><td>STRING</td><td></td><td>项目类型名称</td><td>类型名称</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.projectType.applyAllUser</td><td>BOOLEAN</td><td></td><td>true-适用所有人<br>false-不适用所有人</td><td>true</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterType</td><td>OBJECT</td><td></td><td>条件类型为MATTER_TYPE时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterType.matterTypeSeqId</td><td>LONG</td><td></td><td>业务类型自增id</td><td>20</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterType.matterTypeName</td><td>STRING</td><td></td><td>业务类型名称</td><td>类型名</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterMission</td><td>OBJECT</td><td></td><td>条件类型为MATTER_MISSION时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterMission.matterMissionSeqId</td><td>LONG</td><td></td><td>业务事项自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterMission.matterTypeSeqId</td><td>LONG</td><td></td><td>所属业务类型自增id</td><td>20</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterMission.matterMissionName</td><td>STRING</td><td></td><td>业务事项名称</td><td>事项名</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterDetail</td><td>OBJECT</td><td></td><td>条件类型为MATTER_DETAIL时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterDetail.matterDetailSeqId</td><td>LONG</td><td></td><td>业务事由自增id</td><td>2</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterDetail.matterMissionSeqId</td><td>LONG</td><td></td><td>所属业务事项自增id</td><td>3</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.matterDetail.matterDetailName</td><td>STRING</td><td></td><td>业务事由名称</td><td>事由名</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.businessGroup</td><td>OBJECT</td><td></td><td>条件类型为BUSINESS_GROUP时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.businessGroup.grpSeqId</td><td>LONG</td><td></td><td>业务分组自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.businessGroup.grpId</td><td>STRING</td><td></td><td>业务分组Id</td><td>id1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.businessGroup.grpCode</td><td>STRING</td><td></td><td>业务分组编码</td><td>code1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.businessGroup.grpName</td><td>STRING</td><td></td><td>业务分组名称</td><td>分组名</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.memberGroup</td><td>OBJECT</td><td></td><td>条件类型为MEMBER_GROUP时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.memberGroup.seqId</td><td>LONG</td><td></td><td>成员组自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.memberGroup.id</td><td>STRING</td><td></td><td>成员组id</td><td>id1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.memberGroup.name</td><td>STRING</td><td></td><td>成员组名称</td><td>名称1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.role</td><td>OBJECT</td><td></td><td>条件类型为ROLE时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.role.roleSeqId</td><td>LONG</td><td></td><td>角色自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.role.roleCode</td><td>STRING</td><td></td><td>角色编码</td><td>111</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.role.roleName</td><td>STRING</td><td></td><td>角色名称</td><td>角色名</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.rank</td><td>OBJECT</td><td></td><td>条件类型为RANK时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.rank.rankSeqId</td><td>LONG</td><td></td><td>职级自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.rank.rankCode</td><td>STRING</td><td></td><td>职级编码</td><td>code1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.rank.rankName</td><td>STRING</td><td></td><td>职级名称</td><td>职级名</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.customFileOption</td><td>OBJECT</td><td></td><td>条件类型为CUSTOM_FILE时才有值</td><td></td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.customFileOption.seqId</td><td>LONG</td><td></td><td>选项自增id</td><td>1</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.customFileOption.optionId</td><td>STRING</td><td></td><td>选项id</td><td>11</td></tr>
+<tr><td>root.data.budgetConditionGroups.roleGroup.customFileOption.optionName</td><td>STRING</td><td></td><td>选项名称</td><td>选项名</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;orgSeqId&quot;:151489,
+    &quot;organizationIds&quot;: [
+       &quot;all0101&quot;
+   ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;budgetSeqId&quot;: 1,
+        &quot;budgetId&quot;: &quot;all0101&quot;,
+        &quot;budgetParentId&quot;: null,
+        &quot;budgetName&quot;: &quot;全条件组织&quot;,
+        &quot;priority&quot;: 1,
+        &quot;typeSeqId&quot;: 1,
+        &quot;orderNum&quot;: 0,
+        &quot;admins&quot;: [
+            {
+                &quot;empSeqId&quot;: 1,
+                &quot;empId&quot;: &quot;U0000&quot;,
+                &quot;empNam&quot;: &quot;天&quot;,
+                &quot;phoneNbr&quot;: &quot;183****1111&quot;,
+                &quot;depSeqId&quot;: 1,
+                &quot;onJobFlag&quot;: &quot;ON&quot;
+            }
+        ],
+        &quot;reportUsers&quot;: [
+            {
+                &quot;empSeqId&quot;: 1,
+                &quot;empId&quot;: &quot;U0000&quot;,
+                &quot;empNam&quot;: &quot;天&quot;,
+                &quot;phoneNbr&quot;: &quot;183****1111&quot;,
+                &quot;depSeqId&quot;: 1,
+                &quot;onJobFlag&quot;: &quot;ON&quot;
+            }
+        ],
+        &quot;budgetConditionGroups&quot;: [
+            [
+                {
+                    &quot;itemId&quot;: 140602,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;DEPARTMENT&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;DEPARTMENT&quot;,
+                            &quot;typeSeqId&quot;: 54711,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: {
+                                &quot;depSeqId&quot;: 54711,
+                                &quot;depId&quot;: &quot;0031&quot;,
+                                &quot;depParentId&quot;: &quot;0000&quot;,
+                                &quot;depName&quot;: &quot;财务部&quot;,
+                                &quot;depCode&quot;: &quot;0009&quot;
+                            },
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140603,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;DEP_WITH_CHILDREN&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;DEP_WITH_CHILDREN&quot;,
+                            &quot;typeSeqId&quot;: 54711,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: {
+                                &quot;depSeqId&quot;: 54711,
+                                &quot;depId&quot;: &quot;0031&quot;,
+                                &quot;depParentId&quot;: &quot;0000&quot;,
+                                &quot;depName&quot;: &quot;财务部&quot;,
+                                &quot;depCode&quot;: &quot;0009&quot;
+                            },
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140604,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;PROJECT&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;PROJECT&quot;,
+                            &quot;typeSeqId&quot;: 197558,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: {
+                                &quot;projectSeqId&quot;: 197558,
+                                &quot;projectId&quot;: &quot;PRJ20240716143413&quot;,
+                                &quot;projectName&quot;: &quot;0716项目&quot;
+                            },
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140605,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;MATTER_DETAIL&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;MATTER_TYPE&quot;,
+                            &quot;typeSeqId&quot;: 20,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: {
+                                &quot;matterTypeSeqId&quot;: 20,
+                                &quot;matterTypeName&quot;: &quot;天蓝1&quot;
+                            },
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;MATTER_DETAIL&quot;,
+                            &quot;typeSeqId&quot;: 16,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: {
+                                &quot;matterDetailSeqId&quot;: 16,
+                                &quot;matterMissionSeqId&quot;: 25,
+                                &quot;matterDetailName&quot;: &quot;天蓝1&quot;
+                            },
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;MATTER_MISSION&quot;,
+                            &quot;typeSeqId&quot;: 25,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: {
+                                &quot;matterMissionSeqId&quot;: 25,
+                                &quot;matterTypeSeqId&quot;: 20,
+                                &quot;matterMissionName&quot;: &quot;天蓝1&quot;
+                            },
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140606,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;COST_CENTER&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;COST_CENTER&quot;,
+                            &quot;typeSeqId&quot;: 12476,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: {
+                                &quot;cenId&quot;: 12476,
+                                &quot;cenName&quot;: &quot;成本2&quot;,
+                                &quot;cenNbr&quot;: &quot;002&quot;
+                            },
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140607,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;PROJECT_TYPE&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;PROJECT_TYPE&quot;,
+                            &quot;typeSeqId&quot;: 52,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: {
+                                &quot;prjTypeSeqId&quot;: 52,
+                                &quot;prjTypeId&quot;: &quot;PRJTYPE20210823113433&quot;,
+                                &quot;prjTypeParentId&quot;: &quot;PRJTYPe2021082311343311&quot;,
+                                &quot;prjTypeName&quot;: &quot;项目2&quot;,
+                                &quot;applyAllUser&quot;: false
+                            },
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140608,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;CUSTOM_FILE&quot;,
+                    &quot;groupTypeRelId&quot;: 307,
+                    &quot;groupTypeName&quot;: &quot;无层档案&quot;,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;CUSTOM_FILE&quot;,
+                            &quot;typeSeqId&quot;: 179713,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: {
+                                &quot;seqId&quot;: 179713,
+                                &quot;optionId&quot;: &quot;2&quot;,
+                                &quot;optionName&quot;: &quot;无3&quot;
+                            }
+                        }
+                    ]
+                },
+                {
+                    &quot;itemId&quot;: 140609,
+                    &quot;budgetSeqId&quot;: 151489,
+                    &quot;groupSeqId&quot;: 137393,
+                    &quot;groupType&quot;: &quot;PERSONAL&quot;,
+                    &quot;groupTypeRelId&quot;: null,
+                    &quot;groupTypeName&quot;: null,
+                    &quot;relation&quot;: &quot;IN&quot;,
+                    &quot;roleGroup&quot;: [
+                        {
+                            &quot;type&quot;: &quot;DEPARTMENT&quot;,
+                            &quot;typeSeqId&quot;: 54711,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: {
+                                &quot;depSeqId&quot;: 54711,
+                                &quot;depId&quot;: &quot;0031&quot;,
+                                &quot;depParentId&quot;: &quot;0000&quot;,
+                                &quot;depName&quot;: &quot;财务部&quot;,
+                                &quot;depCode&quot;: &quot;0009&quot;
+                            },
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;MEMBER_GROUP&quot;,
+                            &quot;typeSeqId&quot;: 45,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: {
+                                &quot;seqId&quot;: 2255,
+                                &quot;id&quot;: 45,
+                                &quot;name&quot;: &quot;青苹果2&quot;
+                            },
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;ROLE&quot;,
+                            &quot;typeSeqId&quot;: 1258,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: {
+                                &quot;roleSeqId&quot;: 1258,
+                                &quot;roleCode&quot;: &quot;ORGMN&quot;,
+                                &quot;roleName&quot;: &quot;组织负责人&quot;
+                            },
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;RANK&quot;,
+                            &quot;typeSeqId&quot;: 249,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: {
+                                &quot;rankSeqId&quot;: 249,
+                                &quot;rankCode&quot;: &quot;M1.1&quot;,
+                                &quot;rankName&quot;: &quot;第一主管&quot;
+                            },
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;BUSINESS_GROUP&quot;,
+                            &quot;typeSeqId&quot;: 5985,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: {
+                                &quot;grpSeqId&quot;: 5985,
+                                &quot;grpId&quot;: &quot;0000000096&quot;,
+                                &quot;grpCode&quot;: &quot;运输组&quot;,
+                                &quot;grpName&quot;: &quot;货物运输组&quot;
+                            },
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;POST&quot;,
+                            &quot;typeSeqId&quot;: 1497955,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: {
+                                &quot;posSeqId&quot;: 1497955,
+                                &quot;posId&quot;: &quot;P0001&quot;,
+                                &quot;posNam&quot;: &quot;岗位示例&quot;,
+                                &quot;posStatus&quot;: &quot;1&quot;
+                            },
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;JOB&quot;,
+                            &quot;typeSeqId&quot;: 21712,
+                            &quot;staff&quot;: null,
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: {
+                                &quot;jobSeqId&quot;: 21712,
+                                &quot;jobId&quot;: &quot;123&quot;,
+                                &quot;jobNam&quot;: &quot;财务&quot;,
+                                &quot;jobStatus&quot;: &quot;1&quot;
+                            },
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        },
+                        {
+                            &quot;type&quot;: &quot;EMPLOYEE&quot;,
+                            &quot;typeSeqId&quot;: 42520,
+                            &quot;staff&quot;: {
+                                &quot;empSeqId&quot;: 42520,
+                                &quot;empId&quot;: &quot;U0000&quot;,
+                                &quot;empNam&quot;: &quot;天&quot;,
+                                &quot;phoneNbr&quot;: &quot;183****1111&quot;,
+                                &quot;depSeqId&quot;: 47859,
+                                &quot;onJobFlag&quot;: &quot;ON&quot;
+                            },
+                            &quot;comOrg&quot;: null,
+                            &quot;post&quot;: null,
+                            &quot;job&quot;: null,
+                            &quot;projectInf&quot;: null,
+                            &quot;costCenter&quot;: null,
+                            &quot;projectType&quot;: null,
+                            &quot;matterType&quot;: null,
+                            &quot;matterMission&quot;: null,
+                            &quot;matterDetail&quot;: null,
+                            &quot;businessGroup&quot;: null,
+                            &quot;memberGroup&quot;: null,
+                            &quot;role&quot;: null,
+                            &quot;rank&quot;: null,
+                            &quot;customFileOption&quot;: null
+                        }
+                    ]
+                }
+            ]
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>sucess为查询成功状态， true为成功 其余都是失败</p>
+</body>
+</html>

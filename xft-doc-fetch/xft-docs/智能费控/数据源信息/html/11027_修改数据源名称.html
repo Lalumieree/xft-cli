@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>修改数据源名称</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>修改数据源名称</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/dataSource/sourceId/{sourceId}/updateMultilevelSourceName</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/dataSource/sourceId/{sourceId}/updateMultilevelSourceName</p>
+<h2>接口描述</h2>
+<p>费控 单据配置 --&gt; 自定义字段 --&gt; 层级选择 --&gt; 对应选项数据源 ： 根据数据源ID修改数据源名称</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.sourceId</td><td>STRING</td><td>是</td><td>数据源Id</td><td>1000</td></tr>
+<tr><td>query.selectSourceName</td><td>STRING</td><td>是</td><td>更新后的数据源名称</td><td>数据源1号改</td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td>是</td><td>公司标识</td><td>XFT000000</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>是</td><td>成功标志</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>返回信息</td><td>修改数据源名称成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+<pre><code>
+{BaseURL}/api/itrip-gateway/v1/dataSource/sourceId/123/updateMultilevelSourceName?OPAUID=XFT000000&amp;selectSourceName=数据源1号改
+</code></pre>
+
+<h3>返回示例</h3>
+<pre><code>
+{ 
+	   &quot;success&quot;:  true,
+	   &quot;message&quot;:  &quot;修改数据源名称成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>400</td><td>请联系管理员配置企业信息</td><td>无</td></tr>
+<tr><td>ERR0000</td><td>解密失败</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

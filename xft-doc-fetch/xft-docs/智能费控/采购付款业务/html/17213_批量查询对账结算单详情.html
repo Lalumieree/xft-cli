@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>批量查询对账结算单详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>批量查询对账结算单详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/corporate/recon-settle/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/corporate/recon-settle/detail</p>
+<h2>接口描述</h2>
+<p>批量获取采购付款的对账结算单的单据详情，单次批量最多查询20笔单据</p>
+<p>注意：对账结算单为EventType值为RECON_SETTLE的单据</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.billIdList</td><td>ARRAY</td><td>是</td><td>单次批量单据查询最多20条</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>ARRAY</td><td>否</td><td>单据详情数据对象</td><td></td></tr>
+<tr><td>root.body.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2025080804570985</td></tr>
+<tr><td>root.body.billSts</td><td>STRING</td><td>是</td><td>* 0：草稿<br>* 1：待审批<br>* 2：审批通过<br>* 4：拒绝<br>* 5：待财务审核<br>* 6：待财务复核<br>* 7： 财务审核通过<br>* 8： 财务复核通过<br>* 9： 财务审核驳回<br>* 10：财务复核驳回<br>* 11：已撤回<br>* 12：已退回<br>* 15：已废弃<br>* 16：暂存<br>* 17：废弃中<br>* 18：等待外部处理<br>* 19：变更中 <br>* 20：已停用<br>* 21：已删除</td><td>1</td></tr>
+<tr><td>root.body.eventType</td><td>STRING</td><td>是</td><td>只会返回对账结算单<br>RECON_SETTLE：对账结算单</td><td>SUPPLIER_SETTLE</td></tr>
+<tr><td>root.body.eventName</td><td>STRING</td><td>是</td><td>单据业务类型名称</td><td>对公结算单</td></tr>
+<tr><td>root.body.eventId</td><td>LONG</td><td>是</td><td>单据类型编号</td><td>02231025140327000002</td></tr>
+<tr><td>root.body.applyTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698656241000</td></tr>
+<tr><td>root.body.firstApplyTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698656241000</td></tr>
+<tr><td>root.body.finishTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1753695979000</td></tr>
+<tr><td>root.body.billDepCode</td><td>STRING</td><td>是</td><td>单据所属部门编码</td><td>00000005</td></tr>
+<tr><td>root.body.billDepName</td><td>STRING</td><td>是</td><td>单据所属部门名称</td><td>天行1组</td></tr>
+<tr><td>root.body.billComLpcCode</td><td>STRING</td><td>否</td><td>单据所属法人公司编码</td><td>0004</td></tr>
+<tr><td>root.body.billComLpcName</td><td>STRING</td><td>否</td><td>单据所属法人公司名称</td><td>天行</td></tr>
+<tr><td>root.body.aplName</td><td>STRING</td><td>是</td><td>申请人姓名</td><td>null</td></tr>
+<tr><td>root.body.aplEmpNumber</td><td>STRING</td><td>否</td><td>申请人员工编号</td><td>stf01</td></tr>
+<tr><td>root.body.aplDepCode</td><td>LONG</td><td>是</td><td>申请人所属部门编码</td><td>00000001</td></tr>
+<tr><td>root.body.aplDepName</td><td>STRING</td><td>是</td><td>申请人所属部门名称</td><td>研发部</td></tr>
+<tr><td>root.body.wrEmpNumber</td><td>STRING</td><td>否</td><td>提单人员工编号</td><td>stf02</td></tr>
+<tr><td>root.body.wrName</td><td>STRING</td><td>是</td><td>提单人姓名</td><td>张益</td></tr>
+<tr><td>root.body.isAgent</td><td>BOOLEAN</td><td>是</td><td>是否代理提单</td><td>false</td></tr>
+<tr><td>root.body.printStatus</td><td>STRING</td><td>是</td><td>* 0：不可打印 <br>* 1：可打印</td><td>1</td></tr>
+<tr><td>root.body.billPayStatus</td><td>STRING</td><td>否</td><td>* -1:无需支付<br>* 0：待付款<br>* 1：付款中<br>* 2：付款成功<br>* 3：付款失败<br>* 4：部分付款成功<br>* 5：已发起<br>* 6：已取消<br>* 7：取消支付<br>* 8：部分取消支付</td><td>0</td></tr>
+<tr><td>root.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td>备注啊</td></tr>
+<tr><td>root.body.payFinishTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1748334746000</td></tr>
+<tr><td>root.body.customFields</td><td>ARRAY</td><td>否</td><td>[自定义字段的取值参考](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=12746)</td><td></td></tr>
+<tr><td>root.body.customFields.fieldNumber</td><td>STRING</td><td>否</td><td>字段编码</td><td>C51818719</td></tr>
+<tr><td>root.body.customFields.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>单据部门</td></tr>
+<tr><td>root.body.customFields.sourceValue</td><td>STRING</td><td>否</td><td>取值来源</td><td>[&quot;00000005&quot;]</td></tr>
+<tr><td>root.body.customFields.showValue</td><td>STRING</td><td>否</td><td>自定义字段的值</td><td>[{&quot;departmentCode&quot;:&quot;00000005&quot;,&quot;departmentName&quot;:&quot;天行/天行1组&quot;}]</td></tr>
+<tr><td>root.body.customFields.type</td><td>STRING</td><td>是</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>root.body.customFields.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>root.body.customFields.printEnable</td><td>STRING</td><td>是</td><td>* 0：不可打印 <br>* 1：可打印</td><td>1</td></tr>
+<tr><td>root.body.customFields.description</td><td>STRING</td><td>否</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>root.body.customFields.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>root.body.customFields.optionList</td><td>ARRAY</td><td>否</td><td>没有长度限制</td><td>[aa,bb]</td></tr>
+<tr><td>root.body.customFields.formColumnList</td><td>ARRAY</td><td>否</td><td>表格表头</td><td>null</td></tr>
+<tr><td>root.body.customFields.formColumnList.name</td><td>STRING</td><td>是</td><td>字段名称</td><td></td></tr>
+<tr><td>root.body.customFields.formColumnList.code</td><td>STRING</td><td>是</td><td>字段编码</td><td></td></tr>
+<tr><td>root.body.customFields.formColumnList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td></td></tr>
+<tr><td>root.body.customFields.formColumnList.fieldCode</td><td>STRING</td><td>是</td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>root.body.settleBaseInfo</td><td>OBJECT</td><td></td><td>结算单基础信息</td><td></td></tr>
+<tr><td>root.body.settleBaseInfo.goodsTypeList</td><td>ARRAY</td><td>是</td><td>产品种类编码列表</td><td>[ &quot;PRO2025051900002&quot;，&quot;PRO2025051900001&quot; ]</td></tr>
+<tr><td>root.body.settleBaseInfo.discountAmount</td><td>BIGDECIMAL</td><td>是</td><td>折扣金额合计</td><td>0</td></tr>
+<tr><td>root.body.settleBaseInfo.totalAmount</td><td>BIGDECIMAL</td><td>是</td><td>入库金额合计</td><td>200</td></tr>
+<tr><td>root.body.settleBaseInfo.inveStartDate</td><td>DATE</td><td></td><td>时间格式为 yyyy-MM-dd</td><td>2025-01-22</td></tr>
+<tr><td>root.body.settleBaseInfo.inveEndDate</td><td>DATE</td><td></td><td>时间格式为 yyyy-MM-dd</td><td>2025-02-22</td></tr>
+<tr><td>root.body.settleBaseInfo.unpaidAmount</td><td>BIGDECIMAL</td><td>是</td><td>decimal(21,6)</td><td>200</td></tr>
+<tr><td>root.body.settleBaseInfo.outstandingAmount</td><td>BIGDECIMAL</td><td>是</td><td>待结算金额合计</td><td>200</td></tr>
+<tr><td>root.body.settleBaseInfo.invoiceAmount</td><td>BIGDECIMAL</td><td>是</td><td>发票金额合计</td><td>200</td></tr>
+<tr><td>root.body.reconciliationStatementList</td><td>ARRAY</td><td>是</td><td>对账单列表</td><td></td></tr>
+<tr><td>root.body.reconciliationStatementList.billId</td><td>LONG</td><td>是</td><td>对账单号</td><td>2025052204290063</td></tr>
+<tr><td>root.body.reconciliationStatementList.supplierName</td><td>STRING</td><td></td><td>供应商名称</td><td>测试档案管理供应商新增</td></tr>
+<tr><td>root.body.reconciliationStatementList.supplierCode</td><td>STRING</td><td></td><td>供应商编号</td><td>SUP001</td></tr>
+<tr><td>root.body.reconciliationStatementList.invoiceValidStatus</td><td>STRING</td><td>是</td><td>equal：一致<br>notEqual：不一致</td><td>equal</td></tr>
+<tr><td>root.body.reconciliationStatementList.inventoryTotalAmount</td><td>BIGDECIMAL</td><td>是</td><td>入库合计金额</td><td>5000</td></tr>
+<tr><td>root.body.reconciliationStatementList.inboundAmount</td><td>BIGDECIMAL</td><td>是</td><td>入库金额</td><td>5000</td></tr>
+<tr><td>root.body.reconciliationStatementList.returnAmount</td><td>BIGDECIMAL</td><td>是</td><td>退货金额</td><td>0</td></tr>
+<tr><td>root.body.reconciliationStatementList.invoiceAmount</td><td>STRING</td><td>是</td><td>已关联发票金额</td><td>4500</td></tr>
+<tr><td>root.body.reconciliationStatementList.reconciliationStatus</td><td>STRING</td><td>是</td><td>waitReconcilin-待对账<br>reconciling-对账中<br>reconciled-已对账<br>notNeedReconcile-无需对账</td><td>reconciled</td></tr>
+<tr><td>root.body.reconciliationStatementList.settleStatus</td><td>STRING</td><td>是</td><td>noSettle：未结算<br>settling：结算中<br>settled：已结算</td><td>settled</td></tr>
+<tr><td>root.body.reconciliationStatementList.firstCategoryCodeList</td><td>ARRAY</td><td></td><td>类别1编码列表</td><td>[&quot;firstCategory1&quot;]</td></tr>
+<tr><td>root.body.reconciliationStatementList.secondCategoryCodeList</td><td>ARRAY</td><td></td><td>类别2编码列表</td><td>[&quot;firstCategory2&quot;]</td></tr>
+<tr><td>root.body.reconciliationStatementList.thirdCategoryCodeList</td><td>ARRAY</td><td></td><td>类别3编码列表</td><td>[&quot;firstCategory1&quot;]</td></tr>
+<tr><td>root.body.reconciliationStatementList.fourthCategoryCodeList</td><td>ARRAY</td><td></td><td>类别4编码列表</td><td>[&quot;firstCategory1]</td></tr>
+<tr><td>root.body.reconciliationStatementList.fifthCategoryCodeList</td><td>ARRAY</td><td></td><td>类别5编码列表</td><td>[&quot;firstCategory1&quot;]</td></tr>
+<tr><td>root.body.reconciliationStatementList.goodsTypes</td><td>ARRAY</td><td></td><td>产品种类</td><td>[ &quot;PRO2025051900002&quot;，&quot;PRO2025051900001&quot; ]</td></tr>
+<tr><td>root.body.reconciliationStatementList.inveStartDate</td><td>DATE</td><td></td><td>时间格式为 yyyy-MM-dd</td><td>2025-05-10</td></tr>
+<tr><td>root.body.reconciliationStatementList.inveEndDate</td><td>DATE</td><td></td><td>时间格式为 yyyy-MM-dd</td><td>2025-05-19</td></tr>
+<tr><td>root.body.reconciliationStatementList.inventoryIdList</td><td>ARRAY</td><td>是</td><td>入库单号列表</td><td>[ &quot;20250206001&quot;, &quot;20250206002&quot;, &quot;20250206003&quot; ]</td></tr>
+<tr><td>root.body.payDetailList</td><td>ARRAY</td><td>否</td><td>付款明细列表</td><td></td></tr>
+<tr><td>root.body.payDetailList.paySeqId</td><td>LONG</td><td>否</td><td>自增ID</td><td>3735</td></tr>
+<tr><td>root.body.payDetailList.payTypInf</td><td>OBJECT</td><td>否</td><td>付款类型</td><td></td></tr>
+<tr><td>root.body.payDetailList.payTypInf.payTypSeqId</td><td>LONG</td><td>否</td><td>付款类型自增ID</td><td>2482</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.businessScenario</td><td>STRING</td><td>否</td><td>(1-员工报销， 2-对对公支付)</td><td>2</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.payType</td><td>STRING</td><td>否</td><td>(1-线上付款、2-线下付款)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.payMethod</td><td>STRING</td><td>否</td><td>付款方式</td><td>网银支付</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.status</td><td>STRING</td><td>否</td><td>0: 停用， 1：启用</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.isDefault</td><td>STRING</td><td>否</td><td>0: 否， 1：是</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.typeFlag</td><td>STRING</td><td>否</td><td>AUK-异步网银，CDC-云直连</td><td>AUK</td></tr>
+<tr><td>root.body.payDetailList.payTypInf.wthrSystemPreset</td><td>STRING</td><td>否</td><td>是否系统预设</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.payAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>2</td></tr>
+<tr><td>root.body.payDetailList.originalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>2</td></tr>
+<tr><td>root.body.payDetailList.loanReversalAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.originalLoanReversalAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.actualPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>0</td></tr>
+<tr><td>root.body.payDetailList.originalActualPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>0</td></tr>
+<tr><td>root.body.payDetailList.planPayDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1715097600000</td></tr>
+<tr><td>root.body.payDetailList.provisionInf</td><td>OBJECT</td><td>否</td><td>关联付款条款</td><td></td></tr>
+<tr><td>root.body.payDetailList.provisionInf.payProvisionSeqId</td><td>LONG</td><td>否</td><td>条款自增ID</td><td>20626</td></tr>
+<tr><td>root.body.payDetailList.provisionInf.payStageNam</td><td>LONG</td><td>否</td><td>付款阶段名称</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.provisionInf.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>111111111</td></tr>
+<tr><td>root.body.payDetailList.provisionInf.unpaidAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>111111109</td></tr>
+<tr><td>root.body.payDetailList.provisionInf.payDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1745510400000</td></tr>
+<tr><td>root.body.payDetailList.provisionInf.provision</td><td>STRING</td><td>否</td><td>条款</td><td>水电</td></tr>
+<tr><td>root.body.payDetailList.provisionInf.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.accountInfo</td><td>OBJECT</td><td>否</td><td>收款方信息</td><td></td></tr>
+<tr><td>root.body.payDetailList.accountInfo.accountSeqId</td><td>LONG</td><td>否</td><td>收款账户自增ID</td><td>17021</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.paySeqId</td><td>LONG</td><td>否</td><td>账户关联ID</td><td>3735</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.acctType</td><td>LONG</td><td>否</td><td>1-对公账户，0-个人账户</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.bankCode</td><td>LONG</td><td>否</td><td>银行编码</td><td>314</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.bankName</td><td>STRING</td><td>否</td><td>银行名称</td><td>农村商业银行</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoBank</td><td>LONG</td><td>否</td><td>开户行编码</td><td>314305570606</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoBankName</td><td>STRING</td><td>否</td><td>开户行名称</td><td>江苏常熟农村商业银行股份有限公司招商支行</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.recBankBnr</td><td>STRING</td><td>否</td><td>联行号(其实没有用到，是放在了开户行编码里)</td><td></td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoName</td><td>STRING</td><td>否</td><td>银行户名</td><td>农村商业</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.acctNo</td><td>STRING</td><td>否</td><td>银行账号</td><td>MQ==</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoCountry</td><td>STRING</td><td>否</td><td>开户国家</td><td>中国</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoProvince</td><td>STRING</td><td>否</td><td>开户省份编码</td><td>320000</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoProvinceName</td><td>STRING</td><td>否</td><td>开户省份名称</td><td>江苏省</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoCity</td><td>STRING</td><td>否</td><td>开户城市编码</td><td>320500</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.depoCityName</td><td>STRING</td><td>否</td><td>开户城市名称</td><td>苏州市</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.accountFlag</td><td>STRING</td><td>否</td><td>SP：报账付款账户；SR：报账收款账户 AP：付款申请付款账户；AR：付款申请收款账户 RP：退款单退款账户；RR：退款单收款账户</td><td>SR</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.payAccountSeqId</td><td>LONG</td><td>否</td><td>收款账户自增ID</td><td>17021</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.accountPayType</td><td>LONG</td><td>否</td><td>0-对私，1-对公</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.cloudConfigNumber</td><td>STRING</td><td>否</td><td>招行云直联配置标识号</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.cloudBusinessModel</td><td>STRING</td><td>否</td><td>招行云直联业务模式</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.accountMode</td><td>STRING</td><td>否</td><td>银行账户 数字人民币账户</td><td>BANK</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.accountType</td><td>STRING</td><td>否</td><td>银行账户 数字人民币账户</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.collectingCompanyName</td><td>STRING</td><td>否</td><td>收款公司名称</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.acctSeqId</td><td>STRING</td><td>否</td><td>供应商收款账户表主键</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.accountInfo.accountRemark</td><td>STRING</td><td>否</td><td>账户备注，付款账户有，保存是查询同步</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.lendPayList</td><td>ARRAY</td><td>否</td><td>核销明细</td><td></td></tr>
+<tr><td>root.body.payDetailList.lendPayList.empSeqId</td><td>LONG</td><td>否</td><td>核销操作人</td><td>42531</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendBillId</td><td>LONG</td><td>否</td><td>借款单号</td><td>2024042303343412</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.eventNam</td><td>STRING</td><td>否</td><td>借款单单据名称</td><td>zj预付款</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendEmpName</td><td>STRING</td><td>否</td><td>借款单申请人名称</td><td>www啊啊</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendEmpNumber</td><td>STRING</td><td>否</td><td>借款单申请人花名册员工号</td><td>B0000</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendBillPayDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.aplNam</td><td>STRING</td><td>否</td><td>申请人姓名</td><td>www啊啊</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendTypeName</td><td>STRING</td><td>否</td><td>借款类型名称</td><td>zj预付款</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendObject</td><td>STRING</td><td>否</td><td>SUPPLIER(供应商), EMPLOYEE(员工)</td><td>SUPPLIER</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.payBillId</td><td>LONG</td><td>否</td><td>报销单号</td><td>2024050803402009</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.beforeRemainingPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.originalBeforeRemainingPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.payAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.originalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.originalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.repaymentDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713830400000</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.arriveTicketDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713830400000</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.applyTotalAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>0</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.budgetOpen</td><td>STRING</td><td>否</td><td>默认0 关闭 1开启</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendExpTypeRelSeqId</td><td>STRING</td><td>否</td><td>借款单配置费用类型自增id</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.billComSeqId</td><td>LONG</td><td>否</td><td>单据公司自增id</td><td>47877</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.billComNam</td><td>STRING</td><td>否</td><td>单据公司名称</td><td>zjy的企业</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.applyTim</td><td>STRING</td><td>否</td><td>yyyy-MM-dd HH:mm:ss</td><td>2024-04-23 20:52:54</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.billProjectSeqId</td><td>DOUBLE</td><td>否</td><td>单据所属项目SeqId</td><td>0</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendBillSts</td><td>STRING</td><td>否</td><td>* 0：草稿<br>* 1：待审批<br>* 2：审批通过<br>* 4：拒绝<br>* 5：待财务审核<br>* 6：待财务复核<br>* 7： 财务审核通过<br>* 8： 财务复核通过<br>* 9： 财务审核驳回<br>* 10：财务复核驳回<br>* 11：已撤回<br>* 12：已退回<br>* 15：已废弃<br>* 16：暂存<br>* 17：废弃中<br>* 18：等待外部处理<br>* 19：变更中 <br>* 20：已停用<br>* 21：已删除</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.currencyCode</td><td>STRING</td><td>否</td><td>币种代码</td><td>CNY</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.rate</td><td>BIGDECIMAL</td><td>否</td><td>decimal(5,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.totalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.originalTotalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendEmpSeqId</td><td>LONG</td><td>否</td><td>借款单申请人自增id</td><td>42531</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.lendEmpId</td><td>STRING</td><td>否</td><td>借款单申请人id</td><td>U0000</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.totalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.lendPayList.relLendTypeName</td><td>STRING</td><td>否</td><td>关联的借款单的借款类型名称</td><td>类型四</td></tr>
+<tr><td>root.body.payDetailList.payPeriodType</td><td>STRING</td><td>否</td><td>0 到期即付 1 申请支付</td><td>0</td></tr>
+<tr><td>root.body.payDetailList.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>root.body.payDetailList.useDiscount</td><td>LONG</td><td>否</td><td>使用折扣</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.discountAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.originalDiscountAmount</td><td>BIGDECIMAL</td><td>否</td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.benefitPeriodList</td><td>ARRAY</td><td>否</td><td>结构同单数据模式</td><td>[]</td></tr>
+<tr><td>root.body.payDetailList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>root.body.payDetailList.rate</td><td>BIGDECIMAL</td><td>否</td><td>decimal(5,2)</td><td>1</td></tr>
+<tr><td>root.body.payDetailList.contract</td><td>OBJECT</td><td>否</td><td>结构同单数据模式</td><td></td></tr>
+<tr><td>root.body.payDetailList.supplierDto</td><td>OBJECT</td><td>否</td><td>结构同单数据模式</td><td></td></tr>
+<tr><td>root.body.invoices</td><td>ARRAY</td><td>是</td><td>发票列表</td><td>[]</td></tr>
+<tr><td>root.body.invoices.invoiceNumber</td><td>STRING</td><td>是</td><td>发票号码</td><td>123</td></tr>
+<tr><td>root.body.invoices.invoiceCode</td><td>STRING</td><td></td><td>发票代码</td><td>111</td></tr>
+<tr><td>root.body.invoices.billingDate</td><td>DATE</td><td></td><td>格式为 yyyy-MM-dd</td><td>2012-01-23</td></tr>
+<tr><td>root.body.invoices.amount</td><td>BIGDECIMAL</td><td></td><td>decimal(17,2)</td><td>123</td></tr>
+<tr><td>root.body.invoices.taxAmount</td><td>BIGDECIMAL</td><td></td><td>decimal(17,2)</td><td>1</td></tr>
+<tr><td>root.body.invoices.invoiceType</td><td>STRING</td><td></td><td>1：区块链电子发票 2：普通电子发票 3：增值税普通发票 4：增值税专用发票 5：火车票 6：飞机行程单 7：出租车 8：定额 B:卷式发票</td><td>1</td></tr>
+<tr><td>root.body.invoices.buyerName</td><td>STRING</td><td></td><td>购方</td><td></td></tr>
+<tr><td>root.body.invoices.sellerName</td><td>STRING</td><td></td><td>销方</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td></td><td>返回码</td><td>SUC0000</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;billIdList&quot;:[
+    2025080804570985,2025052604300002,202505260430000
+    ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;comId&quot;: 3941,
+            &quot;billId&quot;: 2025080804570985,
+            &quot;billSts&quot;: &quot;0&quot;,
+            &quot;useType&quot;: &quot;21&quot;,
+            &quot;eventId&quot;: &quot;21250806164111000019&quot;,
+            &quot;eventType&quot;: &quot;RECON_SETTLE&quot;,
+            &quot;eventName&quot;: &quot;202508-签收&quot;,
+            &quot;applyTim&quot;: 1754627622000,
+            &quot;firstApplyTim&quot;: null,
+            &quot;finishTim&quot;: null,
+            &quot;billDepCode&quot;: &quot;00000026&quot;,
+            &quot;billDepName&quot;: &quot;文艺部&quot;,
+            &quot;billComLpcCode&quot;: &quot;COR000001&quot;,
+            &quot;billComLpcName&quot;: &quot;强盛集团&quot;,
+            &quot;aplSeqId&quot;: 10000024,
+            &quot;aplName&quot;: &quot;全智瑶&quot;,
+            &quot;aplEmpNumber&quot;: &quot;123456&quot;,
+            &quot;aplDepCode&quot;: &quot;00000004&quot;,
+            &quot;aplDepName&quot;: &quot;刀人子公司&quot;,
+            &quot;wrSeqId&quot;: 10000024,
+            &quot;wrEmpNumber&quot;: &quot;123456&quot;,
+            &quot;wrName&quot;: &quot;全智瑶&quot;,
+            &quot;isAgent&quot;: false,
+            &quot;printStatus&quot;: &quot;1&quot;,
+            &quot;billPayStatus&quot;: &quot;0&quot;,
+            &quot;billRemark&quot;: &quot;&quot;,
+            &quot;billCustomFieldList&quot;: [
+                {
+                    &quot;fieldNumber&quot;: &quot;C51818719&quot;,
+                    &quot;fieldName&quot;: &quot;备注事由&quot;,
+                    &quot;sourceValue&quot;: null,
+                    &quot;showValue&quot;: &quot;&quot;,
+                    &quot;type&quot;: &quot;MULTI_INPUT&quot;,
+                    &quot;required&quot;: false,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                },
+                {
+                    &quot;fieldNumber&quot;: &quot;C99131721&quot;,
+                    &quot;fieldName&quot;: &quot;表格&quot;,
+                    &quot;sourceValue&quot;: null,
+                    &quot;showValue&quot;: &quot;[{\&quot;columnValues\&quot;:[{\&quot;value\&quot;:\&quot;\&quot;},{\&quot;value\&quot;:\&quot;\&quot;},{\&quot;value\&quot;:\&quot;\&quot;}],\&quot;sequence\&quot;:1}]&quot;,
+                    &quot;type&quot;: &quot;ADV_FORM&quot;,
+                    &quot;required&quot;: false,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: [
+                        {
+                            &quot;seqId&quot;: 152213255274499,
+                            &quot;name&quot;: &quot;姓名&quot;,
+                            &quot;code&quot;: null,
+                            &quot;value&quot;: null,
+                            &quot;type&quot;: &quot;TEXT&quot;,
+                            &quot;required&quot;: false,
+                            &quot;calculationFormula&quot;: null,
+                            &quot;fieldCode&quot;: null,
+                            &quot;inputMaxLength&quot;: 200,
+                            &quot;numIntDigit&quot;: null,
+                            &quot;numDecimalDigit&quot;: null,
+                            &quot;showThousandsSeparator&quot;: null,
+                            &quot;showPercentage&quot;: null,
+                            &quot;dateTimeShowType&quot;: null,
+                            &quot;placeholderText&quot;: null,
+                            &quot;readOnly&quot;: null,
+                            &quot;multipleSelect&quot;: null,
+                            &quot;orderIndex&quot;: &quot;0&quot;,
+                            &quot;formOptionList&quot;: null,
+                            &quot;formDefaultValues&quot;: null
+                        },
+                        {
+                            &quot;seqId&quot;: 152213255274498,
+                            &quot;name&quot;: &quot;金额&quot;,
+                            &quot;code&quot;: null,
+                            &quot;value&quot;: null,
+                            &quot;type&quot;: &quot;NUM&quot;,
+                            &quot;required&quot;: false,
+                            &quot;calculationFormula&quot;: null,
+                            &quot;fieldCode&quot;: null,
+                            &quot;inputMaxLength&quot;: null,
+                            &quot;numIntDigit&quot;: 9,
+                            &quot;numDecimalDigit&quot;: 2,
+                            &quot;showThousandsSeparator&quot;: null,
+                            &quot;showPercentage&quot;: null,
+                            &quot;dateTimeShowType&quot;: null,
+                            &quot;placeholderText&quot;: null,
+                            &quot;readOnly&quot;: null,
+                            &quot;multipleSelect&quot;: null,
+                            &quot;orderIndex&quot;: &quot;1&quot;,
+                            &quot;formOptionList&quot;: null,
+                            &quot;formDefaultValues&quot;: null
+                        },
+                        {
+                            &quot;seqId&quot;: 152213255274497,
+                            &quot;name&quot;: &quot;比例&quot;,
+                            &quot;code&quot;: null,
+                            &quot;value&quot;: null,
+                            &quot;type&quot;: &quot;NUM&quot;,
+                            &quot;required&quot;: false,
+                            &quot;calculationFormula&quot;: null,
+                            &quot;fieldCode&quot;: null,
+                            &quot;inputMaxLength&quot;: null,
+                            &quot;numIntDigit&quot;: 2,
+                            &quot;numDecimalDigit&quot;: 2,
+                            &quot;showThousandsSeparator&quot;: null,
+                            &quot;showPercentage&quot;: &quot;1&quot;,
+                            &quot;dateTimeShowType&quot;: null,
+                            &quot;placeholderText&quot;: null,
+                            &quot;readOnly&quot;: null,
+                            &quot;multipleSelect&quot;: null,
+                            &quot;orderIndex&quot;: &quot;2&quot;,
+                            &quot;formOptionList&quot;: null,
+                            &quot;formDefaultValues&quot;: null
+                        }
+                    ]
+                },
+                {
+                    &quot;fieldNumber&quot;: &quot;C62786719&quot;,
+                    &quot;fieldName&quot;: &quot;所属部门&quot;,
+                    &quot;sourceValue&quot;: &quot;[\&quot;00000026\&quot;]&quot;,
+                    &quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;00000026\&quot;,\&quot;departmentName\&quot;:\&quot;强盛集团/文艺部\&quot;}]&quot;,
+                    &quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,
+                    &quot;required&quot;: true,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                }
+            ],
+            &quot;payFinishTim&quot;: null,
+            &quot;settleBaseInfo&quot;: {
+                &quot;goodsTypeList&quot;: [
+                    &quot;PRO2025051900002&quot;,
+                    &quot;PRO2025051900001&quot;
+                ],
+                &quot;discountAmount&quot;: 21.000000,
+                &quot;totalAmount&quot;: 366.000000,
+                &quot;inveStartDate&quot;: &quot;2025-01-10&quot;,
+                &quot;inveEndDate&quot;: &quot;2025-05-22&quot;,
+                &quot;unpaidAmount&quot;: 345.00,
+                &quot;outstandingAmount&quot;: 345.00,
+                &quot;invoiceAmount&quot;: 600.00
+            },
+            &quot;reconciliationStatementList&quot;: [
+                {
+                    &quot;billId&quot;: 2025012104056859,
+                    &quot;supplierName&quot;: &quot;测试档案管理供应商新增&quot;,
+                    &quot;supplierCode&quot;: &quot;SUP20240821200959&quot;,
+                    &quot;invoiceValidStatus&quot;: &quot;notEqual&quot;,
+                    &quot;inventoryTotalAmount&quot;: 55.000000,
+                    &quot;inboundAmount&quot;: 55.000000,
+                    &quot;returnAmount&quot;: 0,
+                    &quot;invoiceAmount&quot;: 300.000000,
+                    &quot;reconciliationStatus&quot;: &quot;reconciled&quot;,
+                    &quot;settleStatus&quot;: &quot;settling&quot;,
+                    &quot;firstCategoryCodeList&quot;: [
+                        &quot;firstCategory2&quot;
+                    ],
+                    &quot;secondCategoryCodeList&quot;: [
+                        &quot;secondCategory1&quot;
+                    ],
+                    &quot;thirdCategoryCodeList&quot;: [
+                        &quot;thirdCategory1&quot;
+                    ],
+                    &quot;fourthCategoryCodeList&quot;: [
+                        &quot;fourthCategory2&quot;
+                    ],
+                    &quot;fifthCategoryCodeList&quot;: [
+                        &quot;fifthCategory1&quot;
+                    ],
+                    &quot;inveStartDate&quot;: &quot;2025-01-10&quot;,
+                    &quot;inveEndDate&quot;: &quot;2025-01-10&quot;,
+                    &quot;inventoryIdList&quot;: [
+                        &quot;22&quot;
+                    ],
+                    &quot;goodsTypes&quot;: [
+                        &quot;PRO2025051900002&quot;
+                    ]
+                },
+                {
+                    &quot;billId&quot;: 2025020604065715,
+                    &quot;supplierName&quot;: &quot;测试档案管理供应商新增&quot;,
+                    &quot;supplierCode&quot;: &quot;SUP20240821200959&quot;,
+                    &quot;invoiceValidStatus&quot;: &quot;notEqual&quot;,
+                    &quot;inventoryTotalAmount&quot;: 300.000000,
+                    &quot;inboundAmount&quot;: 333.000000,
+                    &quot;returnAmount&quot;: -33.000000,
+                    &quot;invoiceAmount&quot;: 300.000000,
+                    &quot;reconciliationStatus&quot;: &quot;reconciled&quot;,
+                    &quot;settleStatus&quot;: &quot;noSettle&quot;,
+                    &quot;firstCategoryCodeList&quot;: [
+                        &quot;firstCategory1&quot;,
+                        &quot;firstCategory3&quot;
+                    ],
+                    &quot;secondCategoryCodeList&quot;: [
+                        &quot;secondCategory1&quot;,
+                        &quot;secondCategory4&quot;,
+                        &quot;secondCategory2&quot;
+                    ],
+                    &quot;thirdCategoryCodeList&quot;: [
+                        &quot;thirdCategory2&quot;,
+                        &quot;thirdCategory1&quot;,
+                        &quot;thirdCategory3&quot;
+                    ],
+                    &quot;fourthCategoryCodeList&quot;: [
+                        &quot;fourthCategory2&quot;,
+                        &quot;fourthCategory1&quot;
+                    ],
+                    &quot;fifthCategoryCodeList&quot;: [
+                        &quot;fifthCategory2&quot;,
+                        &quot;fifthCategory1&quot;
+                    ],
+                    &quot;inveStartDate&quot;: &quot;2025-02-01&quot;,
+                    &quot;inveEndDate&quot;: &quot;2025-02-05&quot;,
+                    &quot;inventoryIdList&quot;: [
+                        &quot;20250206001&quot;,
+                        &quot;20250206002&quot;,
+                        &quot;20250206003&quot;
+                    ],
+                    &quot;goodsTypes&quot;: [
+                        &quot;PRO2025051900002&quot;
+                    ]
+                },
+                {
+                    &quot;billId&quot;: 2025052204290063,
+                    &quot;supplierName&quot;: &quot;测试档案管理供应商新增&quot;,
+                    &quot;supplierCode&quot;: &quot;SUP20240821200959&quot;,
+                    &quot;invoiceValidStatus&quot;: &quot;notEqual&quot;,
+                    &quot;inventoryTotalAmount&quot;: 11.000000,
+                    &quot;inboundAmount&quot;: 11.000000,
+                    &quot;returnAmount&quot;: 0,
+                    &quot;invoiceAmount&quot;: 0.000000,
+                    &quot;reconciliationStatus&quot;: &quot;reconciled&quot;,
+                    &quot;settleStatus&quot;: &quot;noSettle&quot;,
+                    &quot;firstCategoryCodeList&quot;: [
+                        &quot;firstCategory1&quot;
+                    ],
+                    &quot;secondCategoryCodeList&quot;: [
+                        &quot;secondCategory1&quot;,
+                        &quot;secondCategory3&quot;
+                    ],
+                    &quot;thirdCategoryCodeList&quot;: [],
+                    &quot;fourthCategoryCodeList&quot;: [],
+                    &quot;fifthCategoryCodeList&quot;: [],
+                    &quot;inveStartDate&quot;: &quot;2025-05-18&quot;,
+                    &quot;inveEndDate&quot;: &quot;2025-05-22&quot;,
+                    &quot;inventoryIdList&quot;: [
+                        &quot;202505221003&quot;,
+                        &quot;202505221004&quot;
+                    ],
+                    &quot;goodsTypes&quot;: [
+                        &quot;PRO2025051900001&quot;
+                    ]
+                }
+            ],
+            &quot;payDetailList&quot;: [
+                {
+                    &quot;paySeqId&quot;: 47988,
+                    &quot;payTypInf&quot;: {
+                        &quot;payTypSeqId&quot;: 2908,
+                        &quot;comId&quot;: null,
+                        &quot;businessScenario&quot;: &quot;2&quot;,
+                        &quot;payType&quot;: &quot;2&quot;,
+                        &quot;payMethod&quot;: &quot;现金&quot;,
+                        &quot;status&quot;: &quot;1&quot;,
+                        &quot;isDefault&quot;: &quot;1&quot;,
+                        &quot;typeFlag&quot;: null,
+                        &quot;wthrSystemPreset&quot;: &quot;0&quot;
+                    },
+                    &quot;reimSeqId&quot;: null,
+                    &quot;payAmount&quot;: 300.00,
+                    &quot;originalPayAmount&quot;: 300.00,
+                    &quot;loanReversalAmount&quot;: 0.00,
+                    &quot;originalLoanReversalAmount&quot;: 0.00,
+                    &quot;actualPayAmount&quot;: 300.00,
+                    &quot;originalActualPayAmount&quot;: 300.00,
+                    &quot;planPayDate&quot;: 1759852800000,
+                    &quot;provisionInf&quot;: null,
+                    &quot;accountInfo&quot;: {
+                        &quot;accountSeqId&quot;: 25717,
+                        &quot;paySeqId&quot;: 47988,
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;103&quot;,
+                        &quot;bankName&quot;: &quot;中国农业银行&quot;,
+                        &quot;depoBank&quot;: &quot;103651081559&quot;,
+                        &quot;depoBankName&quot;: &quot;农行成都龙腾支行&quot;,
+                        &quot;recBankBnr&quot;: &quot;&quot;,
+                        &quot;depoName&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;acctNo&quot;: &quot;56563416341631633415&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;510000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;四川省&quot;,
+                        &quot;depoCity&quot;: &quot;510100&quot;,
+                        &quot;depoCityName&quot;: &quot;成都市&quot;,
+                        &quot;accountFlag&quot;: &quot;SER&quot;,
+                        &quot;payAccountSeqId&quot;: 25717,
+                        &quot;accountPayType&quot;: &quot;1&quot;,
+                        &quot;cloudConfigNumber&quot;: null,
+                        &quot;cloudBusinessModel&quot;: null,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;accountType&quot;: null,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;acctSeqId&quot;: null,
+                        &quot;accountRemark&quot;: null
+                    },
+                    &quot;lendPayList&quot;: null,
+                    &quot;payPeriodType&quot;: &quot;0&quot;,
+                    &quot;remark&quot;: &quot;备注1&quot;,
+                    &quot;useDiscount&quot;: null,
+                    &quot;discountAmount&quot;: 0.00,
+                    &quot;originalDiscountAmount&quot;: 0.00,
+                    &quot;benefitPeriodList&quot;: null,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;contract&quot;: null,
+                    &quot;supplierDto&quot;: {
+                        &quot;supSeqId&quot;: 35550,
+                        &quot;id&quot;: null,
+                        &quot;supSts&quot;: null,
+                        &quot;mainCompany&quot;: null,
+                        &quot;supTypeValue&quot;: null,
+                        &quot;supTypeName&quot;: null,
+                        &quot;supId&quot;: &quot;SUP20240821200959&quot;,
+                        &quot;supNam&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;corOrgNbr&quot;: null,
+                        &quot;enableDate&quot;: null,
+                        &quot;supDepSeqId&quot;: null,
+                        &quot;supDepId&quot;: null,
+                        &quot;supDepName&quot;: null,
+                        &quot;availableOrgType&quot;: null,
+                        &quot;useFlag&quot;: null,
+                        &quot;modifySrcSeqId&quot;: null,
+                        &quot;needUpdate&quot;: false
+                    }
+                },
+                {
+                    &quot;paySeqId&quot;: 47989,
+                    &quot;payTypInf&quot;: {
+                        &quot;payTypSeqId&quot;: 2908,
+                        &quot;comId&quot;: null,
+                        &quot;businessScenario&quot;: &quot;2&quot;,
+                        &quot;payType&quot;: &quot;2&quot;,
+                        &quot;payMethod&quot;: &quot;现金&quot;,
+                        &quot;status&quot;: &quot;1&quot;,
+                        &quot;isDefault&quot;: &quot;1&quot;,
+                        &quot;typeFlag&quot;: null,
+                        &quot;wthrSystemPreset&quot;: &quot;0&quot;
+                    },
+                    &quot;reimSeqId&quot;: null,
+                    &quot;payAmount&quot;: 49.00,
+                    &quot;originalPayAmount&quot;: 49.00,
+                    &quot;loanReversalAmount&quot;: 0.00,
+                    &quot;originalLoanReversalAmount&quot;: 0.00,
+                    &quot;actualPayAmount&quot;: 49.00,
+                    &quot;originalActualPayAmount&quot;: 49.00,
+                    &quot;planPayDate&quot;: 1762531200000,
+                    &quot;provisionInf&quot;: null,
+                    &quot;accountInfo&quot;: {
+                        &quot;accountSeqId&quot;: 25717,
+                        &quot;paySeqId&quot;: 47989,
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;103&quot;,
+                        &quot;bankName&quot;: &quot;中国农业银行&quot;,
+                        &quot;depoBank&quot;: &quot;103651081559&quot;,
+                        &quot;depoBankName&quot;: &quot;农行成都龙腾支行&quot;,
+                        &quot;recBankBnr&quot;: &quot;&quot;,
+                        &quot;depoName&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;acctNo&quot;: &quot;56563416341631633415&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;510000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;四川省&quot;,
+                        &quot;depoCity&quot;: &quot;510100&quot;,
+                        &quot;depoCityName&quot;: &quot;成都市&quot;,
+                        &quot;accountFlag&quot;: &quot;SER&quot;,
+                        &quot;payAccountSeqId&quot;: 25717,
+                        &quot;accountPayType&quot;: &quot;1&quot;,
+                        &quot;cloudConfigNumber&quot;: null,
+                        &quot;cloudBusinessModel&quot;: null,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;accountType&quot;: null,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;acctSeqId&quot;: null,
+                        &quot;accountRemark&quot;: null
+                    },
+                    &quot;lendPayList&quot;: null,
+                    &quot;payPeriodType&quot;: &quot;1&quot;,
+                    &quot;remark&quot;: &quot;22222222222&quot;,
+                    &quot;useDiscount&quot;: null,
+                    &quot;discountAmount&quot;: 0.00,
+                    &quot;originalDiscountAmount&quot;: 0.00,
+                    &quot;benefitPeriodList&quot;: null,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;contract&quot;: null,
+                    &quot;supplierDto&quot;: {
+                        &quot;supSeqId&quot;: 35550,
+                        &quot;id&quot;: null,
+                        &quot;supSts&quot;: null,
+                        &quot;mainCompany&quot;: null,
+                        &quot;supTypeValue&quot;: null,
+                        &quot;supTypeName&quot;: null,
+                        &quot;supId&quot;: &quot;SUP20240821200959&quot;,
+                        &quot;supNam&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;corOrgNbr&quot;: null,
+                        &quot;enableDate&quot;: null,
+                        &quot;supDepSeqId&quot;: null,
+                        &quot;supDepId&quot;: null,
+                        &quot;supDepName&quot;: null,
+                        &quot;availableOrgType&quot;: null,
+                        &quot;useFlag&quot;: null,
+                        &quot;modifySrcSeqId&quot;: null,
+                        &quot;needUpdate&quot;: false
+                    }
+                }
+            ],
+            &quot;invoices&quot;: [
+                {
+                    &quot;buyerName&quot;: &quot;强盛集团&quot;,
+                    &quot;invoiceCode&quot;: &quot;&quot;,
+                    &quot;billingDate&quot;: &quot;24-12-20 上午12:00&quot;,
+                    &quot;invoiceNumber&quot;: &quot;202501240002&quot;,
+                    &quot;invoiceType&quot;: &quot;I&quot;,
+                    &quot;sellerName&quot;: &quot;杨珂窅的公司&quot;,
+                    &quot;amount&quot;: 300.000000,
+                    &quot;taxAmount&quot;: 0.000000
+                },
+                {
+                    &quot;buyerName&quot;: &quot;强盛集团&quot;,
+                    &quot;invoiceCode&quot;: &quot;&quot;,
+                    &quot;billingDate&quot;: &quot;24-12-20 上午12:00&quot;,
+                    &quot;invoiceNumber&quot;: &quot;k8k82a3rb3yfr5w24avf&quot;,
+                    &quot;invoiceType&quot;: &quot;2&quot;,
+                    &quot;sellerName&quot;: &quot;2221&quot;,
+                    &quot;amount&quot;: 100.000000,
+                    &quot;taxAmount&quot;: 0.000000
+                },
+                {
+                    &quot;buyerName&quot;: &quot;强盛集团&quot;,
+                    &quot;invoiceCode&quot;: &quot;&quot;,
+                    &quot;billingDate&quot;: &quot;24-12-20 上午12:00&quot;,
+                    &quot;invoiceNumber&quot;: &quot;202501240004&quot;,
+                    &quot;invoiceType&quot;: &quot;I&quot;,
+                    &quot;sellerName&quot;: &quot;杨珂窅的公司&quot;,
+                    &quot;amount&quot;: 200.000000,
+                    &quot;taxAmount&quot;: 0.000000
+                }
+            ]
+        },
+        {
+            &quot;comId&quot;: 3941,
+            &quot;billId&quot;: 2025052604300002,
+            &quot;billSts&quot;: &quot;2&quot;,
+            &quot;useType&quot;: &quot;21&quot;,
+            &quot;eventId&quot;: &quot;21250523170344000005&quot;,
+            &quot;eventType&quot;: &quot;RECON_SETTLE&quot;,
+            &quot;eventName&quot;: &quot;USE对了吗&quot;,
+            &quot;applyTim&quot;: 1748243624000,
+            &quot;firstApplyTim&quot;: 1748243624000,
+            &quot;finishTim&quot;: 1748243642000,
+            &quot;billDepCode&quot;: &quot;0000&quot;,
+            &quot;billDepName&quot;: &quot;强盛集团&quot;,
+            &quot;billComLpcCode&quot;: &quot;COR000001&quot;,
+            &quot;billComLpcName&quot;: &quot;强盛集团&quot;,
+            &quot;aplSeqId&quot;: 10000024,
+            &quot;aplName&quot;: &quot;全智瑶&quot;,
+            &quot;aplEmpNumber&quot;: &quot;123456&quot;,
+            &quot;aplDepCode&quot;: &quot;0000&quot;,
+            &quot;aplDepName&quot;: &quot;强盛集团&quot;,
+            &quot;wrSeqId&quot;: 10000024,
+            &quot;wrEmpNumber&quot;: &quot;123456&quot;,
+            &quot;wrName&quot;: &quot;全智瑶&quot;,
+            &quot;isAgent&quot;: false,
+            &quot;printStatus&quot;: &quot;1&quot;,
+            &quot;billPayStatus&quot;: &quot;2&quot;,
+            &quot;billRemark&quot;: &quot;&quot;,
+            &quot;billCustomFieldList&quot;: [
+                {
+                    &quot;fieldNumber&quot;: &quot;C26084154&quot;,
+                    &quot;fieldName&quot;: &quot;备注事由&quot;,
+                    &quot;sourceValue&quot;: null,
+                    &quot;showValue&quot;: &quot;&quot;,
+                    &quot;type&quot;: &quot;MULTI_INPUT&quot;,
+                    &quot;required&quot;: false,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                },
+                {
+                    &quot;fieldNumber&quot;: &quot;C62786719&quot;,
+                    &quot;fieldName&quot;: &quot;承担部门&quot;,
+                    &quot;sourceValue&quot;: &quot;[\&quot;0000\&quot;]&quot;,
+                    &quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;0000\&quot;,\&quot;departmentName\&quot;:\&quot;强盛集团/强盛集团\&quot;}]&quot;,
+                    &quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,
+                    &quot;required&quot;: true,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                }
+            ],
+            &quot;payFinishTim&quot;: 1748334746000,
+            &quot;settleBaseInfo&quot;: {
+                &quot;goodsTypeList&quot;: [
+                    &quot;PRO2025051900001&quot;
+                ],
+                &quot;discountAmount&quot;: 0,
+                &quot;totalAmount&quot;: 11.000000,
+                &quot;inveStartDate&quot;: null,
+                &quot;inveEndDate&quot;: null,
+                &quot;unpaidAmount&quot;: 11.00,
+                &quot;outstandingAmount&quot;: 11.00,
+                &quot;invoiceAmount&quot;: 0.00
+            },
+            &quot;reconciliationStatementList&quot;: [
+                {
+                    &quot;billId&quot;: 2025052204290063,
+                    &quot;supplierName&quot;: &quot;测试档案管理供应商新增&quot;,
+                    &quot;supplierCode&quot;: &quot;SUP20240821200959&quot;,
+                    &quot;invoiceValidStatus&quot;: &quot;notEqual&quot;,
+                    &quot;inventoryTotalAmount&quot;: 11.000000,
+                    &quot;inboundAmount&quot;: 11.000000,
+                    &quot;returnAmount&quot;: 0,
+                    &quot;invoiceAmount&quot;: 0.000000,
+                    &quot;reconciliationStatus&quot;: &quot;reconciled&quot;,
+                    &quot;settleStatus&quot;: &quot;noSettle&quot;,
+                    &quot;firstCategoryCodeList&quot;: [
+                        &quot;firstCategory1&quot;
+                    ],
+                    &quot;secondCategoryCodeList&quot;: [
+                        &quot;secondCategory1&quot;,
+                        &quot;secondCategory3&quot;
+                    ],
+                    &quot;thirdCategoryCodeList&quot;: [],
+                    &quot;fourthCategoryCodeList&quot;: [],
+                    &quot;fifthCategoryCodeList&quot;: [],
+                    &quot;inveStartDate&quot;: &quot;2025-05-18&quot;,
+                    &quot;inveEndDate&quot;: &quot;2025-05-22&quot;,
+                    &quot;inventoryIdList&quot;: [
+                        &quot;202505221003&quot;,
+                        &quot;202505221004&quot;
+                    ],
+                    &quot;goodsTypes&quot;: [
+                        &quot;PRO2025051900001&quot;
+                    ]
+                }
+            ],
+            &quot;payDetailList&quot;: [
+                {
+                    &quot;paySeqId&quot;: 43753,
+                    &quot;payTypInf&quot;: {
+                        &quot;payTypSeqId&quot;: 2908,
+                        &quot;comId&quot;: null,
+                        &quot;businessScenario&quot;: &quot;2&quot;,
+                        &quot;payType&quot;: &quot;2&quot;,
+                        &quot;payMethod&quot;: &quot;现金&quot;,
+                        &quot;status&quot;: &quot;1&quot;,
+                        &quot;isDefault&quot;: &quot;1&quot;,
+                        &quot;typeFlag&quot;: null,
+                        &quot;wthrSystemPreset&quot;: &quot;0&quot;
+                    },
+                    &quot;reimSeqId&quot;: null,
+                    &quot;payAmount&quot;: 2.00,
+                    &quot;originalPayAmount&quot;: 2.00,
+                    &quot;loanReversalAmount&quot;: 0.00,
+                    &quot;originalLoanReversalAmount&quot;: 0.00,
+                    &quot;actualPayAmount&quot;: 2.00,
+                    &quot;originalActualPayAmount&quot;: 2.00,
+                    &quot;planPayDate&quot;: 1748188800000,
+                    &quot;provisionInf&quot;: null,
+                    &quot;accountInfo&quot;: {
+                        &quot;accountSeqId&quot;: 25717,
+                        &quot;paySeqId&quot;: 43753,
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;103&quot;,
+                        &quot;bankName&quot;: &quot;中国农业银行&quot;,
+                        &quot;depoBank&quot;: &quot;103651081559&quot;,
+                        &quot;depoBankName&quot;: &quot;农行成都龙腾支行&quot;,
+                        &quot;recBankBnr&quot;: &quot;&quot;,
+                        &quot;depoName&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;acctNo&quot;: &quot;56563416341631633415&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;510000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;四川省&quot;,
+                        &quot;depoCity&quot;: &quot;510100&quot;,
+                        &quot;depoCityName&quot;: &quot;成都市&quot;,
+                        &quot;accountFlag&quot;: &quot;SER&quot;,
+                        &quot;payAccountSeqId&quot;: 25717,
+                        &quot;accountPayType&quot;: &quot;1&quot;,
+                        &quot;cloudConfigNumber&quot;: null,
+                        &quot;cloudBusinessModel&quot;: null,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;accountType&quot;: null,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;acctSeqId&quot;: null,
+                        &quot;accountRemark&quot;: null
+                    },
+                    &quot;lendPayList&quot;: null,
+                    &quot;payPeriodType&quot;: &quot;0&quot;,
+                    &quot;remark&quot;: null,
+                    &quot;useDiscount&quot;: &quot;0&quot;,
+                    &quot;discountAmount&quot;: 0.00,
+                    &quot;originalDiscountAmount&quot;: 0.00,
+                    &quot;benefitPeriodList&quot;: null,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;contract&quot;: null,
+                    &quot;supplierDto&quot;: {
+                        &quot;supSeqId&quot;: 35550,
+                        &quot;id&quot;: null,
+                        &quot;supSts&quot;: null,
+                        &quot;mainCompany&quot;: null,
+                        &quot;supTypeValue&quot;: null,
+                        &quot;supTypeName&quot;: null,
+                        &quot;supId&quot;: &quot;SUP20240821200959&quot;,
+                        &quot;supNam&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;corOrgNbr&quot;: null,
+                        &quot;enableDate&quot;: null,
+                        &quot;supDepSeqId&quot;: null,
+                        &quot;supDepId&quot;: null,
+                        &quot;supDepName&quot;: null,
+                        &quot;availableOrgType&quot;: null,
+                        &quot;useFlag&quot;: null,
+                        &quot;modifySrcSeqId&quot;: null,
+                        &quot;needUpdate&quot;: false
+                    }
+                },
+                {
+                    &quot;paySeqId&quot;: 43754,
+                    &quot;payTypInf&quot;: {
+                        &quot;payTypSeqId&quot;: 2908,
+                        &quot;comId&quot;: null,
+                        &quot;businessScenario&quot;: &quot;2&quot;,
+                        &quot;payType&quot;: &quot;2&quot;,
+                        &quot;payMethod&quot;: &quot;现金&quot;,
+                        &quot;status&quot;: &quot;1&quot;,
+                        &quot;isDefault&quot;: &quot;1&quot;,
+                        &quot;typeFlag&quot;: null,
+                        &quot;wthrSystemPreset&quot;: &quot;0&quot;
+                    },
+                    &quot;reimSeqId&quot;: null,
+                    &quot;payAmount&quot;: 6.00,
+                    &quot;originalPayAmount&quot;: 6.00,
+                    &quot;loanReversalAmount&quot;: 0.00,
+                    &quot;originalLoanReversalAmount&quot;: 0.00,
+                    &quot;actualPayAmount&quot;: 6.00,
+                    &quot;originalActualPayAmount&quot;: 6.00,
+                    &quot;planPayDate&quot;: 1748188800000,
+                    &quot;provisionInf&quot;: null,
+                    &quot;accountInfo&quot;: {
+                        &quot;accountSeqId&quot;: 25717,
+                        &quot;paySeqId&quot;: 43754,
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;103&quot;,
+                        &quot;bankName&quot;: &quot;中国农业银行&quot;,
+                        &quot;depoBank&quot;: &quot;103651081559&quot;,
+                        &quot;depoBankName&quot;: &quot;农行成都龙腾支行&quot;,
+                        &quot;recBankBnr&quot;: &quot;&quot;,
+                        &quot;depoName&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;acctNo&quot;: &quot;56563416341631633415&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;510000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;四川省&quot;,
+                        &quot;depoCity&quot;: &quot;510100&quot;,
+                        &quot;depoCityName&quot;: &quot;成都市&quot;,
+                        &quot;accountFlag&quot;: &quot;SER&quot;,
+                        &quot;payAccountSeqId&quot;: 25717,
+                        &quot;accountPayType&quot;: &quot;1&quot;,
+                        &quot;cloudConfigNumber&quot;: null,
+                        &quot;cloudBusinessModel&quot;: null,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;accountType&quot;: null,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;acctSeqId&quot;: null,
+                        &quot;accountRemark&quot;: null
+                    },
+                    &quot;lendPayList&quot;: null,
+                    &quot;payPeriodType&quot;: &quot;1&quot;,
+                    &quot;remark&quot;: null,
+                    &quot;useDiscount&quot;: null,
+                    &quot;discountAmount&quot;: 0.00,
+                    &quot;originalDiscountAmount&quot;: 0.00,
+                    &quot;benefitPeriodList&quot;: null,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;contract&quot;: null,
+                    &quot;supplierDto&quot;: {
+                        &quot;supSeqId&quot;: 35550,
+                        &quot;id&quot;: null,
+                        &quot;supSts&quot;: null,
+                        &quot;mainCompany&quot;: null,
+                        &quot;supTypeValue&quot;: null,
+                        &quot;supTypeName&quot;: null,
+                        &quot;supId&quot;: &quot;SUP20240821200959&quot;,
+                        &quot;supNam&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;corOrgNbr&quot;: null,
+                        &quot;enableDate&quot;: null,
+                        &quot;supDepSeqId&quot;: null,
+                        &quot;supDepId&quot;: null,
+                        &quot;supDepName&quot;: null,
+                        &quot;availableOrgType&quot;: null,
+                        &quot;useFlag&quot;: null,
+                        &quot;modifySrcSeqId&quot;: null,
+                        &quot;needUpdate&quot;: false
+                    }
+                },
+                {
+                    &quot;paySeqId&quot;: 43755,
+                    &quot;payTypInf&quot;: {
+                        &quot;payTypSeqId&quot;: 2908,
+                        &quot;comId&quot;: null,
+                        &quot;businessScenario&quot;: &quot;2&quot;,
+                        &quot;payType&quot;: &quot;2&quot;,
+                        &quot;payMethod&quot;: &quot;现金&quot;,
+                        &quot;status&quot;: &quot;1&quot;,
+                        &quot;isDefault&quot;: &quot;1&quot;,
+                        &quot;typeFlag&quot;: null,
+                        &quot;wthrSystemPreset&quot;: &quot;0&quot;
+                    },
+                    &quot;reimSeqId&quot;: null,
+                    &quot;payAmount&quot;: 3.00,
+                    &quot;originalPayAmount&quot;: 3.00,
+                    &quot;loanReversalAmount&quot;: 0.00,
+                    &quot;originalLoanReversalAmount&quot;: 0.00,
+                    &quot;actualPayAmount&quot;: 3.00,
+                    &quot;originalActualPayAmount&quot;: 3.00,
+                    &quot;planPayDate&quot;: 1748188800000,
+                    &quot;provisionInf&quot;: null,
+                    &quot;accountInfo&quot;: {
+                        &quot;accountSeqId&quot;: 25717,
+                        &quot;paySeqId&quot;: 43755,
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;103&quot;,
+                        &quot;bankName&quot;: &quot;中国农业银行&quot;,
+                        &quot;depoBank&quot;: &quot;103651081559&quot;,
+                        &quot;depoBankName&quot;: &quot;农行成都龙腾支行&quot;,
+                        &quot;recBankBnr&quot;: &quot;&quot;,
+                        &quot;depoName&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;acctNo&quot;: &quot;56563416341631633415&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;510000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;四川省&quot;,
+                        &quot;depoCity&quot;: &quot;510100&quot;,
+                        &quot;depoCityName&quot;: &quot;成都市&quot;,
+                        &quot;accountFlag&quot;: &quot;SER&quot;,
+                        &quot;payAccountSeqId&quot;: 25717,
+                        &quot;accountPayType&quot;: &quot;1&quot;,
+                        &quot;cloudConfigNumber&quot;: null,
+                        &quot;cloudBusinessModel&quot;: null,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;accountType&quot;: null,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;acctSeqId&quot;: null,
+                        &quot;accountRemark&quot;: null
+                    },
+                    &quot;lendPayList&quot;: null,
+                    &quot;payPeriodType&quot;: &quot;1&quot;,
+                    &quot;remark&quot;: null,
+                    &quot;useDiscount&quot;: null,
+                    &quot;discountAmount&quot;: 0.00,
+                    &quot;originalDiscountAmount&quot;: 0.00,
+                    &quot;benefitPeriodList&quot;: null,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;contract&quot;: null,
+                    &quot;supplierDto&quot;: {
+                        &quot;supSeqId&quot;: 35550,
+                        &quot;id&quot;: null,
+                        &quot;supSts&quot;: null,
+                        &quot;mainCompany&quot;: null,
+                        &quot;supTypeValue&quot;: null,
+                        &quot;supTypeName&quot;: null,
+                        &quot;supId&quot;: &quot;SUP20240821200959&quot;,
+                        &quot;supNam&quot;: &quot;测试档案管理供应商新增&quot;,
+                        &quot;corOrgNbr&quot;: null,
+                        &quot;enableDate&quot;: null,
+                        &quot;supDepSeqId&quot;: null,
+                        &quot;supDepId&quot;: null,
+                        &quot;supDepName&quot;: null,
+                        &quot;availableOrgType&quot;: null,
+                        &quot;useFlag&quot;: null,
+                        &quot;modifySrcSeqId&quot;: null,
+                        &quot;needUpdate&quot;: false
+                    }
+                }
+            ],
+            &quot;invoices&quot;: [
+                {
+                    &quot;buyerName&quot;: null,
+                    &quot;invoiceCode&quot;: &quot;&quot;,
+                    &quot;billingDate&quot;: &quot;24-12-20 上午12:00&quot;,
+                    &quot;invoiceNumber&quot;: &quot;k8k82a3rb3yfr5w24avf&quot;,
+                    &quot;invoiceType&quot;: &quot;2&quot;,
+                    &quot;sellerName&quot;: null,
+                    &quot;amount&quot;: 0.000000,
+                    &quot;taxAmount&quot;: null
+                }
+            ]
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>E0001</td><td>业务执行错误</td><td>请参考message错误信息</td></tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>下载城市信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>下载城市信息</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/common/city</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/common/city</p>
+<h2>接口描述</h2>
+<p>根据城市信息类型下载对应的城市信息。</p>
+<h2>调用方式</h2>
+<p>METHOD: GET</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>root.type</td><td>STRING</td><td>是</td><td>CITY_LIST_DOMESTIC：国内城市列表；<br>CITY_LIST_INTERNATIONAL：国际城市列表；<br>CITY_TREE_DOMESTIC：国内城市树；<br>CITY_TREE_INTERNATIONAL：国际城市树</td><td>CITY_LIST_DOMESTIC</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.file</td><td>FILE</td><td></td><td>城市json文件</td><td></td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{BaseUrl}/v1/common/city/?type=CITY_LIST_INTERNATIONAL
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+以字节流文件形式返回，文件名：CITY_LIST_INTERNATIONAL.json
+解析数据参考：
+城市列表：
+[
+    {
+        &quot;canSelected&quot;: true,
+        &quot;cityPath&quot;: &quot;CHN,1&quot;,
+        &quot;code&quot;: &quot;1&quot;,
+        &quot;country&quot;: false,
+        &quot;countryCode&quot;: &quot;CHN&quot;,
+        &quot;countryName&quot;: &quot;中国&quot;,
+        &quot;countryNameEn&quot;: &quot;CHINA&quot;,
+        &quot;dataSource&quot;: 0,
+        &quot;displayOrder&quot;: 1000,
+        &quot;domestic&quot;: true,
+        &quot;enable&quot;: true,
+        &quot;gangAoTai&quot;: false,
+        &quot;mainInfo2Output&quot;: &quot;CHN,1|null|北京市|Beijing|中国|CHN|&quot;,
+        &quot;name&quot;: &quot;北京市&quot;,
+        &quot;nameEn&quot;: &quot;Beijing&quot;,
+        &quot;newCity&quot;: false,
+        &quot;parentCode&quot;: &quot;CHN&quot;,
+        &quot;pathMatchCode&quot;: &quot;,1,&quot;,
+        &quot;pathName&quot;: &quot;北京市&quot;,
+        &quot;sourceCode&quot;: &quot;110000&quot;,
+        &quot;type&quot;: &quot;PROVINCE_LEVEL_CITY&quot;
+    }
+	...
+]
+城市树：
+{
+    &quot;children&quot;: [
+        {
+            &quot;children&quot;: [
+                ...
+            ],
+            &quot;cityPath&quot;: &quot;CHN&quot;,
+            &quot;code&quot;: &quot;CHN&quot;,
+            &quot;countryName&quot;: &quot;中国&quot;,
+            &quot;countryNameEn&quot;: &quot;CHINA&quot;,
+            &quot;domestic&quot;: true,
+            &quot;name&quot;: &quot;中国&quot;,
+            &quot;nameEn&quot;: &quot;CHINA&quot;,
+            &quot;newCity&quot;: false,
+            &quot;pathName&quot;: &quot;中国&quot;,
+            &quot;sourceCode&quot;: &quot;CHN&quot;,
+            &quot;type&quot;: &quot;COUNTRY&quot;
+        }
+	...
+    ],
+    &quot;cityPath&quot;: &quot;CHN&quot;,
+    &quot;code&quot;: &quot;CHN&quot;,
+    &quot;countryName&quot;: &quot;中国&quot;,
+    &quot;countryNameEn&quot;: &quot;CHINA&quot;,
+    &quot;domestic&quot;: true,
+    &quot;name&quot;: &quot;中国&quot;,
+    &quot;nameEn&quot;: &quot;CHINA&quot;,
+    &quot;newCity&quot;: false,
+    &quot;pathName&quot;: &quot;中国&quot;,
+    &quot;sourceCode&quot;: &quot;CHN&quot;,
+    &quot;type&quot;: &quot;COUNTRY&quot;
+}
+</code></pre>
+<p>参数说明：</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>名称</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>code</td><td>String</td><td>城市编号</td><td></td></tr>
+<tr><td>name</td><td>String</td><td>城市名称</td><td></td></tr>
+<tr><td>nameEn</td><td>String</td><td>城市英文名</td><td></td></tr>
+<tr><td>cityPath</td><td>String</td><td>城市路径</td><td></td></tr>
+<tr><td>pathName</td><td>String</td><td>路径名称</td><td></td></tr>
+<tr><td>type</td><td>CityPlaceTypeEnum</td><td>地址类型</td><td>COUNTRY(&quot;国家&quot;), PROVINCE(&quot;省&quot;), PROVINCE_LEVEL_CITY(&quot;省级行政区、直辖市&quot;), SPECIAL_ADMINISTRATIVE_REGION(&quot;特别行政区&quot;), PREFECTURE_LEVEL_CITY(&quot;地级行政区、地级市&quot;), COUNTY_LEVEL_CITY(&quot;区/县级行政区，区、县、县级市&quot;)</td></tr>
+<tr><td>parentCode</td><td>String</td><td>上级编码</td><td></td></tr>
+<tr><td>countryName</td><td>String</td><td>国家名称</td><td></td></tr>
+<tr><td>countryNameEn</td><td>String</td><td>国家名称英文名</td><td></td></tr>
+<tr><td>countryCode</td><td>String</td><td>国家编码</td><td></td></tr>
+<tr><td>enable</td><td>boolean</td><td>是否启用中</td><td></td></tr>
+<tr><td>domestic</td><td>boolean</td><td>是否国内城市</td><td></td></tr>
+<tr><td>children</td><td>Array</td><td>城市子节点列表</td><td></td></tr>
+</tbody></table>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>CITY_TYPE_NOT_EXIST</td><td>城市类型文件信息不存在</td><td>确认入参城市信息类型是否正确</td></tr>
+</tbody></table>
+</body>
+</html>

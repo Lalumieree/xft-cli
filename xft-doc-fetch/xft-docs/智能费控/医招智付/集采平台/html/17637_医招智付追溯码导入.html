@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>医招智付追溯码导入</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>医招智付追溯码导入</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-settle/trace-code/import</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-settle/trace-code/import</p>
+<h2>接口描述</h2>
+<p>将追溯码导入医招智付-追溯码台账中，医招智付会调取阿里码上放心接口解析追溯码信息。</p>
+
+<p>注意：</p>
+<p>1. 单次最大导入上限为80条；</p>
+<p>2. 导入的追溯码长度只能为20位；</p>
+<p>3. 导入前，请先在医招智付中配置阿里码上放心授权信息。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.deliverEnterprise</td><td>STRING</td><td>是</td><td>查询公司在阿里码上放心平台注册的ID，需要与阿里码上放心平台注册的公司名称一致</td><td>&quot;南京华北医药有限责任公司&quot;</td></tr>
+<tr><td>root.traceCodeList</td><td>ARRAY</td><td>否</td><td>单个追溯码长度为20；<br>单次导入上限为80；<br>导入内容为空，直接返回“成功”。</td><td>[&quot;84004560440850000177&quot;]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>成功：true；<br>失败：false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>执行成功时，会返回的信息：”成功“；<br>执行失败时，会返回错误信息。</td><td>&quot;成功&quot;</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>调用失败：EROOR1；<br>执行失败：EROOR2；<br>执行成功：SUC0000；<br>参数错误：E0002</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.body</td><td>STRING</td><td>是</td><td>执行成功时，返回&quot;追溯码导入成功&quot;</td><td>&quot;追溯码导入成功&quot;</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{  
+    &quot;deliverEnterprise&quot;: &quot;泉州鹭燕医药有限公司&quot;,  
+    &quot;traceCodeList&quot;: [  
+        &quot;84004560440850000177&quot;  
+    ]  
+}  
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{  
+    &quot;body&quot;:&quot;追溯码导入成功&quot;,  
+    &quot;returnCode&quot;:&quot;SUC0000&quot;,  
+    &quot;success&quot;:true&quot;,  
+    &quot;message&quot;:&quot;成功&quot;  
+}  
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>E0002</td><td>配送企业名称不能为空</td><td>传入配送企业名称</td></tr>
+<tr><td>E0002</td><td>输入正确格式的20位追溯码</td><td>输入正确的追溯码</td></tr>
+<tr><td>E0002</td><td>追溯码导入上限为80条</td><td>调整单次导入追溯码数量</td></tr>
+<tr><td>E0002</td><td>配送企业名称不可超过200个字符</td><td>输入正确的配送企业名称</td></tr>
+<tr><td>EROOR1</td><td>系统错误</td><td>稍后再试，或联系开发人员</td></tr>
+<tr><td>EROOR2</td><td>授权码为空，请在医招智付中维护授权信息</td><td>在“医招智付-集采平台-规则设置-授权码”中维护正确的阿里授权信息</td></tr>
+<tr><td>EROOR2</td><td>未找到对应码上放心供应商，请精准维护码上放心供应商全称</td><td>输入的配送企业名称不正确或该企业尚未在阿里码上放心平台注册</td></tr>
+</tbody></table>
+</body>
+</html>

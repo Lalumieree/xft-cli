@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>分页查询项目信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>分页查询项目信息</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/project/page/query</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/project/page/query</p>
+<h2>接口描述</h2>
+<p>分页查询企业下的项目信息列表</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.globalSearch</td><td>STRING</td><td>否</td><td>项目编号和名称模糊匹配</td><td>测试自定义字段</td></tr>
+<tr><td>root.start</td><td>INTEGER</td><td>是</td><td>最小支持0，不能为空</td><td>0</td></tr>
+<tr><td>root.limit</td><td>INTEGER</td><td>是</td><td>最大支持100条一页</td><td>100</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.data</td><td>OBJECT</td><td>否</td><td>返回数据</td><td></td></tr>
+<tr><td>root.data.total</td><td>LONG</td><td>否</td><td>总数</td><td>1</td></tr>
+<tr><td>root.data.list</td><td>ARRAY</td><td>否</td><td>列表数据</td><td></td></tr>
+<tr><td>root.data.list.projectSeqId</td><td>LONG</td><td>否</td><td>项目自增id</td><td>113339</td></tr>
+<tr><td>root.data.list.comId</td><td>LONG</td><td>否</td><td>公司ID</td><td>3398</td></tr>
+<tr><td>root.data.list.projectId</td><td>STRING</td><td>否</td><td>项目编码</td><td>PRJ20211</td></tr>
+<tr><td>root.data.list.projectName</td><td>STRING</td><td>否</td><td>项目名称</td><td>项目名称10122</td></tr>
+<tr><td>root.data.list.parentProjectName</td><td>STRING</td><td>否</td><td>父级项目名称</td><td>项目名称6</td></tr>
+<tr><td>root.data.list.parentProjectId</td><td>LONG</td><td></td><td>父级项目编码</td><td>PRJ20231018110937</td></tr>
+<tr><td>root.data.list.projectType</td><td>STRING</td><td>否</td><td>项目类型</td><td>类型1</td></tr>
+<tr><td>root.data.list.startDate</td><td>DATE</td><td>否</td><td>时间戳</td><td>1662307200000</td></tr>
+<tr><td>root.data.list.endDate</td><td>DATE</td><td>否</td><td>时间戳</td><td>1706630400000</td></tr>
+<tr><td>root.data.list.customerId</td><td>STRING</td><td></td><td>项目客户编码</td><td>CUS20221220110847</td></tr>
+<tr><td>root.data.list.customerName</td><td>STRING</td><td>否</td><td>项目客户名称</td><td>刘**</td></tr>
+<tr><td>root.data.list.projectAddress</td><td>STRING</td><td>否</td><td>项目地址名称</td><td>北京市</td></tr>
+<tr><td>root.data.list.projectStage</td><td>STRING</td><td>否</td><td>项目状态</td><td>测试项目状态</td></tr>
+<tr><td>root.data.list.projectIndustry</td><td>STRING</td><td>否</td><td>项目行业名称</td><td>互联网</td></tr>
+<tr><td>root.data.list.isTaxFree</td><td>STRING</td><td>否</td><td>1:是，<br>0:否</td><td>0</td></tr>
+<tr><td>root.data.list.projectRemark</td><td>STRING</td><td>否</td><td>项目备注</td><td>项目备注</td></tr>
+<tr><td>root.data.list.customFieldValues</td><td>ARRAY</td><td>否</td><td>自定义字段</td><td></td></tr>
+<tr><td>root.data.list.customFieldValues.customFieldValue</td><td>STRING</td><td>否</td><td>自定义字段填写值</td><td>文本内容</td></tr>
+<tr><td>root.data.list.customFieldValues.customFieldCode</td><td>STRING</td><td>否</td><td>自定义字段编码</td><td>1</td></tr>
+<tr><td>root.data.list.customFieldValues.multiValues</td><td>ARRAY</td><td>否</td><td>最大支持100个选项</td><td>[ &quot;选项2&quot;,&quot;选项3&quot; ]</td></tr>
+<tr><td>root.data.list.projectRoles</td><td>ARRAY</td><td></td><td>项目角色</td><td></td></tr>
+<tr><td>root.data.list.projectRoles.projectRoleId</td><td>STRING</td><td></td><td>项目角色编号</td><td>000001</td></tr>
+<tr><td>root.data.list.projectRoles.projectRoleName</td><td>STRING</td><td></td><td>项目角色名称</td><td>项目经理</td></tr>
+<tr><td>root.data.list.projectRoles.userGroup</td><td>ARRAY</td><td></td><td>项目角色用户组</td><td></td></tr>
+<tr><td>root.data.list.projectRoles.userGroup.type</td><td>STRING</td><td></td><td>类型范围:<br> <br> EMPLOYEE(&quot;员工&quot;),<br> DEPARTMENT(&quot;部门&quot;),<br> POST(&quot;岗位&quot;),<br> JOB(&quot;职位&quot;),<br> ROLE(&quot;角色&quot;),<br> RANK(&quot;职级&quot;),<br> SUBSIDIARY(&quot;合同公司&quot;),<br> MEMBER_GROUP(&quot;用户组&quot;),<br> BUSINESS_GROUP(&quot;业务分组&quot;);</td><td>EMPLOYEE</td></tr>
+<tr><td>root.data.list.projectRoles.userGroup.id</td><td>STRING</td><td></td><td>与类型匹配的编码：<br><br> 员工：员工号<br> 部门：部门编码<br> 职位：职位编码<br> 岗位：岗位编码<br> 职级：职级编码<br> 角色：角色编码</td><td>U0000</td></tr>
+<tr><td>root.data.list.visibleType</td><td>STRING</td><td></td><td>1:全部员工<br>0:部分员工</td><td>0</td></tr>
+<tr><td>root.data.list.visibleUserGroup</td><td>ARRAY</td><td></td><td>可见用户组</td><td></td></tr>
+<tr><td>root.data.list.visibleUserGroup.type</td><td>STRING</td><td></td><td>类型范围:<br> <br> EMPLOYEE(&quot;员工&quot;),<br> DEPARTMENT(&quot;部门&quot;),<br> POST(&quot;岗位&quot;),<br> JOB(&quot;职位&quot;),<br> ROLE(&quot;角色&quot;),<br> RANK(&quot;职级&quot;),<br> SUBSIDIARY(&quot;合同公司&quot;),<br> MEMBER_GROUP(&quot;用户组&quot;),<br> BUSINESS_GROUP(&quot;业务分组&quot;);</td><td>EMPLOYEE</td></tr>
+<tr><td>root.data.list.visibleUserGroup.id</td><td>STRING</td><td></td><td>与类型匹配的编码：<br><br> 员工：员工号<br> 部门：部门编码<br> 职位：职位编码<br> 岗位：岗位编码<br> 职级：职级编码<br> 角色：角色编码</td><td>U0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>该值只会返回true，异常请求参考异常示例</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>请求成功提示</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+  &quot;globalSearch&quot;: &quot;测试自定义字段&quot;,
+  &quot;limit&quot;: 100,
+  &quot;start&quot;: 0
+}
+</code></pre>
+<h3>成功的响应报文</h3>
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;total&quot;: 1,
+        &quot;list&quot;: [
+            {
+                &quot;projectSeqId&quot;: 123229,
+                &quot;comId&quot;: 3398,
+                &quot;projectId&quot;: &quot;PRJ20231201102749&quot;,
+                &quot;projectName&quot;: &quot;测试自定义字段&quot;,
+                &quot;parentProjectName&quot;: &quot;测试时间范围&quot;,
+                &quot;parentProjectId&quot;: &quot;PRJ20231018110937&quot;,
+                &quot;projectType&quot;: &quot;测试二&quot;,
+                &quot;startDate&quot;: 1662307200000,
+                &quot;endDate&quot;: 1706630400000,
+                &quot;customerId&quot;: &quot;CUS20221220110847&quot;,
+                &quot;customerName&quot;: &quot;刘**&quot;,
+                &quot;projectAddress&quot;: &quot;天津市&quot;,
+                &quot;projectStage&quot;: &quot;测试项目状态&quot;,
+                &quot;projectIndustry&quot;: &quot;互联网&quot;,
+                &quot;isTaxFree&quot;: &quot;0&quot;,
+                &quot;projectRemark&quot;: &quot;车是大富大贵分工&quot;,
+                &quot;projectRoles&quot;: [
+                    {
+                        &quot;projectRoleId&quot;: &quot;000001&quot;,
+                        &quot;projectRoleName&quot;: &quot;项目经理&quot;,
+                        &quot;userGroup&quot;: [
+                            {
+                                &quot;type&quot;: &quot;EMPLOYEE&quot;,
+                                &quot;id&quot;: &quot;U0000&quot;
+                            }
+                        ]
+                    }
+                ],
+                &quot;visibleType&quot;: &quot;0&quot;,
+                &quot;visibleUserGroup&quot;: [
+                    {
+                        &quot;type&quot;: &quot;DEPARTMENT&quot;,
+                        &quot;id&quot;: &quot;0003&quot;
+                    },
+                    {
+                        &quot;type&quot;: &quot;EMPLOYEE&quot;,
+                        &quot;id&quot;: &quot;U0000&quot;
+                    },
+                    {
+                        &quot;type&quot;: &quot;EMPLOYEE&quot;,
+                        &quot;id&quot;: &quot;V0005&quot;
+                    },
+                    {
+                        &quot;type&quot;: &quot;RANK&quot;,
+                        &quot;id&quot;: &quot;M1&quot;
+                    }
+                ],
+                &quot;customFieldValues&quot;: [
+                    {
+                        &quot;customFieldCode&quot;: &quot;1&quot;,
+                        &quot;customFieldValue&quot;: &quot;211&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;2&quot;,
+                        &quot;customFieldValue&quot;: &quot;1王企鹅发放&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;3&quot;,
+                        &quot;customFieldValue&quot;: &quot;90099&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;4&quot;,
+                        &quot;customFieldValue&quot;: &quot;选项2&quot;,
+                        &quot;multiValues&quot;: [
+                            &quot;选项2&quot;
+                        ]
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;5&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;multiValues&quot;: [
+                            &quot;选项2&quot;,
+                            &quot;选项3&quot;
+                        ]
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;6&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;multiValues&quot;: [
+                            &quot;选项2&quot;
+                        ]
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;7&quot;,
+                        &quot;customFieldValue&quot;: &quot;2023-12-01&quot;,
+                        &quot;multiValues&quot;: null
+                    }
+                ]
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+</code></pre>
+
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>E0002</td><td>分页大小不能为空;分页起始位置不能为空;</td><td>检查分页参数是否漏传</td></tr>
+<tr><td>E0002</td><td>分页起始位置最小为0;</td><td>检查分页起始值是否小于0</td></tr>
+<tr><td>E0002</td><td>最大支持100条一页;</td><td>检查分页条数是否大于100</td></tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>保存火车订单</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>保存火车订单</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/travel/orders/train</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/travel/orders/train</p>
+<h2>接口描述</h2>
+<p>消费平台存储连接器导入订单</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>ARRAY</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.orderBaseInfo</td><td>OBJECT</td><td>是</td><td>订单基本信息</td><td></td></tr>
+<tr><td>body.orderBaseInfo.bookEmpNumber</td><td>STRING</td><td>是</td><td>预订人编号（花名册编号）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.bookEmpSeqId</td><td>LONG</td><td>是</td><td>预订人系统编号（系统编号与花名册编号必填一个）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.bookEmpName</td><td>STRING</td><td>是</td><td>预订人名称</td><td></td></tr>
+<tr><td>body.orderBaseInfo.passengerEmpNumber</td><td>STRING</td><td>是</td><td>乘客编号（花名册编号）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.passengerEmpSeqId</td><td>LONG</td><td>是</td><td>乘客系统编号（系统编号与花名册编号必填一个）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.passengerEmpName</td><td>STRING</td><td>否</td><td>乘客姓名</td><td></td></tr>
+<tr><td>body.orderBaseInfo.platform</td><td>STRING</td><td>是</td><td>订单平台</td><td></td></tr>
+<tr><td>body.orderBaseInfo.orderType</td><td>STRING</td><td>是</td><td>N:正常 T:退订 C:改签</td><td>N</td></tr>
+<tr><td>body.orderBaseInfo.thirdOrderId</td><td>STRING</td><td>是</td><td>订单编号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.thirdParentOrderId</td><td>STRING</td><td>否</td><td>第三方上级订单编号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.thirdOriginOrderId</td><td>STRING</td><td>否</td><td>第三方原订单号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.relatedApplyBillId</td><td>STRING</td><td>否</td><td>事前申请单号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.source</td><td>STRING</td><td>否</td><td>OFFICIAL_WEBSITE 官网，SERVICE_AGENCY_BOOK 客服代订，SERVICE_MANUAL_RECORD 客服手工录单</td><td></td></tr>
+<tr><td>body.orderBaseInfo.relatedBusinessOrderId</td><td>STRING</td><td>否</td><td>关联业务订单号（12306订单号）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.orderCreateTime</td><td>STRING</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.orderBaseInfo.orderCompleteTime</td><td>STRING</td><td>否</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.orderBaseInfo.travelType</td><td>STRING</td><td>是</td><td>COMPANY_TRIP 因公，PERSONAL_TRIP 因私</td><td></td></tr>
+<tr><td>body.orderPayInfo</td><td>OBJECT</td><td>是</td><td>订单支付信息</td><td></td></tr>
+<tr><td>body.orderPayInfo.amount</td><td>STRING</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.excludeServiceFee</td><td>STRING</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.serviceFee</td><td>STRING</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.refundFee</td><td>STRING</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.changeFee</td><td>STRING</td><td>是</td><td>改签手续费</td><td></td></tr>
+<tr><td>body.orderPayInfo.payWay</td><td>STRING</td><td>是</td><td>公司支付 COMPANY_PAY，个人支付 PERSONAL_PAY</td><td></td></tr>
+<tr><td>body.orderPayInfo.companyPayAmount</td><td>STRING</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.personalPayAmount</td><td>STRING</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.exceedStandard</td><td>STRING</td><td>否</td><td>Y：是，N：否</td><td>N</td></tr>
+<tr><td>body.orderPayInfo.exceedStandardReason</td><td>STRING</td><td>否</td><td>超标事由</td><td></td></tr>
+<tr><td>body.orderPayInfo.changeType</td><td>STRING</td><td>否</td><td>NO_MARGIN 无差价，REFUND_DIFFERENCE 高改低（原票价高于改签后票价），SUPPLIMENT_DIFFERENCE 低改高（原票价低于改签后票价）</td><td></td></tr>
+<tr><td>body.orderPayInfo.changeReason</td><td>STRING</td><td>否</td><td>改签事由</td><td></td></tr>
+<tr><td>body.orderPayInfo.orderPayTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.orderPayInfo.refundReason</td><td>STRING</td><td>否</td><td>退款事由</td><td></td></tr>
+<tr><td>body.orderPayInfo.insuranceFee</td><td>STRING</td><td>否</td><td>保险费</td><td></td></tr>
+<tr><td>body.trainTicketInfo</td><td>OBJECT</td><td>是</td><td>火车票信息</td><td></td></tr>
+<tr><td>body.trainTicketInfo.departTime</td><td>STRING</td><td>是</td><td>yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.trainTicketInfo.destinationTime</td><td>STRING</td><td>是</td><td>yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.trainTicketInfo.departCityCode</td><td>LONG</td><td>是</td><td>出发地城市编码</td><td></td></tr>
+<tr><td>body.trainTicketInfo.destinationCityCode</td><td>LONG</td><td>是</td><td>目的地城市编码</td><td></td></tr>
+<tr><td>body.trainTicketInfo.seatingClass</td><td>STRING</td><td>否</td><td>BUSINESS_SEAT 商务, SUPERLATIVE_SEAT 特等, FIRST_CLASS_SEAT 一等, SECOND_CLASS_SEAT 二等,<br> HIGH_GRADE_SOFT_SLEEPER 高级软卧 ,<br>SOFT_SLEEPER软卧 ,<br>HARD_SEAT 硬卧 ,<br>SOFT_SEAT 软座 ,<br>NO_SEAT 无座 ,<br>OTHER其他</td><td></td></tr>
+<tr><td>body.trainTicketInfo.ticketNumber</td><td>STRING</td><td>是</td><td>客票号</td><td></td></tr>
+<tr><td>body.trainTicketInfo.trainNumber</td><td>STRING</td><td>否</td><td>车次号</td><td></td></tr>
+<tr><td>body.trainTicketInfo.departStation</td><td>STRING</td><td>是</td><td>出发站</td><td></td></tr>
+<tr><td>body.trainTicketInfo.destinationStation</td><td>STRING</td><td>是</td><td>到达站</td><td></td></tr>
+<tr><td>body.trainTicketInfo.departStationCode</td><td>STRING</td><td>否</td><td>出发站三字码</td><td></td></tr>
+<tr><td>body.trainTicketInfo.destinationStationCode</td><td>STRING</td><td>否</td><td>到达站三字码</td><td></td></tr>
+<tr><td>body.trainTicketInfo.seatNumber</td><td>STRING</td><td>否</td><td>座位号</td><td></td></tr>
+<tr><td>body.contactInfo</td><td>OBJECT</td><td>否</td><td>联系人信息</td><td></td></tr>
+<tr><td>body.contactInfo.contactName</td><td>STRING</td><td>否</td><td>contactName</td><td></td></tr>
+<tr><td>body.contactInfo.contactPhone</td><td>LONG</td><td>否</td><td>contactPhone</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>是</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>是</td><td>success</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>是</td><td>message</td><td>&quot;成功&quot;</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>POST ： /api/v1/travel/orders/train</p>
+
+<p>body:</p>
+
+<pre><code>
+[
+    {
+        &quot;orderBaseInfo&quot;: {
+            &quot;bookEmpNumber&quot;: &quot;U0000&quot;,
+            &quot;bookEmpSeqId&quot;:null,
+            &quot;bookEmpName&quot;: &quot;张灯结彩&quot;,
+            &quot;passengerEmpNumber&quot;:&quot;V0002&quot;,
+            &quot;passengerEmpSeqId&quot;:null,
+            &quot;passengerEmpName&quot;:&quot;小威威&quot;,
+            &quot;platform&quot;: &quot;ZAI_TU&quot;,
+            &quot;orderType&quot;: &quot;N&quot;,
+            &quot;thirdOrderId&quot;: &quot;57184751-005104895&quot;,
+            &quot;thirdParentOrderId&quot;:&quot;&quot;,
+            &quot;thirdOriginOrderId&quot;: &quot;&quot;,
+            &quot;relatedApplyBillId&quot;: &quot;&quot;,
+            &quot;source&quot;:&quot;OFFICIAL_WEBSITE&quot;,
+            &quot;relatedBusinessOrderId&quot;:&quot;r738456dfsdh21321&quot;,
+            &quot;orderCreateTime&quot;: &quot;2023-07-03 13:14:55&quot;,
+            &quot;orderCompleteTime&quot;: &quot;2023-07-03 13:14:55&quot;,
+            &quot;travelType&quot;:&quot;COMPANY_TRIP&quot;
+        },
+        &quot;orderPayInfo&quot;: {
+            &quot;amount&quot;: &quot;200&quot;,
+            &quot;excludeServiceFee&quot;: &quot;160&quot;,
+            &quot;serviceFee&quot;: &quot;30&quot;,
+            &quot;refundFee&quot;: &quot;2&quot;,
+            &quot;changeFee&quot;: &quot;2&quot;,
+            &quot;payWay&quot;: &quot;COMPANY_PAY&quot;,
+            &quot;companyPayAmount&quot;: &quot;200&quot;,
+            &quot;personalPayAmount&quot;: &quot;0&quot;,
+            &quot;exceedStandard&quot;:&quot;N&quot;,
+            &quot;exceedStandardReason&quot;:&quot;dsfgsdfgsdf&quot;,
+            &quot;changeType&quot;:&quot;NO_MARGIN&quot;,
+            &quot;changeReason&quot;:&quot;改签事由&quot;,
+            &quot;orderPayTime&quot;: &quot;2023-07-03 13:14:55&quot;,
+            &quot;refundReason&quot;: &quot;睡个懒觉快递费和个数&quot;,
+            &quot;insuranceFee&quot;:&quot;6&quot;
+        },
+        &quot;trainTicketInfo&quot;: {
+            &quot;departTime&quot;: &quot;2023-07-03 13:14:55&quot;,
+            &quot;destinationTime&quot;: &quot;2023-07-03 13:14:55&quot;,
+            &quot;departCityCode&quot;: &quot;400098&quot;,
+            &quot;destinationCityCode&quot;: &quot;600987&quot;,
+            &quot;seatingClass&quot;: &quot;BUSINESS_SEAT&quot;,
+            &quot;ticketNumber&quot;: &quot;dgahjd6906&quot;,
+            &quot;trainNumber&quot;: &quot;K9908&quot;,
+            &quot;departStation&quot;:&quot;杭州东&quot;,
+            &quot;destinationStation&quot;:&quot;嘉兴南&quot;,
+            &quot;departStationCode&quot;:&quot;TAV&quot;,
+            &quot;destinationStationCode&quot;:&quot;ACG&quot;,
+            &quot;seatNumber&quot;:&quot;24A&quot;
+        },
+        &quot;contactInfo&quot;: {
+            &quot;contactName&quot;: &quot;李二狗&quot;,
+            &quot;contactPhone&quot;: &quot;13888888888&quot;
+        }
+    }
+]
+
+</code></pre>
+
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>描述</th></tr></thead>
+<tbody>
+<tr><td>ERROR00</td><td>失败</td></tr>
+</tbody></table>
+</body>
+</html>

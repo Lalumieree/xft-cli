@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>单笔查询差旅报销单详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>单笔查询差旅报销单详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/reimburse/bill/travel/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/reimburse/bill/travel/detail</p>
+<h2>接口描述</h2>
+<p>单笔获取差旅报销单的单据详情</p>
+
+<p>**单据和费用自定义字段说明和返回格式**</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>字段类型</th><th>说明</th><th>showValue示例</th><th>sourceValue示例</th></tr></thead>
+<tbody>
+<tr><td>单行文本</td><td>value以字符串格式返回</td><td>单行文本11</td><td></td></tr>
+<tr><td>多行文本</td><td>value以字符串格式返回</td><td>多行文本11</td><td></td></tr>
+<tr><td>数字</td><td>value以字符串格式返回</td><td>8.6</td><td></td></tr>
+<tr><td>金额</td><td>value以字符串格式返回</td><td>9.6</td><td></td></tr>
+<tr><td>单选</td><td>value以字符串格式返回</td><td>选项1</td><td></td></tr>
+<tr><td>多选</td><td>value以Json格式字符串返回</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td><td></td></tr>
+<tr><td>下拉选择</td><td>value以Json格式字符串返回</td><td>[\&quot;选项1\&quot;, \&quot;选项2\&quot;]</td><td></td></tr>
+<tr><td>手机号码</td><td>value以字符串格式返回</td><td>18858885666</td><td></td></tr>
+<tr><td>日期选择</td><td>value以字符串格式返回</td><td>2023-08-01 12:30</td><td></td></tr>
+<tr><td>日期区间</td><td>value以yyyy-mm-dd hh:mm格式，用&quot;,&quot;拼接返回字符串</td><td>2023-08-01 12:30,2023-08-02 12:30,1</td><td></td></tr>
+<tr><td>银行卡号</td><td>value以字符串格式返回</td><td>6222252225436456</td><td></td></tr>
+<tr><td>邮箱</td><td>value以字符串格式返回</td><td>123456@163.com</td><td></td></tr>
+<tr><td>附件</td><td>附件编号，value以字符串格式传入</td><td>[{\&quot;fileId\&quot;:\&quot;7e31f235-15a3-4140-883a-25971df3d4b9\&quot;, \&quot;fileName\&quot;:\&quot;7E58ED9B.jpg\&quot;},{\&quot;fileId\&quot;:\&quot;6fb4e980-4fc4-420e-95ee-28914284b52c\&quot;,\&quot;fileName\&quot;:\&quot;8090DB49.jpg\&quot;}]</td><td></td></tr>
+<tr><td>层级选择</td><td>选项值，按照层级顺序的字符串List，以Json格式传入</td><td>[\&quot;选项1\&quot;, \&quot;选项1-1\&quot;]</td><td></td></tr>
+<tr><td>关联字段</td><td>value以字符串格式返回</td><td>关联字段值</td><td></td></tr>
+<tr><td>表格</td><td>value以Json格式字符串返回，每一行根据序号值区分，每一行中，每个表格值包含titleCode和value</td><td>[{\&quot;sequence\&quot;: 1, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;张三\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;26\&quot;}]}, {\&quot;sequence\&quot;: 2, \&quot;columnValues\&quot;: [{\&quot;titleCode\&quot;: \&quot;NAME\&quot;, \&quot;value\&quot;: \&quot;李四\&quot;}, {\&quot;titleCode\&quot;: \&quot;AGE\&quot;, \&quot;value\&quot;: \&quot;28\&quot;}]}]</td><td></td></tr>
+<tr><td>人员</td><td>value以Json格式字符串返回</td><td>[{\&quot;empNumber\&quot;:\&quot;88888888\&quot;,\&quot;empName\&quot;:\&quot;小招喵\&quot;},{\&quot;empNumber\&quot;:\&quot;17621112222\&quot;,\&quot;empName\&quot;:\&quot;小威威\&quot;}]</td><td>[\&quot;EMP_NUMBER_01\&quot;, \&quot;EMP_NUMBER_02\&quot;]</td></tr>
+<tr><td>单据部门</td><td>value以Json格式字符串返回</td><td>{\&quot;departmentCode\&quot;:\&quot;00000002\&quot;,\&quot;departmentName\&quot;:\&quot;憨人科技/豆浆油条\&quot;}</td><td>[\&quot;00000002\&quot;]</td></tr>
+<tr><td>单据项目</td><td>value以Json格式字符串返回</td><td>{\&quot;projectCode\&quot;:\&quot;PRJ20210820095218\&quot;,\&quot;projectName\&quot;:\&quot;2222\&quot;}</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>关联单据</td><td>value以Json格式字符串返回</td><td>[{\&quot;aplNam\&quot;:\&quot;张灯结彩\&quot;,\&quot;aplSeqId\&quot;:58702,\&quot;applyTim\&quot;:\&quot;2023-08-07 15:27:13\&quot;,\&quot;applyTotalAmount\&quot;:0.00,\&quot;billId\&quot;:2023080702298807, \&quot;billRemark\&quot;:\&quot;预置内容\&quot;,\&quot;displayAmount\&quot;:0,\&quot;eventNam\&quot;:\&quot;通用申请-jjw\&quot;,\&quot;eventSeqId\&quot;:13904,\&quot;expTotalCnt\&quot;:0.00,\&quot;useType\&quot;:\&quot;1\&quot;}]</td><td></td></tr>
+<tr><td>申请金额</td><td>value以字符串格式返回</td><td>66.6</td><td></td></tr>
+<tr><td>城市</td><td>value以Json格式字符串返回</td><td>[{\&quot;cityCode\&quot;:\&quot;2\&quot;,\&quot;cityName\&quot;:\&quot;天津\&quot;}]</td><td></td></tr>
+<tr><td>供应商</td><td>value以Json格式字符串返回</td><td>[{\&quot;supplierNo\&quot;:\&quot;233\&quot;,\&quot;supplierName\&quot;:\&quot;供应商1\&quot;}]</td><td></td></tr>
+<tr><td>客户</td><td>value以Json格式字符串返回</td><td>[{\&quot;customerNo\&quot;:\&quot;23\&quot;,\&quot;customerName\&quot;:\&quot;客户1\&quot;}]</td><td></td></tr>
+<tr><td>合同</td><td>value以Json格式字符串返回</td><td>[{\&quot;customerNo\&quot;:\&quot;21\&quot;,\&quot;customerName\&quot;:\&quot;合同1\&quot;}]</td><td></td></tr>
+<tr><td>成本中心</td><td>value以Json格式字符串返回</td><td>{\&quot;costCenterCode\&quot;:\&quot;00000211\&quot;,\&quot;costCenterCodeName\&quot;:\&quot;豆浆油条\&quot;}</td><td>center001</td></tr>
+<tr><td>档案选择</td><td>value以Json格式字符串返回</td><td>[{\&quot;optionCode\&quot;: \&quot;ID1\&quot;, &quot;\optionName\&quot;: \&quot;选项1\&quot;},{\&quot;optionCode\&quot;: \&quot;ID2\&quot;, &quot;\optionName\&quot;: \&quot;选项2\&quot;}]</td><td>[\&quot;option01\&quot;, \&quot;option02\&quot;]</td></tr>
+<tr><td>部门</td><td>value以Json格式字符串返回</td><td>[{\&quot;departmentCode\&quot;:\&quot;00000002\&quot;,\&quot;departmentName\&quot;:\&quot;豆浆油条\&quot;}, {\&quot;departmentCode\&quot;:\&quot;60542\&quot;,\&quot;departmentName\&quot;:\&quot;黑黑不黑\&quot;}]</td><td>[\&quot;ORG_01\&quot;, \&quot;ORG_02\&quot;]</td></tr>
+<tr><td>项目</td><td>value以Json格式字符串返回</td><td>[{\&quot;projectCode\&quot;:\&quot;PRJ20210820095218\&quot;,\&quot;projectName\&quot;:\&quot;2222\&quot;}, {\&quot;projectCode\&quot;:\&quot;5555\&quot;,\&quot;projectName\&quot;:\&quot;下一级\&quot;}]</td><td>[\&quot;PROJECT_1\&quot;, \&quot;PROJECT_2\&quot;]</td></tr>
+<tr><td>事业部</td><td>value以Json格式字符串返回</td><td>{\&quot;departmentCode\&quot;:\&quot;00000211\&quot;,\&quot;departmentName\&quot;:\&quot;豆浆油条\&quot;}</td><td>[\&quot;00000211\&quot;]</td></tr>
+<tr><td>事项</td><td>value以Json格式字符串返回</td><td>{\&quot;matterTypeNumber\&quot;:\&quot;MATTER_TYPE_1\&quot;, \&quot;matterTypeName\&quot;:\&quot;一级业务类型\&quot;,\&quot;matterMissionNumber\&quot;:\&quot;MATTER_MISSION_1\&quot;, \&quot;matterMissionName\&quot;:\&quot;业务事项\&quot;,\&quot;matterDetailNumber\&quot;:\&quot;MATTER_DETAIL_1\&quot;,\&quot;matterDetailName\&quot;:\&quot;业务事由\&quot;}</td><td></td></tr>
+<tr><td>收款账户</td><td>value以Json格式字符串返回</td><td>[{\&quot;accountNumber\&quot;:\&quot;66666666666666666666\&quot;,\&quot;accountName\&quot;:58702,\&quot;depoBankName\&quot;:\&quot;中国银行\&quot;,\&quot;depoAddress\&quot;:\&quot;杭州市滨江区长河街道\&quot;,\&quot;depoBranchBankName\&quot;:\&quot;杭州市滨江区中国银行支行\&quot;}]</td><td></td></tr>
+</tbody></table>
+<h2>调用方式</h2>
+<p>METHOD: GET</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.billId</td><td>LONG</td><td>是</td><td>需要获取详情的差旅报销单编号</td><td>2023103000000001</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>OBJECT</td><td>否</td><td>单据详情数据对象</td><td></td></tr>
+<tr><td>body.body.comId</td><td>LONG</td><td>是</td><td>企业编号</td><td>0001</td></tr>
+<tr><td>body.body.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.billSts</td><td>STRING</td><td>是</td><td>* 0：草稿<br>* 1：待审批<br>* 2：审批通过<br>* 4：拒绝<br>* 5：待财务审核<br>* 6：待财务复核<br>* 7： 财务审核通过<br>* 8： 财务复核通过<br>* 9： 财务审核驳回<br>* 10：财务复核驳回<br>* 11：已撤回<br>* 12：已退回<br>* 15：已废弃<br>* 16：暂存<br>* 17：废弃中<br>* 18：等待外部处理<br>* 19：变更中 <br>* 20：已停用<br>* 21：已删除</td><td>1</td></tr>
+<tr><td>body.body.useType</td><td>STRING</td><td>是</td><td>只会返回报销单<br>* 2：报销单</td><td>2</td></tr>
+<tr><td>body.body.eventId</td><td>LONG</td><td>是</td><td>单据类型编号</td><td>02231025140327000002</td></tr>
+<tr><td>body.body.eventType</td><td>STRING</td><td>是</td><td>只会返回差旅报销单<br>* TRAVEL_REIM：差旅报销单</td><td>TRAVEL_REIM</td></tr>
+<tr><td>body.body.eventName</td><td>STRING</td><td>是</td><td>单据业务类型名称</td><td>出差报销单</td></tr>
+<tr><td>body.body.applyTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698656241000</td></tr>
+<tr><td>body.body.firstApplyTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698656241000</td></tr>
+<tr><td>body.body.finishTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>null</td></tr>
+<tr><td>body.body.billDepCode</td><td>STRING</td><td>是</td><td>单据所属部门编码</td><td>00000005</td></tr>
+<tr><td>body.body.billDepName</td><td>STRING</td><td>是</td><td>单据所属部门名称</td><td>天行1组</td></tr>
+<tr><td>body.body.billComLpcCode</td><td>STRING</td><td>否</td><td>单据所属法人公司编码</td><td>0004</td></tr>
+<tr><td>body.body.billComLpcName</td><td>STRING</td><td>否</td><td>单据所属法人公司名称</td><td>天行</td></tr>
+<tr><td>body.body.billProjectCode</td><td>STRING</td><td>否</td><td>单据所属项目编码</td><td>null</td></tr>
+<tr><td>body.body.billProjectName</td><td>STRING</td><td>否</td><td>单据所属项目名称</td><td>null</td></tr>
+<tr><td>body.body.billCenName</td><td>STRING</td><td>否</td><td>单据成本中心名称</td><td>null</td></tr>
+<tr><td>body.body.billCenCode</td><td>STRING</td><td>否</td><td>单据成本中心编号</td><td>null</td></tr>
+<tr><td>body.body.projectTypeCode</td><td>STRING</td><td>否</td><td>档案管理配置的项目类型编码</td><td>null</td></tr>
+<tr><td>body.body.projectTypeName</td><td>STRING</td><td>否</td><td>档案管理配置的项目类型名称</td><td>null</td></tr>
+<tr><td>body.body.billBDCode</td><td>STRING</td><td>否</td><td>单据所属事业部编码</td><td>null</td></tr>
+<tr><td>body.body.billBDName</td><td>STRING</td><td>否</td><td>单据所属事业部名称</td><td>null</td></tr>
+<tr><td>body.body.aplSeqId</td><td>LONG</td><td>是</td><td>报销人唯一编号</td><td>10915426</td></tr>
+<tr><td>body.body.aplName</td><td>STRING</td><td>是</td><td>报销人姓名</td><td>null</td></tr>
+<tr><td>body.body.aplEmpNumber</td><td>STRING</td><td>否</td><td>报销人员工编号</td><td></td></tr>
+<tr><td>body.body.aplDepCode</td><td>LONG</td><td>是</td><td>报销人所属部门编码</td><td>00000001</td></tr>
+<tr><td>body.body.aplDepName</td><td>STRING</td><td>是</td><td>报销人所属部门名称</td><td>研发部</td></tr>
+<tr><td>body.body.wrSeqId</td><td>LONG</td><td>是</td><td>提单人唯一编号</td><td>10915426</td></tr>
+<tr><td>body.body.wrEmpNumber</td><td>STRING</td><td>是</td><td>提单人员工编号</td><td></td></tr>
+<tr><td>body.body.wrName</td><td>STRING</td><td>是</td><td>提单人员姓名</td><td>张益</td></tr>
+<tr><td>body.body.isAgent</td><td>BOOLEAN</td><td>是</td><td>是否代理</td><td>false</td></tr>
+<tr><td>body.body.printStatus</td><td>STRING</td><td>是</td><td>* 0：不可打印 <br>* 1：可打印</td><td>1</td></tr>
+<tr><td>body.body.printedState</td><td>STRING</td><td>否</td><td>* 0: 否 <br>* 1: 是</td><td>0</td></tr>
+<tr><td>body.body.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>报销单费用合计金额</td><td>732</td></tr>
+<tr><td>body.body.subsidyTotalAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.billPayStatus</td><td>STRING</td><td>否</td><td>* 0：待付款<br>* 1：付款中<br>* 2：付款成功<br>* 3：付款失败<br>* 4：部分付款成功<br>* 5：已发起<br>* 6：已取消<br>* 7：取消支付<br>* 8：部分取消支付</td><td>0</td></tr>
+<tr><td>body.body.payFinishTim</td><td>STRING</td><td></td><td>yyyy-MM-dd HH:mm:ss</td><td>2024-12-12 16:30:01</td></tr>
+<tr><td>body.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td>null</td></tr>
+<tr><td>body.body.billSignStatus</td><td>STRING</td><td></td><td>N-无需签收 W-待签收 F-已签收</td><td>F</td></tr>
+<tr><td>body.body.signTime</td><td>LONG</td><td></td><td>精确到分</td><td>1745379064000</td></tr>
+<tr><td>body.body.billCustomFieldList</td><td>ARRAY</td><td>否</td><td>请参考接口描述中自定义字段说明和返回格式</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.fieldNumber</td><td>STRING</td><td>否</td><td>字段编码</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>单据部门</td></tr>
+<tr><td>body.body.billCustomFieldList.sourceValue</td><td>STRING</td><td>是</td><td>根据自定义字段说明解析</td><td>[&quot;00000005&quot;]</td></tr>
+<tr><td>body.body.billCustomFieldList.showValue</td><td>STRING</td><td>是</td><td>自定义字段的值</td><td>[{&quot;departmentCode&quot;:&quot;00000005&quot;,&quot;departmentName&quot;:&quot;天行/天行1组&quot;}]</td></tr>
+<tr><td>body.body.billCustomFieldList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.billCustomFieldList.src</td><td>STRING</td><td>是</td><td>* EVENT ：单据</td><td>EVENT</td></tr>
+<tr><td>body.body.billCustomFieldList.srcId</td><td>LONG</td><td>是</td><td>所属业务序号</td><td>22795</td></tr>
+<tr><td>body.body.billCustomFieldList.srcBodyId</td><td>LONG</td><td>是</td><td>所属业务编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.billCustomFieldList.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>body.body.billCustomFieldList.printEnable</td><td>STRING</td><td>是</td><td>* 0：不可打印 <br>* 1：可打印</td><td>1</td></tr>
+<tr><td>body.body.billCustomFieldList.description</td><td>STRING</td><td>是</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>body.body.billCustomFieldList.options</td><td>ARRAY</td><td>否</td><td>根据自定义字段说明解析</td><td>[aaa,bbb]</td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList</td><td>ARRAY</td><td>否</td><td>表格表头</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.name</td><td>STRING</td><td>是</td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.code</td><td>STRING</td><td>是</td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.fieldCode</td><td>STRING</td><td>是</td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.relatedBillList</td><td>ARRAY</td><td>否</td><td>关联单据信息</td><td></td></tr>
+<tr><td>body.body.relatedBillList.comId</td><td>LONG</td><td>是</td><td>企业唯一编号</td><td>4426</td></tr>
+<tr><td>body.body.relatedBillList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.relatedBillList.empSeqId</td><td>LONG</td><td>是</td><td>员工唯一编号</td><td>10915426</td></tr>
+<tr><td>body.body.relatedBillList.relBillId</td><td>LONG</td><td>是</td><td>关联单据唯一编号</td><td>2023103001981419</td></tr>
+<tr><td>body.body.relatedBillList.relType</td><td>STRING</td><td>否</td><td>* REL_APPLY_BILL：关联申请单组件<br>* REL_BILL： 关联单据自定义字段</td><td>REL_APPLY_BILL</td></tr>
+<tr><td>body.body.relatedBillList.usedState</td><td>STRING</td><td>是</td><td>* 1：已使用<br>* 0：未使用</td><td>1</td></tr>
+<tr><td>body.body.expenseList</td><td>ARRAY</td><td>否</td><td>费用集合</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSeqId</td><td>LONG</td><td>是</td><td>费用唯一编号</td><td>134133</td></tr>
+<tr><td>body.body.expenseList.comId</td><td>LONG</td><td>是</td><td>企业唯一编号</td><td>4426</td></tr>
+<tr><td>body.body.expenseList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.expenseList.expTypeCode</td><td>STRING</td><td>是</td><td>费用类型编码</td><td>02</td></tr>
+<tr><td>body.body.expenseList.expTypeName</td><td>STRING</td><td>是</td><td>费用类型名称</td><td>火车费</td></tr>
+<tr><td>body.body.expenseList.expAttribute</td><td>STRING</td><td>是</td><td>* AIRCRAFT：机票<br>* HOTEL：住宿<br>* TRAIN：火车<br>* SHIP：轮船<br>* CAR：用车<br>* MEAL：用餐<br>* PHONE：通讯<br>* OTHER：其他</td><td>TRAIN</td></tr>
+<tr><td>body.body.expenseList.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>body.body.expenseList.commonOrderList</td><td>ARRAY</td><td>否</td><td>关联的订单信息集合</td><td></td></tr>
+<tr><td>body.body.expenseList.commonOrderList.comId</td><td>LONG</td><td>是</td><td>企业五一编号</td><td>4426</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.expenseSeqId</td><td>LONG</td><td>是</td><td>费用唯一编号</td><td>134133</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderSeqId</td><td>LONG</td><td>是</td><td>订单唯一编号</td><td>80291528587</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderId</td><td>STRING</td><td>是</td><td>订单业务编号</td><td>2-10174157920</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderType</td><td>STRING</td><td>是</td><td>* FLIGHT：机票<br>* HOTEL：酒店<br>* TRAIN：火车票<br>* CAR：用车<br>* MEAL：用餐</td><td>TRAIN</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderStatus</td><td>STRING</td><td>是</td><td>* N：预定<br>* C：改签<br>* T：退票</td><td>N</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.payType</td><td>LONG</td><td>是</td><td>* 1：企业支付<br>* 2：个人垫付</td><td>2</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderTime</td><td>STRING</td><td>否</td><td>yyyy-mm-dd hh:mm:ss 精确到秒</td><td>2023-10-30 00:19:16</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.amount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>366</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.ticketRates</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>366</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.serviceFee</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>0</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.refundChangeServiceFee</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>0</td></tr>
+<tr><td>body.body.expenseList.employeeMonthOrderFlag</td><td>STRING</td><td>否</td><td>* OFF：否<br>* ON： 是</td><td>OFF</td></tr>
+<tr><td>body.body.expenseList.employeeMonthOrderAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>0</td></tr>
+<tr><td>body.body.expenseList.taxPriceSeparationState</td><td>STRING</td><td>否</td><td>* 0：否<br>* 1：是</td><td>0</td></tr>
+<tr><td>body.body.expenseList.taxFreeAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.reimAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>366</td></tr>
+<tr><td>body.body.expenseList.updAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.taxAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.taxRate</td><td>STRING</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.taxName</td><td>STRING</td><td>否</td><td>税项名称</td><td>null</td></tr>
+<tr><td>body.body.expenseList.inputTransferAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.updRsn</td><td>STRING</td><td>否</td><td>费用修改原因</td><td>null</td></tr>
+<tr><td>body.body.expenseList.needBsCrdMemo</td><td>STRING</td><td>否</td><td>费用缺失商务卡备注</td><td></td></tr>
+<tr><td>body.body.expenseList.needBsCrdFlg</td><td>STRING</td><td>否</td><td>* 0：不缺失<br>* 1：缺失</td><td>0</td></tr>
+<tr><td>body.body.expenseList.vatInvoiceState</td><td>LONG</td><td>否</td><td>* 0：不含有专票<br>* 1：含有专票</td><td>0</td></tr>
+<tr><td>body.body.expenseList.awardList</td><td>ARRAY</td><td>否</td><td>奖励信息集合</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.comId</td><td>LONG</td><td>是</td><td>企业编号</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.expenseSeqId</td><td>LONG</td><td>是</td><td>费用唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.awardType</td><td>STRING</td><td>是</td><td>* 1：差额奖励 <br>* 2：折扣奖励</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.currencyCode</td><td>STRING</td><td>否</td><td>#### 国际通用三位字母币种编码<br><br>* CNY：人民币<br>* USD：美元</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.currencyRate</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.originalAwardAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.awardRatio</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.expenseAmountUnderLimit</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.awardAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.partReimInvoice</td><td>BOOLEAN</td><td>否</td><td>发票是否为部分报销</td><td>false</td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList</td><td>ARRAY</td><td>否</td><td>发票信息集合</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceCode</td><td>STRING</td><td>是</td><td>发票代码</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceNumber</td><td>STRING</td><td>是</td><td>发票号码</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDate</td><td>STRING</td><td></td><td>yyyy-mm-dd</td><td>2022-09-29</td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceStatus</td><td>STRING</td><td>是</td><td>* B： 未报销<br>* L： 报销中<br>* S：已报销</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceType</td><td>STRING</td><td>是</td><td>[发票类型](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=15380)</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceCheckStatus</td><td>STRING</td><td>是</td><td>* A：有效, <br>* B：作废</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoicePrintNumber</td><td>STRING</td><td>否</td><td>机打号码</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceCheckResult</td><td>STRING</td><td></td><td>* A：未查验 <br>* T：真票 <br>* F：假票 <br>* E：异常，特指网络通信异常</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.buyerName</td><td>STRING</td><td></td><td>购方名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.buyerCode</td><td>STRING</td><td></td><td>购方税号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.sellerName</td><td>STRING</td><td></td><td>销方名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.sellerCode</td><td>STRING</td><td></td><td>销方税号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficName</td><td>STRING</td><td></td><td>运输公司名称(航空公司名称、出租车单位名称、网约车公司名称）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficCode</td><td>STRING</td><td></td><td>号码(车次号、航班号、出租车车牌)</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficEcode</td><td>STRING</td><td></td><td>电子票号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficFrom</td><td>STRING</td><td></td><td>始发站</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficTo</td><td>STRING</td><td></td><td>终点站</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficAirFromFirst</td><td>STRING</td><td></td><td>始发站1（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficAirToFirst</td><td>STRING</td><td></td><td>终点站1（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficAirFromSecond</td><td>STRING</td><td></td><td>始发站2（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficAirToSecond</td><td>STRING</td><td></td><td>终点站2（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficStartDate</td><td>STRING</td><td></td><td>始发日期</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficStartTime</td><td>STRING</td><td></td><td>始发时间</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficStartWeek</td><td>STRING</td><td></td><td>始发星期（网约车使用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficEndDate</td><td>STRING</td><td></td><td>到达日期（出租车使用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficEndTime</td><td>STRING</td><td></td><td>到达时间（出租车使用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficWaitTime</td><td>STRING</td><td></td><td>等候时间（出租车使用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficSeatNumber</td><td>STRING</td><td></td><td>座位号（火车:二等座、经济舱;网约车:专车、快车）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficDistance</td><td>STRING</td><td></td><td>里程（出租车里程距离，单位公里）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficTaxCode</td><td>STRING</td><td></td><td>查询码（出租车卷式发票，对应查询码出租车电子发票，对应证号）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficOivDat</td><td>STRING</td><td></td><td>填开日期（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.trafficOivEna</td><td>STRING</td><td></td><td>填开单位（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.zCafAmt</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.isuExp</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.insuranceTaxRate</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList</td><td>ARRAY</td><td></td><td>发票明细</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.invoiceDetailSeqId</td><td>LONG</td><td></td><td>发票明细编号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.godSeq</td><td>INTEGER</td><td>是</td><td>序号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.taxName</td><td>STRING</td><td>是</td><td>税目名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.certificateSeqId</td><td>STRING</td><td></td><td>凭证编号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.goodsName</td><td>STRING</td><td>是</td><td>名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.godNum</td><td>BIGDECIMAL</td><td>是</td><td>数量</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.taxRate</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.ptxAmt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.ptnAmt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.taxAmt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.expenseList.expRelApplyList</td><td>ARRAY</td><td></td><td>目前系统中只支持关联单条申请费用</td><td></td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.applyBillId</td><td>LONG</td><td></td><td>关联申请单id</td><td>2025121500000001</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.expTypeCode</td><td>STRING</td><td></td><td>费用类型编码</td><td>A11</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.expTypeName</td><td>STRING</td><td></td><td>费用类型名称</td><td>测试费用</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.applyAmount</td><td>BIGDECIMAL</td><td></td><td>人民币金额</td><td>100.00</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.originalCurrencyApplyAmount</td><td>BIGDECIMAL</td><td></td><td>外币金额</td><td>100.00</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.currencyCode</td><td>STRING</td><td></td><td>币种代码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.rate</td><td>BIGDECIMAL</td><td></td><td>汇率</td><td>1.0000</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.totalReimbursedAmount</td><td>BIGDECIMAL</td><td></td><td>包含本次报销金额</td><td>80.00</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.usableAmount</td><td>BIGDECIMAL</td><td></td><td>可报销金额</td><td>20.00</td></tr>
+<tr><td>body.body.expenseList.expRelApplyList.reimAmount</td><td>BIGDECIMAL</td><td></td><td>本次报销金额</td><td>10.00</td></tr>
+<tr><td>body.body.expenseList.shareRule</td><td>STRING</td><td>否</td><td>分摊规则 <br>* 0：税金需要分摊<br>* 1：税金不需要分摊</td><td>0</td></tr>
+<tr><td>body.body.expenseList.expenseSpread</td><td>OBJECT</td><td></td><td>分摊信息</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.seqId</td><td>LONG</td><td>是</td><td>分摊唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadBusinessType</td><td>STRING</td><td>是</td><td>EXPENSE：费用/补助</td><td>EXPENSE</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadBusinessId</td><td>STRING</td><td>是</td><td>分摊业务唯一编号</td><td>10000000001</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.totalAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.originalTotalAmount</td><td>STRING</td><td>是</td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.currencyCode</td><td>STRING</td><td>是</td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList</td><td>ARRAY</td><td>是</td><td>分摊条目</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.id</td><td>LONG</td><td>是</td><td>分摊条目的唯一ID</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.originalSpreadAmount</td><td>STRING</td><td>是</td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.currencyCode</td><td>STRING</td><td>是</td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.priceTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>0.09</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.priceWithoutTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>54.01</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.departmentCode</td><td>STRING</td><td></td><td>部门编号</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.departmentName</td><td>STRING</td><td></td><td>部门名称</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.empName</td><td>STRING</td><td></td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.empNumber</td><td>STRING</td><td></td><td>员工工号</td><td>00000001</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.empSeqId</td><td>LONG</td><td></td><td>员工唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.projectCode</td><td>STRING</td><td></td><td>项目编码</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.projectName</td><td>STRING</td><td></td><td>项目名称</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.proportion</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后4位</td><td>33.3333</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.overBudgetFlag</td><td>STRING</td><td></td><td>* 0：不超<br>* 1：超</td><td>0</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList</td><td>ARRAY</td><td>是</td><td>自定义分摊的字段取值集合，与分摊方方式的分摊字段配置一一对应</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.spreadItemId</td><td>LONG</td><td>是</td><td>所属分摊条目的唯一ID</td><td>10000</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldName</td><td>STRING</td><td>是</td><td>该字段值为系统设置 -&gt; 分摊方式页面中具体的分摊字段的字段名称</td><td>部门</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldType</td><td>STRING</td><td>是</td><td>* system：系统字段<br>* custom：自定义字段</td><td>system</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldBizType</td><td>STRING</td><td>是</td><td>* 员工：EMPLOYEE<br>* 客户：CUSTOMER<br>* 部门：DEPARTMENT<br>* 项目：PROJECT<br>* 成本中心：COSTCENTER<br>* 业务分组：BUSINESSGROUP<br>* 自定义档案：CUSTOMFILE</td><td>DEPARTMENT</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSeqId</td><td>LONG</td><td>是</td><td>字段取值自增id</td><td>10001</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueCode</td><td>STRING</td><td>是</td><td>字段取值编号</td><td>0000</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueName</td><td>STRING</td><td>是</td><td>字段取值名称</td><td>部门1</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSourceCode</td><td>STRING</td><td></td><td>字段取值来源, 目前只有自定义档案的编码</td><td></td></tr>
+<tr><td>body.body.expenseList.bgtOutMemo</td><td>STRING</td><td>否</td><td>预算超支原因</td><td>null</td></tr>
+<tr><td>body.body.expenseList.bgtOverFlag</td><td>STRING</td><td>否</td><td>* 0：不超标<br>* 1：超标</td><td>null</td></tr>
+<tr><td>body.body.expenseList.departure</td><td>STRING</td><td>否</td><td>出发地编码</td><td>73</td></tr>
+<tr><td>body.body.expenseList.destination</td><td>LONG</td><td>否</td><td>目的地编码</td><td>1</td></tr>
+<tr><td>body.body.expenseList.dstntIndex</td><td>INTEGER</td><td>否</td><td>所属行程序号</td><td>0</td></tr>
+<tr><td>body.body.expenseList.bgnTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698624000000</td></tr>
+<tr><td>body.body.expenseList.endTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>1698624000000</td></tr>
+<tr><td>body.body.expenseList.checkInDate</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>null</td></tr>
+<tr><td>body.body.expenseList.checkOutDate</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>null</td></tr>
+<tr><td>body.body.expenseList.payCity</td><td>STRING</td><td>否</td><td>消费城市唯一编码</td><td>null</td></tr>
+<tr><td>body.body.expenseList.discount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.aircraftCabin</td><td>STRING</td><td>否</td><td>* 1：头等舱<br>* 2：公务舱<br>* 3：经济舱<br>* 4：超级经济舱</td><td>null</td></tr>
+<tr><td>body.body.expenseList.airlineNo</td><td>STRING</td><td>否</td><td>航班号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.airlineCom</td><td>STRING</td><td>否</td><td>航空公司</td><td>null</td></tr>
+<tr><td>body.body.expenseList.flightETicketNo</td><td>STRING</td><td>否</td><td>机票电子客票号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.flightFullPrice</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.civilAviationFund</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.expenseList.trainNo</td><td>STRING</td><td>否</td><td>列车号</td><td>33</td></tr>
+<tr><td>body.body.expenseList.trainETicketNo</td><td>STRING</td><td>否</td><td>火车票票号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.trainCabin</td><td>STRING</td><td>否</td><td>* 1：商务座<br>* 2：特等座<br>* 3：一等座<br>* 4：二等座<br>* 5：高级软卧<br>* 6：软卧<br>* 7：硬卧<br>* 8：软座<br>* 9：硬座<br>* 10：站票<br>* 11：动卧<br>* 12：一等软座<br>* 13：二等软座<br>* 14：一人软包<br>* 15：高级动卧</td><td>12</td></tr>
+<tr><td>body.body.expenseList.shipCabin</td><td>STRING</td><td>否</td><td>* 1：一等舱<br>* 2：二等舱<br>* 3：三等舱</td><td>null</td></tr>
+<tr><td>body.body.expenseList.partiNbr</td><td>INTEGER</td><td>否</td><td>参与人数</td><td>null</td></tr>
+<tr><td>body.body.expenseList.merchantName</td><td>STRING</td><td>否</td><td>商户名称</td><td>null</td></tr>
+<tr><td>body.body.expenseList.hotelStar</td><td>STRING</td><td>否</td><td>* 1：五星<br>* 2：四星<br>* 3：三星<br>* 4： 其他</td><td>null</td></tr>
+<tr><td>body.body.expenseList.wrTim</td><td>DATE</td><td>否</td><td>精确到微秒</td><td>null</td></tr>
+<tr><td>body.body.expenseList.plcIlgMemo</td><td>STRING</td><td>否</td><td>政策违规备注</td><td></td></tr>
+<tr><td>body.body.expenseList.plcIlgFlg</td><td>STRING</td><td>否</td><td>* 0：不违规<br>* 1：违规</td><td>0</td></tr>
+<tr><td>body.body.expenseList.bgtErrMsg</td><td>STRING</td><td>否</td><td>政策违规提示信息</td><td></td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList</td><td>ARRAY</td><td></td><td>请参考接口描述中自定义字段说明和返回格式</td><td></td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.fieldNumber</td><td>STRING</td><td></td><td>字段编码</td><td>null</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>单据部门</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.sourceValue</td><td>STRING</td><td>是</td><td>根据自定义字段说明解析</td><td>[&quot;00000005&quot;]</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.printEnable</td><td>STRING</td><td>是</td><td>* 0：不可打印<br>* 1：可打印</td><td>1</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.description</td><td>STRING</td><td>是</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.options</td><td>ARRAY</td><td></td><td>根据自定义字段说明解析</td><td>[aaa,bbb]</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.formColumnList</td><td>ARRAY</td><td></td><td>表格表头</td><td>null</td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.formColumnList.name</td><td>STRING</td><td>是</td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.formColumnList.code</td><td>STRING</td><td>是</td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.formColumnList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.expenseList.expCustomFieldList.formColumnList.fieldCode</td><td>STRING</td><td>是</td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.subsidyList</td><td>ARRAY</td><td>否</td><td>补助集合</td><td></td></tr>
+<tr><td>body.body.subsidyList.billId</td><td>LONG</td><td>是</td><td>单据id</td><td></td></tr>
+<tr><td>body.body.subsidyList.ssdBodySeqId</td><td>LONG</td><td>是</td><td>补贴实例唯一</td><td></td></tr>
+<tr><td>body.body.subsidyList.ssdSeqId</td><td>LONG</td><td>是</td><td>补贴项唯一</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyCode</td><td>STRING</td><td>是</td><td>补贴编码</td><td></td></tr>
+<tr><td>body.body.subsidyList.ssdTypeName</td><td>STRING</td><td>是</td><td>补贴类型名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.ssdTypeCode</td><td>STRING</td><td>是</td><td>补贴类型编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.dstntOrder</td><td>INTEGER</td><td></td><td>补助所属行程序号</td><td></td></tr>
+<tr><td>body.body.subsidyList.amount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.taxPriceSeparationState</td><td>STRING</td><td></td><td>* 0：否<br>* 1：是</td><td>1</td></tr>
+<tr><td>body.body.subsidyList.taxFreeAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>1.11</td></tr>
+<tr><td>body.body.subsidyList.taxAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>5.55</td></tr>
+<tr><td>body.body.subsidyList.taxRate</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>0.2</td></tr>
+<tr><td>body.body.subsidyList.taxName</td><td>STRING</td><td></td><td>费用税项名称</td><td>测试税项</td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList</td><td>ARRAY</td><td>否</td><td>发票信息集合</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceCode</td><td>STRING</td><td>是</td><td>发票代码</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceNumber</td><td>STRING</td><td>是</td><td>发票号码</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDate</td><td>STRING</td><td></td><td>yyyy-mm-dd</td><td>2022-09-29</td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceStatus</td><td>STRING</td><td>是</td><td>* B： 未报销<br>* L： 报销中<br>* S：已报销</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceType</td><td>STRING</td><td>是</td><td>[发票类型](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=15380)</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceCheckStatus</td><td>STRING</td><td>是</td><td>* A：有效, <br>* B：作废</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoicePrintNumber</td><td>STRING</td><td>否</td><td>机打号码</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceAmount</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceCheckResult</td><td>STRING</td><td></td><td>* A：未查验 <br>* T：真票 <br>* F：假票 <br>* E：异常，特指网络通信异常</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.buyerName</td><td>STRING</td><td></td><td>购方名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.buyerCode</td><td>STRING</td><td></td><td>购方税号</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.sellerName</td><td>STRING</td><td></td><td>销方名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.sellerCode</td><td>STRING</td><td></td><td>销方税号</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficName</td><td>STRING</td><td></td><td>运输公司名称(航空公司名称、出租车单位名称、网约车公司名称）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficCode</td><td>STRING</td><td></td><td>号码(车次号、航班号、出租车车牌)</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficEcode</td><td>STRING</td><td></td><td>电子票号</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficFrom</td><td>STRING</td><td></td><td>始发站</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficTo</td><td>STRING</td><td></td><td>终点站</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficAirFromFirst</td><td>STRING</td><td></td><td>始发站1（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficAirToFirst</td><td>STRING</td><td></td><td>终点站1（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficAirFromSecond</td><td>STRING</td><td></td><td>始发站2（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficAirToSecond</td><td>STRING</td><td></td><td>终点站2（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficStartDate</td><td>STRING</td><td></td><td>始发日期</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficStartTime</td><td>STRING</td><td></td><td>始发时间</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficStartWeek</td><td>STRING</td><td></td><td>始发星期（网约车使用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficEndDate</td><td>STRING</td><td></td><td>到达日期（出租车使用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficEndTime</td><td>STRING</td><td></td><td>到达时间（出租车使用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficWaitTime</td><td>STRING</td><td></td><td>等候时间（出租车使用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficSeatNumber</td><td>STRING</td><td></td><td>座位号（火车:二等座、经济舱;网约车:专车、快车）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficDistance</td><td>STRING</td><td></td><td>里程（出租车里程距离，单位公里）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficTaxCode</td><td>STRING</td><td></td><td>查询码（出租车卷式发票，对应查询码出租车电子发票，对应证号）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficOivDat</td><td>STRING</td><td></td><td>填开日期（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.trafficOivEna</td><td>STRING</td><td></td><td>填开单位（飞机行程单专用）</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.zCafAmt</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.isuExp</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.insuranceTaxRate</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList</td><td>ARRAY</td><td></td><td>发票明细</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.invoiceDetailSeqId</td><td>LONG</td><td></td><td>发票明细编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.godSeq</td><td>INTEGER</td><td>是</td><td>序号</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.taxName</td><td>STRING</td><td>是</td><td>税目名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.certificateSeqId</td><td>STRING</td><td></td><td>凭证编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.goodsName</td><td>STRING</td><td>是</td><td>名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.godNum</td><td>BIGDECIMAL</td><td>是</td><td>数量</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.taxRate</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.ptxAmt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.ptnAmt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.invoiceInfoList.invoiceDetailList.taxAmt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList</td><td>ARRAY</td><td></td><td>请参考接口描述中自定义字段说明和返回格式</td><td></td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.fieldNumber</td><td>STRING</td><td></td><td>字段编码</td><td>null</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>单据部门</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.sourceValue</td><td>STRING</td><td>是</td><td>根据自定义字段说明解析</td><td>[&quot;00000005&quot;]</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.printEnable</td><td>STRING</td><td>是</td><td>* 0：不可打印<br>* 1：可打印</td><td>1</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.description</td><td>STRING</td><td>是</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.options</td><td>ARRAY</td><td></td><td>根据自定义字段说明解析</td><td>[aaa,bbb]</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.formColumnList</td><td>ARRAY</td><td></td><td>表格表头</td><td>null</td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.formColumnList.name</td><td>STRING</td><td>是</td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.formColumnList.code</td><td>STRING</td><td>是</td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.formColumnList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.subsidyList.expCustomFieldList.formColumnList.fieldCode</td><td>STRING</td><td>是</td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList</td><td>ARRAY</td><td></td><td>补贴明细</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.subsidyTypeId</td><td>STRING</td><td>是</td><td>补助类型编码</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.subsidyTypeName</td><td>STRING</td><td>是</td><td>补助类型名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.empSeqId</td><td>STRING</td><td>是</td><td>员工唯一编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.empName</td><td>STRING</td><td>是</td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.empNumber</td><td>STRING</td><td></td><td>员工工号</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.wrTime</td><td>DATE</td><td></td><td>精确到微秒</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.amount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.subsidyCalculateType</td><td>STRING</td><td>是</td><td>* 1：次 <br>* 2：半天 <br>* 3：全天 <br>* R： 时长 <br>* M：时刻 <br>* C：自定义</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.mileage</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.dstntOrder</td><td>INTEGER</td><td></td><td>所属第几行程</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidyDetailList.dateType</td><td>STRING</td><td></td><td>* WORKING_DAY：普通工作日 <br>* HOLIDAY：国家放假休息日<br>* WEEKEND：周末休息日（除国家放假休息日)</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread</td><td>OBJECT</td><td></td><td>补贴分摊</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.seqId</td><td>LONG</td><td>是</td><td>分摊唯一编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadBusinessType</td><td>STRING</td><td>是</td><td>EXPENSE：费用/补助</td><td>EXPENSE</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadBusinessId</td><td>STRING</td><td>是</td><td>分摊业务唯一编号</td><td>10000000001</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.totalAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.originalTotalAmount</td><td>STRING</td><td>是</td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.currencyCode</td><td>STRING</td><td>是</td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList</td><td>ARRAY</td><td>是</td><td>分摊条目</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.id</td><td>LONG</td><td>是</td><td>分摊条目的唯一ID</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.originalSpreadAmount</td><td>STRING</td><td>是</td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.currencyCode</td><td>STRING</td><td>是</td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.priceTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>0.09</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.priceWithoutTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>54.01</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.departmentCode</td><td>STRING</td><td></td><td>部门编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.departmentName</td><td>STRING</td><td></td><td>部门名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.empName</td><td>STRING</td><td></td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.empNumber</td><td>STRING</td><td></td><td>员工工号</td><td>00000001</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.empSeqId</td><td>LONG</td><td></td><td>员工唯一编号</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.projectCode</td><td>STRING</td><td></td><td>项目编码</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.projectName</td><td>STRING</td><td></td><td>项目名称</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.proportion</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后4位</td><td>33.3333</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.overBudgetFlag</td><td>STRING</td><td></td><td>* 0：不超<br>* 1：超</td><td>0</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList</td><td>ARRAY</td><td>是</td><td>自定义分摊的字段取值集合，与分摊方方式的分摊字段配置一一对应</td><td></td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.spreadItemId</td><td>LONG</td><td>是</td><td>所属分摊条目的唯一ID</td><td>10000</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldName</td><td>STRING</td><td>是</td><td>该字段值为系统设置 -&gt; 分摊方式页面中具体的分摊字段的字段名称</td><td>部门</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldType</td><td>STRING</td><td>是</td><td>* system：系统字段<br>* custom：自定义字段</td><td>system</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldBizType</td><td>STRING</td><td>是</td><td>* 员工：EMPLOYEE<br>* 客户：CUSTOMER<br>* 部门：DEPARTMENT<br>* 项目：PROJECT<br>* 成本中心：COSTCENTER<br>* 业务分组：BUSINESSGROUP<br>* 自定义档案：CUSTOMFILE</td><td>DEPARTMENT</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSeqId</td><td>STRING</td><td>是</td><td>字段取值自增id</td><td>10001</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueCode</td><td>STRING</td><td>是</td><td>字段取值编号</td><td>0000</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueName</td><td>STRING</td><td>是</td><td>字段取值名称</td><td>部门1</td></tr>
+<tr><td>body.body.subsidyList.subsidySpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSourceCode</td><td>STRING</td><td></td><td>字段取值来源, 目前只有自定义档案的编码</td><td></td></tr>
+<tr><td>body.body.businessTripInfo</td><td>OBJECT</td><td>否</td><td>行程信息</td><td></td></tr>
+<tr><td>body.body.businessTripInfo.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.businessTripInfo.totalTripDays</td><td>BIGDECIMAL</td><td>否</td><td>精确到小数点后2位</td><td>null</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList</td><td>ARRAY</td><td>否</td><td>行程明细信息集合</td><td></td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.depart</td><td>STRING</td><td>是</td><td>出发地编码</td><td>1</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.departName</td><td>STRING</td><td>否</td><td>出发地名称</td><td>北京市</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.departDetail</td><td>STRING</td><td>否</td><td>出发地详址</td><td>null</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.destination</td><td>LONG</td><td>是</td><td>目的地编码</td><td>2</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.destinationName</td><td>STRING</td><td>否</td><td>目的地名称</td><td>天津市</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.destinationDetail</td><td>STRING</td><td>否</td><td>目的地详址</td><td>null</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.departDat</td><td>DATE</td><td>是</td><td>精确到微秒</td><td>1698595200000</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.arriveDat</td><td>DATE</td><td>是</td><td>精确到微秒</td><td>1698764400000</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.cityLevel</td><td>STRING</td><td>否</td><td>城市级别</td><td>{&quot;d&quot;:2}</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.roundTrip</td><td>STRING</td><td>否</td><td>* N：否<br>* Y： 是</td><td>N</td></tr>
+<tr><td>body.body.businessTripInfo.businessTripDetailList.travelMode</td><td>STRING</td><td>否</td><td>* 火车：Train<br>* 飞机：AirPlane<br>* 自驾：SelfDrive<br>* 其他：Other</td><td>Other</td></tr>
+<tr><td>body.body.peers</td><td>ARRAY</td><td></td><td>同行人信息集合</td><td></td></tr>
+<tr><td>body.body.peers.empNumber</td><td>STRING</td><td></td><td>同行人员工花名册</td><td>U00001</td></tr>
+<tr><td>body.body.peers.empName</td><td>STRING</td><td></td><td>同行人姓名</td><td>张三</td></tr>
+<tr><td>body.body.billLendPayRelList</td><td>ARRAY</td><td>否</td><td>借款核销信息集合</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.seqId</td><td>LONG</td><td>是</td><td>借款核销唯一编号</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.comId</td><td>LONG</td><td>是</td><td>企业id</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.lendObject</td><td>STRING</td><td>是</td><td>* SUPPLIER：供应商<br>* EMPLOYEE：员工</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.billComName</td><td>STRING</td><td>是</td><td>单据公司名称</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.applyTim</td><td>DATE</td><td></td><td>精确到微秒</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.empSeqId</td><td>LONG</td><td>是</td><td>核销操作人</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.lendTypeName</td><td>STRING</td><td>是</td><td>借款类型名称</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.lendBillId</td><td>LONG</td><td>是</td><td>借款单号</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.eventName</td><td>STRING</td><td>是</td><td>借款单单据名称</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.aplName</td><td>STRING</td><td>是</td><td>借款单申请人姓名</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.payBillId</td><td>LONG</td><td>是</td><td>报销单号</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.payAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.expTotalCnt</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.billLendPayRelList.budgetOpen</td><td>STRING</td><td></td><td>* 0：关闭 <br>* 1：开启</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList</td><td>ARRAY</td><td>否</td><td>多人收款信息</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.seqId</td><td>LONG</td><td>是</td><td>自增id</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.comId</td><td>LONG</td><td>是</td><td>公司id</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.billId</td><td>LONG</td><td>是</td><td>单据id</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.empSeqId</td><td>LONG</td><td>是</td><td>员工唯一id</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.empName</td><td>STRING</td><td>是</td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.depoName</td><td>STRING</td><td>是</td><td>开户名</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.depoBank</td><td>STRING</td><td>是</td><td>开户行名称</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.depoBranBank</td><td>STRING</td><td>是</td><td>开户支行名称</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.payAmount</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后2位</td><td></td></tr>
+<tr><td>body.body.multiPersonCollectionList.payCurrencyCode</td><td>STRING</td><td>是</td><td>付款金额币种</td><td></td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{  
+  &quot;body&quot;: {  
+    &quot;comId&quot;: 3722,  
+    &quot;billId&quot;: 2023122702422815,  
+    &quot;billSts&quot;: &quot;0&quot;,  
+    &quot;useType&quot;: &quot;2&quot;,  
+    &quot;eventId&quot;: &quot;02230705110747000010&quot;,  
+    &quot;eventType&quot;: &quot;TRAVEL_REIM&quot;,  
+    &quot;eventName&quot;: &quot;差旅报销&quot;,  
+    &quot;applyTim&quot;: 1703659821000,  
+    &quot;firstApplyTim&quot;: null,  
+    &quot;finishTim&quot;: null,  
+    &quot;billDepCode&quot;: &quot;00000003&quot;,  
+    &quot;billDepName&quot;: &quot;极光实验室&quot;,  
+    &quot;billComLpcCode&quot;: &quot;0000&quot;,  
+    &quot;billComLpcName&quot;: &quot;混沌实验室&quot;,  
+    &quot;billProjectCode&quot;: null,  
+    &quot;billProjectName&quot;: null,  
+    &quot;billCenName&quot;: null,  
+    &quot;billCenCode&quot;: null,  
+    &quot;projectTypeCode&quot;: null,  
+    &quot;projectTypeName&quot;: null,  
+    &quot;billBDCode&quot;: null,  
+    &quot;billBDName&quot;: null,  
+    &quot;aplSeqId&quot;: 262025,  
+    &quot;aplName&quot;: null,  
+    &quot;aplEmpNumber&quot;: &quot;01019710&quot;,  
+    &quot;aplDepCode&quot;: &quot;00000003&quot;,  
+    &quot;aplDepName&quot;: &quot;极光实验室&quot;,  
+    &quot;wrSeqId&quot;: 262025,  
+    &quot;wrEmpNumber&quot;: &quot;01019710&quot;,  
+    &quot;wrName&quot;: &quot;徐大旺&quot;,  
+    &quot;isAgent&quot;: false,  
+    &quot;printStatus&quot;: &quot;1&quot;,  
+    &quot;printedState&quot;: &quot;0&quot;,  
+    &quot;expTotalCnt&quot;: 105,  
+    &quot;subsidyTotalAmount&quot;: 105,  
+    &quot;billPayStatus&quot;: &quot;0&quot;,  
+	&quot;payFinishTim&quot;: &quot;2024-12-12 16:30:01&quot;,
+    &quot;billRemark&quot;: null,  
+    &quot;billCustomFieldList&quot;: [  
+      {  
+        &quot;fieldNumber&quot;: null,  
+        &quot;fieldName&quot;: &quot;所属部门&quot;,  
+        &quot;sourceValue&quot;: &quot;[\&quot;00000003\&quot;]&quot;,  
+        &quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;00000003\&quot;,\&quot;departmentName\&quot;:\&quot;混沌实验室/极光实验室\&quot;}]&quot;,  
+        &quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,  
+        &quot;required&quot;: true,  
+        &quot;printEnable&quot;: &quot;1&quot;,  
+        &quot;description&quot;: null,  
+        &quot;multiple&quot;: false,  
+        &quot;options&quot;: [],  
+        &quot;formColumnList&quot;: null  
+      },  
+      {  
+        &quot;fieldNumber&quot;: null,  
+        &quot;fieldName&quot;: &quot;备注&quot;,  
+        &quot;sourceValue&quot;: null,  
+        &quot;showValue&quot;: &quot;test&quot;,  
+        &quot;type&quot;: &quot;MULTI_INPUT&quot;,  
+        &quot;required&quot;: false,  
+        &quot;printEnable&quot;: &quot;1&quot;,  
+        &quot;description&quot;: null,  
+        &quot;multiple&quot;: false,  
+        &quot;options&quot;: [],  
+        &quot;formColumnList&quot;: null  
+      },  
+      {  
+        &quot;fieldNumber&quot;: null,  
+        &quot;fieldName&quot;: &quot;附件&quot;,  
+        &quot;sourceValue&quot;: null,  
+        &quot;showValue&quot;: null,  
+        &quot;type&quot;: &quot;ACCESSORIES&quot;,  
+        &quot;required&quot;: false,  
+        &quot;printEnable&quot;: &quot;1&quot;,  
+        &quot;description&quot;: null,  
+        &quot;multiple&quot;: false,  
+        &quot;options&quot;: [],  
+        &quot;formColumnList&quot;: null  
+      },  
+      {  
+        &quot;fieldNumber&quot;: &quot;&quot;,  
+        &quot;fieldName&quot;: &quot;收款账户&quot;,  
+        &quot;sourceValue&quot;: null,  
+        &quot;showValue&quot;: &quot;{\&quot;accountName\&quot;:\&quot;下沙支行\&quot;,\&quot;accountNumber\&quot;:\&quot;123456789\&quot;,\&quot;depoAddress\&quot;:\&quot;重庆市\&quot;,\&quot;depoBankName\&quot;:\&quot;招商银行\&quot;,\&quot;depoBranchBankName\&quot;:\&quot;123456\&quot;}&quot;,  
+        &quot;type&quot;: &quot;ADV_RECEIVE_ACCOUNT&quot;,  
+        &quot;required&quot;: true,  
+        &quot;printEnable&quot;: &quot;1&quot;,  
+        &quot;description&quot;: null,  
+        &quot;multiple&quot;: false,  
+        &quot;options&quot;: [],  
+        &quot;formColumnList&quot;: null  
+      },  
+      {  
+        &quot;fieldNumber&quot;: null,  
+        &quot;fieldName&quot;: &quot;入住人&quot;,  
+        &quot;sourceValue&quot;: null,  
+        &quot;showValue&quot;: null,  
+        &quot;type&quot;: &quot;ADV_STAFF&quot;,  
+        &quot;required&quot;: false,  
+        &quot;printEnable&quot;: &quot;1&quot;,  
+        &quot;description&quot;: null,  
+        &quot;multiple&quot;: false,  
+        &quot;options&quot;: [],  
+        &quot;formColumnList&quot;: null  
+      }  
+    ],  
+    &quot;relatedBillList&quot;: [  
+      {  
+        &quot;comId&quot;: 3722,  
+        &quot;billId&quot;: 2023122702422815,  
+        &quot;empSeqId&quot;: 262025,  
+        &quot;relBillId&quot;: 2023112802255007,  
+        &quot;relType&quot;: &quot;REL_APPLY_BILL&quot;,  
+        &quot;usedState&quot;: &quot;0&quot;  
+      }  
+    ],  
+    &quot;expenseList&quot;: [  
+      {  
+        &quot;expenseSeqId&quot;: 268731,  
+        &quot;comId&quot;: 3722,  
+        &quot;billId&quot;: 2023122702422815,  
+        &quot;expTypeCode&quot;: &quot;02&quot;,  
+        &quot;expTypeName&quot;: &quot;火车费&quot;,  
+        &quot;expAttribute&quot;: &quot;TRAIN&quot;,  
+        &quot;remark&quot;: &quot;费用test&quot;,  
+        &quot;commonOrderList&quot;: [  
+          {  
+            &quot;comId&quot;: 3722,  
+            &quot;billId&quot;: 2023122702422815,  
+            &quot;expenseSeqId&quot;: 268731,  
+            &quot;orderSeqId&quot;: 80291569302,  
+            &quot;orderId&quot;: &quot;28350678770-U0000&quot;,  
+            &quot;orderType&quot;: &quot;FLIGHT&quot;,  
+            &quot;orderStatus&quot;: &quot;N&quot;,  
+            &quot;payType&quot;: &quot;1&quot;,  
+            &quot;orderTime&quot;: &quot;2023-11-02 08:14:27&quot;,  
+            &quot;amount&quot;: 2607,  
+            &quot;ticketRates&quot;: 2599,  
+            &quot;serviceFee&quot;: 8,  
+            &quot;refundChangeServiceFee&quot;: 0  
+          },  
+          {  
+            &quot;comId&quot;: 3722,  
+            &quot;billId&quot;: 2023122702422815,  
+            &quot;expenseSeqId&quot;: 268731,  
+            &quot;orderSeqId&quot;: 80291569305,  
+            &quot;orderId&quot;: &quot;28350678770-U0000-1&quot;,  
+            &quot;orderType&quot;: &quot;FLIGHT&quot;,  
+            &quot;orderStatus&quot;: &quot;N&quot;,  
+            &quot;payType&quot;: &quot;1&quot;,  
+            &quot;orderTime&quot;: &quot;2023-12-01 08:14:27&quot;,  
+            &quot;amount&quot;: 2107,  
+            &quot;ticketRates&quot;: 2099,  
+            &quot;serviceFee&quot;: 8,  
+            &quot;refundChangeServiceFee&quot;: 0  
+          },  
+          {  
+            &quot;comId&quot;: 3722,  
+            &quot;billId&quot;: 2023122702422815,  
+            &quot;expenseSeqId&quot;: 268731,  
+            &quot;orderSeqId&quot;: 80291569310,  
+            &quot;orderId&quot;: &quot;22632996340-U0000-3&quot;,  
+            &quot;orderType&quot;: &quot;HOTEL&quot;,  
+            &quot;orderStatus&quot;: &quot;N&quot;,  
+            &quot;payType&quot;: &quot;1&quot;,  
+            &quot;orderTime&quot;: &quot;2023-12-01 09:55:24&quot;,  
+            &quot;amount&quot;: 892,  
+            &quot;ticketRates&quot;: 892,  
+            &quot;serviceFee&quot;: 0,  
+            &quot;refundChangeServiceFee&quot;: 0  
+          }  
+        ],  
+        &quot;employeeMonthOrderFlag&quot;: &quot;ON&quot;,  
+        &quot;employeeMonthOrderAmount&quot;: 5590,  
+        &quot;taxPriceSeparationState&quot;: &quot;0&quot;,  
+        &quot;taxFreeAmount&quot;: null,  
+        &quot;reimAmount&quot;: 0,  
+        &quot;updAmount&quot;: null,  
+        &quot;taxAmount&quot;: null,  
+        &quot;taxRate&quot;: null,  
+        &quot;taxName&quot;: null,  
+        &quot;inputTransferAmount&quot;: null,  
+        &quot;updRsn&quot;: null,  
+        &quot;needBsCrdMemo&quot;: &quot;&quot;,  
+        &quot;needBsCrdFlg&quot;: &quot;0&quot;,  
+        &quot;vatInvoiceState&quot;: &quot;0&quot;,  
+         &quot;awardList&quot;: [  
+          {  
+            &quot;comId&quot;: 3722,  
+            &quot;billId&quot;: 2023122702422815,  
+            &quot;expenseSeqId&quot;: 268731,  
+            &quot;awardType&quot;: &quot;1&quot;,  
+            &quot;currencyCode&quot;: &quot;CNY&quot;,  
+            &quot;currencyRate&quot;: 1,  
+            &quot;originalAwardAmount&quot;: 18,  
+            &quot;awardRatio&quot;: 20,  
+            &quot;expenseAmountUnderLimit&quot;: 0,  
+            &quot;awardAmount&quot;: 18  
+          }  
+        ],  
+        &quot;partReimInvoice&quot;: false,  
+        &quot;invoiceInfoList&quot;: [  
+          {  
+            &quot;invoiceCode&quot;: &quot;051002100511&quot;,  
+            &quot;invoiceDate&quot;: &quot;2022-09-29&quot;,  
+            &quot;buyerCode&quot;: &quot;91330108682946791K&quot;,  
+            &quot;buyerName&quot;: &quot;招银网络科技（杭州）有限公司&quot;,  
+            &quot;invoiceCheckStatus&quot;: &quot;A&quot;,  
+            &quot;invoiceStatus&quot;: &quot;B&quot;,  
+            &quot;invoiceNumber&quot;: &quot;27918072&quot;,  
+            &quot;invoicePrintNumber&quot;: &quot;&quot;,  
+            &quot;invoiceType&quot;: &quot;2&quot;,  
+            &quot;sellerCode&quot;: &quot;91510107MA65T8E44U&quot;,  
+            &quot;sellerName&quot;: &quot;成都鞍马智行科技有限公司&quot;,  
+            &quot;invoiceAmount&quot;: 22.08,  
+            &quot;invoiceCheckResult&quot;: &quot;T&quot;,  
+            &quot;trafficName&quot;: null,  
+            &quot;trafficCode&quot;: null,  
+            &quot;trafficEcode&quot;: null,  
+            &quot;trafficFrom&quot;:null,  
+            &quot;trafficTo&quot;: null,  
+            &quot;trafficAirFromFirst&quot;: null,  
+            &quot;trafficAirToFirst&quot;: null,  
+            &quot;trafficAirFromSecond&quot;: null,  
+            &quot;trafficAirToSecond&quot;: null,  
+            &quot;trafficStartDate&quot;: null,  
+            &quot;trafficStartTime&quot;: null,  
+            &quot;trafficStartWeek&quot;: null,  
+            &quot;trafficEndDate&quot;: null,  
+            &quot;trafficEndTime&quot;: null,  
+            &quot;trafficWaitTime&quot;: null,  
+            &quot;trafficSeatNumber&quot;: null,  
+            &quot;seatTypeName&quot;: null,  
+            &quot;trafficAmount&quot;: null,  
+            &quot;trafficDistance&quot;: null,  
+            &quot;trafficTaxCode&quot;: null,  
+            &quot;trafficOivDat&quot;: null,  
+            &quot;trafficOivEna&quot;: null,  
+            &quot;isuExp&quot;: null,  
+            &quot;tatAmt&quot;: null,  
+            &quot;insuranceTaxRate&quot;: null,  
+            &quot;invoiceDetailList&quot;: [  
+              {  
+                &quot;invoiceDetailSeqId&quot;: 4402,  
+                &quot;godSeq&quot;: 0,  
+                &quot;taxName&quot;: &quot;&quot;,  
+                &quot;certificateSeqId&quot;: &quot;2-051002100511-27918072&quot;,  
+                &quot;goodsName&quot;: &quot;*运输服务*客运服务费&quot;,  
+                &quot;godNum&quot;: 1,  
+                &quot;taxRate&quot;: 0,  
+                &quot;ptxAmt&quot;: 22.08,  
+                &quot;ptnAmt&quot;: 22.08,  
+                &quot;taxAmt&quot;: 0  
+              }  
+            ]  
+          },  
+	  {  
+            &quot;invoiceCode&quot;: &quot;null,  
+            &quot;invoiceDate&quot;: &quot;2024-11-24&quot;,  
+            &quot;buyerCode&quot;: &quot;91330108682946791K&quot;,  
+            &quot;buyerName&quot;: &quot;招银网络科技（杭州）有限公司&quot;,  
+            &quot;invoiceCheckStatus&quot;: &quot;A&quot;,  
+            &quot;invoiceStatus&quot;: &quot;B&quot;,  
+            &quot;invoiceNumber&quot;: &quot;24119121158000001220&quot;,  
+            &quot;invoicePrintNumber&quot;: &quot;&quot;,  
+            &quot;invoiceType&quot;: &quot;51&quot;,  
+            &quot;sellerCode&quot;: null,  
+            &quot;sellerName&quot;: null,  
+            &quot;invoiceAmount&quot;: null,  
+            &quot;invoiceCheckResult&quot;: &quot;T&quot;,  
+            &quot;trafficName&quot;: null,  
+            &quot;trafficCode&quot;: null,  
+            &quot;trafficEcode&quot;: “2115873086112590634472024”,  
+            &quot;trafficFrom&quot;: &quot;大兴机场&quot;,  
+            &quot;trafficTo&quot;: &quot;北京西&quot;,  
+            &quot;trafficAirFromFirst&quot;: null,  
+            &quot;trafficAirToFirst&quot;: null,  
+            &quot;trafficAirFromSecond&quot;: null,  
+            &quot;trafficAirToSecond&quot;: null,  
+            &quot;trafficStartDate&quot;: &quot;2024-11-24&quot;,  
+            &quot;trafficStartTime&quot;: &quot;11:08:00&quot;,  
+            &quot;trafficStartWeek&quot;: null,  
+            &quot;trafficEndDate&quot;: null,  
+            &quot;trafficEndTime&quot;: null,  
+            &quot;trafficWaitTime&quot;: null,  
+            &quot;trafficSeatNumber&quot;: &quot;二等座&quot;,  
+            &quot;seatTypeName&quot;: null,  
+            &quot;trafficAmount&quot;: 270.55,  
+            &quot;trafficDistance&quot;: null,  
+            &quot;trafficTaxCode&quot;: null,  
+            &quot;trafficOivDat&quot;: null,  
+            &quot;trafficOivEna&quot;: null,  
+            &quot;isuExp&quot;: null,  
+            &quot;tatAmt&quot;: 2.48,  
+            &quot;insuranceTaxRate&quot;: null,  
+            &quot;invoiceDetailList&quot;: []  
+	   }  
+        ],  
+        &quot;shareRule&quot;: &quot;0&quot;,  
+        &quot;expenseSpread&quot;:  {  
+          &quot;seqId&quot;: 4527,  
+          &quot;spreadBusinessType&quot;: &quot;expense&quot;,  
+          &quot;spreadBusinessId&quot;: &quot;268731&quot;,  
+          &quot;totalAmount&quot;: 5590,  
+          &quot;originalTotalAmount&quot;: 5590,
+          &quot;currencyCode&quot;: &quot;CNY&quot;,
+          &quot;spreadItemList&quot;: [  
+            {  
+              &quot;id&quot;: 9270,  
+              &quot;spreadAmount&quot;: 5590, 
+               &quot;originalSpreadAmount&quot;: 5590,
+              &quot;currencyCode&quot;: &quot;CNY&quot;, 
+              &quot;departmentCode&quot;: 00000009,  
+              &quot;departmentName&quot;: &quot;00000009-混沌分公司&quot;,  
+              &quot;empName&quot;: null,  
+              &quot;empNumber&quot;: null,  
+              &quot;empSeqId&quot;: null,  
+              &quot;projectCode&quot;: null,  
+              &quot;projectName&quot;: null,  
+              &quot;proportion&quot;: 100,  
+              &quot;overBudgetFlag&quot;: &quot;0&quot;,
+              &quot;spreadFieldValueApiViewDTOList&quot;: [
+                {
+                  &quot;spreadItemId&quot;: 11101,
+                  &quot;fieldName&quot;: &quot;部门&quot;,
+                  &quot;fieldType&quot;: &quot;system&quot;,
+                  &quot;fieldBizType&quot;: &quot;DEPARTMENT&quot;,
+                  &quot;fieldValueSeqId&quot;: 1000,
+                  &quot;fieldValueCode&quot;: &quot;00000009&quot;,
+                  &quot;fieldValueName&quot;: &quot;00000009-混沌分公司&quot;,
+                  &quot;fieldValueSourceCode&quot;: null
+                },                
+                {
+                   &quot;spreadItemId&quot;: 11102,
+                   &quot;fieldName&quot;: &quot;自定义档案测试&quot;,
+                   &quot;fieldType&quot;: &quot;custom&quot;,
+                    &quot;fieldBizType&quot;: &quot;CUSTOMFILE&quot;,
+                    &quot;fieldValueSeqId&quot;: 1001,
+                    &quot;fieldValueCode&quot;: &quot;01&quot;,
+                    &quot;fieldValueName&quot;: &quot;档案选项1&quot;,
+                    &quot;fieldValueSourceCode&quot;: &quot;dd001&quot;
+                   }
+            }  
+          ]  
+        },  
+        &quot;bgtOutMemo&quot;: null,  
+        &quot;bgtOverFlag&quot;: null,  
+        &quot;departure&quot;: &quot;1&quot;,  
+        &quot;destination&quot;: &quot;2&quot;,  
+        &quot;dstntIndex&quot;: 0,  
+        &quot;bgnTim&quot;: 1701907200000,  
+        &quot;endTim&quot;: 1701993600000,  
+        &quot;checkInDate&quot;: null,  
+        &quot;checkOutDate&quot;: null,  
+        &quot;payCity&quot;: null,  
+        &quot;discount&quot;: null,  
+        &quot;aircraftCabin&quot;: null,  
+        &quot;airlineNo&quot;: null,  
+        &quot;airlineCom&quot;: null,  
+        &quot;flightETicketNo&quot;: null,  
+        &quot;flightFullPrice&quot;: null,  
+        &quot;civilAviationFund&quot;: null,  
+        &quot;trainNo&quot;: &quot;G11&quot;,  
+        &quot;trainETicketNo&quot;: null,  
+        &quot;trainCabin&quot;: &quot;4&quot;,  
+        &quot;shipCabin&quot;: null,  
+        &quot;partiNbr&quot;: null,  
+        &quot;merchantName&quot;: null,  
+        &quot;hotelStar&quot;: null,  
+        &quot;wrTim&quot;: null,  
+        &quot;plcIlgMemo&quot;: &quot;&quot;,  
+        &quot;plcIlgFlg&quot;: &quot;0&quot;,  
+        &quot;bgtErrMsg&quot;: null,  
+	&quot;expCustomFieldList&quot;: [  
+          {  
+            &quot;fieldNumber&quot;: &quot;NUM_093319141&quot;,  
+            &quot;fieldName&quot;: &quot;数字输入框&quot;,  
+            &quot;sourceValue&quot;: null,  
+            &quot;showValue&quot;: &quot;9&quot;,  
+            &quot;type&quot;: &quot;NUM&quot;,  
+            &quot;required&quot;: true,  
+            &quot;printEnable&quot;: &quot;1&quot;,  
+            &quot;description&quot;: null,  
+            &quot;multiple&quot;: false,  
+            &quot;options&quot;: [],  
+            &quot;formColumnList&quot;: null  
+           },  
+           {  
+             &quot;fieldNumber&quot;: &quot;INFINITY_SELECT_093459655&quot;,  
+             &quot;fieldName&quot;: &quot;下拉选择&quot;,  
+             &quot;sourceValue&quot;: null,  
+             &quot;showValue&quot;: &quot;[\&quot;下拉1\&quot;]&quot;,  
+             &quot;type&quot;: &quot;INFINITY_SELECT&quot;,  
+             &quot;required&quot;: false,  
+             &quot;printEnable&quot;: &quot;1&quot;,  
+             &quot;description&quot;: null,  
+             &quot;multiple&quot;: false,  
+             &quot;options&quot;: [  
+	       &quot;下拉1&quot;,  
+	       &quot;下拉2&quot;  
+	     ],  
+             &quot;formColumnList&quot;: null  
+           }  
+	]  
+      }  
+    ],  
+    &quot;subsidyList&quot;: [  
+      {  
+        &quot;billId&quot;: 2023122702422815,  
+        &quot;ssdBodySeqId&quot;: 25850,  
+        &quot;ssdSeqId&quot;: 3081,  
+        &quot;subsidyCode&quot;: &quot;2023122702422815-3081-0&quot;,  
+        &quot;ssdTypeName&quot;: &quot;差旅补贴&quot;,  
+        &quot;ssdTypeCode&quot;: &quot;1001&quot;,  
+        &quot;dstntOrder&quot;: 0,  
+        &quot;amount&quot;: 80,  
+        &quot;subsidySpread&quot;:{  
+          &quot;seqId&quot;: 4527,  
+          &quot;spreadBusinessType&quot;: &quot;expense&quot;,  
+          &quot;spreadBusinessId&quot;: &quot;25850&quot;,  
+          &quot;totalAmount&quot;: 80,  
+          &quot;originalTotalAmount&quot;: 80,
+          &quot;currencyCode&quot;: &quot;CNY&quot;,
+          &quot;spreadItemList&quot;: [  
+            {  
+              &quot;id&quot;: 9270,  
+              &quot;spreadAmount&quot;: 80, 
+               &quot;originalSpreadAmount&quot;: 80,
+              &quot;currencyCode&quot;: &quot;CNY&quot;, 
+              &quot;departmentCode&quot;: 00000009,  
+              &quot;departmentName&quot;: &quot;00000009-混沌分公司&quot;,  
+              &quot;empName&quot;: null,  
+              &quot;empNumber&quot;: null,  
+              &quot;empSeqId&quot;: null,  
+              &quot;projectCode&quot;: null,  
+              &quot;projectName&quot;: null,  
+              &quot;proportion&quot;: 100,  
+              &quot;overBudgetFlag&quot;: &quot;0&quot;,
+              &quot;spreadFieldValueApiViewDTOList&quot;: [
+                {
+                  &quot;spreadItemId&quot;: 11101,
+                  &quot;fieldName&quot;: &quot;部门&quot;,
+                  &quot;fieldType&quot;: &quot;system&quot;,
+                  &quot;fieldBizType&quot;: &quot;DEPARTMENT&quot;,
+                  &quot;fieldValueSeqId&quot;: 1000,
+                  &quot;fieldValueCode&quot;: &quot;00000009&quot;,
+                  &quot;fieldValueName&quot;: &quot;00000009-混沌分公司&quot;,
+                  &quot;fieldValueSourceCode&quot;: null
+                },                
+                {
+                   &quot;spreadItemId&quot;: 11102,
+                   &quot;fieldName&quot;: &quot;自定义档案测试&quot;,
+                   &quot;fieldType&quot;: &quot;custom&quot;,
+                    &quot;fieldBizType&quot;: &quot;CUSTOMFILE&quot;,
+                    &quot;fieldValueSeqId&quot;: 1001,
+                    &quot;fieldValueCode&quot;: &quot;01&quot;,
+                    &quot;fieldValueName&quot;: &quot;档案选项1&quot;,
+                    &quot;fieldValueSourceCode&quot;: &quot;dd001&quot;
+                   }
+            }  
+          ]  
+        },  
+        &quot;subsidyDetailList&quot;: [  
+          {  
+            &quot;expSeqId&quot;: 25850,  
+            &quot;subsidyTypeId&quot;: &quot;1001&quot;,  
+            &quot;subsidyTypeName&quot;: &quot;差旅补贴&quot;,  
+            &quot;empSeqId&quot;: &quot;262025&quot;,  
+            &quot;empName&quot;: &quot;徐大旺&quot;,  
+            &quot;empNumber&quot;: &quot;01019710&quot;,  
+            &quot;wrTime&quot;: 1701907200000,  
+            &quot;amount&quot;: 40,  
+            &quot;subsidyCalculateType&quot;: &quot;2&quot;,  
+            &quot;mileage&quot;: null,  
+            &quot;dstntOrder&quot;: 0,  
+            &quot;dateType&quot;: &quot;WORKING_DAY&quot;  
+          },  
+          {  
+            &quot;expSeqId&quot;: 25850,  
+            &quot;subsidyTypeId&quot;: &quot;1001&quot;,  
+            &quot;subsidyTypeName&quot;: &quot;差旅补贴&quot;,  
+            &quot;empSeqId&quot;: &quot;262025&quot;,  
+            &quot;empName&quot;: &quot;徐大旺&quot;,  
+            &quot;empNumber&quot;: &quot;01019710&quot;,  
+            &quot;wrTime&quot;: 1701993600000,  
+            &quot;amount&quot;: 40,  
+            &quot;subsidyCalculateType&quot;: &quot;2&quot;,  
+            &quot;mileage&quot;: null,  
+            &quot;dstntOrder&quot;: 0,  
+            &quot;dateType&quot;: &quot;WORKING_DAY&quot;  
+          }  
+        ]  
+      },  
+      {  
+        &quot;billId&quot;: 2023122702422815,  
+        &quot;ssdBodySeqId&quot;: 25850,  
+        &quot;ssdSeqId&quot;: 3082,  
+        &quot;subsidyCode&quot;: &quot;2023122702422815-3082-0&quot;,  
+        &quot;ssdTypeName&quot;: &quot;差旅补贴&quot;,  
+        &quot;ssdTypeCode&quot;: &quot;1001&quot;,  
+        &quot;dstntOrder&quot;: 0,  
+        &quot;amount&quot;: 25,  
+        &quot;subsidySpread&quot;: null,  
+        &quot;subsidyDetailList&quot;: [  
+          {  
+            &quot;expSeqId&quot;: 25850,  
+            &quot;subsidyTypeId&quot;: &quot;1001&quot;,  
+            &quot;subsidyTypeName&quot;: &quot;差旅补贴&quot;,  
+            &quot;empSeqId&quot;: &quot;262025&quot;,  
+            &quot;empName&quot;: &quot;徐大旺&quot;,  
+            &quot;empNumber&quot;: &quot;01019710&quot;,  
+            &quot;wrTime&quot;: null,  
+            &quot;amount&quot;: 25,  
+            &quot;subsidyCalculateType&quot;: &quot;1&quot;,  
+            &quot;mileage&quot;: null,  
+            &quot;dstntOrder&quot;: 0,  
+            &quot;dateType&quot;: null  
+          }  
+        ]  
+      }  
+    ],  
+    &quot;businessTripInfo&quot;: {  
+      &quot;billId&quot;: 2023122702422815,  
+      &quot;totalTripDays&quot;: null,  
+      &quot;businessTripDetailList&quot;: [  
+        {  
+          &quot;depart&quot;: &quot;1&quot;,  
+          &quot;departName&quot;: &quot;北京市&quot;,  
+          &quot;departDetail&quot;: null,  
+          &quot;destination&quot;: &quot;2&quot;,  
+          &quot;destinationName&quot;: &quot;天津市&quot;,  
+          &quot;destinationDetail&quot;: null,  
+          &quot;departDat&quot;: 1701931560000,  
+          &quot;arriveDat&quot;: 1702017960000,  
+          &quot;cityLevel&quot;: &quot;{\&quot;d\&quot;:\&quot;0\&quot;}&quot;,  
+          &quot;roundTrip&quot;: &quot;N&quot;,  
+          &quot;travelMode&quot;: &quot;Train&quot;  
+        }  
+      ]  
+    },  
+     &quot;peers&quot;: [  
+            {  
+                &quot;empNumber&quot;: &quot;0000022&quot;,  
+                &quot;empName&quot;: &quot;小明&quot;  
+            },  
+            {  
+                &quot;empNumber&quot;: &quot;0000011&quot;,  
+                &quot;empName&quot;: &quot;小虎&quot;  
+            },  
+            {  
+                &quot;empNumber&quot;: &quot;000003&quot;,  
+                &quot;empName&quot;: &quot;Theshy&quot;  
+            }  
+        ],  
+    &quot;billLendPayRelList&quot;: [  
+      {  
+        &quot;seqId&quot;: 1610,  
+        &quot;comId&quot;: 3722,  
+        &quot;lendObject&quot;: &quot;EMPLOYEE&quot;,  
+        &quot;billComName&quot;: &quot;我真的是小猫咪&quot;,  
+        &quot;applyTim&quot;: 1664099636000,  
+        &quot;empSeqId&quot;: 262025,  
+        &quot;lendExpTypeRelSeqId&quot;: null,  
+        &quot;lendTypeName&quot;: &quot;员工借款&quot;,  
+        &quot;lendBillId&quot;: 2022092500897016,  
+        &quot;eventName&quot;: &quot;员工借款标准&quot;,  
+        &quot;aplName&quot;: &quot;徐大旺&quot;,  
+        &quot;payBillId&quot;: 2023122702422815,  
+        &quot;payAmount&quot;: 8,  
+        &quot;expTotalCnt&quot;: 10,  
+        &quot;budgetOpen&quot;: null  
+      }  
+    ],  
+    &quot;multiPersonCollectionList&quot;: [  
+      {  
+        &quot;seqId&quot;: 10389,  
+        &quot;comId&quot;: 3722,  
+        &quot;billId&quot;: 2023122702422815,  
+        &quot;empSeqId&quot;: 262025,  
+        &quot;empName&quot;: &quot;徐大旺&quot;,  
+        &quot;depoName&quot;: &quot;小西瓜&quot;,  
+        &quot;depoBank&quot;: &quot;中国工商银行&quot;,  
+        &quot;depoBranBank&quot;: &quot;中国银行&quot;,  
+        &quot;payAmount&quot;: 333,  
+        &quot;fromShare&quot;: false  
+      }  
+    ]  
+  },  
+  &quot;returnCode&quot;: &quot;SUC0000&quot;,  
+  &quot;success&quot;: true,  
+  &quot;message&quot;: &quot;成功&quot;  
+}  
+
+</code></pre>
+<pre><code>
+## 错误码说明 
+| 错误码| 错误信息|
+  | --- | --- |
+  | E0001| 具体业务异常提示|
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>自定义档案增量新增</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>自定义档案增量新增</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/custom-file/incr-add</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/custom-file/incr-add</p>
+<h2>接口描述</h2>
+<p>增量新增自定义档案选项接口，通过档案编码定位档案位置，通过optionId来判断选项的层级，以及新增的选项信息来实现增量新增自定义档案选项信息，单多层级选项总数均不可超过20000，多层级每层选项总数量不可超过1000。</p>
+<p>接口所属功能路径：</p>
+<p>智能费控 - 系统设置 - 档案设置 - 自定义档案</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.customFileId</td><td>STRING</td><td>是</td><td>不可为空</td><td>code20250422</td></tr>
+<tr><td>root.options</td><td>ARRAY</td><td>是</td><td>该值为增量新增的自定义档案选项信息，单多层级选项总数均不可超过20000，多层级每层选项总数量不可超过1000。</td><td></td></tr>
+<tr><td>root.options.optionId</td><td>STRING</td><td>否</td><td>1，定义层级为哪一层（下方newOptionId，newOptionName，serialNumber，applyCompanies，status等信息为本optionId子节点信息）；<br> 2，单层级时可以不传optionId，多层级时optionId不填就默认层级为1。</td><td>4135</td></tr>
+<tr><td>root.options.newOptionId</td><td>STRING</td><td>是</td><td>必填</td><td>4136</td></tr>
+<tr><td>root.options.newOptionName</td><td>STRING</td><td>是</td><td>必填</td><td>选项名称4136</td></tr>
+<tr><td>root.options.serialNumber</td><td>INTEGER</td><td></td><td>默认值为0，最大值为20000</td><td>0</td></tr>
+<tr><td>root.options.applyCompanies</td><td>STRING</td><td></td><td>多个适用公司编码之间用,分隔</td><td>73299</td></tr>
+<tr><td>root.options.status</td><td>STRING</td><td></td><td>1：已启用；0，已禁用。</td><td>1</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td></td><td>是否成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td></td><td>调用信息</td><td>选项增量插入成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{  
+    &quot;customFileId&quot;: &quot;code20250422&quot;,  
+    &quot;options&quot;: [  
+        {  
+            &quot;optionId&quot;: &quot;4135&quot;,  
+            &quot;newOptionId&quot;: &quot;4136&quot;, 
+            &quot;newOptionName&quot;: &quot;4136&quot;, 
+            &quot;serialNumber&quot;: 0,  
+            &quot;applyCompanies&quot;: &quot;73299&quot;,
+            &quot;status&quot;: &quot;1&quot; 
+        },
+        {  
+            &quot;optionId&quot;: &quot;4135&quot;,  
+            &quot;newOptionId&quot;: &quot;4137&quot;, 
+            &quot;newOptionName&quot;: &quot;4137&quot;, 
+            &quot;serialNumber&quot;: 1,  
+            &quot;applyCompanies&quot;: &quot;73299&quot;,
+            &quot;status&quot;: &quot;1&quot;  
+        }  
+    ]  
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{  
+    &quot;success&quot;: true,  
+    &quot;message&quot;: &quot;选项增量插入成功！&quot;  
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>&lt;richtable&gt;{&quot;columns&quot;:[{&quot;title&quot;:&quot;错误码&quot;,&quot;dataIndex&quot;:&quot;0&quot;,&quot;resizable&quot;:true,&quot;width&quot;:112},{&quot;title&quot;:&quot;错误信息&quot;,&quot;dataIndex&quot;:&quot;1&quot;,&quot;resizable&quot;:true,&quot;width&quot;:118},{&quot;title&quot;:&quot;解决方案&quot;,&quot;dataIndex&quot;:&quot;2&quot;,&quot;resizable&quot;:false,&quot;width&quot;:121}],&quot;dataSource&quot;:[{&quot;0&quot;:&quot;200&quot;,&quot;1&quot;:&quot;成功&quot;,&quot;2&quot;:&quot;无&quot;}]}&lt;/richtable&gt;</p>
+</body>
+</html>

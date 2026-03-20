@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>付款完成状态确认</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>付款完成状态确认</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/bills/oboPayConfirm</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/bills/oboPayConfirm</p>
+<h2>接口描述</h2>
+<p>对外部支付成功或支付失败的单据支付明细，可以通过回调进行付款成功或失败的状态确认。</p>
+<p>- 如果是单据编号，则会把单据下的所有待支付的明细进行付款状态变更；</p>
+<p>- 如果是明细号，则会把此付款明细进行付款状态变更。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.billId</td><td>INTEGER</td><td>是</td><td>单据id</td><td>20220000000000000</td></tr>
+<tr><td>body.payIndex</td><td>INTEGER</td><td></td><td>付款行</td><td>1</td></tr>
+<tr><td>body.payFinishTime</td><td>STRING</td><td>否</td><td>格式为：yyyy-MM-dd HH:mm:ss<br><br>确认成功时必填，即不传operationFlag，或operationFlag为&quot;SUCCESS&quot;时，必须传值</td><td>2022-10-10 12:23:12</td></tr>
+<tr><td>body.empId</td><td>STRING</td><td></td><td>empId、empNumber、empPhone三者选一</td><td>U0000</td></tr>
+<tr><td>body.empNumber</td><td>STRING</td><td></td><td>empId、empNumber、empPhone三者选一</td><td>A1234</td></tr>
+<tr><td>body.empPhone</td><td>STRING</td><td></td><td>empId、empNumber、empPhone三者选一</td><td>18888888888</td></tr>
+<tr><td>body.operationFlag</td><td>STRING</td><td></td><td>不填时默认为确认成功-SUCCESS<br><br>枚举值只有 确认成功-&quot;SUCCESS&quot;和确认失败-“FAIL”</td><td>SUCCESS</td></tr>
+<tr><td>body.payAccount</td><td>OBJECT</td><td></td><td>付款账户信息</td><td></td></tr>
+<tr><td>body.payAccount.depoName</td><td>STRING</td><td></td><td>付款账户开户名</td><td>张三</td></tr>
+<tr><td>body.payAccount.depoBank</td><td>STRING</td><td></td><td>付款账户开户行联行号</td><td>102100000021</td></tr>
+<tr><td>body.payAccount.acctNo</td><td>STRING</td><td></td><td>支持数字、字母、中划线</td><td>11111111111111111111</td></tr>
+<tr><td>body.receiveAccount</td><td>OBJECT</td><td></td><td>收款账户信息</td><td></td></tr>
+<tr><td>body.receiveAccount.depoName</td><td>STRING</td><td></td><td>收款账户开户名</td><td>李四</td></tr>
+<tr><td>body.receiveAccount.depoBank</td><td>STRING</td><td>否</td><td>收款账户开户行联行号</td><td>1051000000017</td></tr>
+<tr><td>body.receiveAccount.acctNo</td><td>STRING</td><td></td><td>支持数字、字母、中划线</td><td>11111111111111111</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td>是</td><td>薪福通企业号</td><td>XFT00001</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td></td><td>true-成功,false-失败</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td></td><td>返回消息</td><td>调用成功</td></tr>
+<tr><td>body.data</td><td>OBJECT</td><td></td><td>返回数据</td><td></td></tr>
+<tr><td>body.data.total</td><td>INTEGER</td><td></td><td>处理付款明细行数</td><td>1</td></tr>
+<tr><td>body.data.successCount</td><td>INTEGER</td><td></td><td>成功处理数量</td><td>1</td></tr>
+<tr><td>body.data.detail</td><td>OBJECT</td><td></td><td>返回详情</td><td></td></tr>
+<tr><td>body.data.detail.oboSeqId</td><td>LONG</td><td></td><td>支付明细行唯一编号</td><td>1</td></tr>
+<tr><td>body.data.detail.billId</td><td>LONG</td><td></td><td>单据编号</td><td>20220000000000</td></tr>
+<tr><td>body.data.detail.payIndex</td><td>INTEGER</td><td></td><td>支付行行号</td><td>1</td></tr>
+<tr><td>body.data.detail.success</td><td>BOOLEAN</td><td></td><td>标记每一条是否返回成功</td><td>true</td></tr>
+<tr><td>body.data.detail.message</td><td>STRING</td><td></td><td>备注信息</td><td>确认成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求示例</h3>
+<p>{BaseURL}/api/itrip-gateway/v1/bills/oboPayConfirm?OPAUID=XFT00001</p>
+<pre><code>
+{
+    &quot;billId&quot;: 2022000000000000,
+    &quot;payFinishTime&quot;: &quot;2022-10-10 12:23:12&quot;,
+    &quot;empId&quot;:&quot;U0000&quot;,
+    &quot;empNumber&quot;:&quot;A1234&quot;,
+    &quot;empPhone&quot;:&quot;18888888888&quot;
+    &quot;operationFlag&quot;:&quot;SUCCESS&quot;
+}
+</code></pre>
+<h3>返回示例</h3>
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;total&quot;: 1,
+        &quot;successCount&quot;: 1,
+        &quot;detail&quot;: [
+            {
+                &quot;oboSeqId&quot;: 1,
+                &quot;billId&quot;: 2022000000000000
+                &quot;payIndex&quot;: 1,
+                &quot;success&quot;: true,
+                &quot;message&quot;: &quot;确认成功&quot;
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>200</td><td>成功</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

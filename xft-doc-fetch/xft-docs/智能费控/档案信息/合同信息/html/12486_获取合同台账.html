@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>获取合同台账</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>获取合同台账</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/contract/getContractBook</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/contract/getContractBook</p>
+<h2>接口描述</h2>
+<p>获取合同台账分页查询接口</p>
+<p>1. 提供合同编码和合同名称的模糊查询</p>
+<p>2. 提供合同性质，合同状态，合同类型等匹配筛选</p>
+<p>3. 返回合同基本信息，已报销金额明细，已支付金额明细，印花税金额明细，条款金额明细等信息</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.comId</td><td>STRING</td><td></td><td>企业ID</td><td>1111</td></tr>
+<tr><td>body.billId</td><td>STRING</td><td></td><td>合同创建单据编号ID</td><td>202300000000000000</td></tr>
+<tr><td>body.globalSearch</td><td>STRING</td><td></td><td>全局查询：合同编码/合同名称</td><td>测试</td></tr>
+<tr><td>body.payStampTaxFlag</td><td>STRING</td><td></td><td>是否开启了印花税配置</td><td>1</td></tr>
+<tr><td>body.contractAttr</td><td>STRING</td><td></td><td>0-归档合同 1-付款合同 2-框架合同</td><td>1</td></tr>
+<tr><td>body.contractTypeSeqIdList</td><td>STRING</td><td></td><td>合同类型自增ID</td><td>1</td></tr>
+<tr><td>body.depSeqIdList</td><td>STRING</td><td></td><td>责任部门自增ID</td><td>1</td></tr>
+<tr><td>body.supSeqIdList</td><td>STRING</td><td></td><td>乙方单位自增ID</td><td>1</td></tr>
+<tr><td>body.start</td><td>INTEGER</td><td>是</td><td>查询起始</td><td>0</td></tr>
+<tr><td>body.limit</td><td>INTEGER</td><td>是</td><td>分页大小</td><td>10</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td>是</td><td>新福通企业号</td><td>XFT00001</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.data</td><td>OBJECT</td><td>否</td><td>返回数据</td><td></td></tr>
+<tr><td>body.data.total</td><td>LONG</td><td>否</td><td>总数</td><td>2</td></tr>
+<tr><td>body.data.list</td><td>ARRAY</td><td>否</td><td>合同台账列表内容</td><td></td></tr>
+<tr><td>body.data.list.billContractSeqId</td><td>LONG</td><td>否</td><td>合同自增ID</td><td>712</td></tr>
+<tr><td>body.data.list.comId</td><td>LONG</td><td>否</td><td>公司自增iD</td><td>3254</td></tr>
+<tr><td>body.data.list.billId</td><td>LONG</td><td>否</td><td>合同单号</td><td>null</td></tr>
+<tr><td>body.data.list.contractName</td><td>STRING</td><td>否</td><td>合同名称</td><td>印花框架合同</td></tr>
+<tr><td>body.data.list.contractNbr</td><td>STRING</td><td>否</td><td>合同编号</td><td>CONTRACT_0812_2</td></tr>
+<tr><td>body.data.list.contractStartDate</td><td>DATETIME</td><td>否</td><td>合同起始日期</td><td>1659283200000</td></tr>
+<tr><td>body.data.list.contractEndDate</td><td>DATETIME</td><td>否</td><td>合同截止日期</td><td>1690819200000</td></tr>
+<tr><td>body.data.list.contractTypeSeqId</td><td>LONG</td><td>否</td><td>合同类型自增ID</td><td>189</td></tr>
+<tr><td>body.data.list.contractTypeName</td><td>STRING</td><td>否</td><td>&quot;0&quot;: &quot;归档合同&quot;<br>&quot;1&quot;: &quot;付款合同&quot;<br>&quot;2&quot;: &quot;框架合同&quot;</td><td>框架合同</td></tr>
+<tr><td>body.data.list.payStampTaxFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>1</td></tr>
+<tr><td>body.data.list.periodType</td><td>STRING</td><td>否</td><td>周期类型</td><td>m</td></tr>
+<tr><td>body.data.list.startPeriod</td><td>STRING</td><td>否</td><td>初始周期</td><td>2022-10</td></tr>
+<tr><td>body.data.list.contractTypeAttr</td><td>LONG</td><td>否</td><td>0-归档合同 1-付款合同 2-框架合同</td><td>2</td></tr>
+<tr><td>body.data.list.contractDepSeqId</td><td>LONG</td><td>否</td><td>合同申请部门自增ID</td><td>1111</td></tr>
+<tr><td>body.data.list.contractDepId</td><td>STRING</td><td>否</td><td>合同申请部门ID</td><td>0001</td></tr>
+<tr><td>body.data.list.contractDepName</td><td>STRING</td><td>否</td><td>合同申请部门名称</td><td>天蓝编辑部</td></tr>
+<tr><td>body.data.list.contractDepCod</td><td>STRING</td><td>否</td><td>合同申请部门编码</td><td>null</td></tr>
+<tr><td>body.data.list.contractComSeqId</td><td>LONG</td><td>否</td><td>合同公司自增ID</td><td>47920</td></tr>
+<tr><td>body.data.list.contractComId</td><td>STRING</td><td>否</td><td>合同公司ID</td><td>0000</td></tr>
+<tr><td>body.data.list.contractComNam</td><td>STRING</td><td>否</td><td>合同公司名称</td><td>天蓝测试8</td></tr>
+<tr><td>body.data.list.contractComDepCod</td><td>STRING</td><td>否</td><td>合同公司编码</td><td>null</td></tr>
+<tr><td>body.data.list.contractAccessories</td><td>STRING</td><td>否</td><td>附件信息</td><td>[{&quot;fileNam&quot;:&quot;f5eb7105-becb-4d64-9f0b-3d47e4fb0296&quot;,&quot;sts&quot;:0,&quot;fileShowNam&quot;:&quot;11.png&quot;,&quot;seqId&quot;:11862,&quot;upType&quot;:&quot;BILL&quot;,&quot;key&quot;:11862}]</td></tr>
+<tr><td>body.data.list.contractAmtType</td><td>STRING</td><td>否</td><td>1:收款 2：付款</td><td>2</td></tr>
+<tr><td>body.data.list.contractStatus</td><td>STRING</td><td>否</td><td>0审批中 1未履行 2履行中 3已终止 4已过期</td><td>2</td></tr>
+<tr><td>body.data.list.contractAmt</td><td>BIGDECIMAL</td><td>否</td><td>合同收款金额</td><td>0.00</td></tr>
+<tr><td>body.data.list.currencyCode</td><td>STRING</td><td></td><td>合同币种</td><td>USD</td></tr>
+<tr><td>body.data.list.aplSeqId</td><td>LONG</td><td>否</td><td>申请人自增ID</td><td>78825</td></tr>
+<tr><td>body.data.list.aplId</td><td>STRING</td><td>否</td><td>申请人ID</td><td>V0002</td></tr>
+<tr><td>body.data.list.aplNam</td><td>STRING</td><td>否</td><td>申请人名称</td><td>test1</td></tr>
+<tr><td>body.data.list.supSeqId</td><td>LONG</td><td>否</td><td>供应商自增ID</td><td>554</td></tr>
+<tr><td>body.data.list.supNam</td><td>STRING</td><td>否</td><td>供应商名称</td><td>测试供应商</td></tr>
+<tr><td>body.data.list.supId</td><td>STRING</td><td>否</td><td>供应商编码</td><td>null</td></tr>
+<tr><td>body.data.list.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>body.data.list.payProvisionList</td><td>ARRAY</td><td>否</td><td>合同关联付款条款</td><td></td></tr>
+<tr><td>body.data.list.payAmount</td><td>BIGDECIMAL</td><td>否</td><td>已支付金额</td><td>0</td></tr>
+<tr><td>body.data.list.reimAmount</td><td>BIGDECIMAL</td><td>否</td><td>已报销金额</td><td>500</td></tr>
+<tr><td>body.data.list.payStampTaxAmount</td><td>BIGDECIMAL</td><td>否</td><td>印花税金额</td><td>500</td></tr>
+<tr><td>body.data.list.remiAmtList</td><td>ARRAY</td><td>否</td><td>已报销金额明细</td><td></td></tr>
+<tr><td>body.data.list.remiAmtList.billId</td><td>LONG</td><td>否</td><td>单据编号</td><td>2022081201418209</td></tr>
+<tr><td>body.data.list.remiAmtList.eventNam</td><td>STRING</td><td>否</td><td>单据名称</td><td>对公报账单</td></tr>
+<tr><td>body.data.list.remiAmtList.eventId</td><td>STRING</td><td>否</td><td>表单编号</td><td>null</td></tr>
+<tr><td>body.data.list.remiAmtList.eventSeqId</td><td>LONG</td><td>否</td><td>表单自增ID</td><td>1111</td></tr>
+<tr><td>body.data.list.remiAmtList.reimAmt</td><td>BIGDECIMAL</td><td>否</td><td>报销金额</td><td>200</td></tr>
+<tr><td>body.data.list.remiAmtList.applyTim</td><td>LONG</td><td>否</td><td>报销日期</td><td>1660292446000</td></tr>
+<tr><td>body.data.list.remiAmtList.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>支付金额</td><td>200</td></tr>
+<tr><td>body.data.list.remiAmtList.billSts</td><td>STRING</td><td>否</td><td>单据状态</td><td>2</td></tr>
+<tr><td>body.data.list.remiAmtList.rebatedAmount</td><td>BIGDECIMAL</td><td>否</td><td>已退款金额</td><td>null</td></tr>
+<tr><td>body.data.list.payAmtList</td><td>ARRAY</td><td>否</td><td>已支付金额明细</td><td></td></tr>
+<tr><td>body.data.list.payAmtList.billId</td><td>LONG</td><td>否</td><td>单据编号</td><td>2022081201418209</td></tr>
+<tr><td>body.data.list.payAmtList.eventNam</td><td>STRING</td><td>否</td><td>表单名称</td><td>对公报账单</td></tr>
+<tr><td>body.data.list.payAmtList.eventId</td><td>STRING</td><td>否</td><td>表单编号</td><td>null</td></tr>
+<tr><td>body.data.list.payAmtList.eventSeqId</td><td>LONG</td><td>否</td><td>表单自增ID</td><td>9678</td></tr>
+<tr><td>body.data.list.payAmtList.applyTim</td><td>LONG</td><td>否</td><td>报销日期</td><td>1660292446000</td></tr>
+<tr><td>body.data.list.payAmtList.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>付款金额</td><td>200</td></tr>
+<tr><td>body.data.list.payAmtList.billSts</td><td>STRING</td><td>否</td><td>单据状态</td><td>2</td></tr>
+<tr><td>body.data.list.payAmtList.billPaySts</td><td>STRING</td><td>否</td><td>单据支付状态</td><td>0</td></tr>
+<tr><td>body.data.list.payAmtList.rebatedAmount</td><td>STRING</td><td>否</td><td>已退款金额</td><td>null</td></tr>
+<tr><td>body.data.list.stampAmtList</td><td>ARRAY</td><td>否</td><td>印花税金额明细</td><td></td></tr>
+<tr><td>body.data.list.stampAmtList.stampSeqId</td><td>LONG</td><td>否</td><td>印花税自增ID</td><td>18</td></tr>
+<tr><td>body.data.list.stampAmtList.billContractSeqId</td><td>LONG</td><td>否</td><td>印花税关联合同自增ID</td><td>712</td></tr>
+<tr><td>body.data.list.stampAmtList.billId</td><td>LONG</td><td>否</td><td>印花税关联单据编号</td><td>2022081201418209</td></tr>
+<tr><td>body.data.list.stampAmtList.eventNam</td><td>STRING</td><td>否</td><td>印花税关联单据类型</td><td>对公报账单</td></tr>
+<tr><td>body.data.list.stampAmtList.payDate</td><td>STRING</td><td>否</td><td>支付日期</td><td>2022-08-12 16:20:52.0</td></tr>
+<tr><td>body.data.list.stampAmtList.contractTypeAttr</td><td>LONG</td><td>否</td><td>1：付款合同 2框架合同</td><td>2</td></tr>
+<tr><td>body.data.list.stampAmtList.payStampAmount</td><td>BIGDECIMAL</td><td>否</td><td>应税合同金额</td><td>200</td></tr>
+<tr><td>body.data.list.stampAmtList.payStampTaxAmount</td><td>BIGDECIMAL</td><td>否</td><td>应税合同税额</td><td>9.52</td></tr>
+<tr><td>body.data.list.stampAmtList.status</td><td>LONG</td><td>否</td><td>印花税开启状态</td><td>1</td></tr>
+<tr><td>body.data.list.payProvisionAmtList</td><td>ARRAY</td><td>否</td><td>条款金额明细</td><td></td></tr>
+<tr><td>body.data.list.payProvisionAmtList.payProvisionSeqId</td><td>LONG</td><td></td><td>自增ID</td><td>1</td></tr>
+<tr><td>body.data.list.payProvisionAmtList.payAmtList</td><td>ARRAY</td><td></td><td>已支付金额明细</td><td>参考上面payAmtList</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>调用结果</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>返回结果信息</td><td>调用成功！</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>{BaseURL}/v1/contract/getContractBook?PRJCOD=XFT11710&amp;EMPNUMBER=U0000</p>
+<p>请求体：</p>
+<pre><code>
+{
+    &quot;start&quot;: 0,
+    &quot;limit&quot;: 10
+}
+</code></pre>
+<h3>返回示例</h3>
+
+<pre><code>
+{
+    &quot;data&quot;: {
+        &quot;start&quot;: 0,
+        &quot;limit&quot;: 10,
+        &quot;total&quot;: 2,
+        &quot;list&quot;: [
+            {
+                &quot;billContractSeqId&quot;: 712,
+                &quot;comId&quot;: 3254,
+                &quot;billId&quot;: null,
+                &quot;contractName&quot;: &quot;印花框架合同&quot;,
+                &quot;contractNbr&quot;: &quot;CONTRACT_0812_2&quot;,
+                &quot;contractStartDate&quot;: 1659283200000,
+                &quot;contractEndDate&quot;: 1690819200000,
+                &quot;contractTypeSeqId&quot;: 1,
+                &quot;contractTypeName&quot;: &quot;框架合同&quot;,
+                &quot;payStampTaxFlag&quot;: &quot;1&quot;,
+                &quot;periodType&quot;: &quot;m&quot;,
+                &quot;startPeriod&quot;: &quot;2022-10&quot;,
+                &quot;contractTypeAttr&quot;: &quot;2&quot;,
+                &quot;contractDepSeqId&quot;: 60102,
+                &quot;contractDepId&quot;: &quot;0001&quot;,
+                &quot;contractDepName&quot;: &quot;天蓝编辑部&quot;,
+                &quot;contractDepCod&quot;: null,
+                &quot;contractComSeqId&quot;: 47920,
+                &quot;contractComId&quot;: &quot;0000&quot;,
+                &quot;contractComNam&quot;: &quot;天蓝测试8&quot;,
+                &quot;contractComDepCod&quot;: null,
+                &quot;contractAccessories&quot;: &quot;[{\&quot;fileNam\&quot;:\&quot;f5eb7105-becb-4d64-9f0b-3d47e4fb0296\&quot;,\&quot;sts\&quot;:0,\&quot;fileShowNam\&quot;:\&quot;11.png\&quot;,\&quot;seqId\&quot;:11862,\&quot;upType\&quot;:\&quot;BILL\&quot;,\&quot;key\&quot;:11862}]&quot;,
+                &quot;contractAmtType&quot;: &quot;2&quot;,
+                &quot;contractStatus&quot;: &quot;2&quot;,
+                &quot;contractAmt&quot;: 0.00,
+                &quot;aplSeqId&quot;: 78825,
+                &quot;aplId&quot;: &quot;V0002&quot;,
+                &quot;aplNam&quot;: &quot;test1&quot;,
+                &quot;supSeqId&quot;: 554,
+                &quot;supNam&quot;: &quot;测试供应商&quot;,
+                &quot;supId&quot;: null,
+                &quot;remark&quot;: null,
+                &quot;payProvisionList&quot;: [],
+                &quot;payAmount&quot;: 0,
+		&quot;currencyCode&quot;: &quot;USD&quot;,
+                &quot;reimAmount&quot;: 500.00,
+                &quot;payStampTaxAmount&quot;: 500.00,
+                &quot;remiAmtList&quot;: [
+                    {
+                        &quot;billId&quot;: 2022000000000000,
+                        &quot;eventNam&quot;: &quot;对公报账单&quot;,
+                        &quot;eventId&quot;: null,
+                        &quot;eventSeqId&quot;: 9678,
+                        &quot;reimAmt&quot;: 200.00,
+                        &quot;applyTim&quot;: 1660292446000,
+                        &quot;payAmt&quot;: 200.00,
+                        &quot;billSts&quot;: &quot;2&quot;,
+                        &quot;rebatedAmount&quot;: null
+                    },
+                    {
+                        &quot;billId&quot;: 2022000000000000,
+                        &quot;eventNam&quot;: &quot;对公报账单&quot;,
+                        &quot;eventId&quot;: null,
+                        &quot;eventSeqId&quot;: 9678,
+                        &quot;reimAmt&quot;: 300.00,
+                        &quot;applyTim&quot;: 1660292929000,
+                        &quot;payAmt&quot;: 300.00,
+                        &quot;billSts&quot;: &quot;2&quot;,
+                        &quot;rebatedAmount&quot;: null
+                    }
+                ],
+                &quot;payAmtList&quot;: [
+                    {
+                        &quot;billId&quot;: 2022000000000000,
+                        &quot;eventNam&quot;: &quot;对公报账单&quot;,
+                        &quot;eventId&quot;: null,
+                        &quot;eventSeqId&quot;: 9678,
+                        &quot;applyTim&quot;: 1660292446000,
+                        &quot;payAmt&quot;: 200.00,
+                        &quot;billSts&quot;: &quot;2&quot;,
+                        &quot;billPaySts&quot;: &quot;0&quot;,
+                        &quot;rebatedAmount&quot;: null
+                    },
+                    {
+                        &quot;billId&quot;: 2022000000000000,
+                        &quot;eventNam&quot;: &quot;对公报账单&quot;,
+                        &quot;eventId&quot;: null,
+                        &quot;eventSeqId&quot;: 9678,
+                        &quot;applyTim&quot;: 1660292929000,
+                        &quot;payAmt&quot;: 300.00,
+                        &quot;billSts&quot;: &quot;2&quot;,
+                        &quot;billPaySts&quot;: &quot;0&quot;,
+                        &quot;rebatedAmount&quot;: null
+                    }
+                ],
+                &quot;stampAmtList&quot;: [
+                    {
+                        &quot;stampSeqId&quot;: 18,
+                        &quot;billContractSeqId&quot;: 712,
+                        &quot;billId&quot;: 2022000000000000,
+                        &quot;eventNam&quot;: &quot;对公报账单&quot;,
+                        &quot;payDate&quot;: &quot;2022-08-12 16:20:52.0&quot;,
+                        &quot;contractTypeAttr&quot;: &quot;2&quot;,
+                        &quot;payStampAmount&quot;: 200.00,
+                        &quot;payStampTaxAmount&quot;: 9.52,
+                        &quot;status&quot;: &quot;1&quot;
+                    },
+                    {
+                        &quot;stampSeqId&quot;: 19,
+                        &quot;billContractSeqId&quot;: 712,
+                        &quot;billId&quot;: 2022000000000000,
+                        &quot;eventNam&quot;: &quot;对公报账单&quot;,
+                        &quot;payDate&quot;: &quot;2022-08-12 16:28:55.0&quot;,
+                        &quot;contractTypeAttr&quot;: &quot;2&quot;,
+                        &quot;payStampAmount&quot;: 300.00,
+                        &quot;payStampTaxAmount&quot;: 14.29,
+                        &quot;status&quot;: &quot;1&quot;
+                    }
+                ],
+                &quot;payProvisionAmtList&quot;: []
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;调用成功！&quot;
+}
+
+</code></pre>
+<h2>错误码说明</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>200</td><td>成功</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

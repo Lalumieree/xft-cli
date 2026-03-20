@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>自动入库预入库单入库事件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>自动入库预入库单入库事件</h1>
+
+<h2>基本信息</h2>
+
+<p>事件名称: 自动入库预入库单入库事件</p>
+<p>事件编号: ITRIPPREINVCHG</p>
+<h2>事件描述</h2>
+<p>医招智付-集采平台-自动入库 预入库单入库后，向指定的相关人员或系统发送通知。</p>
+
+<p>注意事项：</p>
+
+<p>每批次上限500条数据：系统一次最多能推送500条数据同步消息。如果需要发送的通知数量超过此限制，会分批发送。这有助于确保每次传输的数据量不至于过大，影响系统的稳定性和效率。</p>
+<h2>触发情况</h2>
+<p>触发场景：</p>
+
+<p>1. 医招智付-集采平台-自动入库 中手动进行标记入库成功；</p>
+<p>2. 医招智付-集采平台-自动入库 中手动推送入库成功。</p>
+<h2>事件报文说明</h2>
+<p>&lt;eventparamstable&gt;[{&quot;elementData&quot;:{&quot;type&quot;:&quot;OBJECT&quot;,&quot;name&quot;:&quot;root&quot;,&quot;label&quot;:&quot;%E8%99%9A%E6%8B%9F%E6%A0%B9%E8%8A%82%E7%82%B9&quot;,&quot;required&quot;:true},&quot;children&quot;:[{&quot;elementData&quot;:{&quot;type&quot;:&quot;ARRAY&quot;,&quot;name&quot;:&quot;inventoryList&quot;,&quot;required&quot;:true,&quot;maxLength&quot;:&quot;500&quot;,&quot;label&quot;:&quot;%E5%85%A5%E5%BA%93%E6%88%90%E5%8A%9F%E7%9A%84%E5%85%A5%E5%BA%93%E5%8D%95%E5%88%97%E8%A1%A8&quot;},&quot;children&quot;:[{&quot;elementData&quot;:{&quot;type&quot;:&quot;STRING&quot;,&quot;name&quot;:&quot;inventoryCode&quot;,&quot;maxLength&quot;:&quot;100&quot;,&quot;required&quot;:true,&quot;label&quot;:&quot;%E5%85%A5%E5%BA%93%E5%8D%95%E7%BC%96%E5%8F%B7&quot;,&quot;exampleValue&quot;:&quot;%22PRE2025121814373139293%22&quot;}}],&quot;open&quot;:true}],&quot;open&quot;:false}]&lt;/eventparamstable&gt;</p>
+<h2>事件报文示例</h2>
+<pre><code>
+{
+    &quot;inventoryList&quot;: [
+        {
+            &quot;inventoryCode&quot;: &quot;PRE2025121814373139293&quot;
+        },
+        {
+            &quot;inventoryCode&quot;: &quot;PRE2025121814373153370&quot;
+        },
+        {
+            &quot;inventoryCode&quot;: &quot;PRE2025121814373115494&quot;
+        },
+        {
+            &quot;inventoryCode&quot;: &quot;PRE2025121814320174993&quot;
+        }
+    ]
+}
+</code></pre>
+</body>
+</html>

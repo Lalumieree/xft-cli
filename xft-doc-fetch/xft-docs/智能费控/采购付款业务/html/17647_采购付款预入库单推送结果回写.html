@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>采购付款预入库单推送结果回写</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>采购付款预入库单推送结果回写</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-pay/core/pre-inventory/push-result-update</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-pay/core/pre-inventory/push-result-update</p>
+<h2>接口描述</h2>
+<p>预入库单推送结果回写接口，将每条预入库单的推送结果回写至采购付款。</p>
+<p>注意：</p>
+<p>单次回写上限为300条；</p>
+<p>本接口对应图中红框里的流程。</p>
+
+<p>![推送预入库单.png](https://s3gw.cmbchina.com/lw36.01-public-prd/public-a1dfd494-ade9-4302-b440-7f88e07b517b)</p>
+
+
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.pushResultList</td><td>ARRAY</td><td>否</td><td>最多支持300个，参数为空则不更新</td><td></td></tr>
+<tr><td>root.pushResultList.inventoryCode</td><td>STRING</td><td>是</td><td>预入库单编号</td><td>&quot;INV1234567&quot;</td></tr>
+<tr><td>root.pushResultList.result</td><td>BOOLEAN</td><td>是</td><td>成功：true，失败：false</td><td>true</td></tr>
+<tr><td>root.pushResultList.msg</td><td>STRING</td><td></td><td>推送成功时：填写推送成功的消息；<br>推送失败时：填写推送失败的消息。</td><td>&quot;预入库单PRE000001不存在&quot;</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>成功：true，失败：false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>执行成功时，会返回的信息：”成功“。<br>执行失败时，会返回错误信息。</td><td>&quot;成功&quot;</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>调用失败：EROOR1<br>执行失败：EROOR2<br>执行成功：SUC0000<br>参数错误：E0002</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.body</td><td>STRING</td><td>是</td><td>执行成功时，返回“推送结果更新成功”</td><td>&quot;推送结果更新成功&quot;</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;pushResultList&quot;: [
+        {
+            &quot;inventoryCode&quot;: &quot;20250829-2&quot;,
+            &quot;result&quot;: true,
+            &quot;msg&quot;: &quot;His0002&quot;
+        },
+        {
+            &quot;inventoryCode&quot;: &quot;20250829-3&quot;,
+            &quot;result&quot;: false,
+            &quot;msg&quot;: &quot;连接异常&quot;
+        }
+    ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: &quot;推送结果更新成功&quot;,
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>EROOR1</td><td>系统错误</td><td>稍后再试，或联系开发人员</td></tr>
+<tr><td>E0002</td><td>更新预入库单数量不得超过300条</td><td>请确保单次更新的预入库单号数量少于300条</td></tr>
+</tbody></table>
+</body>
+</html>

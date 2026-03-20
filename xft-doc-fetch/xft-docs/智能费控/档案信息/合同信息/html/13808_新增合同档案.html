@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>新增合同档案</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>新增合同档案</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v2/archives/contract/add</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v2/archives/contract/add</p>
+<h2>接口描述</h2>
+<p>在公司下创建合同档案，支持创建付款合同、框架合同。支持传入合同基本信息、合同适用范围、合同附件、付款合同付款条款、合同受益期、合同自定义字段等信息。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.contractCompanyCode</td><td>STRING</td><td>是</td><td>合同公司编码</td><td>SH01</td></tr>
+<tr><td>body.contractDepartmentCode</td><td>STRING</td><td>是</td><td>责任部门编码</td><td>0000</td></tr>
+<tr><td>body.contractEmpNumber</td><td>STRING</td><td>是</td><td>员工编号</td><td>00210416</td></tr>
+<tr><td>body.applyAllUser</td><td>BOOLEAN</td><td>是</td><td>合同是否适用全部员工</td><td>false</td></tr>
+<tr><td>body.contractGroups</td><td>ARRAY</td><td>否</td><td>适用类型传值信息为全部时，不支持用户组配置</td><td></td></tr>
+<tr><td>body.contractGroups.type</td><td>STRING</td><td>是</td><td>EMPLOYEE 员工<br>DEPARTMENT 部门<br>POST 岗位<br>JOB 职位<br>ROLE 角色<br>RANK 职级</td><td>EMPLOYEE</td></tr>
+<tr><td>body.contractGroups.typeIdName</td><td>STRING</td><td>是</td><td>除类型为角色（type: ROLE）需要传角色名称，其余情况传值为对应类型的编码。eg：员工编码（type: EMPLOYEE）</td><td>00210416</td></tr>
+<tr><td>body.contractTypeCode</td><td>STRING</td><td>是</td><td>合同类型的编码信息</td><td>CONTRATTYPE20230109192232</td></tr>
+<tr><td>body.contractName</td><td>STRING</td><td>是</td><td>合同名称</td><td>测试API新增付款合同2</td></tr>
+<tr><td>body.supplierCode</td><td>STRING</td><td>是</td><td>供应商编码</td><td>SUP20240304175207</td></tr>
+<tr><td>body.contractStartDate</td><td>STRING</td><td>是</td><td>日期格式：yyyy-MM-dd</td><td>2024-05-01</td></tr>
+<tr><td>body.contractEndDate</td><td>STRING</td><td>是</td><td>日期格式：yyyy-MM-dd</td><td>2026-05-01</td></tr>
+<tr><td>body.currencyCode</td><td>STRING</td><td>是</td><td>根据公司开启的金额类型，eg：CNY、AUD.......</td><td>CNY</td></tr>
+<tr><td>body.contractAmt</td><td>BIGDECIMAL</td><td>是</td><td>金额精度：(17,2)</td><td>0</td></tr>
+<tr><td>body.contractNbr</td><td>STRING</td><td>是</td><td>合同编码</td><td>CONTRAT2024010920</td></tr>
+<tr><td>body.startPeriod</td><td>STRING</td><td>否</td><td>初始周期</td><td>2024-05</td></tr>
+<tr><td>body.contractAttachments</td><td>ARRAY</td><td>否</td><td>1，合同附件可为空<br>2，传入合同附件时，合同附件数量不超过十个<br>3，传入合同附件时，合同附件的唯一ID和合同附件的UUID名称均不能为空</td><td></td></tr>
+<tr><td>body.contractAttachments.seqId</td><td>LONG</td><td>是</td><td>合同附件的唯一ID</td><td>33226</td></tr>
+<tr><td>body.contractAttachments.fileNam</td><td>STRING</td><td>是</td><td>合同附件的UUID名称</td><td>cd7bbf17-8971-404c-9558-bc837abda065</td></tr>
+<tr><td>body.remark</td><td>STRING</td><td>否</td><td>合同备注</td><td>付款合同</td></tr>
+<tr><td>body.payProvisionList</td><td>ARRAY</td><td>否</td><td>1，合同类型为付款合同时，合同付款条款必填<br>2，合同类型为归档合同时，不支持添加合同付款条款<br>3，合同类型为框架合同时，不支持添加合同付款条款</td><td></td></tr>
+<tr><td>body.payProvisionList.payStageNam</td><td>STRING</td><td>否</td><td>付款阶段名称</td><td>阶段一</td></tr>
+<tr><td>body.payProvisionList.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>金额精度：(17,2)</td><td>100</td></tr>
+<tr><td>body.payProvisionList.depoName</td><td>STRING</td><td>否</td><td>付款账户的开户名信息</td><td>滨江小蜜蜂公司dx</td></tr>
+<tr><td>body.payProvisionList.acctNo</td><td>STRING</td><td>否</td><td>付款账户的账号</td><td>22154545000000</td></tr>
+<tr><td>body.payProvisionList.payDate</td><td>STRING</td><td>否</td><td>日期格式：yyyy-MM-dd</td><td>2024-05-14</td></tr>
+<tr><td>body.payProvisionList.provision</td><td>STRING</td><td>否</td><td>付款条款信息</td><td>付款阶段一条款信息</td></tr>
+<tr><td>body.payProvisionList.remark</td><td>STRING</td><td>否</td><td>付款条款的备注信息</td><td>付款阶段备注信息</td></tr>
+<tr><td>body.payProvisionList.initialReimbursedAmount</td><td>BIGDECIMAL</td><td></td><td>金额精度：(17,2)<br>不能大于条款金额，作为条款的初始已经报销的金额，用于导入已经使用过的合同</td><td>0</td></tr>
+<tr><td>body.benefitPeriodList</td><td>ARRAY</td><td>否</td><td>传入合同受益期关联信息</td><td></td></tr>
+<tr><td>body.benefitPeriodList.period</td><td>INTEGER</td><td>否</td><td>受益期的阶段信息：1代表第一阶段、2代表第二极端、依次类推</td><td>1</td></tr>
+<tr><td>body.benefitPeriodList.useFlag</td><td>LONG</td><td>否</td><td>受益期是否停用：<br>1 停用<br>0 启用</td><td>1</td></tr>
+<tr><td>body.customFieldValues</td><td>ARRAY</td><td></td><td>自定义字段值</td><td></td></tr>
+<tr><td>body.customFieldValues.customFieldCode</td><td>STRING</td><td>是</td><td>必填，自定义字段唯一编码</td><td>INFINITY_SELECT_170255122</td></tr>
+<tr><td>body.customFieldValues.customFieldValue</td><td>STRING</td><td></td><td>数字，日期，单选，单行文本，多行文本等自定义字段类型值填写位置</td><td>2523456346564564534汉字</td></tr>
+<tr><td>body.customFieldValues.customFieldName</td><td>STRING</td><td>否</td><td>非必填，可通过自定义字段编码获取自定义字段名称</td><td>下拉选择多选</td></tr>
+<tr><td>body.customFieldValues.multiValues</td><td>ARRAY</td><td></td><td>下拉选择，多选等自定义字段类型多选时的值填写位置</td><td>{ &quot;id&quot;: &quot;选项3&quot;, &quot;name&quot;: &quot;选项3&quot; }</td></tr>
+<tr><td>body.customFieldValues.multiValues.id</td><td>STRING</td><td>否</td><td>多选的值 value</td><td>选项3</td></tr>
+<tr><td>body.customFieldValues.multiValues.name</td><td>STRING</td><td>是</td><td>多选的显示 key</td><td>选项3</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.EMPNUMBER</td><td>STRING</td><td>是</td><td>操作人编码</td><td>00210416</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>LONG</td><td>否</td><td>新增合同返回的唯一ID</td><td>1966</td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>返回编码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>明细信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<p>请求报文：</p>
+
+<pre><code>
+{
+    &quot;contractCompanyCode&quot;: &quot;SH01&quot;,
+    &quot;contractDepartmentCode&quot;: &quot;0000&quot;,
+    &quot;contractEmpNumber&quot;: &quot;00210416&quot;,
+    &quot;applyAllUser&quot;: false,
+    &quot;contractGroups&quot;: [
+        {
+            &quot;type&quot;: &quot;EMPLOYEE&quot;,
+            &quot;typeIdName&quot;: &quot;00210416&quot;
+        }
+    ],
+    &quot;contractTypeCode&quot;: &quot;CONTRATTYPE20230109192232&quot;,
+    &quot;contractName&quot;: &quot;测试API新增付款合同2&quot;,
+    &quot;supplierCode&quot;: &quot;SUP20240304175207&quot;,
+    &quot;contractStartDate&quot;: &quot;2024-05-01&quot;,
+    &quot;contractEndDate&quot;: &quot;2026-05-01&quot;,
+    &quot;currencyCode&quot;: &quot;CNY&quot;,
+    &quot;contractAmt&quot;: null,
+    &quot;contractNbr&quot;: &quot;CONTRAT20240109&quot;,
+    &quot;contractAttachments&quot;: [
+        {
+            &quot;seqId&quot;: 33226,
+            &quot;fileNam&quot;: &quot;cd7bbf17-8971-404c-9558-bc837abda065&quot;
+        }
+    ],
+    &quot;remark&quot;: &quot;付款合同&quot;,
+    &quot;payProvisionList&quot;: [
+        {
+            &quot;payStageNam&quot;: &quot;阶段一&quot;,
+            &quot;payAmt&quot;: &quot;100&quot;,
+            &quot;depoName&quot;: &quot;滨江小蜜蜂公司dx&quot;,
+            &quot;acctNo&quot;: &quot;22154545000000&quot;,
+            &quot;payDate&quot;: &quot;2024-05-14&quot;,
+            &quot;provision&quot;: &quot;付款阶段一条款信息&quot;,
+            &quot;remark&quot;: &quot;付款阶段备注信息&quot;
+        }
+    ],
+    &quot;benefitPeriodList&quot;: [
+        {
+            &quot;period&quot;: 1,
+            &quot;useFlag&quot;: &quot;1&quot;
+        },
+        {
+            &quot;period&quot;: 2,
+            &quot;useFlag&quot;: &quot;1&quot;
+        }
+    ] ,
+&quot;customFieldValues&quot;:[
+    {
+      &quot;customFieldCode&quot;: &quot;DATE_171140986&quot;,
+      &quot;customFieldName&quot;: &quot;年&quot;,
+      &quot;customFieldValue&quot;: &quot;2026&quot;,
+      &quot;multiValues&quot;: null
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;DATE_171108284&quot;,
+      &quot;customFieldName&quot;: &quot;年月日时分&quot;,
+      &quot;customFieldValue&quot;: &quot;2025-02-07 18:13&quot;,
+      &quot;multiValues&quot;: null
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;NUM_154903590&quot;,
+      &quot;customFieldName&quot;: &quot;数字&quot;,
+      &quot;customFieldValue&quot;: &quot;232.1&quot;,
+      &quot;multiValues&quot;: null
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;MULTI_INPUT_103441536&quot;,
+      &quot;customFieldName&quot;: &quot;多行文本&quot;,
+      &quot;customFieldValue&quot;: &quot;2523456346564564534汉字&quot;,
+      &quot;multiValues&quot;: null
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;DATE_170354682&quot;,
+      &quot;customFieldName&quot;: &quot;年月日&quot;,
+      &quot;customFieldValue&quot;: &quot;2026-04-04&quot;,
+      &quot;multiValues&quot;: null
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_170344827&quot;,
+      &quot;customFieldName&quot;: &quot;下拉选择单选超长字段&quot;,
+      &quot;customFieldValue&quot;: null,
+      &quot;multiValues&quot;: [
+        {
+          &quot;id&quot;: &quot;选项24363462346362&quot;,
+          &quot;name&quot;: &quot;选项24363462346362&quot;
+        }
+      ]
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_170255122&quot;,
+      &quot;customFieldName&quot;: &quot;下拉选择多选&quot;,
+      &quot;customFieldValue&quot;: null,
+      &quot;multiValues&quot;: [
+        {
+          &quot;id&quot;: &quot;选项3&quot;,
+          &quot;name&quot;: &quot;选项3&quot;
+        }
+      ]
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;MULTI_SELECT_170242640&quot;,
+      &quot;customFieldName&quot;: &quot;多选&quot;,
+      &quot;customFieldValue&quot;: null,
+      &quot;multiValues&quot;: [
+        {
+          &quot;id&quot;: &quot;选项6&quot;,
+          &quot;name&quot;: &quot;选项6&quot;
+        },
+        {
+          &quot;id&quot;: &quot;选项7&quot;,
+          &quot;name&quot;: &quot;选项7&quot;
+        }
+      ]
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;SELECT_170234568&quot;,
+      &quot;customFieldName&quot;: &quot;单选&quot;,
+      &quot;customFieldValue&quot;: &quot;选项3&quot;,
+      &quot;multiValues&quot;: null
+    },
+    {
+      &quot;customFieldCode&quot;: &quot;INPUT_170223156&quot;,
+      &quot;customFieldName&quot;: &quot;单行文本&quot;,
+      &quot;customFieldValue&quot;: &quot;&quot;,
+      &quot;multiValues&quot;: null
+    }
+  ]
+}
+</code></pre>
+<p>响应报文：</p>
+
+<pre><code>
+{
+    &quot;body&quot;: 1966,
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>E0001</td><td>具体业务异常提示</td></tr>
+<tr><td>E0003</td><td>业务执行错误</td></tr>
+<tr><td>EROOR1</td><td>系统错误</td></tr>
+</tbody></table>
+</body>
+</html>

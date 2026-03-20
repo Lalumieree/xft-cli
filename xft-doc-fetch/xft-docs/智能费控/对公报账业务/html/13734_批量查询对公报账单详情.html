@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>批量查询对公报账单详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>批量查询对公报账单详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v2/bills/corporate/supplier/reimburse/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v2/bills/corporate/supplier/reimburse/detail</p>
+<h2>接口描述</h2>
+<p>批量获取对公报账单的单据详情</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>单据编号</td><td></td></tr>
+<tr><td>body.billIdList</td><td>ARRAY</td><td>是</td><td>目前单次查询上限为20条</td><td>[2023103000000001]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>ARRAY</td><td>否</td><td>单据详情数据对象集合</td><td></td></tr>
+<tr><td>body.body.comId</td><td>LONG</td><td>是</td><td>企业编号</td><td>3213</td></tr>
+<tr><td>body.body.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2024050803402009</td></tr>
+<tr><td>body.body.billSts</td><td>STRING</td><td>是</td><td>0：草稿<br>1：待审批<br>2：审批通过<br>4：拒绝<br>5：待财务审核<br>6：待财务复核<br>7： 财务审核通过<br>8： 财务复核通过<br>9： 财务审核驳回<br>10：财务复核驳回<br>11：已撤回<br>12：已退回<br>15：已废弃<br>16：暂存<br>17：废弃中<br>18：等待外部处理<br>19：变更中<br>20：已停用<br>21：已删除</td><td>2</td></tr>
+<tr><td>body.body.useType</td><td>STRING</td><td>是</td><td>必定为2，对应报销单类型</td><td>2</td></tr>
+<tr><td>body.body.eventId</td><td>LONG</td><td>是</td><td>单据类型编号</td><td>02240408200129000006</td></tr>
+<tr><td>body.body.eventType</td><td>STRING</td><td>是</td><td>必定为SUPPLIER_REIM，对应对公报账单</td><td>SUPPLIER_REIM</td></tr>
+<tr><td>body.body.eventName</td><td>STRING</td><td>是</td><td>单据业务类型名称</td><td>对公报账</td></tr>
+<tr><td>body.body.applyTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1715139350000</td></tr>
+<tr><td>body.body.firstApplyTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1715139350000</td></tr>
+<tr><td>body.body.payFinishTim</td><td>LONG</td><td></td><td>13位时间戳</td><td>1715139350000</td></tr>
+<tr><td>body.body.finishTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1715139395000</td></tr>
+<tr><td>body.body.billDepCode</td><td>STRING</td><td>是</td><td>单据所属部门编码</td><td>0000</td></tr>
+<tr><td>body.body.billDepName</td><td>STRING</td><td>是</td><td>单据所属部门名称</td><td>zjy的企业</td></tr>
+<tr><td>body.body.billComLpcCode</td><td>STRING</td><td>否</td><td>单据所属法人公司id</td><td>0000</td></tr>
+<tr><td>body.body.billComLpcName</td><td>STRING</td><td>否</td><td>单据所属法人公司名称</td><td>zjy的企业</td></tr>
+<tr><td>body.body.billProjectCode</td><td>STRING</td><td>否</td><td>单据所属项目编码</td><td>null</td></tr>
+<tr><td>body.body.billProjectName</td><td>STRING</td><td>否</td><td>单据所属项目名称</td><td>null</td></tr>
+<tr><td>body.body.billCenName</td><td>STRING</td><td>否</td><td>单据成本中心名称</td><td>null</td></tr>
+<tr><td>body.body.billCenCode</td><td>STRING</td><td>否</td><td>单据成本中心编号</td><td>null</td></tr>
+<tr><td>body.body.projectTypeCode</td><td>STRING</td><td>否</td><td>单据所属项目类型编码</td><td>null</td></tr>
+<tr><td>body.body.projectTypeName</td><td>STRING</td><td>否</td><td>单据所属项目类型名称</td><td>null</td></tr>
+<tr><td>body.body.billBDCode</td><td>STRING</td><td>否</td><td>单据所属事业部编码</td><td>null</td></tr>
+<tr><td>body.body.billBDName</td><td>STRING</td><td>否</td><td>单据所属事业部名称</td><td>null</td></tr>
+<tr><td>body.body.aplSeqId</td><td>LONG</td><td>是</td><td>报销人唯一编号</td><td>42531</td></tr>
+<tr><td>body.body.aplName</td><td>STRING</td><td>是</td><td>报销人姓名</td><td>www啊啊</td></tr>
+<tr><td>body.body.aplEmpNumber</td><td>STRING</td><td>否</td><td>报销人员工编号</td><td>B0000</td></tr>
+<tr><td>body.body.aplDepCode</td><td>STRING</td><td>是</td><td>报销人所属部门编码</td><td>0000</td></tr>
+<tr><td>body.body.aplDepName</td><td>STRING</td><td>是</td><td>报销人所属部门名称</td><td>zjy的企业</td></tr>
+<tr><td>body.body.wrSeqId</td><td>LONG</td><td>是</td><td>提单人唯一编号</td><td>42531</td></tr>
+<tr><td>body.body.wrEmpNumber</td><td>STRING</td><td>是</td><td>提单人员姓名</td><td>B0000</td></tr>
+<tr><td>body.body.wrName</td><td>STRING</td><td>是</td><td>是否代理</td><td>www啊啊</td></tr>
+<tr><td>body.body.isAgent</td><td>BOOLEAN</td><td>是</td><td>单据可打印标识</td><td>false</td></tr>
+<tr><td>body.body.printStatus</td><td>STRING</td><td>是</td><td>0：不可打印<br>1：可打印是</td><td>1</td></tr>
+<tr><td>body.body.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>合计金额</td><td>0</td></tr>
+<tr><td>body.body.billPayStatus</td><td>STRING</td><td>否</td><td>0：待付款<br>1：付款中<br>2：付款成功<br>3：付款失败<br>4：部分付款成功<br>5：已发起<br>6：已取消<br>7：取消支付<br>8：部分取消支付</td><td>0</td></tr>
+<tr><td>body.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList</td><td>ARRAY</td><td>否</td><td>[字段说明](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=12746)</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.fieldNumber</td><td>STRING</td><td>否</td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>承担部门</td></tr>
+<tr><td>body.body.billCustomFieldList.sourceValue</td><td>STRING</td><td>是</td><td>取值来源</td><td>[&quot;0000&quot;]</td></tr>
+<tr><td>body.body.billCustomFieldList.showValue</td><td>STRING</td><td>是</td><td>自定义字段的值</td><td>[{&quot;departmentCode&quot;:&quot;0000&quot;,&quot;departmentName&quot;:&quot;zjy的企业/zjy的企业&quot;}]</td></tr>
+<tr><td>body.body.billCustomFieldList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.billCustomFieldList.required</td><td>BOOLEAN</td><td>是</td><td>是否必填</td><td>true</td></tr>
+<tr><td>body.body.billCustomFieldList.printEnable</td><td>LONG</td><td>是</td><td>0：不可打印<br>1：可打印</td><td>1</td></tr>
+<tr><td>body.body.billCustomFieldList.description</td><td>STRING</td><td>是</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.multiple</td><td>BOOLEAN</td><td>是</td><td>是否多选</td><td>false</td></tr>
+<tr><td>body.body.billCustomFieldList.options</td><td>ARRAY</td><td>否</td><td>选项数组</td><td>[]</td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList</td><td>ARRAY</td><td>否</td><td>表格表头</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.name</td><td>STRING</td><td>是</td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.code</td><td>STRING</td><td>是</td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.type</td><td>STRING</td><td>是</td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.fieldCode</td><td>STRING</td><td>是</td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.relatedBillList</td><td>ARRAY</td><td>否</td><td>关联单据信息</td><td></td></tr>
+<tr><td>body.body.relatedBillList.comId</td><td>LONG</td><td>是</td><td>企业唯一编号</td><td></td></tr>
+<tr><td>body.body.relatedBillList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td></td></tr>
+<tr><td>body.body.relatedBillList.empSeqId</td><td>LONG</td><td>是</td><td>员工唯一编号</td><td></td></tr>
+<tr><td>body.body.relatedBillList.relBillId</td><td>LONG</td><td>是</td><td>关联单据唯一编号</td><td></td></tr>
+<tr><td>body.body.relatedBillList.relType</td><td>STRING</td><td></td><td>REL_APPLY_BILL：关联申请单组件<br>REL_BILL： 关联单据自定义字段</td><td></td></tr>
+<tr><td>body.body.relatedBillList.usedState</td><td>STRING</td><td>是</td><td>1：已使用<br>0：未使用</td><td></td></tr>
+<tr><td>body.body.expenseList</td><td>ARRAY</td><td>否</td><td>费用集合</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSeqId</td><td>LONG</td><td>是</td><td>费用唯一编号</td><td>6036388</td></tr>
+<tr><td>body.body.expenseList.comId</td><td>LONG</td><td>是</td><td>企业唯一编号</td><td>3213</td></tr>
+<tr><td>body.body.expenseList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2024050803402009</td></tr>
+<tr><td>body.body.expenseList.expTypeCode</td><td>STRING</td><td>是</td><td>费用类型编码</td><td>00001</td></tr>
+<tr><td>body.body.expenseList.expTypeName</td><td>STRING</td><td>是</td><td>费用类型名称</td><td>酒店费用类型</td></tr>
+<tr><td>body.body.expenseList.expAttribute</td><td>STRING</td><td>是</td><td>费用属性</td><td>HOTEL</td></tr>
+<tr><td>body.body.expenseList.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>body.body.expenseList.commonOrderList</td><td>ARRAY</td><td>否</td><td>关联的订单信息集合</td><td>null</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.comId</td><td>LONG</td><td>是</td><td>企业编号</td><td>4426</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2023103001982406</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.expenseSeqId</td><td>LONG</td><td>是</td><td>费用唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderSeqId</td><td>LONG</td><td>是</td><td>订单唯一编号</td><td>80291528587</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderId</td><td>STRING</td><td>是</td><td>订单业务编号</td><td>2-10174157920</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderType</td><td>STRING</td><td>是</td><td>FLIGHT：机票<br>HOTEL：酒店<br>TRAIN：火车票<br>CAR：用车<br>MEAL：用餐</td><td>TRAIN</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderStatus</td><td>STRING</td><td>是</td><td>N：预定<br>C：改签<br>T：退票</td><td>N</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.payType</td><td>STRING</td><td>是</td><td>1：企业支付<br>2：个人垫付</td><td>2</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.orderTime</td><td>STRING</td><td></td><td>yyyy-MM-dd HH:mm:ss</td><td>2023-10-30 00:19:16</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.amount</td><td>BIGDECIMAL</td><td>是</td><td>订单金额</td><td>366</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.ticketRates</td><td>BIGDECIMAL</td><td></td><td>订单票价</td><td>366</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.serviceFee</td><td>BIGDECIMAL</td><td></td><td>平台服务费</td><td>0</td></tr>
+<tr><td>body.body.expenseList.commonOrderList.refundChangeServiceFee</td><td>BIGDECIMAL</td><td></td><td>退改签服务费</td><td>0</td></tr>
+<tr><td>body.body.expenseList.employeeMonthOrderFlag</td><td>STRING</td><td>否</td><td>OFF：否<br>ON： 是</td><td>OFF</td></tr>
+<tr><td>body.body.expenseList.employeeMonthOrderAmount</td><td>BIGDECIMAL</td><td>否</td><td>月结费用金额</td><td>0</td></tr>
+<tr><td>body.body.expenseList.taxPriceSeparationState</td><td>STRING</td><td>否</td><td>0：否<br>1：是</td><td>0</td></tr>
+<tr><td>body.body.expenseList.taxFreeAmount</td><td>BIGDECIMAL</td><td>否</td><td>非税金额</td><td>null</td></tr>
+<tr><td>body.body.expenseList.reimAmount</td><td>BIGDECIMAL</td><td>是</td><td>报销金额</td><td>2</td></tr>
+<tr><td>body.body.expenseList.updAmount</td><td>BIGDECIMAL</td><td>否</td><td>更新金额</td><td>null</td></tr>
+<tr><td>body.body.expenseList.taxAmount</td><td>BIGDECIMAL</td><td>否</td><td>税额</td><td>null</td></tr>
+<tr><td>body.body.expenseList.taxRate</td><td>BIGDECIMAL</td><td>否</td><td>税率</td><td>null</td></tr>
+<tr><td>body.body.expenseList.taxName</td><td>STRING</td><td>否</td><td>税项名称</td><td>null</td></tr>
+<tr><td>body.body.expenseList.inputTransferAmount</td><td>BIGDECIMAL</td><td>否</td><td>进项转出金额</td><td>null</td></tr>
+<tr><td>body.body.expenseList.updRsn</td><td>STRING</td><td>否</td><td>费用修改原因</td><td>null</td></tr>
+<tr><td>body.body.expenseList.needBsCrdMemo</td><td>STRING</td><td>否</td><td>费用缺失商务卡备注</td><td></td></tr>
+<tr><td>body.body.expenseList.needBsCrdFlg</td><td>LONG</td><td>否</td><td>费用缺失商务卡标识</td><td>0</td></tr>
+<tr><td>body.body.expenseList.vatInvoiceState</td><td>LONG</td><td>否</td><td>是否含有专票</td><td>0</td></tr>
+<tr><td>body.body.expenseList.awardList</td><td>ARRAY</td><td>否</td><td>奖励信息集合</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.comId</td><td>LONG</td><td>是</td><td>企业编号</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.expenseSeqId</td><td>LONG</td><td>是</td><td>费用唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.awardType</td><td>STRING</td><td>是</td><td>1：差额奖励<br>2：折扣奖励</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.currencyCode</td><td>STRING</td><td>是</td><td>国际通用三位字母币种编码<br>CNY：人民币<br>USD：美元</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.currencyRate</td><td>BIGDECIMAL</td><td>是</td><td>汇率</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.originalAwardAmount</td><td>BIGDECIMAL</td><td>是</td><td>奖励原币金额</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.awardRatio</td><td>BIGDECIMAL</td><td>是</td><td>比例</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.expenseAmountUnderLimit</td><td>BIGDECIMAL</td><td>是</td><td>费用金额比例下限</td><td></td></tr>
+<tr><td>body.body.expenseList.awardList.awardAmount</td><td>BIGDECIMAL</td><td>是</td><td>奖励金额</td><td></td></tr>
+<tr><td>body.body.expenseList.partReimInvoice</td><td>BOOLEAN</td><td>否</td><td>发票是否为部分报销</td><td>false</td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList</td><td>ARRAY</td><td>否</td><td>发票集合</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceCode</td><td>STRING</td><td></td><td>发票代码</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceNumber</td><td>STRING</td><td></td><td>发票号码</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDate</td><td>STRING</td><td></td><td>yyyy-MM-dd</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceStatus</td><td>STRING</td><td></td><td>B： 未报销<br>L： 报销中<br>S：已报销</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceType</td><td>STRING</td><td></td><td>1：区块链电子发票<br>2：普通电子发票<br>3：增值税普通发票<br>4：增值税专用发票<br>5：火车票<br>6：飞机行程单<br>7：出租车<br>8：定额<br>B：卷式发票</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceCheckStatus</td><td>STRING</td><td></td><td>A：有效,<br>B：作废</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoicePrintNumber</td><td>STRING</td><td></td><td>机打号码</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceAmount</td><td>BIGDECIMAL</td><td></td><td>价税合计</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceCheckResult</td><td>STRING</td><td></td><td>A：未查验<br>T：真票<br>F：假票<br>E：异常，特指网络通信异常</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.buyerName</td><td>STRING</td><td></td><td>购方名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.buyerCode</td><td>STRING</td><td></td><td>购方税号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.sellerName</td><td>STRING</td><td></td><td>销方名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.sellerCode</td><td>STRING</td><td></td><td>销方税号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList</td><td>ARRAY</td><td></td><td>发票明细</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.invoiceDetailSeqId</td><td>STRING</td><td></td><td>发票明细编号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.godSeq</td><td>STRING</td><td></td><td>序号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.taxName</td><td>STRING</td><td></td><td>税目名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.certificateSeqId</td><td>STRING</td><td></td><td>凭证编号</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.goodsName</td><td>STRING</td><td></td><td>名称</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.godNum</td><td>BIGDECIMAL</td><td></td><td>数量</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.taxRate</td><td>BIGDECIMAL</td><td></td><td>税率</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.ptxAmt</td><td>BIGDECIMAL</td><td></td><td>含税金额</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.ptnAmt</td><td>BIGDECIMAL</td><td></td><td>不含税金额</td><td></td></tr>
+<tr><td>body.body.expenseList.invoiceInfoList.invoiceDetailList.taxAmt</td><td>BIGDECIMAL</td><td></td><td>税额</td><td></td></tr>
+<tr><td>body.body.expenseList.shareRule</td><td>LONG</td><td>否</td><td>分摊规则<br><br>0：税金需要分摊<br>1：税金不需要分摊</td><td>0</td></tr>
+<tr><td>body.body.expenseList.expenseSpread</td><td>OBJECT</td><td>否</td><td>分摊信息</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.seqId</td><td>LONG</td><td>是</td><td>分摊唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadBusinessType</td><td>STRING</td><td>是</td><td>EXPENSE：费用/补助</td><td>EXPENSE</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadBusinessId</td><td>STRING</td><td>是</td><td>分摊业务唯一编号</td><td>10000000001</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.totalAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.originalTotalAmount</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>100.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.currencyCode</td><td>STRING</td><td></td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList</td><td>ARRAY</td><td></td><td>分摊条目</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.id</td><td>LONG</td><td>是</td><td>分摊条目的唯一ID</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadAmount</td><td>BIGDECIMAL</td><td></td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.originalSpreadAmount</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>55.00</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.currencyCode</td><td>STRING</td><td></td><td>分摊币种编码</td><td>CNY</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.priceTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>0.09</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.priceWithoutTax</td><td>STRING</td><td></td><td>精确到小数点后2位</td><td>54.01</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.departmentCode</td><td>STRING</td><td></td><td>部门编号</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.departmentName</td><td>STRING</td><td></td><td>部门名称</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.empName</td><td>STRING</td><td></td><td>员工姓名</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.empNumber</td><td>STRING</td><td></td><td>员工工号</td><td>00000001</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.empSeqId</td><td>LONG</td><td></td><td>员工唯一编号</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.projectCode</td><td>STRING</td><td></td><td>项目编码</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.projectName</td><td>STRING</td><td></td><td>项目名称</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.proportion</td><td>BIGDECIMAL</td><td>是</td><td>精确到小数点后4位</td><td>33.3333</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.overBudgetFlag</td><td>STRING</td><td></td><td>* 0：不超<br>* 1：超</td><td>0</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList</td><td>ARRAY</td><td></td><td>自定义分摊的字段取值集合，与分摊方方式的分摊字段配置一一对应</td><td></td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.spreadItemId</td><td>LONG</td><td>是</td><td>所属分摊条目的唯一ID</td><td>10000</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldName</td><td>STRING</td><td>是</td><td>该字段值为系统设置 -&gt; 分摊方式页面中具体的分摊字段的字段名称</td><td>部门</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldType</td><td>STRING</td><td>是</td><td>* system：系统字段<br>* custom：自定义字段</td><td>system</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldBizType</td><td>STRING</td><td>是</td><td>* 员工：EMPLOYEE<br>* 客户：CUSTOMER<br>* 部门：DEPARTMENT<br>* 项目：PROJECT<br>* 成本中心：COSTCENTER<br>* 业务分组：BUSINESSGROUP<br>* 自定义档案：CUSTOMFILE</td><td>DEPARTMENT</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSeqId</td><td>LONG</td><td>是</td><td>字段取值自增id</td><td>10001</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueCode</td><td>STRING</td><td>是</td><td>字段取值编号</td><td>0000</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueName</td><td>STRING</td><td>是</td><td>字段取值名称</td><td>部门1</td></tr>
+<tr><td>body.body.expenseList.expenseSpread.spreadItemList.spreadFieldValueApiViewDTOList.fieldValueSourceCode</td><td>STRING</td><td></td><td>字段取值来源, 目前只有自定义档案的编码</td><td></td></tr>
+<tr><td>body.body.expenseList.bgtOutMemo</td><td>STRING</td><td>否</td><td>预算超支原因</td><td>null</td></tr>
+<tr><td>body.body.expenseList.bgtOverFlag</td><td>STRING</td><td>否</td><td>0：不超标<br>1：超标</td><td>null</td></tr>
+<tr><td>body.body.expenseList.departure</td><td>STRING</td><td>否</td><td>出发地编码</td><td>null</td></tr>
+<tr><td>body.body.expenseList.destination</td><td>STRING</td><td>否</td><td>目的地编码</td><td>null</td></tr>
+<tr><td>body.body.expenseList.dstntIndex</td><td>DOUBLE</td><td>否</td><td>所属行程序号</td><td>0</td></tr>
+<tr><td>body.body.expenseList.bgnTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>null</td></tr>
+<tr><td>body.body.expenseList.endTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>null</td></tr>
+<tr><td>body.body.expenseList.checkInDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1714521600000</td></tr>
+<tr><td>body.body.expenseList.checkOutDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1715126400000</td></tr>
+<tr><td>body.body.expenseList.payCity</td><td>LONG</td><td>否</td><td>消费城市唯一编码</td><td>1</td></tr>
+<tr><td>body.body.expenseList.discount</td><td>STRING</td><td>否</td><td>机票折扣</td><td>null</td></tr>
+<tr><td>body.body.expenseList.aircraftCabin</td><td>STRING</td><td>否</td><td>1：头等舱<br>2：公务舱<br>3：经济舱<br>4：超级经济舱</td><td>null</td></tr>
+<tr><td>body.body.expenseList.airlineNo</td><td>STRING</td><td>否</td><td>航班号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.airlineCom</td><td>STRING</td><td>否</td><td>航空公司</td><td>null</td></tr>
+<tr><td>body.body.expenseList.flightETicketNo</td><td>STRING</td><td>否</td><td>机票电子客票号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.flightFullPrice</td><td>BIGDECIMAL</td><td>否</td><td>机票全价</td><td>null</td></tr>
+<tr><td>body.body.expenseList.civilAviationFund</td><td>BIGDECIMAL</td><td>否</td><td>民航发展基金</td><td>null</td></tr>
+<tr><td>body.body.expenseList.trainNo</td><td>STRING</td><td>否</td><td>列车号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.trainETicketNo</td><td>STRING</td><td>否</td><td>火车票票号</td><td>null</td></tr>
+<tr><td>body.body.expenseList.trainCabin</td><td>STRING</td><td>否</td><td>1：商务座<br>2：特等座<br>3：一等座<br>4：二等座<br>5：高级软卧<br>6：软卧<br>7：硬卧<br>8：软座<br>9：硬座<br>10：站票<br>11：动卧<br>12：一等软座<br>13：二等软座<br>14：一人软包<br>15：高级动卧</td><td>null</td></tr>
+<tr><td>body.body.expenseList.shipCabin</td><td>STRING</td><td>否</td><td>1：一等舱<br>2：二等舱<br>3：三等舱</td><td>null</td></tr>
+<tr><td>body.body.expenseList.partiNbr</td><td>INTEGER</td><td>否</td><td>参与人数</td><td>null</td></tr>
+<tr><td>body.body.expenseList.merchantName</td><td>STRING</td><td>否</td><td>商户名称</td><td>2</td></tr>
+<tr><td>body.body.expenseList.hotelStar</td><td>STRING</td><td>否</td><td>1：五星<br>2：四星<br>3：三星<br>4： 其他</td><td>null</td></tr>
+<tr><td>body.body.expenseList.wrTim</td><td>DATE</td><td>否</td><td>13位时间戳</td><td>null</td></tr>
+<tr><td>body.body.expenseList.plcIlgMemo</td><td>STRING</td><td>否</td><td>政策违规备注</td><td></td></tr>
+<tr><td>body.body.expenseList.plcIlgFlg</td><td>STRING</td><td>否</td><td>0：不违规<br>1：违规</td><td>0</td></tr>
+<tr><td>body.body.expenseList.bgtErrMsg</td><td>STRING</td><td>否</td><td>政策违规提示信息</td><td></td></tr>
+<tr><td>body.body.expenseList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>body.body.expenseList.rate</td><td>BIGDECIMAL</td><td>否</td><td>汇率</td><td>1</td></tr>
+<tr><td>body.body.expenseList.systemRate</td><td>BIGDECIMAL</td><td>否</td><td>系统汇率</td><td>1</td></tr>
+<tr><td>body.body.expenseList.originalCurrencyReimAmt</td><td>BIGDECIMAL</td><td>否</td><td>原币费用金额</td><td>2</td></tr>
+<tr><td>body.body.supplierReimburse</td><td>OBJECT</td><td>否</td><td>报账信息</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo</td><td>OBJECT</td><td>否</td><td>付款账户</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.accountSeqId</td><td>LONG</td><td>否</td><td>收款账户自增ID</td><td>63</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.paySeqId</td><td>STRING</td><td>否</td><td>账户关联ID</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.acctType</td><td>STRING</td><td>否</td><td>1-对公账户，0-个人账户</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.bankCode</td><td>STRING</td><td>否</td><td>银行编码</td><td>308</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.bankName</td><td>STRING</td><td>否</td><td>银行名称</td><td>招商银行</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoBank</td><td>STRING</td><td>否</td><td>开户行编码</td><td>308100005019</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoBankName</td><td>STRING</td><td>否</td><td>开户行名称</td><td>招商银行股份有限公司北京分行</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.recBankBnr</td><td>STRING</td><td>否</td><td>联行号(其实没有用到，是放在了开户行编码里)</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoName</td><td>STRING</td><td>否</td><td>银行户名</td><td>zjy的企业</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.acctNo</td><td>STRING</td><td>否</td><td>银行账号</td><td>NjIyNTExMDE1NTg3Nzg0NQ==</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoCountry</td><td>STRING</td><td>否</td><td>开户国家</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoProvince</td><td>STRING</td><td>否</td><td>开户省份编码</td><td>110000</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoProvinceName</td><td>STRING</td><td>否</td><td>开户省份名称</td><td>北京市</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoCity</td><td>STRING</td><td>否</td><td>开户城市编码</td><td>110000</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.depoCityName</td><td>STRING</td><td>否</td><td>开户城市名称</td><td>北京市</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.accountFlag</td><td>STRING</td><td>否</td><td>SP：报账付款账户；SR：报账收款账户 AP：付款申请付款账户；AR：付款申请收款账户 RP：退款单退款账户；RR：退款单收款账户</td><td>SP</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.payAccountSeqId</td><td>LONG</td><td>否</td><td>供应商收款账户自增ID</td><td>63</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.accountPayType</td><td>STRING</td><td>否</td><td>0-对私，1-对公</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.cloudConfigNumber</td><td>STRING</td><td>否</td><td>招行云直联配置标识号</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.cloudBusinessModel</td><td>STRING</td><td>否</td><td>招行云直联业务模式</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.accountMode</td><td>STRING</td><td>否</td><td>银行账户 数字人民币账户</td><td>BANK</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.accountType</td><td>STRING</td><td>否</td><td>银行账户 数字人民币账户</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.collectingCompanyName</td><td>STRING</td><td>否</td><td>收款公司名称</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.acctSeqId</td><td>STRING</td><td>否</td><td>收款账户自增ID</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payAccountInfo.accountRemark</td><td>STRING</td><td>否</td><td>账户备注，付款账户有，保存是查询同步</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract</td><td>OBJECT</td><td>否</td><td>单数据模式：关联合同信息</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractSeqId</td><td>LONG</td><td>否</td><td>合同自增ID</td><td>21051</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractId</td><td>STRING</td><td>否</td><td>合同编码</td><td>CON20240423201250</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractName</td><td>STRING</td><td>否</td><td>合同名称</td><td>zj合同-对公</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType</td><td>OBJECT</td><td>否</td><td>合同类型对象</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractTypeSeqId</td><td>LONG</td><td>否</td><td>合同类型自增ID</td><td>101</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractTypeId</td><td>STRING</td><td>否</td><td>合同类型编码</td><td>CONTRATTYPE20211028150837</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractTypeName</td><td>STRING</td><td>否</td><td>合同类型名称</td><td>合同2</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractTypeParentId</td><td>STRING</td><td>否</td><td>上级项目类型编号</td><td>CONTRATTYPE20211028101011</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractTypeParentName</td><td>STRING</td><td>否</td><td>上级项目类型名称</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractTypeLevel</td><td>STRING</td><td>否</td><td>项目类型层级</td><td>2</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.contractAttr</td><td>STRING</td><td>否</td><td>0-归档合同 1-付款合同 2-框架合同</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.benefitPeriodFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.stampTaxFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractType.useFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.contract.payStampTaxFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.contract.periodType</td><td>STRING</td><td>否</td><td>m-月</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.startPeriod</td><td>STRING</td><td>否</td><td>初始周期</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.projectSeqId</td><td>LONG</td><td>否</td><td>相关项目自增ID</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.projectName</td><td>STRING</td><td>否</td><td>相关项目名称</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractAmount</td><td>BIGDECIMAL</td><td>否</td><td>合同金额</td><td>113377777</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractStatus</td><td>STRING</td><td>否</td><td>0：审批中，1：未履行，2：履行中，3：已终止，4：已过期</td><td>5</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractStartDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>2024-04-23</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractEndDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>2025-05-23</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractAmountType</td><td>STRING</td><td>否</td><td>1.付款 2.收款</td><td>2</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractDepSeqId</td><td>LONG</td><td>否</td><td>合同申请部门</td><td>47877</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractDepName</td><td>STRING</td><td>否</td><td>合同申请部门名称</td><td>zjy的企业</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractComSeqId</td><td>LONG</td><td>否</td><td>合同公司自增</td><td>47877</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractComId</td><td>STRING</td><td>否</td><td>合同公司Id</td><td>0000</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractComNam</td><td>STRING</td><td>否</td><td>合同公司名称</td><td>zjy的企业</td></tr>
+<tr><td>body.body.supplierReimburse.contract.contractTypeAttr</td><td>STRING</td><td>否</td><td>合同性质</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.contract.supSeqId</td><td>LONG</td><td>否</td><td>供应商自增ID</td><td>29025</td></tr>
+<tr><td>body.body.supplierReimburse.contract.supNam</td><td>STRING</td><td>否</td><td>供应商名称</td><td>新增0420</td></tr>
+<tr><td>body.body.supplierReimburse.contract.lockSts</td><td>STRING</td><td>否</td><td>锁定状态</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.unpaidTotalAmount</td><td>STRING</td><td>否</td><td>合同条款未付总金额</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.leftDays</td><td>INTEGER</td><td>否</td><td>合同剩余天数</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.billRemark</td><td>STRING</td><td>否</td><td>单据备注信息</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.tempSaveFlg</td><td>STRING</td><td>否</td><td>是否为暂存单据</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.contract.remainedAmount</td><td>STRING</td><td>否</td><td>剩余金额</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto</td><td>OBJECT</td><td>否</td><td>单数据模式：供应商信息</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supSeqId</td><td>LONG</td><td>否</td><td>供应商自增ID</td><td>29025</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.id</td><td>STRING</td><td>否</td><td>自定义字段供应商自增ID</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supSts</td><td>STRING</td><td>否</td><td>1-启用，0-禁用</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.mainCompany</td><td>STRING</td><td>否</td><td>主体公司</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supTypeValue</td><td>STRING</td><td>否</td><td>供应商类型值</td><td>60</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supTypeName</td><td>STRING</td><td>否</td><td>供应商类型名称</td><td>外部公司</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supId</td><td>STRING</td><td>否</td><td>供应商编码</td><td>SUP20240420130442</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supNam</td><td>STRING</td><td>否</td><td>供应商名称</td><td>新增0420</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.corOrgNbr</td><td>STRING</td><td>否</td><td>统一社会信用代码/身份证号码</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.enableDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supDepSeqId</td><td>LONG</td><td>否</td><td>申请部门自增ID</td><td>47877</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supDepId</td><td>STRING</td><td>否</td><td>申请部门ID</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.supDepName</td><td>STRING</td><td>否</td><td>申请部门名字</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.availableOrgType</td><td>STRING</td><td>否</td><td>1：部分， 0：全部</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.supplierDto.useFlag</td><td>STRING</td><td>否</td><td>供应商使用状态</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList</td><td>ARRAY</td><td>否</td><td>付款明细列表</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.paySeqId</td><td>LONG</td><td>否</td><td>自增ID</td><td>3735</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf</td><td>OBJECT</td><td>否</td><td>付款类型</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.payTypSeqId</td><td>LONG</td><td>否</td><td>付款类型自增ID</td><td>2482</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.businessScenario</td><td>STRING</td><td>否</td><td>(1-员工报销， 2-对对公支付)</td><td>2</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.payType</td><td>STRING</td><td>否</td><td>(1-线上付款、2-线下付款)</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.payMethod</td><td>STRING</td><td>否</td><td>付款方式</td><td>网银支付</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.status</td><td>STRING</td><td>否</td><td>0: 停用， 1：启用</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.isDefault</td><td>STRING</td><td>否</td><td>0: 否， 1：是</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.typeFlag</td><td>STRING</td><td>否</td><td>AUK-异步网银，CDC-云直连</td><td>AUK</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payTypInf.wthrSystemPreset</td><td>STRING</td><td>否</td><td>是否系统预设</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payAmount</td><td>BIGDECIMAL</td><td>否</td><td>应付金额</td><td>2</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.originalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>付款原币金额</td><td>2</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.loanReversalAmount</td><td>BIGDECIMAL</td><td>否</td><td>冲借款金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.originalLoanReversalAmount</td><td>BIGDECIMAL</td><td>否</td><td>冲借款原币金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.actualPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>实际付款金额</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.originalActualPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>实际付款原币金额</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.planPayDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1715097600000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf</td><td>OBJECT</td><td>否</td><td>关联付款条款</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.payProvisionSeqId</td><td>LONG</td><td>否</td><td>条款自增ID</td><td>20626</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.payStageNam</td><td>LONG</td><td>否</td><td>付款阶段名称</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.payAmt</td><td>BIGDECIMAL</td><td>否</td><td>付款金额</td><td>111111111</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.unpaidAmount</td><td>BIGDECIMAL</td><td>否</td><td>未付金额</td><td>111111109</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.payDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1745510400000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.provision</td><td>STRING</td><td>否</td><td>条款</td><td>水电</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.provisionInf.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo</td><td>OBJECT</td><td>否</td><td>收款方信息</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.accountSeqId</td><td>LONG</td><td>否</td><td>收款账户自增ID</td><td>17021</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.paySeqId</td><td>LONG</td><td>否</td><td>账户关联ID</td><td>3735</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.acctType</td><td>LONG</td><td>否</td><td>1-对公账户，0-个人账户</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.bankCode</td><td>LONG</td><td>否</td><td>银行编码</td><td>314</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.bankName</td><td>STRING</td><td>否</td><td>银行名称</td><td>农村商业银行</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoBank</td><td>LONG</td><td>否</td><td>开户行编码</td><td>314305570606</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoBankName</td><td>STRING</td><td>否</td><td>开户行名称</td><td>江苏常熟农村商业银行股份有限公司招商支行</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.recBankBnr</td><td>STRING</td><td>否</td><td>联行号(其实没有用到，是放在了开户行编码里)</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoName</td><td>STRING</td><td>否</td><td>银行户名</td><td>农村商业</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.acctNo</td><td>STRING</td><td>否</td><td>银行账号</td><td>MQ==</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoCountry</td><td>STRING</td><td>否</td><td>开户国家</td><td>中国</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoProvince</td><td>STRING</td><td>否</td><td>开户省份编码</td><td>320000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoProvinceName</td><td>STRING</td><td>否</td><td>开户省份名称</td><td>江苏省</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoCity</td><td>STRING</td><td>否</td><td>开户城市编码</td><td>320500</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.depoCityName</td><td>STRING</td><td>否</td><td>开户城市名称</td><td>苏州市</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.accountFlag</td><td>STRING</td><td>否</td><td>SP：报账付款账户；SR：报账收款账户 AP：付款申请付款账户；AR：付款申请收款账户 RP：退款单退款账户；RR：退款单收款账户</td><td>SR</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.payAccountSeqId</td><td>LONG</td><td>否</td><td>收款账户自增ID</td><td>17021</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.accountPayType</td><td>LONG</td><td>否</td><td>0-对私，1-对公</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.cloudConfigNumber</td><td>STRING</td><td>否</td><td>招行云直联配置标识号</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.cloudBusinessModel</td><td>STRING</td><td>否</td><td>招行云直联业务模式</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.accountMode</td><td>STRING</td><td>否</td><td>银行账户 数字人民币账户</td><td>BANK</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.accountType</td><td>STRING</td><td>否</td><td>银行账户 数字人民币账户</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.collectingCompanyName</td><td>STRING</td><td>否</td><td>收款公司名称</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.acctSeqId</td><td>STRING</td><td>否</td><td>供应商收款账户表主键</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.accountInfo.accountRemark</td><td>STRING</td><td>否</td><td>账户备注，付款账户有，保存是查询同步</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList</td><td>ARRAY</td><td>否</td><td>核销明细</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.empSeqId</td><td>LONG</td><td>否</td><td>核销操作人</td><td>42531</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendBillId</td><td>LONG</td><td>否</td><td>借款单号</td><td>2024042303343412</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.eventNam</td><td>STRING</td><td>否</td><td>借款单单据名称</td><td>zj预付款</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendEmpName</td><td>STRING</td><td>否</td><td>借款单申请人名称</td><td>www啊啊</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendEmpNumber</td><td>STRING</td><td>否</td><td>借款单申请人花名册员工号</td><td>B0000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendBillPayDate</td><td>STRING</td><td>否</td><td>yyyy-MM-dd</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.aplNam</td><td>STRING</td><td>否</td><td>申请人姓名</td><td>www啊啊</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendTypeName</td><td>STRING</td><td>否</td><td>借款类型名称</td><td>zj预付款</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendObject</td><td>STRING</td><td>否</td><td>SUPPLIER(供应商), EMPLOYEE(员工)</td><td>SUPPLIER</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.payBillId</td><td>LONG</td><td>否</td><td>报销单号</td><td>2024050803402009</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.beforeRemainingPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>本次核销前借款单剩余还款金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.originalBeforeRemainingPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>本次核销前借款单剩余还款原币金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.payAmount</td><td>BIGDECIMAL</td><td>否</td><td>本次核销金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.originalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>本次核销原币金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.originalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>预付款总金额原币</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.repaymentDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713830400000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.arriveTicketDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1713830400000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>总金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.applyTotalAmount</td><td>BIGDECIMAL</td><td>否</td><td>事前申请总金额</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.budgetOpen</td><td>STRING</td><td>否</td><td>默认0 关闭 1开启</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendExpTypeRelSeqId</td><td>STRING</td><td>否</td><td>借款单配置费用类型自增id</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.billComSeqId</td><td>LONG</td><td>否</td><td>单据公司自增id</td><td>47877</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.billComNam</td><td>STRING</td><td>否</td><td>单据公司名称</td><td>zjy的企业</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.applyTim</td><td>STRING</td><td>否</td><td>yyyy-MM-dd HH:mm:ss</td><td>2024-04-23 20:52:54</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.billProjectSeqId</td><td>DOUBLE</td><td>否</td><td>单据所属项目SeqId</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendBillSts</td><td>STRING</td><td>否</td><td>借款单单据状态</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.currencyCode</td><td>STRING</td><td>否</td><td>币种代码</td><td>CNY</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.rate</td><td>BIGDECIMAL</td><td>否</td><td>汇率</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.totalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>借款总金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.originalTotalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>借款总原币金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendEmpSeqId</td><td>LONG</td><td>否</td><td>借款单申请人自增id</td><td>42531</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.lendEmpId</td><td>STRING</td><td>否</td><td>借款单申请人id</td><td>U0000</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.totalPayAmount</td><td>BIGDECIMAL</td><td>否</td><td>全单据核销金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.lendPayList.relLendTypeName</td><td>STRING</td><td>否</td><td>关联的借款单的借款类型名称</td><td>类型四</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.payPeriodType</td><td>STRING</td><td>否</td><td>付款时效类型</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.remark</td><td>STRING</td><td>否</td><td>备注</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.useDiscount</td><td>LONG</td><td>否</td><td>使用折扣</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.discountAmount</td><td>BIGDECIMAL</td><td>否</td><td>折扣金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.originalDiscountAmount</td><td>BIGDECIMAL</td><td>否</td><td>折扣原币金额</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.benefitPeriodList</td><td>ARRAY</td><td>否</td><td>结构同单数据模式</td><td>[]</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.currencyCode</td><td>STRING</td><td>否</td><td>币种</td><td>CNY</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.rate</td><td>BIGDECIMAL</td><td>否</td><td>汇率</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.contract</td><td>OBJECT</td><td>否</td><td>结构同单数据模式</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.payDetailList.supplierDto</td><td>OBJECT</td><td>否</td><td>结构同单数据模式</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList</td><td>ARRAY</td><td>否</td><td>单数据模式：关联合同受益期</td><td></td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.seqId</td><td>LONG</td><td>否</td><td>合同受益期自增ID</td><td>787</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.period</td><td>STRING</td><td>否</td><td>受益阶段(1 2...)</td><td>1</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.periodRemark</td><td>STRING</td><td>否</td><td>周期说明</td><td>2024-03</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.benefitAmount</td><td>BIGDECIMAL</td><td>否</td><td>受益金额</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.relBillId</td><td>STRING</td><td>否</td><td>关联单据编号</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.paidAmount</td><td>BIGDECIMAL</td><td>否</td><td>已付金额</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.actAmount</td><td>BIGDECIMAL</td><td>否</td><td>实付金额</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.payStampTaxFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.useFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>0</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.usedFlag</td><td>STRING</td><td>否</td><td>0-否 1-是</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.benefitPeriodList.modifySourceId</td><td>LONG</td><td>否</td><td>变更单源id</td><td>null</td></tr>
+<tr><td>body.body.supplierReimburse.reconciliationIds</td><td>ARRAY</td><td>否</td><td>外部业务字段，月结对账编号</td><td>[]</td></tr>
+<tr><td>body.body.supplierReimburse.externalBusinessId</td><td>STRING</td><td>否</td><td>外部业务字段, 由reconciliationIds计算而来</td><td>null</td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+<tr><td>body.errorMsg</td><td>STRING</td><td></td><td>错误信息</td><td>失败</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+    &quot;billIdList&quot;: [
+        2024050803402009,
+        2024042603367610
+    ]
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;comId&quot;: 3213,
+            &quot;billId&quot;: 2024050803402009,
+            &quot;billSts&quot;: &quot;2&quot;,
+            &quot;useType&quot;: &quot;2&quot;,
+            &quot;eventId&quot;: &quot;02240408200129000006&quot;,
+            &quot;eventType&quot;: &quot;SUPPLIER_REIM&quot;,
+            &quot;eventName&quot;: &quot;zj对公报账-多供多合-综&quot;,
+            &quot;applyTim&quot;: 1715139350000,
+            &quot;firstApplyTim&quot;: 1715139350000,
+            &quot;finishTim&quot;: 1715139395000,
+            &quot;billDepCode&quot;: &quot;0000&quot;,
+            &quot;billDepName&quot;: &quot;zjy的企业&quot;,
+            &quot;billComLpcCode&quot;: &quot;0000&quot;,
+            &quot;billComLpcName&quot;: &quot;zjy的企业&quot;,
+            &quot;billProjectCode&quot;: null,
+            &quot;billProjectName&quot;: null,
+            &quot;billCenName&quot;: null,
+            &quot;billCenCode&quot;: null,
+            &quot;projectTypeCode&quot;: null,
+            &quot;projectTypeName&quot;: null,
+            &quot;billBDCode&quot;: null,
+            &quot;billBDName&quot;: null,
+            &quot;aplSeqId&quot;: 42531,
+            &quot;aplName&quot;: &quot;www啊啊&quot;,
+            &quot;aplEmpNumber&quot;: &quot;B0000&quot;,
+            &quot;aplDepCode&quot;: &quot;0000&quot;,
+            &quot;aplDepName&quot;: &quot;zjy的企业&quot;,
+            &quot;wrSeqId&quot;: 42531,
+            &quot;wrEmpNumber&quot;: &quot;B0000&quot;,
+            &quot;wrName&quot;: &quot;www啊啊&quot;,
+            &quot;isAgent&quot;: false,
+            &quot;printStatus&quot;: &quot;1&quot;,
+            &quot;expTotalCnt&quot;: 0,
+            &quot;billPayStatus&quot;: &quot;0&quot;,
+            &quot;billRemark&quot;: &quot;&quot;,
+            &quot;billCustomFieldList&quot;: [
+                {
+                    &quot;fieldNumber&quot;: &quot;&quot;,
+                    &quot;fieldName&quot;: &quot;承担部门&quot;,
+                    &quot;sourceValue&quot;: &quot;[\&quot;0000\&quot;]&quot;,
+                    &quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;0000\&quot;,\&quot;departmentName\&quot;:\&quot;zjy的企业/zjy的企业\&quot;}]&quot;,
+                    &quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,
+                    &quot;required&quot;: true,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                }
+            ],
+            &quot;relatedBillList&quot;: [],
+            &quot;expenseList&quot;: [
+                {
+                    &quot;expenseSeqId&quot;: 6036388,
+                    &quot;comId&quot;: 3213,
+                    &quot;billId&quot;: 2024050803402009,
+                    &quot;expTypeCode&quot;: &quot;00001&quot;,
+                    &quot;expTypeName&quot;: &quot;酒店费用类型&quot;,
+                    &quot;expAttribute&quot;: &quot;HOTEL&quot;,
+                    &quot;remark&quot;: null,
+                    &quot;commonOrderList&quot;: null,
+                    &quot;employeeMonthOrderFlag&quot;: &quot;OFF&quot;,
+                    &quot;employeeMonthOrderAmount&quot;: 0,
+                    &quot;taxPriceSeparationState&quot;: &quot;0&quot;,
+                    &quot;taxFreeAmount&quot;: null,
+                    &quot;reimAmount&quot;: 2,
+                    &quot;updAmount&quot;: null,
+                    &quot;taxAmount&quot;: null,
+                    &quot;taxRate&quot;: null,
+                    &quot;taxName&quot;: null,
+                    &quot;inputTransferAmount&quot;: null,
+                    &quot;updRsn&quot;: null,
+                    &quot;needBsCrdMemo&quot;: &quot;&quot;,
+                    &quot;needBsCrdFlg&quot;: &quot;0&quot;,
+                    &quot;vatInvoiceState&quot;: &quot;0&quot;,
+                    &quot;awardList&quot;: [],
+                    &quot;partReimInvoice&quot;: false,
+                    &quot;invoiceInfoList&quot;: [],
+                    &quot;shareRule&quot;: &quot;0&quot;,
+                    &quot;expenseSpread&quot;: null,
+                    &quot;bgtOutMemo&quot;: null,
+                    &quot;bgtOverFlag&quot;: null,
+                    &quot;departure&quot;: null,
+                    &quot;destination&quot;: null,
+                    &quot;dstntIndex&quot;: 0,
+                    &quot;bgnTim&quot;: null,
+                    &quot;endTim&quot;: null,
+                    &quot;checkInDate&quot;: 1714521600000,
+                    &quot;checkOutDate&quot;: 1715126400000,
+                    &quot;payCity&quot;: &quot;1&quot;,
+                    &quot;discount&quot;: null,
+                    &quot;aircraftCabin&quot;: null,
+                    &quot;airlineNo&quot;: null,
+                    &quot;airlineCom&quot;: null,
+                    &quot;flightETicketNo&quot;: null,
+                    &quot;flightFullPrice&quot;: null,
+                    &quot;civilAviationFund&quot;: null,
+                    &quot;trainNo&quot;: null,
+                    &quot;trainETicketNo&quot;: null,
+                    &quot;trainCabin&quot;: null,
+                    &quot;shipCabin&quot;: null,
+                    &quot;partiNbr&quot;: null,
+                    &quot;merchantName&quot;: &quot;2&quot;,
+                    &quot;hotelStar&quot;: null,
+                    &quot;wrTim&quot;: null,
+                    &quot;plcIlgMemo&quot;: &quot;&quot;,
+                    &quot;plcIlgFlg&quot;: &quot;0&quot;,
+                    &quot;bgtErrMsg&quot;: &quot;&quot;,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;systemRate&quot;: 1,
+                    &quot;originalCurrencyReimAmt&quot;: 2,
+                    &quot;spreadFieldValueApiViewDTOList&quot;: [
+                        {
+                            &quot;spreadItemId&quot;: 11101,
+                            &quot;fieldName&quot;: &quot;部门&quot;,
+                            &quot;fieldType&quot;: &quot;system&quot;,
+                            &quot;fieldBizType&quot;: &quot;DEPARTMENT&quot;,
+                            &quot;fieldValueSeqId&quot;: 1000,
+                            &quot;fieldValueCode&quot;: &quot;00000009&quot;,
+                            &quot;fieldValueName&quot;: &quot;00000009-混沌分公司&quot;,
+                            &quot;fieldValueSourceCode&quot;: null
+                        },
+                        {
+                            &quot;spreadItemId&quot;: 11102,
+                            &quot;fieldName&quot;: &quot;自定义档案测试&quot;,
+                            &quot;fieldType&quot;: &quot;custom&quot;,
+                            &quot;fieldBizType&quot;: &quot;CUSTOMFILE&quot;,
+                            &quot;fieldValueSeqId&quot;: 1001,
+                            &quot;fieldValueCode&quot;: &quot;01&quot;,
+                            &quot;fieldValueName&quot;: &quot;档案选项1&quot;,
+                            &quot;fieldValueSourceCode&quot;: &quot;dd001&quot;
+                        }
+                    ]
+                }
+            ],
+            &quot;supplierReimburse&quot;: {
+                &quot;payAccountInfo&quot;: {
+                    &quot;accountSeqId&quot;: 63,
+                    &quot;paySeqId&quot;: null,
+                    &quot;acctType&quot;: &quot;&quot;,
+                    &quot;bankCode&quot;: &quot;308&quot;,
+                    &quot;bankName&quot;: &quot;招商银行&quot;,
+                    &quot;depoBank&quot;: &quot;308100005019&quot;,
+                    &quot;depoBankName&quot;: &quot;招商银行股份有限公司北京分行&quot;,
+                    &quot;recBankBnr&quot;: &quot;&quot;,
+                    &quot;depoName&quot;: &quot;zjy的企业&quot;,
+                    &quot;acctNo&quot;: &quot;NjIyNTExMDE1NTg3Nzg0NQ==&quot;,
+                    &quot;depoCountry&quot;: &quot;&quot;,
+                    &quot;depoProvince&quot;: &quot;110000&quot;,
+                    &quot;depoProvinceName&quot;: &quot;北京市&quot;,
+                    &quot;depoCity&quot;: &quot;110000&quot;,
+                    &quot;depoCityName&quot;: &quot;北京市&quot;,
+                    &quot;accountFlag&quot;: &quot;SP&quot;,
+                    &quot;payAccountSeqId&quot;: 63,
+                    &quot;accountPayType&quot;: &quot;1&quot;,
+                    &quot;cloudConfigNumber&quot;: null,
+                    &quot;cloudBusinessModel&quot;: null,
+                    &quot;accountMode&quot;: &quot;BANK&quot;,
+                    &quot;accountType&quot;: null,
+                    &quot;collectingCompanyName&quot;: null,
+                    &quot;acctSeqId&quot;: null,
+                    &quot;accountRemark&quot;: null
+                },
+                &quot;contract&quot;: {
+                    &quot;contractSeqId&quot;: 21051,
+                    &quot;contractId&quot;: &quot;CON20240423201250&quot;,
+                    &quot;contractName&quot;: &quot;zj合同-对公&quot;,
+                    &quot;contractType&quot;: {
+                        &quot;contractTypeSeqId&quot;: 101,
+                        &quot;contractTypeId&quot;: &quot;CONTRATTYPE20211028150837&quot;,
+                        &quot;contractTypeName&quot;: &quot;合同2&quot;,
+                        &quot;contractTypeParentId&quot;: &quot;CONTRATTYPE20211028101011&quot;,
+                        &quot;contractTypeParentName&quot;: null,
+                        &quot;contractTypeLevel&quot;: &quot;2&quot;,
+                        &quot;contractAttr&quot;: &quot;1&quot;,
+                        &quot;benefitPeriodFlag&quot;: &quot;0&quot;,
+                        &quot;stampTaxFlag&quot;: &quot;0&quot;,
+                        &quot;useFlag&quot;: &quot;0&quot;
+                    },
+                    &quot;payStampTaxFlag&quot;: &quot;0&quot;,
+                    &quot;periodType&quot;: null,
+                    &quot;startPeriod&quot;: null,
+                    &quot;projectSeqId&quot;: null,
+                    &quot;projectName&quot;: null,
+                    &quot;contractAmount&quot;: 113377777,
+                    &quot;contractStatus&quot;: &quot;5&quot;,
+                    &quot;contractStartDate&quot;: &quot;2024-04-23&quot;,
+                    &quot;contractEndDate&quot;: &quot;2025-05-23&quot;,
+                    &quot;contractAmountType&quot;: &quot;2&quot;,
+                    &quot;contractDepSeqId&quot;: 47877,
+                    &quot;contractDepName&quot;: &quot;zjy的企业&quot;,
+                    &quot;contractComSeqId&quot;: &quot;47877&quot;,
+                    &quot;contractComId&quot;: &quot;0000&quot;,
+                    &quot;contractComNam&quot;: &quot;zjy的企业&quot;,
+                    &quot;contractTypeAttr&quot;: &quot;1&quot;,
+                    &quot;supSeqId&quot;: 29025,
+                    &quot;supNam&quot;: &quot;新增0420&quot;,
+                    &quot;lockSts&quot;: null,
+                    &quot;remark&quot;: null,
+                    &quot;unpaidTotalAmount&quot;: null,
+                    &quot;leftDays&quot;: null,
+                    &quot;billRemark&quot;: null,
+                    &quot;tempSaveFlg&quot;: null,
+                    &quot;remainedAmount&quot;: null
+                },
+                &quot;supplierDto&quot;: {
+                    &quot;supSeqId&quot;: 29025,
+                    &quot;id&quot;: null,
+                    &quot;supSts&quot;: &quot;1&quot;,
+                    &quot;mainCompany&quot;: null,
+                    &quot;supTypeValue&quot;: &quot;60&quot;,
+                    &quot;supTypeName&quot;: &quot;外部公司&quot;,
+                    &quot;supId&quot;: &quot;SUP20240420130442&quot;,
+                    &quot;supNam&quot;: &quot;新增0420&quot;,
+                    &quot;corOrgNbr&quot;: null,
+                    &quot;enableDate&quot;: null,
+                    &quot;supDepSeqId&quot;: 47877,
+                    &quot;supDepId&quot;: &quot;&quot;,
+                    &quot;supDepName&quot;: &quot;&quot;,
+                    &quot;availableOrgType&quot;: &quot;0&quot;,
+                    &quot;useFlag&quot;: &quot;1&quot;
+                },
+                &quot;payDetailList&quot;: [
+                    {
+                        &quot;paySeqId&quot;: 3735,
+                        &quot;payTypInf&quot;: {
+                            &quot;payTypSeqId&quot;: 2482,
+                            &quot;businessScenario&quot;: &quot;2&quot;,
+                            &quot;payType&quot;: &quot;1&quot;,
+                            &quot;payMethod&quot;: &quot;网银支付&quot;,
+                            &quot;status&quot;: &quot;1&quot;,
+                            &quot;isDefault&quot;: &quot;1&quot;,
+                            &quot;typeFlag&quot;: &quot;AUK&quot;,
+                            &quot;wthrSystemPreset&quot;: &quot;1&quot;
+                        },
+                        &quot;reimSeqId&quot;: 3145,
+                        &quot;payAmount&quot;: 2,
+                        &quot;originalPayAmount&quot;: 2,
+                        &quot;loanReversalAmount&quot;: 1,
+                        &quot;originalLoanReversalAmount&quot;: 1,
+                        &quot;actualPayAmount&quot;: 0,
+                        &quot;originalActualPayAmount&quot;: 0,
+                        &quot;planPayDate&quot;: 1715097600000,
+                        &quot;provisionInf&quot;: {
+                            &quot;payProvisionSeqId&quot;: 20626,
+                            &quot;payStageNam&quot;: &quot;1&quot;,
+                            &quot;payAmt&quot;: 111111111,
+                            &quot;unpaidAmount&quot;: 111111109,
+                            &quot;payDate&quot;: 1745510400000,
+                            &quot;provision&quot;: &quot;水电&quot;,
+                            &quot;remark&quot;: null
+                        },
+                        &quot;accountInfo&quot;: {
+                            &quot;accountSeqId&quot;: 17021,
+                            &quot;paySeqId&quot;: 3735,
+                            &quot;acctType&quot;: &quot;1&quot;,
+                            &quot;bankCode&quot;: &quot;314&quot;,
+                            &quot;bankName&quot;: &quot;农村商业银行&quot;,
+                            &quot;depoBank&quot;: &quot;314305570606&quot;,
+                            &quot;depoBankName&quot;: &quot;江苏常熟农村商业银行股份有限公司招商支行&quot;,
+                            &quot;recBankBnr&quot;: &quot;&quot;,
+                            &quot;depoName&quot;: &quot;农村商业&quot;,
+                            &quot;acctNo&quot;: &quot;MQ==&quot;,
+                            &quot;depoCountry&quot;: &quot;中国&quot;,
+                            &quot;depoProvince&quot;: &quot;320000&quot;,
+                            &quot;depoProvinceName&quot;: &quot;江苏省&quot;,
+                            &quot;depoCity&quot;: &quot;320500&quot;,
+                            &quot;depoCityName&quot;: &quot;苏州市&quot;,
+                            &quot;accountFlag&quot;: &quot;SR&quot;,
+                            &quot;payAccountSeqId&quot;: 17021,
+                            &quot;accountPayType&quot;: &quot;1&quot;,
+                            &quot;cloudConfigNumber&quot;: null,
+                            &quot;cloudBusinessModel&quot;: null,
+                            &quot;accountMode&quot;: &quot;BANK&quot;,
+                            &quot;accountType&quot;: null,
+                            &quot;collectingCompanyName&quot;: null,
+                            &quot;acctSeqId&quot;: null,
+                            &quot;accountRemark&quot;: null
+                        },
+                        &quot;lendPayList&quot;: [
+                            {
+                                &quot;seqId&quot;: 2155,
+                                &quot;empSeqId&quot;: 42531,
+                                &quot;lendBillId&quot;: 2024042303343412,
+                                &quot;eventNam&quot;: &quot;zj预付款&quot;,
+                                &quot;lendEmpName&quot;: &quot;www啊啊&quot;,
+                                &quot;lendEmpNumber&quot;: &quot;B0000&quot;,
+                                &quot;lendBillPayDate&quot;: null,
+                                &quot;aplNam&quot;: &quot;www啊啊&quot;,
+                                &quot;lendTypeName&quot;: &quot;zj预付款&quot;,
+                                &quot;lendObject&quot;: &quot;SUPPLIER&quot;,
+                                &quot;payBillId&quot;: 2024050803402009,
+                                &quot;beforeRemainingPayAmount&quot;: 1,
+                                &quot;originalBeforeRemainingPayAmount&quot;: 1,
+                                &quot;payAmount&quot;: 1,
+                                &quot;originalPayAmount&quot;: 1,
+                                &quot;originalLendAmount&quot;: 1,
+                                &quot;repaymentDate&quot;: null,
+                                &quot;arriveTicketDate&quot;: 1713830400000,
+                                &quot;crtTim&quot;: 1715139350000,
+                                &quot;revTime&quot;: null,
+                                &quot;expTotalCnt&quot;: 1,
+                                &quot;applyTotalAmount&quot;: 0,
+                                &quot;budgetOpen&quot;: null,
+                                &quot;lendExpTypeRelSeqId&quot;: null,
+                                &quot;billComSeqId&quot;: 47877,
+                                &quot;billComNam&quot;: &quot;zjy的企业&quot;,
+                                &quot;applyTim&quot;: &quot;2024-04-23 20:52:54.0&quot;,
+                                &quot;billProjectSeqId&quot;: 0,
+                                &quot;lendBillSts&quot;: null,
+                                &quot;currencyCode&quot;: &quot;CNY&quot;,
+                                &quot;rate&quot;: 1,
+                                &quot;totalLendAmount&quot;: 1,
+                                &quot;originalTotalLendAmount&quot;: 1,
+                                &quot;lendEmpSeqId&quot;: 42531,
+                                &quot;lendEmpId&quot;: &quot;U0000&quot;,
+                                &quot;totalPayAmount&quot;: 1,
+                                &quot;relLendTypeName&quot;: &quot;类型四&quot;
+                            }
+                        ],
+                        &quot;payPeriodType&quot;: &quot;0&quot;,
+                        &quot;remark&quot;: null,
+                        &quot;useDiscount&quot;: &quot;1&quot;,
+                        &quot;discountAmount&quot;: 1,
+                        &quot;originalDiscountAmount&quot;: 1,
+                        &quot;benefitPeriodList&quot;: [
+                            {
+                                &quot;seqId&quot;: 788,
+                                &quot;comId&quot;: 3213,
+                                &quot;billContractSeqId&quot;: 21031,
+                                &quot;billId&quot;: null,
+                                &quot;period&quot;: 2,
+                                &quot;periodRemark&quot;: &quot;2024-04&quot;,
+                                &quot;benefitAmount&quot;: 0,
+                                &quot;relBillId&quot;: null,
+                                &quot;paidAmount&quot;: null,
+                                &quot;actAmount&quot;: null,
+                                &quot;payStampTaxFlag&quot;: &quot;0&quot;,
+                                &quot;useFlag&quot;: &quot;0&quot;
+                            }
+                        ],
+                        &quot;currencyCode&quot;: &quot;CNY&quot;,
+                        &quot;rate&quot;: 1,
+                        &quot;contract&quot;: {
+                            &quot;contractSeqId&quot;: 21051,
+                            &quot;contractId&quot;: &quot;CON20240423201250&quot;,
+                            &quot;contractName&quot;: &quot;zj合同-对公&quot;,
+                            &quot;contractType&quot;: {
+                                &quot;contractTypeSeqId&quot;: 101,
+                                &quot;contractTypeId&quot;: &quot;CONTRATTYPE20211028150837&quot;,
+                                &quot;contractTypeName&quot;: &quot;合同2&quot;,
+                                &quot;contractTypeParentId&quot;: &quot;CONTRATTYPE20211028101011&quot;,
+                                &quot;contractTypeParentName&quot;: null,
+                                &quot;contractTypeLevel&quot;: &quot;2&quot;,
+                                &quot;contractAttr&quot;: &quot;1&quot;,
+                                &quot;benefitPeriodFlag&quot;: &quot;0&quot;,
+                                &quot;stampTaxFlag&quot;: &quot;0&quot;,
+                                &quot;useFlag&quot;: &quot;0&quot;
+                            },
+                            &quot;payStampTaxFlag&quot;: &quot;0&quot;,
+                            &quot;periodType&quot;: null,
+                            &quot;startPeriod&quot;: null,
+                            &quot;projectSeqId&quot;: null,
+                            &quot;projectName&quot;: null,
+                            &quot;contractAmount&quot;: 113377777,
+                            &quot;contractStatus&quot;: &quot;5&quot;,
+                            &quot;contractStartDate&quot;: &quot;2024-04-23&quot;,
+                            &quot;contractEndDate&quot;: &quot;2025-05-23&quot;,
+                            &quot;contractAmountType&quot;: &quot;2&quot;,
+                            &quot;contractDepSeqId&quot;: 47877,
+                            &quot;contractDepName&quot;: &quot;zjy的企业&quot;,
+                            &quot;contractComSeqId&quot;: &quot;47877&quot;,
+                            &quot;contractComId&quot;: &quot;0000&quot;,
+                            &quot;contractComNam&quot;: &quot;zjy的企业&quot;,
+                            &quot;contractTypeAttr&quot;: &quot;1&quot;,
+                            &quot;supSeqId&quot;: 29025,
+                            &quot;supNam&quot;: &quot;新增0420&quot;,
+                            &quot;lockSts&quot;: null,
+                            &quot;remark&quot;: null,
+                            &quot;unpaidTotalAmount&quot;: null,
+                            &quot;leftDays&quot;: null,
+                            &quot;billRemark&quot;: null,
+                            &quot;tempSaveFlg&quot;: null,
+                            &quot;remainedAmount&quot;: null
+                        },
+                        &quot;supplierDto&quot;: {
+                            &quot;supSeqId&quot;: 29025,
+                            &quot;id&quot;: null,
+                            &quot;supSts&quot;: &quot;1&quot;,
+                            &quot;mainCompany&quot;: null,
+                            &quot;supTypeValue&quot;: &quot;60&quot;,
+                            &quot;supTypeName&quot;: &quot;外部公司&quot;,
+                            &quot;supId&quot;: &quot;SUP20240420130442&quot;,
+                            &quot;supNam&quot;: &quot;新增0420&quot;,
+                            &quot;corOrgNbr&quot;: null,
+                            &quot;enableDate&quot;: null,
+                            &quot;supDepSeqId&quot;: 47877,
+                            &quot;supDepId&quot;: &quot;&quot;,
+                            &quot;supDepName&quot;: &quot;&quot;,
+                            &quot;availableOrgType&quot;: &quot;0&quot;,
+                            &quot;useFlag&quot;: &quot;1&quot;
+                        }
+                    }
+                ],
+                &quot;benefitPeriodList&quot;: [
+                    {
+                        &quot;seqId&quot;: 787,
+                        &quot;period&quot;: 1,
+                        &quot;periodRemark&quot;: &quot;2024-03&quot;,
+                        &quot;benefitAmount&quot;: 0,
+                        &quot;relBillId&quot;: null,
+                        &quot;paidAmount&quot;: null,
+                        &quot;actAmount&quot;: null,
+                        &quot;payStampTaxFlag&quot;: &quot;0&quot;,
+                        &quot;useFlag&quot;: &quot;0&quot;
+                    }
+                ],
+                &quot;reconciliationIds&quot;: [],
+                &quot;externalBusinessId&quot;: null
+            }
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>E0001</td><td>API查询单据详情失败</td></tr>
+</tbody></table>
+</body>
+</html>

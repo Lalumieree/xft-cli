@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>预算方案详情查询</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>预算方案详情查询</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/budget/get-budget-parent-plan-detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/budget/get-budget-parent-plan-detail</p>
+<h2>接口描述</h2>
+<p>本接口适用于查询智能费控预算方案详情，包含预算方案基础信息和相关配置项。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>root.planSeqId</td><td>LONG</td><td>是</td><td>预算方案自增id</td><td>100</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>否</td><td>预算方案详情</td><td></td></tr>
+<tr><td>root.body.budgetParentPlanSeqId</td><td>LONG</td><td>否</td><td>预算方案自增id</td><td>100</td></tr>
+<tr><td>root.body.budgetName</td><td>STRING</td><td>否</td><td>预算方案名称</td><td>测试预算方案</td></tr>
+<tr><td>root.body.budgetStartDate</td><td>STRING</td><td>否</td><td>格式为yyyy-MM-dd</td><td>2024-01-01</td></tr>
+<tr><td>root.body.budgetEndDate</td><td>STRING</td><td>否</td><td>格式为yyyy-MM-dd</td><td>2026-12-31</td></tr>
+<tr><td>root.body.budgetDimension</td><td>STRING</td><td>否</td><td>1-按预算组织维度<br>2-按预算科目维度<br>3-按预算组织+预算科目维度</td><td>3</td></tr>
+<tr><td>root.body.budgetState</td><td>STRING</td><td>否</td><td>0-停用<br>1-启用</td><td>1</td></tr>
+<tr><td>root.body.eventIds</td><td>ARRAY</td><td>否</td><td>表单自增id列表，最多支持关联100个表单<br>如果不填，则默认为适用所有的表单</td><td>[1,2,3]</td></tr>
+<tr><td>root.body.budgetPlanId</td><td>STRING</td><td>否</td><td>预算方案编码</td><td>test001</td></tr>
+<tr><td>root.body.budgetOrgs</td><td>ARRAY</td><td>否</td><td>预算组织自增id列表，最多支持关联100个预算组织<br>如果不填，则默认为支持所有的预算组织</td><td>[1,2,3]</td></tr>
+<tr><td>root.body.budgetSubs</td><td>ARRAY</td><td>否</td><td>预算科目自增id列表，最多支持关联100个预算科目<br>如果不填，则默认为支持所有的预算科目</td><td>[1,2,3]</td></tr>
+<tr><td>root.body.budgetApproveTime</td><td>STRING</td><td>否</td><td>NONE-不需要审批<br><br>WHEN_INIT-期初预算编制需审批<br><br>WHEN_MODIFY-预算追加调整需审批<br><br>ANYTIME-期初预算编制/预算追加调整均需审批</td><td>NONE</td></tr>
+<tr><td>root.body.needPostAccount</td><td>STRING</td><td>否</td><td>0-无需过账<br>1-需要过账</td><td>0</td></tr>
+<tr><td>root.body.allowExternalSystemBill</td><td>STRING</td><td>否</td><td>0-不允许<br>1-允许</td><td>0</td></tr>
+<tr><td>root.body.allowMonthOrderBudgetOccupy</td><td>STRING</td><td>否</td><td>0-不支持<br>1-支持</td><td>0</td></tr>
+<tr><td>root.body.budgetRangeFixed</td><td>STRING</td><td>否</td><td>0=不固定<br>1-固定</td><td>0</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>SUC0000-成功<br>E0001-系统错误<br>E0002-参数错误</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>true说明接口调用成功 <br>false说明接口调用失败</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>接口调用返回信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{}
+</code></pre>
+<h3>调用成功的响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;budgetParentPlanSeqId&quot;: 100,
+        &quot;budgetName&quot;: &quot;测试预算方案导入&quot;,
+        &quot;budgetStartDate&quot;: &quot;2024-01-01&quot;,
+        &quot;budgetEndDate&quot;: &quot;2026-12-31&quot;,
+        &quot;budgetDimension&quot;: &quot;3&quot;,
+        &quot;budgetState&quot;: &quot;1&quot;,
+        &quot;eventIds&quot;: [
+            1
+        ],
+        &quot;budgetPlanId&quot;: &quot;test001&quot;,
+        &quot;budgetOrgs&quot;: [
+            2
+        ],
+        &quot;budgetSubs&quot;: [
+            3
+        ],
+        &quot;budgetApproveTime&quot;: &quot;NONE&quot;,
+        &quot;needPostAccount&quot;: &quot;0&quot;,
+        &quot;allowExternalSystemBill&quot;: &quot;0&quot;,
+        &quot;allowMonthOrderBudgetOccupy&quot;: &quot;0&quot;,
+        &quot;budgetRangeFixed&quot;: &quot;0&quot;
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h3>调用失败的响应报文</h3>
+<pre><code>
+{
+    &quot;returnCode&quot;: &quot;E0001&quot;,
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;业务错误: 当前预算方案不存在，请检查输入内容&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>sucess为接口调用成功状态， true为成功，其余都是失败</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>常见报错</th></tr></thead>
+<tbody>
+<tr><td>当前预算方案不存在，请检查输入内容</td></tr>
+</tbody></table>
+</body>
+</html>

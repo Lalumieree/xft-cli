@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>第三方申请单推送</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>第三方申请单推送</h1>
+
+<h2>基本信息</h2>
+
+<p>事件名称: 第三方申请单推送</p>
+<p>事件编号: ITRIPBILL</p>
+<h2>事件描述</h2>
+<p>费控差旅申请单推送第三方消费平台事件</p>
+<h2>触发情况</h2>
+<p>企业在费控开通消费平台后，在设置规则页面配置推送单据类型及状态，当企业下用户所提单据满足配置的单据类型和状态条件时，触发该事件。</p>
+<h2>事件报文说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**参数**</th><th>**类型**</th><th>**必填**</th><th>**长度**</th><th>**说明**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>applyEmpName</td><td>String</td><td>是</td><td></td><td>申请人姓名</td><td></td></tr>
+<tr><td>applyEmpNumber</td><td>String</td><td>是</td><td></td><td>申请人花名册编号</td><td>-</td></tr>
+<tr><td>billComId</td><td>String</td><td>是</td><td>-</td><td>单据公司编号</td><td></td></tr>
+<tr><td>billComName</td><td>String</td><td>是</td><td>-</td><td>单据公司名称</td><td></td></tr>
+<tr><td>billDepId</td><td>String</td><td>是</td><td></td><td>单据部门编号</td><td></td></tr>
+<tr><td>billDepName</td><td>String</td><td>是</td><td></td><td>单据部门名称</td><td>-</td></tr>
+<tr><td>billId</td><td>String</td><td>是</td><td>-</td><td>单据编号</td><td></td></tr>
+<tr><td>billRemark</td><td>String</td><td>否</td><td>-</td><td>单据备注</td><td></td></tr>
+<tr><td>billStatus</td><td>string</td><td>是</td><td></td><td>单据状态</td><td>待审批：1，审批通过：2， 拒绝：4，已撤回：11，已退回：12，已废弃：15，变更中 ：19，</td></tr>
+<tr><td>billType</td><td>string</td><td>是</td><td></td><td>单据类型</td><td>差旅申请单：TRAVEL_APPLY</td><td>TRAVEL_APPLY</td></tr>
+<tr><td>billProjectId</td><td>String</td><td>否</td><td>-</td><td>单据项目编号</td><td></td></tr>
+<tr><td>billProjectName</td><td>String</td><td>否</td><td>-</td><td>单据项目名称</td><td></td></tr>
+<tr><td>billApplyTime</td><td>String</td><td>是</td><td>-</td><td>单据提交时间</td><td>yyyy-MM-dd hh:mm:ss</td></tr>
+<tr><td>businessTrips</td><td>Array:BillBusinessTripPushDTO</td><td>是</td><td>-</td><td>行程列表</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;departCityCode</td><td>String</td><td>是</td><td>-</td><td>出发地城市编码</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;departCityName</td><td>String</td><td>是</td><td>-</td><td>出发地名称</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;arriveCityCode</td><td>String</td><td>是</td><td>-</td><td>目的地城市编码</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;arriveCityName</td><td>String</td><td>是</td><td>-</td><td>目的地名称</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;departTime</td><td>String</td><td>是</td><td>-</td><td>出发时间</td><td>yyyy-MM-dd hh:mm:ss</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;arriveTime</td><td>String</td><td>是</td><td>-</td><td>到达时间</td><td>yyyy-MM-dd hh:mm:ss</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;roundTrip</td><td>String</td><td>是</td><td>-</td><td>目的地名称</td><td>单程：N 往返：Y</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;startTimePrecision</td><td>String</td><td>是</td><td>-</td><td>开始时间精度值</td><td>天：DAY，上：AM，下午：PM，时分：MINUTE</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;endTimePrecision</td><td>String</td><td>是</td><td>-</td><td>结束时间精度值</td><td>天：DAY，上：AM，下午：PM，时分：MINUTE</td></tr>
+<tr><td>peers</td><td>Array:BillBusinessTripPeerPushDTO</td><td>否</td><td>-</td><td>同行人列表</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;empNumber</td><td>String</td><td>否</td><td>-</td><td>同行人花名册编号</td></tr>
+<tr><td>&amp;ensp;&amp;ensp;∟&amp;empName</td><td>String</td><td>否</td><td>-</td><td>同行人姓名</td></tr>
+</tbody></table>
+
+<h2>事件报文示例</h2>
+<pre><code>
+{
+    &quot;appId&quot;: &quot;c0fa75a9-7021-4f0c-aa88-123as456789&quot;,
+    &quot;businessKey&quot;: &quot;ITRIPBILL:XFX77295:DI_DI:20240103330022&quot;,
+    &quot;eventId&quot;: &quot;ITRIPBILL&quot;,
+    &quot;eventRcdInf&quot;: &quot;{\&quot;applyEmpName\&quot;:\&quot;李一\&quot;,\&quot;applyEmpNumber\&quot;:\&quot;emp0124\&quot;,\&quot;billApplyTime\&quot;:\&quot;2024-01-03 22:37:48\&quot;,\&quot;billComId\&quot;:\&quot;0000\&quot;,\&quot;billComName\&quot;:\&quot;测试公司\&quot;,\&quot;billDepId\&quot;:\&quot;0023\&quot;,\&quot;billDepName\&quot;:\&quot;测试部门\&quot;,\&quot;billId\&quot;:2024010302854009,\&quot;billRemark\&quot;:\&quot;出差\&quot;,\&quot;billStatus\&quot;:\&quot;2\&quot;,\&quot;billType\&quot;:\&quot;TRAVEL_APPLY\&quot;,\&quot;businessTrips\&quot;:[{\&quot;arriveCityCode\&quot;:\&quot;202\&quot;,\&quot;arriveCityName\&quot;:\&quot;深圳市\&quot;,\&quot;arriveTime\&quot;:\&quot;2024-01-26 17:30:00\&quot;,\&quot;departCityCode\&quot;:\&quot;187\&quot;,\&quot;departCityName\&quot;:\&quot;株洲市\&quot;,\&quot;departTime\&quot;:\&quot;2024-01-27 08:00:00\&quot;,\&quot;endTimePrecision\&quot;:\&quot;MINUTE\&quot;,\&quot;roundTrip\&quot;:\&quot;N\&quot;,\&quot;startTimePrecision\&quot;:\&quot;MINUTE\&quot;}],\&quot;peers\&quot;:[]}&quot;,
+    &quot;eventTime&quot;: &quot;2024-01-03T15:40:42.411&quot;
+}
+</code></pre>
+</body>
+</html>

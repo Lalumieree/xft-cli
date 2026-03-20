@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>批量删除数据源选项</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>批量删除数据源选项</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/dataSource/deleteMultilevelOptions</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/dataSource/deleteMultilevelOptions</p>
+<h2>接口描述</h2>
+<p>批量删除数据源选项</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**参数**</th><th>**类型**</th><th>**必填**</th><th>**参数**</th><th>**长度**</th><th>**说明**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>OPAUID</td><td>String</td><td>是</td><td>param</td><td>8</td><td>公司标识</td><td>传薪福通企业号</td></tr>
+<tr><td>sourceSeqId</td><td>Long</td><td>是</td><td>param</td><td>20</td><td>数据源自增id</td><td>-</td></tr>
+<tr><td>optionSeqIds</td><td>Array:Long</td><td>是</td><td>body</td><td>-</td><td>删除选项列表</td><td>每个optionSeqId最大长度20</td></tr>
+</tbody></table>
+<h2>接口输出参数</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**参数**</th><th>**类型**</th><th>**说明**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>success</td><td>boolean</td><td>成功标志</td><td>-</td></tr>
+<tr><td>message</td><td>String</td><td>返回信息</td><td>-</td></tr>
+</tbody></table>
+<h2>接口调用示例</h2>
+<p>###请求示例</p>
+<p>{BaseURL}/api/itrip-gateway/v1/dataSource/deleteMultilevelOptions?OPAUID=ITRIP_123&amp;sourceSeqId=123</p>
+<pre><code>
+[1, 2]
+</code></pre>
+
+<h3>返回示例</h3>
+<pre><code>
+{ 
+	   &quot;success&quot;:  true,
+	   &quot;message&quot;:  &quot;调用成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>**错误码**</th><th>**错误描述**</th><th>**备注**</th></tr></thead>
+<tbody>
+<tr><td>400</td><td>请联系管理员配置企业信息</td><td>无</td></tr>
+<tr><td>ERR0000</td><td>解密失败</td><td>无</td></tr>
+</tbody></table>
+</body>
+</html>

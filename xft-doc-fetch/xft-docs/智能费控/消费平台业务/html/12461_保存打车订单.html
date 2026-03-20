@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>保存打车订单</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>保存打车订单</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/travel/orders/car</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/travel/orders/car</p>
+<h2>接口描述</h2>
+<p>保存打车订单</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>ARRAY</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.orderBaseInfo</td><td>OBJECT</td><td>是</td><td>订单基本信息</td><td></td></tr>
+<tr><td>body.orderBaseInfo.bookEmpNumber</td><td>STRING</td><td>是</td><td>预订人编号（花名册编号）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.bookEmpSeqId</td><td>LONG</td><td>是</td><td>预订人系统编号（系统编号与花名册编号必填一个）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.bookEmpName</td><td>STRING</td><td>是</td><td>预订人名称</td><td></td></tr>
+<tr><td>body.orderBaseInfo.passengerEmpNumber</td><td>STRING</td><td>是</td><td>乘车人编号（花名册编号）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.passengerEmpSeqId</td><td>STRING</td><td>是</td><td>乘车人系统编号（系统编号与花名册编号必填一个）</td><td></td></tr>
+<tr><td>body.orderBaseInfo.passengerEmpName</td><td>STRING</td><td>是</td><td>乘车人名称</td><td></td></tr>
+<tr><td>body.orderBaseInfo.platform</td><td>STRING</td><td>是</td><td>ZAI_TU：在途；<br>（新对接平台需与薪福通费控沟通确认）</td><td>ZAI_TU</td></tr>
+<tr><td>body.orderBaseInfo.orderType</td><td>STRING</td><td>是</td><td>N:预订单 T:退票单</td><td>N</td></tr>
+<tr><td>body.orderBaseInfo.thirdOrderId</td><td>STRING</td><td>是</td><td>订单编号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.thirdOriginOrderId</td><td>STRING</td><td>否</td><td>退票时传递，退款产生的订单号写入原始预订单的订单编号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.relatedApplyBillId</td><td>LONG</td><td>否</td><td>申请单号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.source</td><td>STRING</td><td>否</td><td>OFFICIAL_WEBSITE: 官网，SERVICE_AGENCY_BOOK: 客服代订，SERVICE_MANUAL_RECORD: 客服手工录单</td><td>OFFICIAL_WEBSITE</td></tr>
+<tr><td>body.orderBaseInfo.relatedBusinessOrderId</td><td>STRING</td><td>否</td><td>关联业务订单号</td><td></td></tr>
+<tr><td>body.orderBaseInfo.orderCreateTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.orderBaseInfo.orderCompleteTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.orderBaseInfo.travelType</td><td>STRING</td><td>是</td><td>COMPANY_TRIP：因公，PERSONAL_TRIP：因私</td><td>COMPANY_TRIP</td></tr>
+<tr><td>body.orderPayInfo</td><td>OBJECT</td><td>是</td><td>订单支付信息</td><td></td></tr>
+<tr><td>body.orderPayInfo.amount</td><td>DOUBLE</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.excludeServiceFeeAmount</td><td>DOUBLE</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.serviceFee</td><td>DOUBLE</td><td>是</td><td>平台服务费</td><td></td></tr>
+<tr><td>body.orderPayInfo.refundFee</td><td>DOUBLE</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.orderPayTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.orderPayInfo.payWay</td><td>STRING</td><td>是</td><td>COMPANY_PAY：公司支付，PERSONAL_PAY：个人支付</td><td>COMPANY_PAY</td></tr>
+<tr><td>body.orderPayInfo.companyPayAmount</td><td>DOUBLE</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.personalPayAmount</td><td>DOUBLE</td><td>是</td><td>精确到两位小数</td><td></td></tr>
+<tr><td>body.orderPayInfo.exceedStandard</td><td>STRING</td><td>否</td><td>是Y，否N</td><td>Y</td></tr>
+<tr><td>body.orderPayInfo.exceedStandardReason</td><td>STRING</td><td>否</td><td>超标事由</td><td></td></tr>
+<tr><td>body.useCarInfo</td><td>OBJECT</td><td>是</td><td>用车信息</td><td></td></tr>
+<tr><td>body.useCarInfo.planDepartTime</td><td>STRING</td><td>否</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.useCarInfo.departTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.useCarInfo.destinationTime</td><td>DATE</td><td>是</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+<tr><td>body.useCarInfo.departCityCode</td><td>LONG</td><td>是</td><td>出发城市编码</td><td></td></tr>
+<tr><td>body.useCarInfo.destinationCityCode</td><td>LONG</td><td>是</td><td>目的城市编码</td><td></td></tr>
+<tr><td>body.useCarInfo.departFullAddress</td><td>STRING</td><td>否</td><td>出发地详细地址</td><td></td></tr>
+<tr><td>body.useCarInfo.destinationFullAddress</td><td>STRING</td><td>否</td><td>到达地详细地址</td><td></td></tr>
+<tr><td>body.useCarInfo.useCarSceneName</td><td>STRING</td><td>否</td><td>用车场景名称</td><td></td></tr>
+<tr><td>body.useCarInfo.carModelName</td><td>STRING</td><td>否</td><td>车型名称</td><td></td></tr>
+<tr><td>body.useCarInfo.hasClock</td><td>STRING</td><td>否</td><td>是Y，否N</td><td>Y</td></tr>
+<tr><td>body.useCarInfo.passengerNumber</td><td>LONG</td><td>否</td><td>乘客人数</td><td></td></tr>
+<tr><td>body.useCarInfo.useCarCostMinutes</td><td>DOUBLE</td><td>否</td><td>单位：分钟</td><td></td></tr>
+<tr><td>body.useCarInfo.useCarDistance</td><td>DOUBLE</td><td>否</td><td>单位：千米</td><td></td></tr>
+<tr><td>body.contactInfo</td><td>OBJECT</td><td>否</td><td>联系人信息</td><td></td></tr>
+<tr><td>body.contactInfo.contactName</td><td>STRING</td><td>否</td><td>联系人姓名</td><td></td></tr>
+<tr><td>body.contactInfo.contactPhone</td><td>LONG</td><td>否</td><td>联系手机号</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.message</td><td>STRING</td><td></td><td>调用信息</td><td></td></tr>
+<tr><td>body.body</td><td>STRING</td><td></td><td>响应体</td><td></td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td></td><td>返回码</td><td></td></tr>
+<tr><td>body.errorMsg</td><td>STRING</td><td></td><td>错误信息</td><td></td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td></td><td>是否调用成功</td><td></td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+
+<pre><code>
+[
+    {
+        &quot;orderBaseInfo&quot;: {
+            &quot;bookEmpNumber&quot;: &quot;U0000&quot;,
+            &quot;bookEmpSeqId&quot;:null,
+            &quot;bookEmpName&quot;: &quot;张灯结彩&quot;,
+            &quot;passengerEmpNumber&quot;:&quot;V0002&quot;,
+            &quot;passengerEmpName&quot;:&quot;小威威&quot;,
+            &quot;platform&quot;: &quot;ZAI_TU&quot;,
+            &quot;orderType&quot;: &quot;N&quot;,
+            &quot;thirdOrderId&quot;: &quot;57184751-005104895&quot;,
+            &quot;thirdOriginOrderId&quot;: &quot;53245234&quot;,
+            &quot;relatedApplyBillId&quot;: &quot;&quot;,
+            &quot;source&quot;:&quot;OFFICIAL_WEBSITE&quot;,
+            &quot;relatedBusinessOrderId&quot;:&quot;r738456dfsdh21321&quot;,
+            &quot;orderCreateTime&quot;: &quot;2023-07-07 13:14:55&quot;,
+            &quot;orderCompleteTime&quot;: &quot;2023-07-07 13:14:55&quot;,
+            &quot;travelType&quot;:&quot;COMPANY_TRIP&quot;
+        },
+        &quot;orderPayInfo&quot;: {
+            &quot;amount&quot;: &quot;500&quot;,
+            &quot;excludeServiceFeeAmount&quot;: &quot;450&quot;,
+            &quot;serviceFee&quot;: &quot;50&quot;,
+            &quot;refundFee&quot;: &quot;0&quot;,
+            &quot;orderPayTime&quot;: &quot;2023-07-07 13:14:55&quot;,
+            &quot;payWay&quot;: &quot;COMPANY_PAY&quot;,
+            &quot;companyPayAmount&quot;: &quot;500&quot;,
+            &quot;personalPayAmount&quot;: &quot;0&quot;,
+            &quot;exceedStandard&quot;:&quot;N&quot;,
+            &quot;exceedStandardReason&quot;:&quot;dsfgsdfgsdf&quot;
+        },
+        &quot;useCarInfo&quot;: {
+            &quot;planDepartTime&quot;: &quot;2023-07-03 13:14:55&quot;,
+            &quot;departTime&quot;: &quot;2023-07-03 14:14:55&quot;,
+            &quot;destinationTime&quot;: &quot;2023-07-03 15:14:55&quot;,
+            &quot;departCityCode&quot;: &quot;400098&quot;,
+            &quot;destinationCityCode&quot;: &quot;600987&quot;,
+            &quot;departFullAddress&quot;: &quot;浙江省杭州市滨兴区阿里中心&quot;,
+            &quot;destinationFullAddress&quot;: &quot;安徽省安庆市望江县望江二中&quot;,
+            &quot;useCarSceneName&quot;: &quot;商务用车&quot;,
+            &quot;carModelName&quot;: &quot;塞车的马自达&quot;,
+            &quot;hasClock&quot;: &quot;N&quot;,
+            &quot;passengerNumber&quot;:17,
+            &quot;useCarCostMinutes&quot;:17.7,
+            &quot;useCarDistance&quot;:17.777
+        },
+        &quot;contactInfo&quot;: {
+            &quot;contactName&quot;: &quot;李二蛋&quot;,
+            &quot;contactPhone&quot;: &quot;13888888888&quot;
+        }
+    }
+]
+
+</code></pre>
+
+<h2>错误码说明</h2>
+<p>SUC0000 成功</p>
+<p>ERROR00 失败</p>
+</body>
+</html>

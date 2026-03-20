@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>导出发票云的发票文件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>导出发票云的发票文件</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/invoice/downloadInvoice</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/invoice/downloadInvoice</p>
+<h2>接口描述</h2>
+<p>导出发票云的发票文件，交通类发票输入交通类发票代码，普通类发票输入发票号码和发票代码进行查询下载，返回发票的字节流</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.billId</td><td>LONG</td><td>是</td><td>单据编号</td><td>2022000000000000</td></tr>
+<tr><td>body.trafficEcode</td><td>STRING</td><td></td><td>invoiceCode 和 invoiceCode 为空时trafficEcode必传</td><td>252809</td></tr>
+<tr><td>body.invoiceCode</td><td>STRING</td><td></td><td>发票类型为&quot;I&quot;, &quot;J&quot;时必传</td><td>950001600111</td></tr>
+<tr><td>body.invoiceNumber</td><td>STRING</td><td></td><td>发票类型为&quot;I&quot;, &quot;J&quot;时必传</td><td>20213877</td></tr>
+<tr><td>body.invoiceType</td><td>STRING</td><td>是</td><td>发票类型</td><td>2</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+<tr><td>query.OPAUID</td><td>STRING</td><td></td><td>新福通企业号</td><td>XFT00001</td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+  &quot;invoiceCode&quot;: &quot;950001600111&quot;,
+  &quot;invoiceNumber&quot;: &quot;20213877&quot;,
+  &quot;billId&quot;: 2022000000000000,
+  &quot;invoiceType&quot;: &quot;2&quot;
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+下载发票文件的字节流
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>Data</td><td>Data</td></tr>
+</tbody></table>
+</body>
+</html>

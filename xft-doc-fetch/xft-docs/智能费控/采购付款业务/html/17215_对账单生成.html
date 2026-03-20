@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>对账单生成</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>对账单生成</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-pay/reconciliation/core/service/generate</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-pay/reconciliation/core/service/generate</p>
+<h2>接口描述</h2>
+<p>用于客户在采购付款的场景下，批量根据入库单生成对账单，并可选自动发起对账</p>
+
+<p>- 单次最多支持500条入库单</p>
+<p>- 入库单要求是同一个供应商和法人公司</p>
+<p>- 入库单必须是需要对账的入库单，并且状态是待对账</p>
+<p>- 如果选择了自动发起对账，则要求入库单的供应商和公司有绑定关系</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.inveOrderIds</td><td>ARRAY</td><td>是</td><td>最多500个</td><td>[&quot;order1&quot;,&quot;order2&quot;]</td></tr>
+<tr><td>root.autoReconciliation</td><td>BOOLEAN</td><td></td><td>默认是false</td><td>true</td></tr>
+<tr><td>root.remark</td><td>STRING</td><td></td><td>备注</td><td>&quot;备注123&quot;</td></tr>
+<tr><td>root.operatorEmpNumber</td><td>STRING</td><td>是</td><td>操作人员工号</td><td>&quot;8029148&quot;</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>错误码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>是否成功</td><td>false</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>信息</td><td>&quot;请检查入库单是否为同一个供应商&quot;</td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>否</td><td>返回体</td><td></td></tr>
+<tr><td>root.body.billId</td><td>LONG</td><td>是</td><td>对账单号</td><td>2025081204577220</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    
+    &quot;inveOrderIds&quot;: [
+        &quot;2025-swq-2&quot;
+    ],
+    &quot;remark&quot;: &quot;这是一个自动对账单&quot;,
+    &quot;operatorEmpNumber&quot;: &quot;123456&quot;,
+    &quot;autoReconciliation&quot;: true
+}
+</code></pre>
+<h3>响应报文</h3>
+<p>- 示例1</p>
+<pre><code>
+{
+    &quot;body&quot;: 2025082804630478,
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<p>- 示例2</p>
+<pre><code>
+{
+    &quot;returnCode&quot;: &quot;EROOR2&quot;,
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;存在作废或重复发起对账的入库单：2025-swq-2&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>EROOR2</td><td>业务执行错误</td><td>请参考message错误信息</td></tr>
+</tbody></table>
+</body>
+</html>

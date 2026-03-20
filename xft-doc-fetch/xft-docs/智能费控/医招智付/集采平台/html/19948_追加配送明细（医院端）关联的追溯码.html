@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>追加配送明细（医院端）关联的追溯码</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>追加配送明细（医院端）关联的追溯码</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-settle/distribution-detail/relate-trace-code/import</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-settle/distribution-detail/relate-trace-code/import</p>
+<h2>接口描述</h2>
+<p>对医招智付-集采平台-自动入库里的配送明细追加追溯码。</p>
+<p>注：</p>
+<p>1. 是**追加**追溯码，并非覆盖；</p>
+<p>2. 单次导入追溯码****上限2000条****；</p>
+<p>3. 导入重复的追溯码时，会去重处理；</p>
+<p>4. 如需覆盖追溯码，请使用 “导入集采平台药品配送明细”api。</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.distributionCode</td><td>STRING</td><td>是</td><td>配送明细唯一编码</td><td>&quot;S2026012901&quot;</td></tr>
+<tr><td>root.traceCodeList</td><td>ARRAY</td><td>是</td><td>上限为2000条追溯码；<br>单条追溯码长度上限为100。</td><td>[&quot;11111111111111111111111111&quot;]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td>是</td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>调用失败：EROOR1；<br>执行失败：EROOR2；<br>执行成功：SUC0000；<br>参数错误：E0002</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>成功时 返回true； <br>失败时 返回false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>调用成功时，返回“成功”；<br>调用失败时，返回错误消息。</td><td>&quot;成功&quot;</td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>是</td><td>关联追溯码结果</td><td></td></tr>
+<tr><td>root.body.associationQuantity</td><td>INTEGER</td><td>是</td><td>返回配送明细已关联的追溯码数量，如，初始关联追溯码0条：<br>1. 第一次导入2000条，返回2000；<br>2. 第二次导入2000条，则返回4000；<br>3. 依此类推...</td><td>2000</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;distributionCode&quot;: &quot;S2026012901&quot;,
+    &quot;traceCodeList&quot;: [
+        &quot;12345678901234567890&quot;,
+        &quot;111111111111111111111111111111&quot;
+    ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;associationQuantity&quot;: 2
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<p>&lt;richtable&gt;{&quot;uuid&quot;:&quot;bedc58f0-c192-4618-9213-cba5b93f87b7&quot;,&quot;columns&quot;:[{&quot;title&quot;:&quot;错误码&quot;,&quot;dataIndex&quot;:&quot;0&quot;,&quot;resizable&quot;:true,&quot;width&quot;:108},{&quot;title&quot;:&quot;错误信息&quot;,&quot;dataIndex&quot;:&quot;1&quot;,&quot;resizable&quot;:true,&quot;width&quot;:114},{&quot;title&quot;:&quot;解决方案&quot;,&quot;dataIndex&quot;:&quot;2&quot;,&quot;resizable&quot;:false,&quot;width&quot;:117}],&quot;dataSource&quot;:[{&quot;0&quot;:&quot;EROOR1&quot;,&quot;1&quot;:&quot;系统错误&quot;,&quot;2&quot;:&quot;稍后再试，或联系开发人员&quot;},{&quot;0&quot;:&quot;EROOR2&quot;,&quot;1&quot;:&quot;配送明细不存在&quot;,&quot;2&quot;:&quot;输入正确的配送明细编码&quot;},{&quot;0&quot;:&quot;E0002&quot;,&quot;1&quot;:&quot;导入的配送明细唯一编码不能为空&quot;,&quot;2&quot;:&quot;输入配送明细唯一编码&quot;},{&quot;0&quot;:&quot;E0002&quot;,&quot;1&quot;:&quot;关联的追溯码不能超过2000条&quot;,&quot;2&quot;:&quot;分批导入追溯码，控制每批小于或等于2000&quot;}]}&lt;/richtable&gt;</p>
+</body>
+</html>

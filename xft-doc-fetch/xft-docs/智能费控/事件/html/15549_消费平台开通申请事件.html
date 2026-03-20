@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>消费平台开通申请事件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>消费平台开通申请事件</h1>
+
+<h2>基本信息</h2>
+
+<p>事件名称: 消费平台开通申请事件</p>
+<p>事件编号: ITRIPBIND</p>
+<h2>事件描述</h2>
+<p>企业开通消费平台申请事件，消费平台接订阅该事件，用于校验开通信息的正确性，并回调消费平台开通结果回调接口告知费控开通结果</p>
+<h2>触发情况</h2>
+<p>企业在费控点击开通消费平台，并输入开通信息点击保存后，将向对应消费平台发送该事件</p>
+<h2>事件报文说明</h2>
+<p>&lt;eventparamstable&gt;[{&quot;elementData&quot;:{&quot;name&quot;:&quot;root&quot;,&quot;type&quot;:&quot;OBJECT&quot;,&quot;label&quot;:&quot;%E8%99%9A%E6%8B%9F%E6%A0%B9%E8%8A%82%E7%82%B9&quot;},&quot;children&quot;:[{&quot;elementData&quot;:{&quot;type&quot;:&quot;ARRAY&quot;,&quot;name&quot;:&quot;bindParams&quot;,&quot;label&quot;:&quot;%E7%BB%91%E5%AE%9A%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8&quot;},&quot;children&quot;:[{&quot;elementData&quot;:{&quot;type&quot;:&quot;STRING&quot;,&quot;name&quot;:&quot;code&quot;,&quot;label&quot;:&quot;%E5%8F%82%E6%95%B0%E7%BC%96%E7%A0%81&quot;,&quot;exampleValue&quot;:&quot;key&quot;,&quot;desc&quot;:&quot;%20%E6%B6%88%E8%B4%B9%E5%B9%B3%E5%8F%B0%E6%8F%90%E4%BE%9B%E7%9A%84%E5%BC%80%E9%80%9A%E7%BB%91%E5%AE%9A%E5%8F%82%E6%95%B0%E5%AD%97%E6%AE%B5%E5%90%8D&quot;}},{&quot;elementData&quot;:{&quot;type&quot;:&quot;STRING&quot;,&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;%E5%8F%82%E6%95%B0%E5%80%BC&quot;,&quot;exampleValue&quot;:&quot;keybx8ctxc9isbp6idefrjppaedhpwb3&quot;,&quot;desc&quot;:&quot;%20%E4%BC%81%E4%B8%9A%E5%A1%AB%E5%86%99%E7%9A%84%E6%B6%88%E8%B4%B9%E5%B9%B3%E5%8F%B0%E5%BC%80%E9%80%9A%E5%8F%82%E6%95%B0%E5%80%BC&quot;}}]}]}]&lt;/eventparamstable&gt;</p>
+<h2>事件报文示例</h2>
+<pre><code>
+{
+  &quot;bindParams&quot;: [
+    {
+      &quot;code&quot;: &quot;eid&quot;,
+      &quot;value&quot;: &quot;621478&quot;
+    },
+    {
+      &quot;code&quot;: &quot;appId&quot;,
+      &quot;value&quot;: &quot;appId_zhaoxik8jyevv7&quot;
+    },
+    {
+      &quot;code&quot;: &quot;key&quot;,
+      &quot;value&quot;: &quot;keybx8ctxc9isbp6idefrjppaedhpwb3&quot;
+    },
+    {
+      &quot;code&quot;: &quot;keyt&quot;,
+      &quot;value&quot;: &quot;keyt_zhaoxik8jyevv7&quot;
+    },
+    {
+      &quot;code&quot;: &quot;signKey&quot;,
+      &quot;value&quot;: &quot;signKeywnf15bxi9uq646m422x7lmhceg&quot;
+    },
+    {
+      &quot;code&quot;: &quot;AESKey&quot;,
+      &quot;value&quot;: &quot;AESKeyFBGCZOlwWSQQHGlA&quot;
+    }
+  ]
+}
+</code></pre>
+</body>
+</html>

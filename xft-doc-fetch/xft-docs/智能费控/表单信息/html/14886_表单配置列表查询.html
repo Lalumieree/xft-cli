@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>表单配置列表查询</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>表单配置列表查询</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/form/query-event-list</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/form/query-event-list</p>
+<h2>接口描述</h2>
+<p>分页查询表单配置列表，支持表单名称模糊搜索，表单状态，表单类型筛选</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.start</td><td>LONG</td><td>是</td><td>起始值，必须传入大于等于0</td><td>0</td></tr>
+<tr><td>root.limit</td><td>LONG</td><td>是</td><td>每次查询最大数量，大于等于1 ，允许最大值1000</td><td>10</td></tr>
+<tr><td>root.eventStatus</td><td>STRING</td><td>否</td><td>表单状态 &quot;1&quot; 启用，&quot;0&quot;停用</td><td>0</td></tr>
+<tr><td>root.eventName</td><td>STRING</td><td>否</td><td>表单名称，支持模糊搜索</td><td>出差</td></tr>
+<tr><td>root.eventTypeList</td><td>ARRAY</td><td>否</td><td>TRAVEL_APPLY 差旅申请<br><br>EXPENSE_APPLY 费用申请<br><br>INVITATION_APPLY 招待申请<br><br>USE_CAR_APPLY 用车申请<br><br>COMMON_APPLY 其他通用申请<br><br>TRAVEL_REIM 差旅报销<br><br>COMMON_REIM 日常报销<br><br>EMP_LEND 员工借款<br><br>REPAYMENT 还款单<br><br>SUPPLIER_LEND 预付款<br><br>SUPPLIER_REIM 对公报账<br><br>SUPPLIER_SETTLE 对公结算<br><br>PAY_APPLY 付款申请<br><br>REVERSE 反冲单<br><br>REBATE 退款单<br><br>CONTRACT 合同<br><br>SUPPLIER 供应商申请<br><br>CUSTOMER 客户</td><td>[&quot;TRAVEL_APPLY&quot;]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>否</td><td>响应体</td><td></td></tr>
+<tr><td>root.body.total</td><td>LONG</td><td>否</td><td>查询总数</td><td>1</td></tr>
+<tr><td>root.body.list</td><td>ARRAY</td><td>否</td><td>查询详情列表</td><td></td></tr>
+<tr><td>root.body.list.eventSeqId</td><td>LONG</td><td>否</td><td>表单配置在费控系统唯一ID</td><td>19390</td></tr>
+<tr><td>root.body.list.eventNumber</td><td>STRING</td><td>否</td><td>表单编码</td><td>01230705110814000001</td></tr>
+<tr><td>root.body.list.eventName</td><td>STRING</td><td>否</td><td>表单名称</td><td>出差申请</td></tr>
+<tr><td>root.body.list.eventStatus</td><td>STRING</td><td>否</td><td>表单状态 &quot;1&quot; 启用，&quot;0&quot;停用</td><td>0</td></tr>
+<tr><td>root.body.list.eventType</td><td>STRING</td><td>否</td><td>TRAVEL_APPLY 差旅申请<br><br>EXPENSE_APPLY 费用申请<br><br>INVITATION_APPLY 招待申请<br><br>USE_CAR_APPLY 用车申请<br><br>COMMON_APPLY 其他通用申请<br><br>TRAVEL_REIM 差旅报销<br><br>COMMON_REIM 日常报销<br><br>EMP_LEND 员工借款<br><br>REPAYMENT 还款单<br><br>SUPPLIER_LEND 预付款<br><br>SUPPLIER_REIM 对公报账<br><br>SUPPLIER_SETTLE 对公结算<br><br>PAY_APPLY 付款申请<br><br>REVERSE 反冲单<br><br>REBATE 退款单<br><br>CONTRACT 合同<br><br>SUPPLIER 供应商申请<br><br>CUSTOMER 客户</td><td>TRAVEL_APPLY</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>响应码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否成功 true/false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>描述信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;start&quot;: 0,
+    &quot;limit&quot;: 10,
+    &quot;eventStatus&quot;: &quot;0&quot;,
+    &quot;eventName&quot;: &quot;出差&quot;,
+    &quot;eventTypeList&quot;: [
+        &quot;TRAVEL_APPLY&quot;
+    ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;total&quot;: 1,
+        &quot;list&quot;: [
+            {
+                &quot;eventSeqId&quot;: 19390,
+                &quot;eventNumber&quot;: &quot;01230705110814000001&quot;,
+                &quot;eventName&quot;: &quot;出差申请&quot;,
+                &quot;eventStatus&quot;: &quot;0&quot;,
+                &quot;eventType&quot;: &quot;TRAVEL_APPLY&quot;
+            }
+        ]
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>SUC0000</td><td>成功</td><td></td></tr>
+<tr><td>E0001</td><td>失败</td><td>根据message提示处理</td></tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>采购付款发货明细批量查询</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>采购付款发货明细批量查询</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-pay/core/shipping-detail/batch-query</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-pay/core/shipping-detail/batch-query</p>
+<h2>接口描述</h2>
+<p>用于采购付款批量查询发货明细信息，单次查询上限100条</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.shippingDetailCodeList</td><td>ARRAY</td><td>否</td><td>最大查询上限为100</td><td>[&quot;INV202502000001&quot;,&quot;INV202502000002&quot;]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>成功：true，失败：false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>执行成功时，会返回的信息：”成功“。<br>执行失败时，会返回错误信息。</td><td>&quot;成功&quot;</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>调用失败：EROOR1<br>执行失败：EROOR2<br>执行成功：SUC0000<br>参数错误：E0002</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.body</td><td>ARRAY</td><td>否</td><td>返回的业务数据</td><td></td></tr>
+<tr><td>root.body.purchaseCompanyId</td><td>LONG</td><td>是</td><td>采购法人公司ID</td><td>65921</td></tr>
+<tr><td>root.body.purchaseCompanyName</td><td>STRING</td><td>是</td><td>采购法人公司名称</td><td>&quot;江西大学附属医学院&quot;</td></tr>
+<tr><td>root.body.supplierArchiveSeqId</td><td>LONG</td><td>是</td><td>供应商档案ID</td><td>65924</td></tr>
+<tr><td>root.body.supplierArchiveName</td><td>STRING</td><td>是</td><td>供应商档案名称</td><td>&quot;福建省食品运输公司&quot;</td></tr>
+<tr><td>root.body.supplierComId</td><td>LONG</td><td>是</td><td>供应商对应租户号</td><td>6524</td></tr>
+<tr><td>root.body.supplierCompanyId</td><td>LONG</td><td>是</td><td>供应商下法人公司唯一ID</td><td>65925</td></tr>
+<tr><td>root.body.supplierCompanyName</td><td>STRING</td><td>是</td><td>供应商下法人公司名称</td><td>&quot;福建省莆田市湄洲岛食品运输公司&quot;</td></tr>
+<tr><td>root.body.shippingDetailCode</td><td>STRING</td><td>是</td><td>发货明细编号</td><td>&quot;sn2025071804522965&quot;</td></tr>
+<tr><td>root.body.orderCode</td><td>STRING</td><td>是</td><td>订单编号</td><td>&quot;O12345678&quot;</td></tr>
+<tr><td>root.body.orderProductRelCode</td><td>STRING</td><td>是</td><td>订单明细编号</td><td>&quot;opr307731041651539968&quot;</td></tr>
+<tr><td>root.body.shippingNoteCode</td><td>STRING</td><td>是</td><td>发货单编号</td><td>&quot;Ship20250822&quot;</td></tr>
+<tr><td>root.body.goodsReceivingAddress</td><td>STRING</td><td>是</td><td>由发货地址+收货人+手机号拼接成</td><td>&quot;北京市/西城区/西城路/红太狼/1788888888&quot;</td></tr>
+<tr><td>root.body.noteReceivingDescription</td><td>STRING</td><td></td><td>发货单收货说明</td><td>&quot;20250821收货&quot;</td></tr>
+<tr><td>root.body.shipperName</td><td>STRING</td><td>是</td><td>发货人姓名</td><td>&quot;TOT&quot;</td></tr>
+<tr><td>root.body.shipperPhoneNumber</td><td>STRING</td><td>是</td><td>发货人联系号码</td><td>&quot;17810289999&quot;</td></tr>
+<tr><td>root.body.productCode</td><td>STRING</td><td>是</td><td>产品编码</td><td>&quot;PRO2025071500001&quot;</td></tr>
+<tr><td>root.body.productName</td><td>STRING</td><td>是</td><td>产品名称</td><td>&quot;999板蓝根&quot;</td></tr>
+<tr><td>root.body.goodsType</td><td>STRING</td><td>是</td><td>产品种类</td><td>&quot;PRO202507150001&quot;</td></tr>
+<tr><td>root.body.productMeasureUnit</td><td>STRING</td><td></td><td>产品计量单位</td><td>&quot;个&quot;</td></tr>
+<tr><td>root.body.unitPrice</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.productPackaging</td><td>STRING</td><td></td><td>包装</td><td>&quot;单瓶&quot;</td></tr>
+<tr><td>root.body.productSpecification</td><td>STRING</td><td></td><td>规格型号</td><td>&quot;600ml&quot;</td></tr>
+<tr><td>root.body.productManufacturingEnterprise</td><td>STRING</td><td></td><td>生产企业</td><td>&quot;乌兹别克斯坦&quot;</td></tr>
+<tr><td>root.body.productBatchNo</td><td>STRING</td><td></td><td>生产批号</td><td>&quot;BOL&quot;</td></tr>
+<tr><td>root.body.productManufacturingDate</td><td>STRING</td><td></td><td>yyyy-MM-dd</td><td>&quot;2025-08-21&quot;</td></tr>
+<tr><td>root.body.expiryDate</td><td>STRING</td><td></td><td>yyyy-MM-dd</td><td>&quot;2025-07-24&quot;</td></tr>
+<tr><td>root.body.purchaseQuantity</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.purchaseAmount</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.shippedQuantity</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.currentShipmentQuantity</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.currentShipmentAmount</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.receivingQuantity</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.receivingAmount</td><td>BIGDECIMAL</td><td>是</td><td>整数位不超过15位，小数位不超过6位</td><td>22.25</td></tr>
+<tr><td>root.body.largeMediumPackagingTraceCodeList</td><td>ARRAY</td><td></td><td>大中包装追溯码</td><td>[&quot;01234567890123456789&quot;]</td></tr>
+<tr><td>root.body.smallPackagingTraceCodeList</td><td>ARRAY</td><td></td><td>小包装追溯码</td><td>[&quot;01234567890123456780&quot;]</td></tr>
+<tr><td>root.body.customFieldValues</td><td>ARRAY</td><td></td><td>自定义字段值</td><td></td></tr>
+<tr><td>root.body.customFieldValues.fieldCode</td><td>STRING</td><td>是</td><td>自定义字段编码</td><td>&quot;INPUT_100553748&quot;</td></tr>
+<tr><td>root.body.customFieldValues.fieldName</td><td>STRING</td><td>是</td><td>自定义字段名称</td><td>&quot;可选值&quot;</td></tr>
+<tr><td>root.body.customFieldValues.fieldValues</td><td>ARRAY</td><td>是</td><td>自定义字段对应的值</td><td>[&quot;DIY&quot;,&quot;ABCV&quot;]</td></tr>
+<tr><td>root.body.relInvoiceList</td><td>ARRAY</td><td></td><td>关联的发票信息</td><td></td></tr>
+<tr><td>root.body.relInvoiceList.invoiceNumber</td><td>STRING</td><td>是</td><td>发票号码</td><td>&quot;0231480215465&quot;</td></tr>
+<tr><td>root.body.relInvoiceList.invoiceCode</td><td>STRING</td><td></td><td>发票代码</td><td>“12345678912”</td></tr>
+<tr><td>root.body.relInvoiceList.invoiceType</td><td>STRING</td><td></td><td>1：区块链电子发票；<br>2：普通电子发票；<br>3：增值税普通发票；<br>4：增值税专用发票；<br>8：定额；<br>B: 卷式发票</td><td>&quot;1&quot;</td></tr>
+<tr><td>root.body.relInvoiceList.billingDate</td><td>STRING</td><td></td><td>格式 yyyy-MM-dd HH:mm:ss</td><td>&quot;2024-08-20 00:00:00&quot;</td></tr>
+<tr><td>root.body.relInvoiceList.amountIncludeTax</td><td>BIGDECIMAL</td><td></td><td>整数位不超过15位，小数位不超过6位</td><td>1.1</td></tr>
+<tr><td>root.body.relInvoiceList.amountExcludeTax</td><td>BIGDECIMAL</td><td></td><td>整数位不超过15位，小数位不超过6位</td><td>2.5</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;shippingDetailCodeList&quot;:[&quot;snd310255793079336960&quot;]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;purchaseCompanyId&quot;: 10000024907,
+            &quot;purchaseCompanyName&quot;: &quot;老板电器&quot;,
+            &quot;supplierArchiveSeqId&quot;: 57495,
+            &quot;supplierArchiveName&quot;: &quot;张老板的第三家公司&quot;,
+            &quot;supplierComId&quot;: 6953,
+            &quot;supplierCompanyId&quot;: 10000024907,
+            &quot;supplierCompanyName&quot;: &quot;老板电器&quot;,
+            &quot;shippingDetailCode&quot;: &quot;snd310255793079336960&quot;,
+            &quot;orderCode&quot;: &quot;2025073004547275&quot;,
+            &quot;orderProductRelCode&quot;: &quot;opr310055782894804993&quot;,
+            &quot;shippingNoteCode&quot;: &quot;sn2025073104549944&quot;,
+            &quot;goodsReceivingAddress&quot;: &quot;北京市/西城区/222/张老板/15267067042&quot;,
+            &quot;noteReceivingDescription&quot;: &quot;M78已收到货&quot;,
+            &quot;shipperName&quot;: &quot;张老板&quot;,
+            &quot;shipperPhoneNumber&quot;: &quot;222&quot;,
+            &quot;productCode&quot;: &quot;PRO2025072800010&quot;,
+            &quot;productName&quot;: &quot;五粮液1&quot;,
+            &quot;goodsType&quot;: &quot;PRO202507240001&quot;,
+            &quot;productMeasureUnit&quot;: &quot;4&quot;,
+            &quot;unitPrice&quot;: 1,
+            &quot;productPackaging&quot;: &quot;2&quot;,
+            &quot;productSpecification&quot;: &quot;3&quot;,
+            &quot;productManufacturingEnterprise&quot;: &quot;西南接23号&quot;,
+            &quot;productBatchNo&quot;: &quot;202508&quot;,
+            &quot;productManufacturingDate&quot;: &quot;2025-08-27&quot;,
+            &quot;expiryDate&quot;: &quot;2026-08-27&quot;,
+            &quot;purchaseQuantity&quot;: 15,
+            &quot;purchaseAmount&quot;: 15,
+            &quot;shippedQuantity&quot;: 1.1,
+            &quot;currentShipmentQuantity&quot;: 11,
+            &quot;currentShipmentAmount&quot;: 11,
+            &quot;receivingQuantity&quot;: 0,
+            &quot;receivingAmount&quot;: 0,
+            &quot;largeMediumPackagingTraceCodeList&quot;: [
+                &quot;256890&quot;,
+                &quot;321321412156312156321&quot;,
+                &quot;81232704863235476061&quot;
+            ],
+            &quot;smallPackagingTraceCodeList&quot;: [
+                &quot;1234567890&quot;,
+                &quot;12345678903213&quot;
+            ],
+            &quot;customFieldValues&quot;: [
+                {
+                    &quot;fieldCode&quot;: &quot;MULTI_INPUT_260378853&quot;,
+                    &quot;fieldName&quot;: &quot;多行文本&quot;,
+                    &quot;fieldValues&quot;: [
+                        &quot;20250827测试&quot;
+                    ]
+                }
+            ],
+            &quot;relInvoiceList&quot;: [
+                {
+                    &quot;invoiceNumber&quot;: &quot;11312700&quot;,
+                    &quot;invoiceCode&quot;: &quot;12345678912&quot;,
+                    &quot;invoiceType&quot;: &quot;1&quot;,
+                    &quot;billingDate&quot;: &quot;2024-08-20 00:00:00&quot;,
+                    &quot;amountIncludeTax&quot;: 0,
+                    &quot;amountExcludeTax&quot;: 1260
+                }
+            ]
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>E0002</td><td>查询发货明细数量不能超过100条</td><td>控制单次查询发货明细数量小于100</td></tr>
+<tr><td>EROOR1</td><td>系统错误</td><td>稍后再试，或联系开发人员</td></tr>
+</tbody></table>
+</body>
+</html>

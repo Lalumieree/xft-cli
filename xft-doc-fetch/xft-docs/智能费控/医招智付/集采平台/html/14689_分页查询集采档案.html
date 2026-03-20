@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>分页查询集采档案</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>分页查询集采档案</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-settle/mapping/archive/page</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-settle/mapping/archive/page</p>
+<h2>接口描述</h2>
+<p>用于医招智付场景分页查询集采档案信息，对应页面为医招智付-集采平台-规则设置-集采档案处列表页，单次查询不能超过500条</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.platformCode</td><td>STRING</td><td>是</td><td>集采平台编码<br>江苏省平台：jiangSuProvincePlatform <br>福建省平台：fuJianProvincePlatform <br>江西省平台：jiangXiProvincePlatform</td><td>fuJianProvincePlatform</td></tr>
+<tr><td>root.archiveName</td><td>STRING</td><td>是</td><td>归属集采档案名称，对应医招智付-集采平台-规则设置-集采档案的相应集采档案名称</td><td>特殊药品映射</td></tr>
+<tr><td>root.sourceIdList</td><td>ARRAY</td><td>否</td><td>规则输入值列表，对应新增集采档案时字段属性为规则输入值的表头字段，最大500条</td><td>[&quot;21934&quot;]</td></tr>
+<tr><td>root.start</td><td>INTEGER</td><td>是</td><td>起始页数</td><td>0</td></tr>
+<tr><td>root.limit</td><td>INTEGER</td><td>是</td><td>最大500</td><td>5</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>否</td><td>返回体</td><td></td></tr>
+<tr><td>root.body.total</td><td>LONG</td><td>否</td><td>符合条件总数量</td><td>1</td></tr>
+<tr><td>root.body.list</td><td>ARRAY</td><td>否</td><td>集采档案信息列表</td><td></td></tr>
+<tr><td>root.body.list.sourceId</td><td>STRING</td><td>否</td><td>对应新增集采档案时字段属性为规则输入值的表头字段</td><td>21934</td></tr>
+<tr><td>root.body.list.sourceName</td><td>STRING</td><td>否</td><td>对应新增集采档案时字段属性为规则输入说明的表头字段</td><td>注射用甲苯磺酸瑞马唑仑</td></tr>
+<tr><td>root.body.list.targetId</td><td>STRING</td><td>否</td><td>对应新增集采档案时字段属性为规则产出结果的表头字段</td><td>是</td></tr>
+<tr><td>root.body.list.targetName</td><td>STRING</td><td>否</td><td>对应新增集采档案时字段属性为产出结果说明的表头字段</td><td>null</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>否</td><td>错误码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>否</td><td>是否调用成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>错误信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+  &quot;platformCode&quot;: &quot;fuJianProvincePlatform&quot;,
+  &quot;archiveName&quot;:&quot;特殊药品映射&quot;,
+  &quot;sourceIdList&quot;:[&quot;21934&quot;],
+  &quot;start&quot;: 0,
+  &quot;limit&quot;: 5
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;total&quot;: 1,
+        &quot;list&quot;: [
+            {
+                &quot;sourceId&quot;: &quot;21934&quot;,
+                &quot;sourceName&quot;: &quot;注射用甲苯磺酸瑞马唑仑&quot;,
+                &quot;targetId&quot;: &quot;是&quot;,
+                &quot;targetName&quot;: null
+            }
+        ]
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}  
+## 错误码说明 
+| 错误码| 错误信息|
+  | --- | --- |
+  | EROOR1| 调用失败|
+  | EROOR2| 执行失败，分页查出最大限制、当前企业未配置集采平台信息等|
+  | SUC0000| 执行成功|
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>分页查询供应商详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>分页查询供应商详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/supplier/page-for-detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/supplier/page-for-detail</p>
+<h2>接口描述</h2>
+<p>供应商详情分页查询</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.start</td><td>INTEGER</td><td>是</td><td>起始行数</td><td>0</td></tr>
+<tr><td>root.limit</td><td>INTEGER</td><td>是</td><td>最大1000条</td><td>10</td></tr>
+<tr><td>root.query</td><td>OBJECT</td><td>否</td><td>请求体</td><td></td></tr>
+<tr><td>root.query.globalSearch</td><td>STRING</td><td>否</td><td>供应商名称或编码模糊搜索</td><td></td></tr>
+<tr><td>root.query.supSts</td><td>STRING</td><td>否</td><td>1：启用； 0：停用</td><td>1</td></tr>
+<tr><td>root.query.availableOrgType</td><td>STRING</td><td>否</td><td>0：全部公司 1：部分公司</td><td>0</td></tr>
+<tr><td>root.query.availableOrgId</td><td>STRING</td><td>否</td><td>法人公司id</td><td>CORx80000</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.body</td><td>OBJECT</td><td>否</td><td>返回体</td><td></td></tr>
+<tr><td>root.body.total</td><td>INTEGER</td><td>是</td><td>不是list长度</td><td>1</td></tr>
+<tr><td>root.body.list</td><td>ARRAY</td><td>否</td><td>供应商信息列表</td><td></td></tr>
+<tr><td>root.body.list.seqId</td><td>LONG</td><td>是</td><td>供应商自增ID</td><td>27321</td></tr>
+<tr><td>root.body.list.supId</td><td>STRING</td><td>是</td><td>供应商编码</td><td>SUP20230810104235</td></tr>
+<tr><td>root.body.list.supNam</td><td>STRING</td><td>是</td><td>供应商名称</td><td>供应商api添加测试1</td></tr>
+<tr><td>root.body.list.supTypeId</td><td>STRING</td><td>是</td><td>智能费控-档案设置-字段设置-供应商-供应商类型编码</td><td>SUPTYPE0001</td></tr>
+<tr><td>root.body.list.supplierType</td><td>STRING</td><td></td><td>智能费控-档案设置-字段设置-供应商-供应商类型名称</td><td>默认供应商类型</td></tr>
+<tr><td>root.body.list.supSts</td><td>STRING</td><td>是</td><td>供应商状态<br>1-启用 0-停用</td><td>1</td></tr>
+<tr><td>root.body.list.enableDate</td><td>STRING</td><td>否</td><td>启用日期</td><td>2023-01-02</td></tr>
+<tr><td>root.body.list.updateTime</td><td>STRING</td><td>是</td><td>更新时间</td><td>2023-08-10 11:09:02</td></tr>
+<tr><td>root.body.list.corOrgNbr</td><td>STRING</td><td>否</td><td>统一信用代码</td><td>123121234567890985</td></tr>
+<tr><td>root.body.list.availableOrgType</td><td>LONG</td><td>否</td><td>1-部分公司 0-全部公司</td><td>1</td></tr>
+<tr><td>root.body.list.availableOrgIdList</td><td>ARRAY</td><td>否</td><td>String列表</td><td>[&quot;CORx60000&quot;]</td></tr>
+<tr><td>root.body.list.customFieldValues</td><td>ARRAY</td><td>否</td><td>自定义字段值列表</td><td></td></tr>
+<tr><td>root.body.list.customFieldValues.customFieldCode</td><td>STRING</td><td>否</td><td>自定义字段编码</td><td>INFINITY_SELECT_172921020</td></tr>
+<tr><td>root.body.list.customFieldValues.customFieldValue</td><td>STRING</td><td>否</td><td>自定义字段填写值</td><td>null</td></tr>
+<tr><td>root.body.list.customFieldValues.customFieldName</td><td>STRING</td><td>否</td><td>自定义字段名称</td><td>下拉单选</td></tr>
+<tr><td>root.body.list.customFieldValues.multiValues</td><td>ARRAY</td><td>否</td><td>多选时的值</td><td></td></tr>
+<tr><td>root.body.list.customFieldValues.multiValues.id</td><td>STRING</td><td></td><td>多选的值 key</td><td>选项1</td></tr>
+<tr><td>root.body.list.customFieldValues.multiValues.name</td><td>STRING</td><td></td><td>多选的显示</td><td>选项1</td></tr>
+<tr><td>root.body.list.customFieldValues.multiValues.code</td><td>STRING</td><td></td><td>多选的 编码</td><td>null</td></tr>
+<tr><td>root.body.list.recAcctList</td><td>ARRAY</td><td>否</td><td>银行账户</td><td></td></tr>
+<tr><td>root.body.list.recAcctList.acctType</td><td>STRING</td><td>否</td><td>1：对公账户，0：个人账户</td><td>1</td></tr>
+<tr><td>root.body.list.recAcctList.bankcode</td><td>STRING</td><td></td><td>银行名称代码</td><td>C1030935001347</td></tr>
+<tr><td>root.body.list.recAcctList.state</td><td>STRING</td><td>否</td><td>1：是，0：否</td><td>1</td></tr>
+<tr><td>root.body.list.recAcctList.bankName</td><td>STRING</td><td>否</td><td>银行名称</td><td>中国人民人行</td></tr>
+<tr><td>root.body.list.recAcctList.depoBank</td><td>STRING</td><td>否</td><td>联行号-开户行名称代码</td><td>001199514244</td></tr>
+<tr><td>root.body.list.recAcctList.depoBankName</td><td>STRING</td><td>否</td><td>开户行名称</td><td>人民银行开鲁县支行</td></tr>
+<tr><td>root.body.list.recAcctList.depoName</td><td>STRING</td><td>否</td><td>默认与供应商名称一致</td><td>供应商名称</td></tr>
+<tr><td>root.body.list.recAcctList.acctNo</td><td>STRING</td><td>否</td><td>银行账号</td><td>123456111111</td></tr>
+<tr><td>root.body.list.recAcctList.mainAcct</td><td>STRING</td><td>否</td><td>1：是，0：否</td><td>1</td></tr>
+<tr><td>root.body.list.recAcctList.depoCountry</td><td>STRING</td><td>否</td><td>开户国家</td><td>中国</td></tr>
+<tr><td>root.body.list.recAcctList.depoProvince</td><td>STRING</td><td>否</td><td>开户省份代码</td><td>150000</td></tr>
+<tr><td>root.body.list.recAcctList.depoProvinceName</td><td>STRING</td><td>否</td><td>开户省份名称</td><td>内蒙古自治区</td></tr>
+<tr><td>root.body.list.recAcctList.depoCity</td><td>STRING</td><td>否</td><td>开户城市代码</td><td>150500</td></tr>
+<tr><td>root.body.list.recAcctList.depoCityName</td><td>STRING</td><td>否</td><td>开户城市名称</td><td>通辽市</td></tr>
+<tr><td>root.body.list.recAcctList.accountMode</td><td>STRING</td><td>否</td><td>BANK:银行账户，DIGITAL_YUAN：数字人民币</td><td>BANK</td></tr>
+<tr><td>root.body.list.recAcctList.wthrDigitalYuanMainAcct</td><td>STRING</td><td>否</td><td>数字人民币账户字段，银行账户无需处理<br><br>1-是，0-否</td><td>0</td></tr>
+<tr><td>root.body.list.recAcctList.collectingCompanyName</td><td>STRING</td><td>否</td><td>数字人民币账户字段，银行账户无需处理</td><td>测试中心</td></tr>
+<tr><td>root.body.list.recAcctList.remark</td><td>STRING</td><td>否</td><td>备注</td><td>测试新增</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>错误码</td><td>SUC0000</td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>是否调用成功</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>是</td><td>错误信息</td><td>成功</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+    &quot;start&quot;: 0,
+    &quot;limit&quot;: 10,
+    &quot;query&quot;: {
+        &quot;globalSearch&quot;: &quot;供应商api添加测试&quot;,
+        &quot;supSts&quot;: &quot;1&quot;,
+        &quot;availableOrgType&quot;: &quot;1&quot;,
+        &quot;availableOrgId&quot;: &quot;CORx60000&quot;
+    }
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: {
+        &quot;total&quot;: 4,
+        &quot;list&quot;: [
+            {
+                &quot;seqId&quot;: 27401,
+                &quot;supId&quot;: &quot;SUP20230814152024&quot;,
+                &quot;supNam&quot;: &quot;供应商api添加测试3&quot;,
+                &quot;supTypeId&quot;: &quot;s1&quot;,
+                &quot;supplierType&quot;: &quot;fsd&quot;,
+                &quot;supSts&quot;: &quot;1&quot;,
+                &quot;enableDate&quot;: null,
+                &quot;updateTime&quot;: &quot;2024-08-29 16:16:35&quot;,
+                &quot;corOrgNbr&quot;: &quot;123121234567890896&quot;,
+                &quot;availableOrgType&quot;: &quot;1&quot;,
+                &quot;availableOrgIdList&quot;: [
+                    &quot;CORx60000&quot;
+                ],
+                &quot;customFieldValues&quot;: [
+                    {
+                        &quot;customFieldCode&quot;: &quot;44444&quot;,
+                        &quot;customFieldValue&quot;: &quot;12332156&quot;,
+                        &quot;customFieldName&quot;: &quot;单行文本1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_172921020&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;customFieldName&quot;: &quot;下拉单选&quot;,
+                        &quot;multiValues&quot;: [
+                            {
+                                &quot;id&quot;: &quot;选项1&quot;,
+                                &quot;name&quot;: &quot;选项1&quot;,
+                                &quot;code&quot;: null
+                            }
+                        ]
+                    }
+                ],
+                &quot;recAcctList&quot;: [
+                    {
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;state&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;C1030844001362&quot;,
+                        &quot;bankName&quot;: &quot;招商银行股份有限公司&quot;,
+                        &quot;depoBank&quot;: null,
+                        &quot;depoBankName&quot;: null,
+                        &quot;depoName&quot;: &quot;二零二一零八一零二零一二零二&quot;,
+                        &quot;acctNo&quot;: &quot;0102050204000089&quot;,
+                        &quot;mainAcct&quot;: &quot;0&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: null,
+                        &quot;depoProvinceName&quot;: null,
+                        &quot;depoCity&quot;: null,
+                        &quot;depoCityName&quot;: null,
+                        &quot;accountMode&quot;: &quot;DIGITAL_YUAN&quot;,
+                        &quot;wthrDigitalYuanMainAcct&quot;: &quot;1&quot;,
+                        &quot;collectingCompanyName&quot;: &quot;123&quot;,
+                        &quot;remark&quot;: null
+                    }
+                ]
+            },
+            {
+                &quot;seqId&quot;: 27336,
+                &quot;supId&quot;: &quot;SUP20230810152820&quot;,
+                &quot;supNam&quot;: &quot;供应商api添加测试2&quot;,
+                &quot;supTypeId&quot;: &quot;s1&quot;,
+                &quot;supplierType&quot;: &quot;fsd&quot;,
+                &quot;supSts&quot;: &quot;1&quot;,
+                &quot;enableDate&quot;: null,
+                &quot;updateTime&quot;: &quot;2023-08-10 17:30:14&quot;,
+                &quot;corOrgNbr&quot;: &quot;123121234567890986&quot;,
+                &quot;availableOrgType&quot;: &quot;1&quot;,
+                &quot;availableOrgIdList&quot;: [
+                    &quot;CORx60000&quot;
+                ],
+                &quot;customFieldValues&quot;: [
+                    {
+                        &quot;customFieldCode&quot;: &quot;44444&quot;,
+                        &quot;customFieldValue&quot;: &quot;555555&quot;,
+                        &quot;customFieldName&quot;: &quot;单行文本1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;SELECT_140332273&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;customFieldName&quot;: &quot;单选1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_172921020&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;customFieldName&quot;: &quot;下拉单选&quot;,
+                        &quot;multiValues&quot;: [
+                            {
+                                &quot;id&quot;: &quot;选项2&quot;,
+                                &quot;name&quot;: &quot;选项2&quot;,
+                                &quot;code&quot;: null
+                            }
+                        ]
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;NUM_112145243&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;customFieldName&quot;: &quot;数字1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;DATE_141326168&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;customFieldName&quot;: &quot;日期选择1&quot;,
+                        &quot;multiValues&quot;: null
+                    }
+                ],
+                &quot;recAcctList&quot;: [
+                    {
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;state&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;C1030844001362&quot;,
+                        &quot;bankName&quot;: &quot;招商银行股份有限公司&quot;,
+                        &quot;depoBank&quot;: null,
+                        &quot;depoBankName&quot;: null,
+                        &quot;depoName&quot;: &quot;二零二一零八一零二零一二零二&quot;,
+                        &quot;acctNo&quot;: &quot;0102050204000089&quot;,
+                        &quot;mainAcct&quot;: &quot;0&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: null,
+                        &quot;depoProvinceName&quot;: null,
+                        &quot;depoCity&quot;: null,
+                        &quot;depoCityName&quot;: null,
+                        &quot;accountMode&quot;: &quot;DIGITAL_YUAN&quot;,
+                        &quot;wthrDigitalYuanMainAcct&quot;: &quot;1&quot;,
+                        &quot;collectingCompanyName&quot;: &quot;123&quot;,
+                        &quot;remark&quot;: null
+                    },
+                    {
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;state&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;C1030844001362&quot;,
+                        &quot;bankName&quot;: &quot;招商银行股份有限公司&quot;,
+                        &quot;depoBank&quot;: null,
+                        &quot;depoBankName&quot;: null,
+                        &quot;depoName&quot;: &quot;二零二一零八一零二零一二零二&quot;,
+                        &quot;acctNo&quot;: &quot;0102050204000089&quot;,
+                        &quot;mainAcct&quot;: &quot;0&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: null,
+                        &quot;depoProvinceName&quot;: null,
+                        &quot;depoCity&quot;: null,
+                        &quot;depoCityName&quot;: null,
+                        &quot;accountMode&quot;: &quot;DIGITAL_YUAN&quot;,
+                        &quot;wthrDigitalYuanMainAcct&quot;: &quot;0&quot;,
+                        &quot;collectingCompanyName&quot;: &quot;123&quot;,
+                        &quot;remark&quot;: null
+                    },
+                    {
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;state&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;102&quot;,
+                        &quot;bankName&quot;: &quot;中国工商银行&quot;,
+                        &quot;depoBank&quot;: &quot;102305502528&quot;,
+                        &quot;depoBankName&quot;: &quot;中国工商银行常熟招商支行&quot;,
+                        &quot;depoName&quot;: &quot;111&quot;,
+                        &quot;acctNo&quot;: &quot;1221&quot;,
+                        &quot;mainAcct&quot;: &quot;1&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;320000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;江苏省&quot;,
+                        &quot;depoCity&quot;: &quot;320500&quot;,
+                        &quot;depoCityName&quot;: &quot;苏州市&quot;,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;wthrDigitalYuanMainAcct&quot;: &quot;0&quot;,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;remark&quot;: null
+                    }
+                ]
+            },
+            {
+                &quot;seqId&quot;: 27317,
+                &quot;supId&quot;: &quot;SUP20230810103635&quot;,
+                &quot;supNam&quot;: &quot;供应商api添加测试&quot;,
+                &quot;supTypeId&quot;: &quot;s1&quot;,
+                &quot;supplierType&quot;: &quot;fsd&quot;,
+                &quot;supSts&quot;: &quot;1&quot;,
+                &quot;enableDate&quot;: null,
+                &quot;updateTime&quot;: &quot;2023-08-10 17:25:05&quot;,
+                &quot;corOrgNbr&quot;: &quot;123121234567890987&quot;,
+                &quot;availableOrgType&quot;: &quot;1&quot;,
+                &quot;availableOrgIdList&quot;: [
+                    &quot;CORx60000&quot;
+                ],
+                &quot;customFieldValues&quot;: null,
+                &quot;recAcctList&quot;: [
+                    {
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;state&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;001&quot;,
+                        &quot;bankName&quot;: &quot;中国人民人行&quot;,
+                        &quot;depoBank&quot;: &quot;001199514244&quot;,
+                        &quot;depoBankName&quot;: &quot;人民银行开鲁县支行&quot;,
+                        &quot;depoName&quot;: null,
+                        &quot;acctNo&quot;: &quot;123456&quot;,
+                        &quot;mainAcct&quot;: &quot;1&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;150000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;内蒙古自治区&quot;,
+                        &quot;depoCity&quot;: &quot;150500&quot;,
+                        &quot;depoCityName&quot;: &quot;通辽市&quot;,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;wthrDigitalYuanMainAcct&quot;: &quot;0&quot;,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;remark&quot;: null
+                    }
+                ]
+            },
+            {
+                &quot;seqId&quot;: 27321,
+                &quot;supId&quot;: &quot;SUP20230810104235&quot;,
+                &quot;supNam&quot;: &quot;供应商api添加测试1&quot;,
+                &quot;supTypeId&quot;: &quot;s1&quot;,
+                &quot;supplierType&quot;: &quot;fsd&quot;,
+                &quot;supSts&quot;: &quot;1&quot;,
+                &quot;enableDate&quot;: null,
+                &quot;updateTime&quot;: &quot;2023-08-10 11:09:02&quot;,
+                &quot;corOrgNbr&quot;: &quot;123121234567890985&quot;,
+                &quot;availableOrgType&quot;: &quot;1&quot;,
+                &quot;availableOrgIdList&quot;: [
+                    &quot;CORx60000&quot;
+                ],
+                &quot;customFieldValues&quot;: [
+                    {
+                        &quot;customFieldCode&quot;: &quot;44444&quot;,
+                        &quot;customFieldValue&quot;: &quot;12332156&quot;,
+                        &quot;customFieldName&quot;: &quot;单行文本1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;SELECT_140332273&quot;,
+                        &quot;customFieldValue&quot;: &quot;选项4&quot;,
+                        &quot;customFieldName&quot;: &quot;单选1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;INFINITY_SELECT_172921020&quot;,
+                        &quot;customFieldValue&quot;: null,
+                        &quot;customFieldName&quot;: &quot;下拉单选&quot;,
+                        &quot;multiValues&quot;: [
+                            {
+                                &quot;id&quot;: &quot;选项1&quot;,
+                                &quot;name&quot;: &quot;选项1&quot;,
+                                &quot;code&quot;: null
+                            }
+                        ]
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;NUM_112145243&quot;,
+                        &quot;customFieldValue&quot;: &quot;2&quot;,
+                        &quot;customFieldName&quot;: &quot;数字1&quot;,
+                        &quot;multiValues&quot;: null
+                    },
+                    {
+                        &quot;customFieldCode&quot;: &quot;DATE_141326168&quot;,
+                        &quot;customFieldValue&quot;: &quot;2023-08-31&quot;,
+                        &quot;customFieldName&quot;: &quot;日期选择1&quot;,
+                        &quot;multiValues&quot;: null
+                    }
+                ],
+                &quot;recAcctList&quot;: [
+                    {
+                        &quot;acctType&quot;: &quot;1&quot;,
+                        &quot;state&quot;: &quot;1&quot;,
+                        &quot;bankCode&quot;: &quot;001&quot;,
+                        &quot;bankName&quot;: &quot;中国人民人行&quot;,
+                        &quot;depoBank&quot;: &quot;001199514244&quot;,
+                        &quot;depoBankName&quot;: &quot;人民银行开鲁县支行&quot;,
+                        &quot;depoName&quot;: null,
+                        &quot;acctNo&quot;: &quot;123456&quot;,
+                        &quot;mainAcct&quot;: &quot;1&quot;,
+                        &quot;depoCountry&quot;: &quot;中国&quot;,
+                        &quot;depoProvince&quot;: &quot;150000&quot;,
+                        &quot;depoProvinceName&quot;: &quot;内蒙古自治区&quot;,
+                        &quot;depoCity&quot;: &quot;150500&quot;,
+                        &quot;depoCityName&quot;: &quot;通辽市&quot;,
+                        &quot;accountMode&quot;: &quot;BANK&quot;,
+                        &quot;wthrDigitalYuanMainAcct&quot;: &quot;0&quot;,
+                        &quot;collectingCompanyName&quot;: null,
+                        &quot;remark&quot;: null
+                    }
+                ]
+            }
+        ]
+    },
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th></tr></thead>
+<tbody>
+<tr><td>SUC0000</td><td>成功</td></tr>
+<tr><td>EROOR1</td><td>系统错误</td></tr>
+<tr><td>EROOR2</td><td>业务执行错误</td></tr>
+</tbody></table>
+</body>
+</html>

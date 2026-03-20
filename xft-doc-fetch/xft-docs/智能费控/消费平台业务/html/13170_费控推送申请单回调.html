@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>费控推送申请单回调</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>费控推送申请单回调</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/travel/bill/push-callback</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/travel/bill/push-callback</p>
+<h2>接口描述</h2>
+
+<p>消费平台推送申请单回调接口</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.billId</td><td>STRING</td><td>是</td><td>单据编号</td><td></td></tr>
+<tr><td>body.platform</td><td>STRING</td><td>是</td><td>（ZAI_TU）在途</td><td></td></tr>
+<tr><td>body.billType</td><td>STRING</td><td>是</td><td>(TRAVEL_APPLY)差旅申请,（INVITATION_APPLY)招待申请</td><td></td></tr>
+<tr><td>body.requestData</td><td>STRING</td><td>是</td><td>申请单推送请求报文</td><td></td></tr>
+<tr><td>body.responseData</td><td>STRING</td><td>是</td><td>申请单推送响应报文</td><td></td></tr>
+<tr><td>body.code</td><td>STRING</td><td>是</td><td>（SUCCESS）成功，（FAIL）失败</td><td></td></tr>
+<tr><td>body.errorMessage</td><td>STRING</td><td>否</td><td>错误信息</td><td></td></tr>
+<tr><td>body.completeTime</td><td>STRING</td><td>否</td><td>格式：yyyy-MM-dd HH:mm:ss</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+
+<pre><code>
+{
+    &quot;billId&quot;: &quot;2023071102217409&quot;,
+    &quot;platform&quot;: &quot;ZAI_TU&quot;,
+    &quot;billType&quot;: &quot;TRAVEL_APPLY&quot;,
+    &quot;requestData&quot;: &quot;[{\&quot;applyEmpId\&quot;:\&quot;U0000\&quot;,\&quot;applyEmpName\&quot;:\&quot;张灯结彩\&quot;,\&quot;billComId\&quot;:\&quot;0000\&quot;,\&quot;billComName\&quot;:\&quot;憨人科技\&quot;,\&quot;billDepId\&quot;:\&quot;0000\&quot;,\&quot;billDepName\&quot;:\&quot;憨人科技\&quot;,\&quot;billId\&quot;:2023071102217409,\&quot;billStatus\&quot;:\&quot;1\&quot;,\&quot;billType\&quot;:\&quot;TRAVEL_APPLY\&quot;,\&quot;businessTrips\&quot;:[{\&quot;arriveCityCode\&quot;:\&quot;2\&quot;,\&quot;arriveCityName\&quot;:\&quot;天津市\&quot;,\&quot;arriveTime\&quot;:\&quot;2023-07-13 23:00:00.0\&quot;,\&quot;departCityCode\&quot;:\&quot;1\&quot;,\&quot;departCityName\&quot;:\&quot;北京市\&quot;,\&quot;departTime\&quot;:\&quot;2023-07-12 00:00:00.0\&quot;,\&quot;roundTrip\&quot;:\&quot;N\&quot;}],\&quot;operatorEmpId\&quot;:\&quot;U0000\&quot;,\&quot;operatorEmpName\&quot;:\&quot;张灯结彩\&quot;,\&quot;peers\&quot;:[{\&quot;empId\&quot;:\&quot;V0003\&quot;,\&quot;empName\&quot;:\&quot;小招喵\&quot;},{\&quot;empId\&quot;:\&quot;V0004\&quot;,\&quot;empName\&quot;:\&quot;杨测试\&quot;}]},{\&quot;applyEmpId\&quot;:\&quot;U0000\&quot;,\&quot;applyEmpName\&quot;:\&quot;张灯结彩\&quot;,\&quot;billComId\&quot;:\&quot;0000\&quot;,\&quot;billComName\&quot;:\&quot;憨人科技\&quot;,\&quot;billDepId\&quot;:\&quot;0000\&quot;,\&quot;billDepName\&quot;:\&quot;憨人科技\&quot;,\&quot;billId\&quot;:2023070602202810,\&quot;billStatus\&quot;:\&quot;19\&quot;,\&quot;billType\&quot;:\&quot;TRAVEL_APPLY\&quot;,\&quot;businessTrips\&quot;:[{\&quot;arriveCityCode\&quot;:\&quot;2\&quot;,\&quot;arriveCityName\&quot;:\&quot;天津市\&quot;,\&quot;arriveTime\&quot;:\&quot;2023-07-08 23:00:00.0\&quot;,\&quot;departCityCode\&quot;:\&quot;1\&quot;,\&quot;departCityName\&quot;:\&quot;北京市\&quot;,\&quot;departTime\&quot;:\&quot;2023-07-07 00:00:00.0\&quot;,\&quot;roundTrip\&quot;:\&quot;N\&quot;}],\&quot;operatorEmpId\&quot;:\&quot;U0000\&quot;,\&quot;operatorEmpName\&quot;:\&quot;张灯结彩\&quot;,\&quot;peers\&quot;:[]}]&quot;,
+    &quot;responseData&quot;: &quot;{\&quot;status\&quot;:0,\&quot;msg\&quot;:\&quot;推送成功!\&quot;}&quot;,
+    &quot;code&quot;: &quot;SUCCESS&quot;,
+    &quot;errorMessage&quot;: &quot;&quot;,
+    &quot;completeTime&quot;: &quot;2023-07-17 14:52:12&quot;
+}
+</code></pre>
+
+<h2>错误码说明</h2>
+<p>SUC0000 成功 ERROR00 失败</p>
+</body>
+</html>

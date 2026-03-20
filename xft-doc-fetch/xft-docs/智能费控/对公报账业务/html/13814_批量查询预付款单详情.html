@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>批量查询预付款单详情</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>批量查询预付款单详情</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v2/bills/corporate/supplier/lend/detail</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v2/bills/corporate/supplier/lend/detail</p>
+<h2>接口描述</h2>
+<p>批量获取预付款单的单据详情</p>
+
+
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>是</td><td>请求体根节点</td><td></td></tr>
+<tr><td>body.billIdList</td><td>ARRAY</td><td>是</td><td>单词查询最多20条</td><td>[2023103000000001]</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>query</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>header</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>body</td><td>OBJECT</td><td>否</td><td>响应体根节点</td><td></td></tr>
+<tr><td>body.body</td><td>ARRAY</td><td>否</td><td>单据详情数据对象集合</td><td></td></tr>
+<tr><td>body.body.comId</td><td>LONG</td><td>否</td><td>企业编号</td><td>XFT00001</td></tr>
+<tr><td>body.body.billId</td><td>LONG</td><td>否</td><td>单据编号</td><td>2024052103003008</td></tr>
+<tr><td>body.body.billSts</td><td>STRING</td><td>否</td><td>0：草稿<br>1：待审批<br>2：审批通过<br>4：拒绝<br>5：待财务审核<br>6：待财务复核<br>7： 财务审核通过<br>8： 财务复核通过<br>9： 财务审核驳回<br>10：财务复核驳回<br>11：已撤回<br>12：已退回<br>15：已废弃<br>16：暂存<br>17：废弃中<br>18：等待外部处理<br>19：变更中<br>20：已停用<br>21：已删除</td><td>11</td></tr>
+<tr><td>body.body.useType</td><td>STRING</td><td>否</td><td>必定为3，对应借款单类型</td><td>3</td></tr>
+<tr><td>body.body.eventId</td><td>STRING</td><td>否</td><td>单据类型编号</td><td>02240305171918000001</td></tr>
+<tr><td>body.body.eventType</td><td>STRING</td><td>否</td><td>必定为SUPPLIER_LEND，对应预付款单</td><td>SUPPLIER_LEND</td></tr>
+<tr><td>body.body.eventName</td><td>STRING</td><td>否</td><td>单据业务类型名称</td><td>对公外币-预付款单</td></tr>
+<tr><td>body.body.applyTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1716279201000</td></tr>
+<tr><td>body.body.firstApplyTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1716279202000</td></tr>
+<tr><td>body.body.finishTim</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1716279202000</td></tr>
+<tr><td>body.body.billDepCode</td><td>STRING</td><td>否</td><td>单据所属部门编码</td><td>0000</td></tr>
+<tr><td>body.body.billDepName</td><td>STRING</td><td>否</td><td>单据所属部门名称</td><td>滨江小蜜蜂公司dx</td></tr>
+<tr><td>body.body.billComLpcCode</td><td>STRING</td><td>否</td><td>单据所属法人公司编码</td><td>COR000001</td></tr>
+<tr><td>body.body.billComLpcName</td><td>STRING</td><td>否</td><td>单据所属法人公司名称</td><td>滨江小蜜蜂公司dx</td></tr>
+<tr><td>body.body.billProjectCode</td><td>STRING</td><td>否</td><td>单据所属项目编码</td><td>null</td></tr>
+<tr><td>body.body.billProjectName</td><td>STRING</td><td>否</td><td>单据所属项目名称</td><td>null</td></tr>
+<tr><td>body.body.billCenName</td><td>STRING</td><td>否</td><td>单据成本中心名称</td><td>null</td></tr>
+<tr><td>body.body.billCenCode</td><td>STRING</td><td>否</td><td>单据成本中心编号</td><td>null</td></tr>
+<tr><td>body.body.projectTypeCode</td><td>STRING</td><td>否</td><td>单据所属项目类型编码</td><td>null</td></tr>
+<tr><td>body.body.projectTypeName</td><td>STRING</td><td>否</td><td>单据所属项目类型名称</td><td>null</td></tr>
+<tr><td>body.body.billBDCode</td><td>STRING</td><td>否</td><td>单据所属事业部编码</td><td>null</td></tr>
+<tr><td>body.body.billBDName</td><td>STRING</td><td>否</td><td>单据所属事业部名称</td><td>null</td></tr>
+<tr><td>body.body.aplSeqId</td><td>LONG</td><td>否</td><td>报销人唯一编号</td><td>263208</td></tr>
+<tr><td>body.body.aplName</td><td>STRING</td><td>否</td><td>报销人姓名</td><td>x蜜蜂</td></tr>
+<tr><td>body.body.aplEmpNumber</td><td>STRING</td><td>否</td><td>报销人员工编号</td><td>00210416</td></tr>
+<tr><td>body.body.aplDepCode</td><td>STRING</td><td>否</td><td>报销人所属部门编码</td><td>0000</td></tr>
+<tr><td>body.body.aplDepName</td><td>STRING</td><td>否</td><td>报销人所属部门名称</td><td>滨江小蜜蜂公司dx</td></tr>
+<tr><td>body.body.wrSeqId</td><td>LONG</td><td>否</td><td>提单人唯一编号</td><td>263208</td></tr>
+<tr><td>body.body.wrEmpNumber</td><td>STRING</td><td>否</td><td>提单人员编码</td><td>00210416</td></tr>
+<tr><td>body.body.wrName</td><td>STRING</td><td>否</td><td>提单人员姓名</td><td>x蜜蜂</td></tr>
+<tr><td>body.body.isAgent</td><td>BOOLEAN</td><td>否</td><td>是否代理</td><td>false</td></tr>
+<tr><td>body.body.printStatus</td><td>STRING</td><td>否</td><td>单据可打印标识 0:不可打印，1：可打印</td><td>1</td></tr>
+<tr><td>body.body.expTotalCnt</td><td>BIGDECIMAL</td><td>否</td><td>合计金额</td><td>13</td></tr>
+<tr><td>body.body.billPayStatus</td><td>LONG</td><td>否</td><td>0：待付款<br>1：付款中<br>2：付款成功<br>3：付款失败<br>4：部分付款成功<br>5：已发起<br>6：已取消<br>7：取消支付<br>8：部分取消支付</td><td>0</td></tr>
+<tr><td>body.body.billRemark</td><td>STRING</td><td>否</td><td>单据备注</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList</td><td>ARRAY</td><td>否</td><td>[字段说明](https://xft.cmbchina.com/open/#/doc/open-document?id=10692&amp;mid=12746)</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.fieldNumber</td><td>STRING</td><td>否</td><td>字段编码</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.fieldName</td><td>STRING</td><td>否</td><td>自定义字段名称</td><td>申请部门</td></tr>
+<tr><td>body.body.billCustomFieldList.sourceValue</td><td>STRING</td><td>否</td><td>取值来源</td><td>[&quot;0000&quot;]</td></tr>
+<tr><td>body.body.billCustomFieldList.showValue</td><td>STRING</td><td>否</td><td>自定义字段的值</td><td>[{&quot;departmentCode&quot;:&quot;0000&quot;,&quot;departmentName&quot;:&quot;滨江小蜜蜂公司dx/滨江小蜜蜂公司dx&quot;}]</td></tr>
+<tr><td>body.body.billCustomFieldList.type</td><td>STRING</td><td>否</td><td>字段类型</td><td>ADV_DEPARTMENT</td></tr>
+<tr><td>body.body.billCustomFieldList.description</td><td>STRING</td><td>否</td><td>自定义字段描述文本</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList</td><td>ARRAY</td><td>否</td><td>表格表头</td><td>null</td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.name</td><td>STRING</td><td></td><td>字段名称</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.code</td><td>STRING</td><td></td><td>字段编码</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.type</td><td>STRING</td><td></td><td>字段类型</td><td></td></tr>
+<tr><td>body.body.billCustomFieldList.formColumnList.fieldCode</td><td>STRING</td><td></td><td>表格字段-字段编码</td><td></td></tr>
+<tr><td>body.body.billAccount</td><td>OBJECT</td><td>否</td><td>收款账户</td><td></td></tr>
+<tr><td>body.body.billAccount.accountType</td><td>LONG</td><td>否</td><td>1-公司,0-个体工商户</td><td>1</td></tr>
+<tr><td>body.body.billAccount.accountMode</td><td>STRING</td><td>否</td><td>账户类型, <br>BANK:银行账户，<br>DIGITAL_YUAN：数字人民币，<br>CUSTOM：自定义账户</td><td>BANK</td></tr>
+<tr><td>body.body.billAccount.depoBank</td><td>STRING</td><td>否</td><td>开户行</td><td>招商银行</td></tr>
+<tr><td>body.body.billAccount.depoAddress</td><td>STRING</td><td>否</td><td>开户地</td><td>天津市</td></tr>
+<tr><td>body.body.billAccount.depoBranchBank</td><td>STRING</td><td>否</td><td>开户支行</td><td>招商银行</td></tr>
+<tr><td>body.body.billAccount.depoName</td><td>STRING</td><td>否</td><td>开户名</td><td>新增供应商0521-002-100</td></tr>
+<tr><td>body.body.billAccount.account</td><td>LONG</td><td>否</td><td>账户号</td><td>221</td></tr>
+<tr><td>body.body.billAccount.depoBankCode</td><td>STRING</td><td>否</td><td>开户行CODE</td><td>308</td></tr>
+<tr><td>body.body.billAccount.depoBranchBankCode</td><td>STRING</td><td>否</td><td>开户支行CODE（联行号）</td><td>308881029164</td></tr>
+<tr><td>body.body.billAccount.depoCity</td><td>STRING</td><td>否</td><td>城市</td><td>天津市</td></tr>
+<tr><td>body.body.billAccount.depoProvince</td><td>STRING</td><td>否</td><td>省份</td><td>天津市</td></tr>
+<tr><td>body.body.billAccount.depoCityCode</td><td>STRING</td><td>否</td><td>城市code</td><td>120000</td></tr>
+<tr><td>body.body.billAccount.depoProvinceCode</td><td>STRING</td><td>否</td><td>省份code</td><td>120000</td></tr>
+<tr><td>body.body.lendPay</td><td>OBJECT</td><td>否</td><td>预付款信息</td><td></td></tr>
+<tr><td>body.body.lendPay.paidAmount</td><td>BIGDECIMAL</td><td>否</td><td>借款核销金额，大于等于0</td><td>0</td></tr>
+<tr><td>body.body.lendPay.lendControlType</td><td>LONG</td><td>否</td><td>0:前款不清，再借警示 ， 1:前款不清，后款不借</td><td>0</td></tr>
+<tr><td>body.body.lendPay.lendReason</td><td>STRING</td><td>否</td><td>提单时填写的借款理由</td><td>null</td></tr>
+<tr><td>body.body.lendPay.contractName</td><td>STRING</td><td>否</td><td>合同单名称</td><td>pxf0521付款</td></tr>
+<tr><td>body.body.lendPay.billContractSeqId</td><td>LONG</td><td>否</td><td>合同自增id</td><td>2100</td></tr>
+<tr><td>body.body.lendPay.payProvisionSeqId</td><td>LONG</td><td>否</td><td>条款自增id</td><td>1515</td></tr>
+<tr><td>body.body.lendPay.payStageNam</td><td>STRING</td><td>否</td><td>合同条款名称</td><td>11</td></tr>
+<tr><td>body.body.lendPay.supSeqId</td><td>LONG</td><td>否</td><td>供应商自增id</td><td>23365</td></tr>
+<tr><td>body.body.lendPay.supName</td><td>STRING</td><td>否</td><td>供应商名称</td><td>新增供应商0521-002</td></tr>
+<tr><td>body.body.lendPay.supId</td><td>STRING</td><td>否</td><td>供应商编码</td><td>SUP20240521154927</td></tr>
+<tr><td>body.body.lendPay.receiveAccountName</td><td>STRING</td><td>否</td><td>收款方名称</td><td>新增供应商0521-002</td></tr>
+<tr><td>body.body.lendPay.repaymentDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1716249600000</td></tr>
+<tr><td>body.body.lendPay.arriveTicketDate</td><td>LONG</td><td>否</td><td>13位时间戳</td><td>1716249600000</td></tr>
+<tr><td>body.body.lendPay.closeReason</td><td>STRING</td><td>否</td><td>借款单关闭理由</td><td>null</td></tr>
+<tr><td>body.body.lendPay.originalPaidAmount</td><td>BIGDECIMAL</td><td>否</td><td>借款核销原币金额，大于等于0</td><td>0</td></tr>
+<tr><td>body.body.lendPay.originalLendAmount</td><td>BIGDECIMAL</td><td>否</td><td>借款原币金额，大于0</td><td>13</td></tr>
+<tr><td>body.body.lendPay.currencyCode</td><td>STRING</td><td>否</td><td>币种code</td><td>CNY</td></tr>
+<tr><td>body.body.lendPay.rate</td><td>BIGDECIMAL</td><td>否</td><td>汇率</td><td>1</td></tr>
+<tr><td>body.body.lendPay.lendAmount</td><td>BIGDECIMAL</td><td>否</td><td>借款金额，大于0</td><td>13</td></tr>
+<tr><td>body.body.lendPay.lendTypeId</td><td>LONG</td><td>否</td><td>借款单类型id</td><td>1490</td></tr>
+<tr><td>body.body.lendPay.lendTypeName</td><td>STRING</td><td>否</td><td>借款类型名称</td><td>供应商借款</td></tr>
+<tr><td>body.body.lendPay.lendObject</td><td>STRING</td><td>否</td><td>支持员工：EMPLOYEE、支持供应商：SUPPLIER</td><td>SUPPLIER</td></tr>
+<tr><td>body.body.lendPay.billLendRelExpTypeList</td><td>ARRAY</td><td>否</td><td>预付款单关联费用集合</td><td></td></tr>
+<tr><td>body.body.lendPay.billLendRelExpTypeList.expId</td><td>STRING</td><td>否</td><td>费用类型ID</td><td>0020</td></tr>
+<tr><td>body.body.lendPay.billLendRelExpTypeList.expNam</td><td>STRING</td><td>否</td><td>费用类型名称</td><td>新费用类型1</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList</td><td>ARRAY</td><td></td><td>通用支付组件</td><td></td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payCompanyCode</td><td>STRING</td><td></td><td>付款公司编码</td><td>COR000001</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payCompanyName</td><td>STRING</td><td></td><td>付款公司名称</td><td>表单服务测试</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payAccountNumber</td><td>STRING</td><td></td><td>付款银行账户</td><td>2222222</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payDepoName</td><td>STRING</td><td></td><td>付款账户户名</td><td>表单服务测试222</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payMethod</td><td>STRING</td><td></td><td>付款方式名称</td><td>xianjin</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.currencyCode</td><td>STRING</td><td></td><td>币种</td><td>CNY</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.discountAmount</td><td>STRING</td><td></td><td>折扣金额，预付款当前仅支持0</td><td>40</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payAmount</td><td>STRING</td><td></td><td>支付金额，大于等于0</td><td>40</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.receiveAccountNumber</td><td>STRING</td><td></td><td>收款银行账户</td><td>2132</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.receiveDepoName</td><td>STRING</td><td></td><td>收款账户户名</td><td>g2</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.receiveId</td><td>STRING</td><td></td><td>收款供应商编码或者员工工号</td><td>20251022172343</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.receiveName</td><td>STRING</td><td></td><td>收款供应商名称或者员工名称</td><td>g2</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.receiveType</td><td>STRING</td><td></td><td>仅支持：SUPPLIER</td><td>SUPPLIER</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.planPayDate</td><td>STRING</td><td></td><td>yyyy-MM-dd</td><td>2025-11-21</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.digest</td><td>STRING</td><td></td><td>摘要</td><td>2摘要3</td></tr>
+<tr><td>body.body.lendPay.commonPaymentDetailList.payPeriod</td><td>STRING</td><td></td><td>付款时效</td><td>0</td></tr>
+<tr><td>body.returnCode</td><td>STRING</td><td>否</td><td>返回码</td><td>SUC0000</td></tr>
+<tr><td>body.success</td><td>BOOLEAN</td><td>否</td><td>是否请求成功</td><td>true</td></tr>
+<tr><td>body.message</td><td>STRING</td><td>否</td><td>提示信息</td><td>成功</td></tr>
+<tr><td>body.errorMsg</td><td>STRING</td><td></td><td>错误信息</td><td>失败</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h4>请求报文</h4>
+<pre><code>
+{
+ 
+	&quot;billIdList&quot; : [
+ 2024052103003008]
+}
+</code></pre>
+<h4>响应报文</h4>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;comId&quot;: 8216,
+            &quot;billId&quot;: 2025102704824847,
+            &quot;billSts&quot;: &quot;2&quot;,
+            &quot;useType&quot;: &quot;3&quot;,
+            &quot;eventId&quot;: &quot;1159185875603456&quot;,
+            &quot;eventType&quot;: &quot;SUPPLIER_LEND&quot;,
+            &quot;eventName&quot;: &quot;zl预付款1024非OA&quot;,
+            &quot;applyTim&quot;: 1761526916000,
+            &quot;firstApplyTim&quot;: 1761526914000,
+            &quot;finishTim&quot;: 1761529869000,
+            &quot;billDepCode&quot;: &quot;0000&quot;,
+            &quot;billDepName&quot;: &quot;表单服务测试&quot;,
+            &quot;billComLpcCode&quot;: &quot;COR000001&quot;,
+            &quot;billComLpcName&quot;: &quot;表单服务测试&quot;,
+            &quot;billProjectCode&quot;: null,
+            &quot;billProjectName&quot;: null,
+            &quot;billCenName&quot;: null,
+            &quot;billCenCode&quot;: null,
+            &quot;projectTypeCode&quot;: null,
+            &quot;projectTypeName&quot;: null,
+            &quot;billBDCode&quot;: null,
+            &quot;billBDName&quot;: null,
+            &quot;aplSeqId&quot;: 168296206,
+            &quot;aplName&quot;: &quot;syp&quot;,
+            &quot;aplEmpNumber&quot;: &quot;EMP000&quot;,
+            &quot;aplDepCode&quot;: &quot;0000&quot;,
+            &quot;aplDepName&quot;: &quot;表单服务测试&quot;,
+            &quot;wrSeqId&quot;: 168296206,
+            &quot;wrEmpNumber&quot;: &quot;EMP000&quot;,
+            &quot;wrName&quot;: &quot;syp&quot;,
+            &quot;isAgent&quot;: false,
+            &quot;printStatus&quot;: &quot;1&quot;,
+            &quot;expTotalCnt&quot;: 75,
+            &quot;billPayStatus&quot;: &quot;0&quot;,
+            &quot;billRemark&quot;: &quot;&quot;,
+            &quot;billCustomFieldList&quot;: [
+                {
+                    &quot;fieldNumber&quot;: &quot;C62786719&quot;,
+                    &quot;fieldName&quot;: &quot;承担部门&quot;,
+                    &quot;sourceValue&quot;: &quot;[\&quot;0000\&quot;]&quot;,
+                    &quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;0000\&quot;,\&quot;departmentName\&quot;:\&quot;表单服务测试/表单服务测试\&quot;}]&quot;,
+                    &quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,
+                    &quot;required&quot;: true,
+                    &quot;printEnable&quot;: &quot;1&quot;,
+                    &quot;description&quot;: null,
+                    &quot;multiple&quot;: false,
+                    &quot;options&quot;: [],
+                    &quot;formColumnList&quot;: null
+                }
+            ],
+            &quot;payFinishTim&quot;: null,
+            &quot;billAccount&quot;: null,
+            &quot;lendPay&quot;: {
+                &quot;paidAmount&quot;: 0,
+                &quot;payingLendBillCount&quot;: null,
+                &quot;lendControlType&quot;: &quot;0&quot;,
+                &quot;lendReason&quot;: null,
+                &quot;contractName&quot;: &quot;&quot;,
+                &quot;billContractSeqId&quot;: null,
+                &quot;payProvisionSeqId&quot;: null,
+                &quot;payStageNam&quot;: null,
+                &quot;supSeqId&quot;: 152508579304260,
+                &quot;supName&quot;: &quot;g2&quot;,
+                &quot;supId&quot;: &quot;20251022172343&quot;,
+                &quot;receiveAccountName&quot;: &quot;g2&quot;,
+                &quot;repaymentDate&quot;: null,
+                &quot;arriveTicketDate&quot;: null,
+                &quot;closeReason&quot;: null,
+                &quot;originalPaidAmount&quot;: 0,
+                &quot;originalLendAmount&quot;: 15,
+                &quot;currencyCode&quot;: &quot;CNY&quot;,
+                &quot;rate&quot;: 1,
+                &quot;lendAmount&quot;: 15,
+                &quot;alreadyPayAmount&quot;: 0,
+                &quot;toBePayAmount&quot;: 0,
+                &quot;remainingPayAmount&quot;: 15,
+                &quot;originalAlreadyPayAmount&quot;: 0,
+                &quot;originalToBePayAmount&quot;: 0,
+                &quot;originalRemainingPayAmount&quot;: 15,
+                &quot;lendTypeId&quot;: 8655,
+                &quot;lendTypeName&quot;: &quot;预付款&quot;,
+                &quot;lendObject&quot;: &quot;SUPPLIER&quot;,
+                &quot;repaymentFlag&quot;: &quot;1&quot;,
+                &quot;refundFlag&quot;: &quot;1&quot;,
+                &quot;billLendRelExpTypeList&quot;: null,
+                &quot;supplierLendSpreadDto&quot;: null,
+                &quot;spreadInfo&quot;: null,
+                &quot;billAccount&quot;: null
+            },
+            &quot;lendDetailList&quot;: [
+                {
+                    &quot;paidAmount&quot;: 0,
+                    &quot;payingLendBillCount&quot;: null,
+                    &quot;lendControlType&quot;: &quot;0&quot;,
+                    &quot;lendReason&quot;: null,
+                    &quot;contractName&quot;: &quot;&quot;,
+                    &quot;billContractSeqId&quot;: null,
+                    &quot;payProvisionSeqId&quot;: null,
+                    &quot;payStageNam&quot;: null,
+                    &quot;supSeqId&quot;: 152508579304260,
+                    &quot;supName&quot;: &quot;g2&quot;,
+                    &quot;supId&quot;: &quot;20251022172343&quot;,
+                    &quot;receiveAccountName&quot;: &quot;g2&quot;,
+                    &quot;repaymentDate&quot;: null,
+                    &quot;arriveTicketDate&quot;: null,
+                    &quot;closeReason&quot;: null,
+                    &quot;originalPaidAmount&quot;: 0,
+                    &quot;originalLendAmount&quot;: 15,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;lendAmount&quot;: 15,
+                    &quot;alreadyPayAmount&quot;: 0,
+                    &quot;toBePayAmount&quot;: 0,
+                    &quot;remainingPayAmount&quot;: 15,
+                    &quot;originalAlreadyPayAmount&quot;: 0,
+                    &quot;originalToBePayAmount&quot;: 0,
+                    &quot;originalRemainingPayAmount&quot;: 15,
+                    &quot;lendTypeId&quot;: 8655,
+                    &quot;lendTypeName&quot;: &quot;预付款&quot;,
+                    &quot;lendObject&quot;: &quot;SUPPLIER&quot;,
+                    &quot;repaymentFlag&quot;: &quot;1&quot;,
+                    &quot;refundFlag&quot;: &quot;1&quot;,
+                    &quot;billLendRelExpTypeList&quot;: null,
+                    &quot;supplierLendSpreadDto&quot;: null,
+                    &quot;spreadInfo&quot;: null,
+                    &quot;billAccount&quot;: null
+                },
+                {
+                    &quot;paidAmount&quot;: 0,
+                    &quot;payingLendBillCount&quot;: null,
+                    &quot;lendControlType&quot;: &quot;0&quot;,
+                    &quot;lendReason&quot;: null,
+                    &quot;contractName&quot;: &quot;&quot;,
+                    &quot;billContractSeqId&quot;: null,
+                    &quot;payProvisionSeqId&quot;: null,
+                    &quot;payStageNam&quot;: null,
+                    &quot;supSeqId&quot;: 152508579304260,
+                    &quot;supName&quot;: &quot;g2&quot;,
+                    &quot;supId&quot;: &quot;20251022172343&quot;,
+                    &quot;receiveAccountName&quot;: &quot;g2&quot;,
+                    &quot;repaymentDate&quot;: null,
+                    &quot;arriveTicketDate&quot;: null,
+                    &quot;closeReason&quot;: null,
+                    &quot;originalPaidAmount&quot;: 0,
+                    &quot;originalLendAmount&quot;: 20,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;lendAmount&quot;: 20,
+                    &quot;alreadyPayAmount&quot;: 0,
+                    &quot;toBePayAmount&quot;: 0,
+                    &quot;remainingPayAmount&quot;: 20,
+                    &quot;originalAlreadyPayAmount&quot;: 0,
+                    &quot;originalToBePayAmount&quot;: 0,
+                    &quot;originalRemainingPayAmount&quot;: 20,
+                    &quot;lendTypeId&quot;: 8655,
+                    &quot;lendTypeName&quot;: &quot;预付款&quot;,
+                    &quot;lendObject&quot;: &quot;SUPPLIER&quot;,
+                    &quot;repaymentFlag&quot;: &quot;1&quot;,
+                    &quot;refundFlag&quot;: &quot;1&quot;,
+                    &quot;billLendRelExpTypeList&quot;: null,
+                    &quot;supplierLendSpreadDto&quot;: null,
+                    &quot;spreadInfo&quot;: null,
+                    &quot;billAccount&quot;: null
+                },
+                {
+                    &quot;paidAmount&quot;: 0,
+                    &quot;payingLendBillCount&quot;: null,
+                    &quot;lendControlType&quot;: &quot;0&quot;,
+                    &quot;lendReason&quot;: null,
+                    &quot;contractName&quot;: &quot;&quot;,
+                    &quot;billContractSeqId&quot;: null,
+                    &quot;payProvisionSeqId&quot;: null,
+                    &quot;payStageNam&quot;: null,
+                    &quot;supSeqId&quot;: 152508579304260,
+                    &quot;supName&quot;: &quot;g2&quot;,
+                    &quot;supId&quot;: &quot;20251022172343&quot;,
+                    &quot;receiveAccountName&quot;: &quot;g2&quot;,
+                    &quot;repaymentDate&quot;: null,
+                    &quot;arriveTicketDate&quot;: null,
+                    &quot;closeReason&quot;: null,
+                    &quot;originalPaidAmount&quot;: 0,
+                    &quot;originalLendAmount&quot;: 20,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;lendAmount&quot;: 20,
+                    &quot;alreadyPayAmount&quot;: 0,
+                    &quot;toBePayAmount&quot;: 0,
+                    &quot;remainingPayAmount&quot;: 20,
+                    &quot;originalAlreadyPayAmount&quot;: 0,
+                    &quot;originalToBePayAmount&quot;: 0,
+                    &quot;originalRemainingPayAmount&quot;: 20,
+                    &quot;lendTypeId&quot;: 8655,
+                    &quot;lendTypeName&quot;: &quot;预付款&quot;,
+                    &quot;lendObject&quot;: &quot;SUPPLIER&quot;,
+                    &quot;repaymentFlag&quot;: &quot;1&quot;,
+                    &quot;refundFlag&quot;: &quot;1&quot;,
+                    &quot;billLendRelExpTypeList&quot;: null,
+                    &quot;supplierLendSpreadDto&quot;: null,
+                    &quot;spreadInfo&quot;: null,
+                    &quot;billAccount&quot;: null
+                },
+                {
+                    &quot;paidAmount&quot;: 0,
+                    &quot;payingLendBillCount&quot;: null,
+                    &quot;lendControlType&quot;: &quot;0&quot;,
+                    &quot;lendReason&quot;: null,
+                    &quot;contractName&quot;: &quot;&quot;,
+                    &quot;billContractSeqId&quot;: null,
+                    &quot;payProvisionSeqId&quot;: null,
+                    &quot;payStageNam&quot;: null,
+                    &quot;supSeqId&quot;: 152508579304260,
+                    &quot;supName&quot;: &quot;g2&quot;,
+                    &quot;supId&quot;: &quot;20251022172343&quot;,
+                    &quot;receiveAccountName&quot;: &quot;g2&quot;,
+                    &quot;repaymentDate&quot;: null,
+                    &quot;arriveTicketDate&quot;: null,
+                    &quot;closeReason&quot;: null,
+                    &quot;originalPaidAmount&quot;: 0,
+                    &quot;originalLendAmount&quot;: 20,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;rate&quot;: 1,
+                    &quot;lendAmount&quot;: 20,
+                    &quot;alreadyPayAmount&quot;: 0,
+                    &quot;toBePayAmount&quot;: 0,
+                    &quot;remainingPayAmount&quot;: 20,
+                    &quot;originalAlreadyPayAmount&quot;: 0,
+                    &quot;originalToBePayAmount&quot;: 0,
+                    &quot;originalRemainingPayAmount&quot;: 20,
+                    &quot;lendTypeId&quot;: 8655,
+                    &quot;lendTypeName&quot;: &quot;预付款&quot;,
+                    &quot;lendObject&quot;: &quot;SUPPLIER&quot;,
+                    &quot;repaymentFlag&quot;: &quot;1&quot;,
+                    &quot;refundFlag&quot;: &quot;1&quot;,
+                    &quot;billLendRelExpTypeList&quot;: null,
+                    &quot;supplierLendSpreadDto&quot;: null,
+                    &quot;spreadInfo&quot;: null,
+                    &quot;billAccount&quot;: null
+                }
+            ],
+            &quot;commonPaymentDetailList&quot;: [
+                {
+                    &quot;payCompanyCode&quot;: null,
+                    &quot;payCompanyName&quot;: null,
+                    &quot;payAccountNumber&quot;: null,
+                    &quot;payDepoName&quot;: null,
+                    &quot;payMethod&quot;: null,
+                    &quot;currencyCode&quot;: &quot;CNY&quot;,
+                    &quot;discountAmount&quot;: 0,
+                    &quot;payAmount&quot;: 75,
+                    &quot;receiveAccountNumber&quot;: &quot;2132&quot;,
+                    &quot;receiveDepoName&quot;: &quot;g2&quot;,
+                    &quot;receiveId&quot;: &quot;20251022172343&quot;,
+                    &quot;receiveName&quot;: &quot;g2&quot;,
+                    &quot;receiveType&quot;: &quot;SUPPLIER&quot;,
+                    &quot;planPayDate&quot;: null,
+                    &quot;digest&quot;: null,
+                    &quot;payPeriod&quot;: null
+                }
+            ]
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功&quot;
+}
+</code></pre>
+<p>{</p>
+<p>&quot;body&quot;: [</p>
+<p>{</p>
+<p>&quot;comId&quot;: 8216,</p>
+<p>&quot;billId&quot;: 2025102704824847,</p>
+<p>&quot;billSts&quot;: &quot;2&quot;,</p>
+<p>&quot;useType&quot;: &quot;3&quot;,</p>
+<p>&quot;eventId&quot;: &quot;1159185875603456&quot;,</p>
+<p>&quot;eventType&quot;: &quot;SUPPLIER_LEND&quot;,</p>
+<p>&quot;eventName&quot;: &quot;zl预付款1024非OA&quot;,</p>
+<p>&quot;applyTim&quot;: 1761526916000,</p>
+<p>&quot;firstApplyTim&quot;: 1761526914000,</p>
+<p>&quot;finishTim&quot;: 1761529869000,</p>
+<p>&quot;billDepCode&quot;: &quot;0000&quot;,</p>
+<p>&quot;billDepName&quot;: &quot;表单服务测试&quot;,</p>
+<p>&quot;billComLpcCode&quot;: &quot;COR000001&quot;,</p>
+<p>&quot;billComLpcName&quot;: &quot;表单服务测试&quot;,</p>
+<p>&quot;billProjectCode&quot;: null,</p>
+<p>&quot;billProjectName&quot;: null,</p>
+<p>&quot;billCenName&quot;: null,</p>
+<p>&quot;billCenCode&quot;: null,</p>
+<p>&quot;projectTypeCode&quot;: null,</p>
+<p>&quot;projectTypeName&quot;: null,</p>
+<p>&quot;billBDCode&quot;: null,</p>
+<p>&quot;billBDName&quot;: null,</p>
+<p>&quot;aplSeqId&quot;: 168296206,</p>
+<p>&quot;aplName&quot;: &quot;syp&quot;,</p>
+<p>&quot;aplEmpNumber&quot;: &quot;EMP000&quot;,</p>
+<p>&quot;aplDepCode&quot;: &quot;0000&quot;,</p>
+<p>&quot;aplDepName&quot;: &quot;表单服务测试&quot;,</p>
+<p>&quot;wrSeqId&quot;: 168296206,</p>
+<p>&quot;wrEmpNumber&quot;: &quot;EMP000&quot;,</p>
+<p>&quot;wrName&quot;: &quot;syp&quot;,</p>
+<p>&quot;isAgent&quot;: false,</p>
+<p>&quot;printStatus&quot;: &quot;1&quot;,</p>
+<p>&quot;expTotalCnt&quot;: 75,</p>
+<p>&quot;billPayStatus&quot;: &quot;0&quot;,</p>
+<p>&quot;billRemark&quot;: &quot;&quot;,</p>
+<p>&quot;billCustomFieldList&quot;: [</p>
+<p>{</p>
+<p>&quot;fieldNumber&quot;: &quot;C62786719&quot;,</p>
+<p>&quot;fieldName&quot;: &quot;承担部门&quot;,</p>
+<p>&quot;sourceValue&quot;: &quot;[\&quot;0000\&quot;]&quot;,</p>
+<p>&quot;showValue&quot;: &quot;[{\&quot;departmentCode\&quot;:\&quot;0000\&quot;,\&quot;departmentName\&quot;:\&quot;表单服务测试/表单服务测试\&quot;}]&quot;,</p>
+<p>&quot;type&quot;: &quot;ADV_DEPARTMENT&quot;,</p>
+<p>&quot;required&quot;: true,</p>
+<p>&quot;printEnable&quot;: &quot;1&quot;,</p>
+<p>&quot;description&quot;: null,</p>
+<p>&quot;multiple&quot;: false,</p>
+<p>&quot;options&quot;: [],</p>
+<p>&quot;formColumnList&quot;: null</p>
+<p>}</p>
+<p>],</p>
+<p>&quot;payFinishTim&quot;: null,</p>
+<p>&quot;billAccount&quot;: null,</p>
+<p>&quot;lendPay&quot;: {</p>
+<p>&quot;paidAmount&quot;: 0,</p>
+<p>&quot;payingLendBillCount&quot;: null,</p>
+<p>&quot;lendControlType&quot;: &quot;0&quot;,</p>
+<p>&quot;lendReason&quot;: null,</p>
+<p>&quot;contractName&quot;: &quot;&quot;,</p>
+<p>&quot;billContractSeqId&quot;: null,</p>
+<p>&quot;payProvisionSeqId&quot;: null,</p>
+<p>&quot;payStageNam&quot;: null,</p>
+<p>&quot;supSeqId&quot;: 152508579304260,</p>
+<p>&quot;supName&quot;: &quot;g2&quot;,</p>
+<p>&quot;supId&quot;: &quot;20251022172343&quot;,</p>
+<p>&quot;receiveAccountName&quot;: &quot;g2&quot;,</p>
+<p>&quot;repaymentDate&quot;: null,</p>
+<p>&quot;arriveTicketDate&quot;: null,</p>
+<p>&quot;closeReason&quot;: null,</p>
+<p>&quot;originalPaidAmount&quot;: 0,</p>
+<p>&quot;originalLendAmount&quot;: 15,</p>
+<p>&quot;currencyCode&quot;: &quot;CNY&quot;,</p>
+<p>&quot;rate&quot;: 1,</p>
+<p>&quot;lendAmount&quot;: 15,</p>
+<p>&quot;alreadyPayAmount&quot;: 0,</p>
+<p>&quot;toBePayAmount&quot;: 0,</p>
+<p>&quot;remainingPayAmount&quot;: 15,</p>
+<p>&quot;originalAlreadyPayAmount&quot;: 0,</p>
+<p>&quot;originalToBePayAmount&quot;: 0,</p>
+<p>&quot;originalRemainingPayAmount&quot;: 15,</p>
+<p>&quot;lendTypeId&quot;: 8655,</p>
+<p>&quot;lendTypeName&quot;: &quot;预付款&quot;,</p>
+<p>&quot;lendObject&quot;: &quot;SUPPLIER&quot;,</p>
+<p>&quot;repaymentFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;refundFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;billLendRelExpTypeList&quot;: null,</p>
+<p>&quot;supplierLendSpreadDto&quot;: null,</p>
+<p>&quot;spreadInfo&quot;: null,</p>
+<p>&quot;billAccount&quot;: null</p>
+<p>},</p>
+<p>&quot;lendDetailList&quot;: [</p>
+<p>{</p>
+<p>&quot;paidAmount&quot;: 0,</p>
+<p>&quot;payingLendBillCount&quot;: null,</p>
+<p>&quot;lendControlType&quot;: &quot;0&quot;,</p>
+<p>&quot;lendReason&quot;: null,</p>
+<p>&quot;contractName&quot;: &quot;&quot;,</p>
+<p>&quot;billContractSeqId&quot;: null,</p>
+<p>&quot;payProvisionSeqId&quot;: null,</p>
+<p>&quot;payStageNam&quot;: null,</p>
+<p>&quot;supSeqId&quot;: 152508579304260,</p>
+<p>&quot;supName&quot;: &quot;g2&quot;,</p>
+<p>&quot;supId&quot;: &quot;20251022172343&quot;,</p>
+<p>&quot;receiveAccountName&quot;: &quot;g2&quot;,</p>
+<p>&quot;repaymentDate&quot;: null,</p>
+<p>&quot;arriveTicketDate&quot;: null,</p>
+<p>&quot;closeReason&quot;: null,</p>
+<p>&quot;originalPaidAmount&quot;: 0,</p>
+<p>&quot;originalLendAmount&quot;: 15,</p>
+<p>&quot;currencyCode&quot;: &quot;CNY&quot;,</p>
+<p>&quot;rate&quot;: 1,</p>
+<p>&quot;lendAmount&quot;: 15,</p>
+<p>&quot;alreadyPayAmount&quot;: 0,</p>
+<p>&quot;toBePayAmount&quot;: 0,</p>
+<p>&quot;remainingPayAmount&quot;: 15,</p>
+<p>&quot;originalAlreadyPayAmount&quot;: 0,</p>
+<p>&quot;originalToBePayAmount&quot;: 0,</p>
+<p>&quot;originalRemainingPayAmount&quot;: 15,</p>
+<p>&quot;lendTypeId&quot;: 8655,</p>
+<p>&quot;lendTypeName&quot;: &quot;预付款&quot;,</p>
+<p>&quot;lendObject&quot;: &quot;SUPPLIER&quot;,</p>
+<p>&quot;repaymentFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;refundFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;billLendRelExpTypeList&quot;: null,</p>
+<p>&quot;supplierLendSpreadDto&quot;: null,</p>
+<p>&quot;spreadInfo&quot;: null,</p>
+<p>&quot;billAccount&quot;: null</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;paidAmount&quot;: 0,</p>
+<p>&quot;payingLendBillCount&quot;: null,</p>
+<p>&quot;lendControlType&quot;: &quot;0&quot;,</p>
+<p>&quot;lendReason&quot;: null,</p>
+<p>&quot;contractName&quot;: &quot;&quot;,</p>
+<p>&quot;billContractSeqId&quot;: null,</p>
+<p>&quot;payProvisionSeqId&quot;: null,</p>
+<p>&quot;payStageNam&quot;: null,</p>
+<p>&quot;supSeqId&quot;: 152508579304260,</p>
+<p>&quot;supName&quot;: &quot;g2&quot;,</p>
+<p>&quot;supId&quot;: &quot;20251022172343&quot;,</p>
+<p>&quot;receiveAccountName&quot;: &quot;g2&quot;,</p>
+<p>&quot;repaymentDate&quot;: null,</p>
+<p>&quot;arriveTicketDate&quot;: null,</p>
+<p>&quot;closeReason&quot;: null,</p>
+<p>&quot;originalPaidAmount&quot;: 0,</p>
+<p>&quot;originalLendAmount&quot;: 20,</p>
+<p>&quot;currencyCode&quot;: &quot;CNY&quot;,</p>
+<p>&quot;rate&quot;: 1,</p>
+<p>&quot;lendAmount&quot;: 20,</p>
+<p>&quot;alreadyPayAmount&quot;: 0,</p>
+<p>&quot;toBePayAmount&quot;: 0,</p>
+<p>&quot;remainingPayAmount&quot;: 20,</p>
+<p>&quot;originalAlreadyPayAmount&quot;: 0,</p>
+<p>&quot;originalToBePayAmount&quot;: 0,</p>
+<p>&quot;originalRemainingPayAmount&quot;: 20,</p>
+<p>&quot;lendTypeId&quot;: 8655,</p>
+<p>&quot;lendTypeName&quot;: &quot;预付款&quot;,</p>
+<p>&quot;lendObject&quot;: &quot;SUPPLIER&quot;,</p>
+<p>&quot;repaymentFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;refundFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;billLendRelExpTypeList&quot;: null,</p>
+<p>&quot;supplierLendSpreadDto&quot;: null,</p>
+<p>&quot;spreadInfo&quot;: null,</p>
+<p>&quot;billAccount&quot;: null</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;paidAmount&quot;: 0,</p>
+<p>&quot;payingLendBillCount&quot;: null,</p>
+<p>&quot;lendControlType&quot;: &quot;0&quot;,</p>
+<p>&quot;lendReason&quot;: null,</p>
+<p>&quot;contractName&quot;: &quot;&quot;,</p>
+<p>&quot;billContractSeqId&quot;: null,</p>
+<p>&quot;payProvisionSeqId&quot;: null,</p>
+<p>&quot;payStageNam&quot;: null,</p>
+<p>&quot;supSeqId&quot;: 152508579304260,</p>
+<p>&quot;supName&quot;: &quot;g2&quot;,</p>
+<p>&quot;supId&quot;: &quot;20251022172343&quot;,</p>
+<p>&quot;receiveAccountName&quot;: &quot;g2&quot;,</p>
+<p>&quot;repaymentDate&quot;: null,</p>
+<p>&quot;arriveTicketDate&quot;: null,</p>
+<p>&quot;closeReason&quot;: null,</p>
+<p>&quot;originalPaidAmount&quot;: 0,</p>
+<p>&quot;originalLendAmount&quot;: 20,</p>
+<p>&quot;currencyCode&quot;: &quot;CNY&quot;,</p>
+<p>&quot;rate&quot;: 1,</p>
+<p>&quot;lendAmount&quot;: 20,</p>
+<p>&quot;alreadyPayAmount&quot;: 0,</p>
+<p>&quot;toBePayAmount&quot;: 0,</p>
+<p>&quot;remainingPayAmount&quot;: 20,</p>
+<p>&quot;originalAlreadyPayAmount&quot;: 0,</p>
+<p>&quot;originalToBePayAmount&quot;: 0,</p>
+<p>&quot;originalRemainingPayAmount&quot;: 20,</p>
+<p>&quot;lendTypeId&quot;: 8655,</p>
+<p>&quot;lendTypeName&quot;: &quot;预付款&quot;,</p>
+<p>&quot;lendObject&quot;: &quot;SUPPLIER&quot;,</p>
+<p>&quot;repaymentFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;refundFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;billLendRelExpTypeList&quot;: null,</p>
+<p>&quot;supplierLendSpreadDto&quot;: null,</p>
+<p>&quot;spreadInfo&quot;: null,</p>
+<p>&quot;billAccount&quot;: null</p>
+<p>},</p>
+<p>{</p>
+<p>&quot;paidAmount&quot;: 0,</p>
+<p>&quot;payingLendBillCount&quot;: null,</p>
+<p>&quot;lendControlType&quot;: &quot;0&quot;,</p>
+<p>&quot;lendReason&quot;: null,</p>
+<p>&quot;contractName&quot;: &quot;&quot;,</p>
+<p>&quot;billContractSeqId&quot;: null,</p>
+<p>&quot;payProvisionSeqId&quot;: null,</p>
+<p>&quot;payStageNam&quot;: null,</p>
+<p>&quot;supSeqId&quot;: 152508579304260,</p>
+<p>&quot;supName&quot;: &quot;g2&quot;,</p>
+<p>&quot;supId&quot;: &quot;20251022172343&quot;,</p>
+<p>&quot;receiveAccountName&quot;: &quot;g2&quot;,</p>
+<p>&quot;repaymentDate&quot;: null,</p>
+<p>&quot;arriveTicketDate&quot;: null,</p>
+<p>&quot;closeReason&quot;: null,</p>
+<p>&quot;originalPaidAmount&quot;: 0,</p>
+<p>&quot;originalLendAmount&quot;: 20,</p>
+<p>&quot;currencyCode&quot;: &quot;CNY&quot;,</p>
+<p>&quot;rate&quot;: 1,</p>
+<p>&quot;lendAmount&quot;: 20,</p>
+<p>&quot;alreadyPayAmount&quot;: 0,</p>
+<p>&quot;toBePayAmount&quot;: 0,</p>
+<p>&quot;remainingPayAmount&quot;: 20,</p>
+<p>&quot;originalAlreadyPayAmount&quot;: 0,</p>
+<p>&quot;originalToBePayAmount&quot;: 0,</p>
+<p>&quot;originalRemainingPayAmount&quot;: 20,</p>
+<p>&quot;lendTypeId&quot;: 8655,</p>
+<p>&quot;lendTypeName&quot;: &quot;预付款&quot;,</p>
+<p>&quot;lendObject&quot;: &quot;SUPPLIER&quot;,</p>
+<p>&quot;repaymentFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;refundFlag&quot;: &quot;1&quot;,</p>
+<p>&quot;billLendRelExpTypeList&quot;: null,</p>
+<p>&quot;supplierLendSpreadDto&quot;: null,</p>
+<p>&quot;spreadInfo&quot;: null,</p>
+<p>&quot;billAccount&quot;: null</p>
+<p>}</p>
+<p>],</p>
+<p>&quot;commonPaymentDetailList&quot;: [</p>
+<p>{</p>
+<p>&quot;payCompanyCode&quot;: null,</p>
+<p>&quot;payCompanyName&quot;: null,</p>
+<p>&quot;payAccountNumber&quot;: null,</p>
+<p>&quot;payDepoName&quot;: null,</p>
+<p>&quot;payMethod&quot;: null,</p>
+<p>&quot;currencyCode&quot;: &quot;CNY&quot;,</p>
+<p>&quot;discountAmount&quot;: 0,</p>
+<p>&quot;payAmount&quot;: 75,</p>
+<p>&quot;receiveAccountNumber&quot;: &quot;2132&quot;,</p>
+<p>&quot;receiveDepoName&quot;: &quot;g2&quot;,</p>
+<p>&quot;receiveId&quot;: &quot;20251022172343&quot;,</p>
+<p>&quot;receiveName&quot;: &quot;g2&quot;,</p>
+<p>&quot;receiveType&quot;: &quot;SUPPLIER&quot;,</p>
+<p>&quot;planPayDate&quot;: null,</p>
+<p>&quot;digest&quot;: null,</p>
+<p>&quot;payPeriod&quot;: null</p>
+<p>}</p>
+<p>]</p>
+<p>}</p>
+<p>],</p>
+<p>&quot;returnCode&quot;: &quot;SUC0000&quot;,</p>
+<p>&quot;success&quot;: true,</p>
+<p>&quot;message&quot;: &quot;成功&quot;</p>
+<p>}</p>
+<pre><code>
+## 错误码说明 
+| 错误码| 错误信息|
+  | --- | --- |
+  | E0001| API查询单据详情失败|
+</body>
+</html>

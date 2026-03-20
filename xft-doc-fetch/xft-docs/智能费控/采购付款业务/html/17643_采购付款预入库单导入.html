@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>采购付款预入库单导入</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:Segoe UI,Helvetica,Arial,sans-serif;line-height:1.6;max-width:1100px;margin:24px auto;padding:0 12px;}table{border-collapse:collapse;width:100%;margin:12px 0;}th,td{vertical-align:top;}pre{background:#f6f8fa;padding:12px;overflow:auto;}code{font-family:Consolas,monospace;}h1,h2,h3{margin-top:1.2em;}p{margin:0.5em 0;}</style>
+</head>
+<body>
+<h1>采购付款预入库单导入</h1>
+
+<h2>接口调用地址</h2>
+<p>生产环境地址：https://api.cmbchina.com/itrip/xft-api/v1/purchase-pay/core/pre-inventory/import</p>
+<p>测试环境地址：https://api.cmburl.cn:8065/itrip/xft-api/uat/v1/purchase-pay/core/pre-inventory/import</p>
+<h2>接口描述</h2>
+<p>功能描述： 将预入库信息导入至采购付款应用。</p>
+
+<p>接口注意事项：批量导入接口，允许部分成功，导入上限为100。</p>
+
+<p>采购付款与连接器的交互流程图如下：</p>
+<p>![预入库单导入 (4).png](https://s3gw.cmbchina.com/lw36.01-public-prd/public-5531217f-9568-47f4-9cdb-65c06fd26856)</p>
+<h2>调用方式</h2>
+<p>METHOD: POST</p>
+<p>CONTENT-TYPE: application/json</p>
+<h2>接口输入参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>请求体根节点</td><td></td></tr>
+<tr><td>root.purchaseCompanyId</td><td>LONG</td><td>是</td><td>采购法人公司ID</td><td>65921</td></tr>
+<tr><td>root.purchaseCompanyName</td><td>STRING</td><td>是</td><td>采购法人公司名称</td><td>&quot;江西大学附属医学院&quot;</td></tr>
+<tr><td>root.supplierArchiveSeqId</td><td>LONG</td><td>是</td><td>供应商档案ID</td><td>65924</td></tr>
+<tr><td>root.supplierArchiveName</td><td>STRING</td><td>是</td><td>供应商档案名称</td><td>&quot;福建省食品运输公司&quot;</td></tr>
+<tr><td>root.inventoryList</td><td>ARRAY</td><td>是</td><td>预入库数据</td><td></td></tr>
+<tr><td>root.inventoryList.inventoryCode</td><td>STRING</td><td>是</td><td>预入库单编号</td><td>&quot;INV2025071804522965&quot;</td></tr>
+<tr><td>root.inventoryList.inventoryDate</td><td>STRING</td><td>是</td><td>yyyy-MM-dd HH:mm:ss</td><td>&quot;2025-08-28 18:34:00&quot;</td></tr>
+<tr><td>root.inventoryList.customFieldValues</td><td>ARRAY</td><td></td><td>预入库单自定义字段值</td><td></td></tr>
+<tr><td>root.inventoryList.customFieldValues.fieldCode</td><td>STRING</td><td>是</td><td>自定义字段编码</td><td>&quot;INPUT_100553748&quot;</td></tr>
+<tr><td>root.inventoryList.customFieldValues.fieldValue</td><td>STRING</td><td></td><td>自定义字段对应的值</td><td>&quot;DIY&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails</td><td>ARRAY</td><td>是</td><td>预入库单产品明细列表</td><td></td></tr>
+<tr><td>root.inventoryList.productDetails.shippingDetailCode</td><td>STRING</td><td>是</td><td>关联的发货明细编号</td><td>&quot;sn2025071804522965&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.inventoryQuantity</td><td>BIGDECIMAL</td><td>是</td><td>整数不超过15位，小数不超过6位</td><td>12.56</td></tr>
+<tr><td>root.inventoryList.productDetails.productCode</td><td>STRING</td><td>是</td><td>产品编码</td><td>&quot;PRO2025071500001&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.productName</td><td>STRING</td><td>是</td><td>产品名称</td><td>&quot;测试1&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.goodsType</td><td>STRING</td><td>是</td><td>产品种类</td><td>&quot;测试种类&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.productMeasureUnit</td><td>STRING</td><td></td><td>产品计量单位</td><td>&quot;5&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.unitPrice</td><td>BIGDECIMAL</td><td>是</td><td>整数不超过15位，小数不超过6位</td><td>22</td></tr>
+<tr><td>root.inventoryList.productDetails.productPackaging</td><td>STRING</td><td></td><td>包装</td><td>&quot;4瓶&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.productSpecification</td><td>STRING</td><td></td><td>规格型号</td><td>&quot;6个&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.productManufacturingEnterprise</td><td>STRING</td><td></td><td>生产企业</td><td>&quot;杭州娃哈哈公司&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.productBatchNo</td><td>STRING</td><td></td><td>生产批号</td><td>&quot;001&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.expiryDate</td><td>STRING</td><td></td><td>格式为：yyyy-MM-dd</td><td>&quot;2025-07-30&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.invoiceNumber</td><td>STRING</td><td></td><td>多张发票建议用逗号隔开，如”1234,2321412“</td><td>&quot;12457890&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.customFieldValues</td><td>ARRAY</td><td></td><td>明细自定义字段值</td><td></td></tr>
+<tr><td>root.inventoryList.productDetails.customFieldValues.fieldCode</td><td>STRING</td><td>是</td><td>自定义字段编码</td><td>&quot;INPUT_100553748&quot;</td></tr>
+<tr><td>root.inventoryList.productDetails.customFieldValues.fieldValue</td><td>STRING</td><td>否</td><td>自定义字段对应的值</td><td>&quot;DIY&quot;</td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>query根节点</td><td></td></tr>
+</tbody></table>
+
+<h2>接口输出参数</h2>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应头根节点</td><td></td></tr>
+</tbody></table>
+
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>root</td><td>OBJECT</td><td></td><td>响应体根节点</td><td></td></tr>
+<tr><td>root.success</td><td>BOOLEAN</td><td>是</td><td>成功：true，失败：false</td><td>true</td></tr>
+<tr><td>root.message</td><td>STRING</td><td>否</td><td>导入全失败时，会返回错误信息</td><td>&quot;以下发货明细编码重复：shippingDetailCode1&quot;</td></tr>
+<tr><td>root.returnCode</td><td>STRING</td><td>是</td><td>调用失败：EROOR1<br>执行失败：EROOR2<br>执行成功：SUC0000<br>参数错误：E0002</td><td>&quot;SUC0000&quot;</td></tr>
+<tr><td>root.body</td><td>ARRAY</td><td>否</td><td>返回的业务数据</td><td></td></tr>
+<tr><td>root.body.shippingDetailCode</td><td>STRING</td><td>是</td><td>发货明细编号</td><td>&quot;INV1234567&quot;</td></tr>
+<tr><td>root.body.result</td><td>BOOLEAN</td><td>是</td><td>true - 成功；<br>false - 失败</td><td>true</td></tr>
+<tr><td>root.body.errorMessage</td><td>STRING</td><td></td><td>错误原因</td><td>&quot;发货明细编号PRE000001不存在&quot;</td></tr>
+</tbody></table>
+
+<h2>接口调用示例</h2>
+<h3>请求报文</h3>
+<pre><code>
+{
+    &quot;purchaseCompanyId&quot;: 454232,
+    &quot;purchaseCompanyName&quot;: &quot;强盛集团&quot;,
+    &quot;supplierArchiveSeqId&quot;: 21530,
+    &quot;supplierArchiveName&quot;: &quot;宁波乐士实业有限公司&quot;,
+    &quot;inventoryList&quot;: [
+        {
+            &quot;inventoryCode&quot;: &quot;20250909-1&quot;,
+            &quot;inventoryDate&quot;: &quot;2025-09-09 18:34:00&quot;,
+            &quot;customFieldValues&quot;: [
+                {
+                    &quot;fieldCode&quot;: &quot;INPUT_154438485&quot;,
+                    &quot;fieldValue&quot;: &quot;Ultraman&quot;
+                }
+            ],
+            &quot;productDetails&quot;: [
+                {
+                    &quot;shippingDetailCode&quot;: &quot;snd309705124584910848&quot;,
+                    &quot;inventoryQuantity&quot;: 1234567123.111111,
+                    &quot;productCode&quot;: &quot;productCode001&quot;,
+                    &quot;productName&quot;: &quot;productName001&quot;,
+                    &quot;goodsType&quot;: &quot;goodsType001&quot;,
+                    &quot;productMeasureUnit&quot;: &quot;productMeasureUnit001&quot;,
+                    &quot;unitPrice&quot;: &quot;21.66&quot;,
+                    &quot;productPackaging&quot;: &quot;productPackaging001&quot;,
+                    &quot;productSpecification&quot;: &quot;productSpecification001&quot;,
+                    &quot;productManufacturingEnterprise&quot;: &quot;productManufacturingEnterprise001&quot;,
+                    &quot;productBatchNo&quot;: &quot;productBatchNo001&quot;,
+                    &quot;expiryDate&quot;: &quot;2025-08-08&quot;,
+                    &quot;invoiceNumber&quot;: &quot;22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222&quot;,
+                    &quot;customFieldValues&quot;: [
+                        {
+                            &quot;fieldCode&quot;: &quot;NUM_154554367&quot;,
+                            &quot;fieldValue&quot;: &quot;0&quot;
+                        },
+                        {
+                            &quot;fieldCode&quot;: &quot;INPUT_154612166&quot;,
+                            &quot;fieldValue&quot;: &quot;UltraMan&quot;
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+
+<pre><code>
+{
+    &quot;purchaseCompanyId&quot;: 454232,
+    &quot;purchaseCompanyName&quot;: &quot;强盛集团&quot;,
+    &quot;supplierArchiveSeqId&quot;: 21530,
+    &quot;supplierArchiveName&quot;: &quot;宁波乐士实业有限公司&quot;,
+    &quot;inventoryList&quot;: [
+        {
+            &quot;inventoryCode&quot;: &quot;20250829-2&quot;,
+            &quot;inventoryDate&quot;: &quot;2025-08-28 18:34:00&quot;,
+            &quot;productDetails&quot;: [
+                {
+                    &quot;shippingDetailCode&quot;: &quot;snd315295685945602048&quot;,
+                    &quot;inventoryQuantity&quot;: 1234567890123.111,
+                    &quot;productCode&quot;: &quot;productCode001&quot;,
+                    &quot;productName&quot;: &quot;productName001&quot;,
+                    &quot;goodsType&quot;: &quot;goodsType001&quot;,
+                    &quot;productMeasureUnit&quot;: &quot;productMeasureUnit001&quot;,
+                    &quot;unitPrice&quot;: &quot;21.66&quot;,
+                    &quot;customFieldValues&quot;: [
+                        {
+                            &quot;fieldCode&quot;: &quot;NUM_154343927&quot;,
+                            &quot;fieldValue&quot;: &quot;123&quot;
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            &quot;inventoryCode&quot;: &quot;20250829-2&quot;,
+            &quot;inventoryDate&quot;: &quot;2025-08-28 18:34:00&quot;,
+            &quot;productDetails&quot;: [
+                {
+                    &quot;shippingDetailCode&quot;: &quot;snd310335138305212416&quot;,
+                    &quot;inventoryQuantity&quot;: 19999999.999999,
+                    &quot;productCode&quot;: &quot;productCode001&quot;,
+                    &quot;productName&quot;: &quot;productName001&quot;,
+                    &quot;goodsType&quot;: &quot;goodsType001&quot;,
+                    &quot;productMeasureUnit&quot;: &quot;productMeasureUnit001&quot;,
+                    &quot;unitPrice&quot;: &quot;21.66&quot;
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+<h3>响应报文</h3>
+<pre><code>
+{
+    &quot;body&quot;: [
+        {
+            &quot;result&quot;: true,
+            &quot;shippingDetailCode&quot;: &quot;snd309705124584910848&quot;,
+            &quot;errorMessage&quot;: null
+        },
+        {
+            &quot;result&quot;: true,
+            &quot;shippingDetailCode&quot;: &quot;snd308768046472761344&quot;,
+            &quot;errorMessage&quot;: null
+        }
+    ],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: true
+}
+</code></pre>
+<pre><code>
+{
+    &quot;body&quot;: [],
+    &quot;returnCode&quot;: &quot;SUC0000&quot;,
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;以下预入库单号重复：20250829-2;&quot;
+}
+</code></pre>
+<h2>错误码说明</h2>
+<table border="1" cellspacing="0" cellpadding="6">
+<thead><tr><th>错误码</th><th>错误信息</th><th>解决方案</th></tr></thead>
+<tbody>
+<tr><td>EROOR2</td><td>业务执行错误</td><td>参考errorMessage错误信息字段</td></tr>
+<tr><td>EROOR1</td><td>系统错误</td><td>稍后再试，或联系开发人员</td></tr>
+<tr><td>E0002</td><td>单次导入入库单数量不能超过100条</td><td>控制入库单导入数量小于100</td></tr>
+</tbody></table>
+</body>
+</html>
