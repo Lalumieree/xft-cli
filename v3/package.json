@@ -1,6 +1,6 @@
 {
   "name": "xft-openapi-caller",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "CLI for matching XFT OpenAPI docs, fetching cached documents, resolving city codes, and calling XFT APIs.",
   "license": "UNLICENSED",
   "type": "module",
@@ -16,7 +16,8 @@
     "node": ">=22"
   },
   "files": [
-    "dist/npm/**"
+    "dist/npm/**",
+    "dist/skill/**"
   ],
   "bin": {
     "xft-find-doc": "dist/npm/xft-find-doc.js",

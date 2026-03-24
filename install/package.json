@@ -1,0 +1,31 @@
+{
+  "name": "xft-skill-install",
+  "version": "1.0.0",
+  "description": "Interactive installer for xft-openapi-caller and XFT skills.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/**"
+  ],
+  "bin": {
+    "xft-skill-install": "dist/xft-skill-install.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepack": "npm run build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  }
+}
