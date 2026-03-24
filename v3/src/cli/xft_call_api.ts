@@ -30,7 +30,6 @@ function printHelp(): void {
     formatOption("--payload-file <file>", "从 JSON 文件读取请求体对象，再与 --body 合并。"),
     formatOption("--timeout <seconds>", "请求超时时间，默认 30 秒。"),
     formatOption("--dry-run", "仅输出组装后的请求，不真正发起调用。"),
-    formatOption("--plain-body", "关闭请求体加密，按明文正文发送。"),
     formatOption("--sign-content-mode <mode>", "签名内容模式：raw-body 或 digest-header，默认 raw-body。"),
     "",
     `${style("凭证参数", helpAnsi.bold)}`,
@@ -114,7 +113,7 @@ async function resolveCredentials(args: string[], config: Record<string, unknown
     cscprjcod: (getArgValue(args, "--cscprjcod") ?? getNonSensitiveValue(config, "cscprjcod", "csc-prjcod", "cscPrjCod") ?? process.env.XFT_CSCPRJCOD) as string | undefined,
     cscusrnbr: (getArgValue(args, "--cscusrnbr") ?? getNonSensitiveValue(config, "cscusrnbr", "csc-usrnbr", "cscUsrNbr") ?? process.env.XFT_CSCUSRNBR) as string | undefined,
     cscusruid: (getArgValue(args, "--cscusruid") ?? getNonSensitiveValue(config, "cscusruid", "csc-usruid", "cscUsrUid") ?? process.env.XFT_CSCUSRUID) as string | undefined,
-    encryptBody: !hasFlag(args, "--plain-body"),
+    encryptBody: true,
     signContentMode: (getArgValue(args, "--sign-content-mode") as "raw-body" | "digest-header" | undefined) ?? "raw-body",
   };
 }

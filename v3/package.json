@@ -1,6 +1,6 @@
 {
   "name": "xft-openapi-caller",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CLI for matching XFT OpenAPI docs, fetching cached documents, resolving city codes, and calling XFT APIs.",
   "license": "UNLICENSED",
   "type": "module",

@@ -17,6 +17,7 @@ description: Match a natural-language request to the correct XFT OpenAPI documen
 - Use `xft-find-doc` to map the user's intent to candidate API documents.
 - Use `xft-fetch-docs` to fetch the selected document into `~/.xft_config/xft_docs` and reuse cached markdown when available.
 - Use `xft-call-api` to send the real request only after credentials and required business fields are ready.
+- `xft-call-api` always sends encrypted request bodies; do not look for or rely on any plaintext body option.
 - Use `xft-refresh-city-cache` to refresh the cached domestic city tree under `~/.xft_config/.cache` when travel APIs need city codes.
 - Use `xft-resolve-city-code` to turn user-entered locations such as `福州市鼓楼区` or `上海市` into XFT city codes.
 - Always check relevant documents under `best_practice/` before designing any new business flow or preparing any create/submit/apply style request.

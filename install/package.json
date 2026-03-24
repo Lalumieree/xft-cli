@@ -1,6 +1,6 @@
 {
   "name": "xft-skill-install",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Interactive installer for xft-openapi-caller and XFT skills.",
   "license": "UNLICENSED",
   "type": "module",
