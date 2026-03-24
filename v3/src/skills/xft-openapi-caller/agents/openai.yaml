@@ -1,0 +1,4 @@
+interface:
+  display_name: "XFT OpenAPI Caller"
+  short_description: "Match, fetch, call, and explain XFT OpenAPI docs"
+  default_prompt: "Use $xft-openapi-caller to find the right XFT API, fetch its doc, call it safely, and summarize the result."

@@ -1,5 +1,5 @@
 .DS_Store
-cli/node_modules/
+**/node_modules/
 cli/local-config.json
 
 config.json
@@ -8,3 +8,4 @@ dist/
 .npm-cache/
 .agents/
 .tmp/
+**.tgz

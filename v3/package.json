@@ -1,0 +1,44 @@
+{
+  "name": "xft-openapi-caller",
+  "version": "1.0.0",
+  "description": "CLI for matching XFT OpenAPI docs, fetching cached documents, resolving city codes, and calling XFT APIs.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/shenxia_admin/xft-tools.git"
+  },
+  "homepage": "https://gitee.com/shenxia_admin/xft-tools",
+  "bugs": {
+    "url": "https://gitee.com/shenxia_admin/xft-tools/issues"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/npm/**"
+  ],
+  "bin": {
+    "xft-find-doc": "dist/npm/xft-find-doc.js",
+    "xft-fetch-docs": "dist/npm/xft-fetch-docs.js",
+    "xft-call-api": "dist/npm/xft-call-api.js",
+    "xft-refresh-city-cache": "dist/npm/xft-refresh-city-cache.js",
+    "xft-resolve-city-code": "dist/npm/xft-resolve-city-code.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepack": "npm run build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "keytar": "^7.9.0",
+    "marked": "^15.0.12",
+    "sm-crypto": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  }
+}
