@@ -2,18 +2,16 @@
 name: xft-openapi-caller
 description: Match a natural-language request to the correct XFT OpenAPI document, fetch the target document, prepare and execute the API call, and summarize the result safely. Use when Codex needs to inspect or call a XFT HTTP API such as organization queries, travel request creation, application detail lookup, or similar interface tasks.
 ---
-
 # XFT OpenAPI Caller
 
 ## Install the npm package
 
 - Install the published CLI before using this skill: `npm install -g xft-openapi-caller`
 - Ensure `node` and `npm` are available in the environment.
-- If `keytar` reports platform-specific install requirements, follow the npm install log and complete the missing system dependency first.
+- Use `xft-call-api --help` to confirm that the dependencies are installed
 
 ## Use the bundled resources
 
-- Resolve all paths relative to this skill directory.
 - Use `xft-find-doc` to map the user's intent to candidate API documents.
 - Use `xft-fetch-docs` to fetch the selected document into `~/.xft_config/xft_docs` and reuse cached markdown when available.
 - Use `xft-call-api` to send the real request only after credentials and required business fields are ready.
