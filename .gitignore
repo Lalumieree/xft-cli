@@ -1,4 +1,5 @@
 .DS_Store
+.worktrees/
 **/node_modules/
 cli/local-config.json
 
@@ -7,5 +8,6 @@ dist/
 .roo/
 .npm-cache/
 .agents/
+.claude/
 .tmp/
 **.tgz
