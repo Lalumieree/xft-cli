@@ -4,6 +4,7 @@ import * as p from "@clack/prompts";
 import color from "picocolors";
 import { getHelpText, parseCliArgs } from "./cli.js";
 import {
+  buildInstallSuccessMessage,
   buildPackageSpecifier,
   copySelectedSkills,
   discoverBundledSkills,
@@ -158,7 +159,7 @@ async function runInstall(context: InstallContext, runCommand: CommandRunner): P
       spinner.start("生成安装预览");
       await Promise.resolve();
       spinner.stop("dry-run 完成");
-      p.outro(renderSuccess(context));
+      p.outro(buildInstallSuccessMessage(context));
       return;
     }
 
@@ -178,21 +179,11 @@ async function runInstall(context: InstallContext, runCommand: CommandRunner): P
     copySelectedSkills(installedSkillNames, context.selectedTargets, skillsRoot);
     spinner.stop("技能安装完成");
 
-    p.outro(renderSuccess({ ...context, skillNames: installedSkillNames }));
+    p.outro(buildInstallSuccessMessage({ ...context, skillNames: installedSkillNames }));
   } catch (error) {
     spinner.stop("安装失败");
     handleFatal(error);
   }
-}
-
-function renderSuccess(context: InstallContext): string {
-  return [
-    color.green("安装完成"),
-    `${color.cyan("CLI")}: ${context.packageSpecifier}`,
-    `${color.cyan("Skills")}: ${context.skillNames.join(", ")}`,
-    `${color.cyan("Targets")}: ${context.selectedTargets.map((target) => target.path).join(" | ")}`,
-    `${color.cyan("验证")}: xft-find-doc --help`,
-  ].join("\n");
 }
 
 function createCommandRunner(): CommandRunner {

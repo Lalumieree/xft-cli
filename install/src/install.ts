@@ -1,8 +1,10 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
+import color from "picocolors";
 import type { CommandRunner, InstallContext, InstallTarget } from "./types.js";
 
 const installedSkillRelativeDir = join("dist", "skill");
+export const defaultVerificationCommand = "xft-cli --help";
 
 export function discoverBundledSkills(skillsRoot: string): string[] {
   if (!existsSync(skillsRoot)) {
@@ -17,6 +19,16 @@ export function discoverBundledSkills(skillsRoot: string): string[] {
 
 export function buildPackageSpecifier(packageName: string, packageVersion?: string): string {
   return packageVersion?.trim() ? `${packageName}@${packageVersion.trim()}` : packageName;
+}
+
+export function buildInstallSuccessMessage(context: InstallContext): string {
+  return [
+    color.green("安装完成"),
+    `${color.cyan("CLI")}: ${context.packageSpecifier}`,
+    `${color.cyan("Skills")}: ${context.skillNames.join(", ")}`,
+    `${color.cyan("Targets")}: ${context.selectedTargets.map((target) => target.path).join(" | ")}`,
+    `${color.cyan("验证")}: ${defaultVerificationCommand}`,
+  ].join("\n");
 }
 
 export async function installCliPackage(packageSpecifier: string, runCommand: CommandRunner): Promise<void> {

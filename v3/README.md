@@ -11,11 +11,14 @@ npm install -g xft-openapi-caller
 ## Commands
 
 ```bash
-xft-find-doc --help
-xft-fetch-docs --help
-xft-call-api --help
-xft-refresh-city-cache --help
-xft-resolve-city-code --help
+xft-cli --help
+xft-cli doc find --help
+xft-cli doc fetch --help
+xft-cli api call --help
+xft-cli city refresh --help
+xft-cli city resolve --help
+xft-cli auth --help
+xft-cli config list --help
 ```
 
 ## Notes

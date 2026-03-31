@@ -23,7 +23,7 @@ function copySkillAssets(): Plugin {
           cpSync(from, resolve(outSkillDir, dirName), { recursive: true });
         }
       }
-      const skillMd = readFileSync(resolve(__dirname, "src", "skills", "xft-openapi-caller", "SKILL.md"), "utf-8");
+      const skillMd = readFileSync(resolve(skillSourceRoot, "SKILL.md"), "utf-8");
       writeFileSync(resolve(outSkillDir, "SKILL.md"), skillMd, "utf-8");
     },
   };
@@ -41,11 +41,8 @@ export default defineConfig({
     ssr: true,
     rollupOptions: {
       input: {
-        "xft-find-doc": resolve(__dirname, "src", "cli", "find_xft_doc.ts"),
-        "xft-fetch-docs": resolve(__dirname, "src", "cli", "xft_fetch_docs.ts"),
-        "xft-call-api": resolve(__dirname, "src", "cli", "xft_call_api.ts"),
-        "xft-refresh-city-cache": resolve(__dirname, "src", "cli", "refresh_xft_city_cache.ts"),
-        "xft-resolve-city-code": resolve(__dirname, "src", "cli", "resolve_xft_city_code.ts"),
+        commands: resolve(__dirname, "src", "commands.ts"),
+        "xft-cli": resolve(__dirname, "src", "index.ts"),
       },
       output: {
         entryFileNames: "[name].js",

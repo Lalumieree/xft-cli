@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+  buildInstallSuccessMessage,
   buildPackageSpecifier,
   discoverBundledSkills,
   executeInstall,
@@ -28,6 +29,19 @@ describe("install helpers", () => {
   it("builds package specifier", () => {
     expect(buildPackageSpecifier("xft-openapi-caller")).toBe("xft-openapi-caller");
     expect(buildPackageSpecifier("xft-openapi-caller", "1.0.0")).toBe("xft-openapi-caller@1.0.0");
+  });
+
+  it("builds install success text with the consolidated CLI verification command", () => {
+    const message = buildInstallSuccessMessage({
+      packageName: "xft-openapi-caller",
+      packageSpecifier: "xft-openapi-caller",
+      skillNames: ["xft-openapi-caller"],
+      selectedTargets: [{ id: "codex", label: "Codex", path: "E:/mock/codex" }],
+      dryRun: false,
+    });
+
+    expect(message).toContain("xft-cli --help");
+    expect(message).not.toContain("xft-find-doc --help");
   });
 
   it("discovers bundled skills", () => {
