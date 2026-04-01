@@ -1,4 +1,0 @@
-interface:
-  display_name: "XFT Catalog MHTML"
-  short_description: "Parse XFT API MHTML docs and update modular feature JSON files."
-  default_prompt: "Use this skill to extract a XFT API definition from a saved MHTML document and update the XFT feature catalog with the corresponding module/interface JSON file."

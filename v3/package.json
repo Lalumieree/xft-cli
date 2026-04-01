@@ -1,0 +1,67 @@
+{
+  "name": "xft-openapi-caller",
+  "version": "1.0.6",
+  "description": "CLI for matching XFT OpenAPI docs, fetching cached documents, resolving city codes, and calling XFT APIs.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/shenxia_admin/xft-tools.git"
+  },
+  "homepage": "https://gitee.com/shenxia_admin/xft-tools",
+  "bugs": {
+    "url": "https://gitee.com/shenxia_admin/xft-tools/issues"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/npm/**",
+    "dist/skill/**"
+  ],
+  "bin": {
+    "xft-cli": "dist/npm/xft-cli.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepack": "npm run build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@oclif/core": "^4.10.3",
+    "keytar": "^7.9.0",
+    "marked": "^15.0.12",
+    "sm-crypto": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
+  },
+  "oclif": {
+    "bin": "xft-cli",
+    "topicSeparator": " ",
+    "commands": {
+      "strategy": "explicit",
+      "target": "./dist/npm/commands.js"
+    },
+    "topics": {
+      "api": {
+        "description": "XFT API 调用能力。"
+      },
+      "auth": {
+        "description": "管理敏感凭证。"
+      },
+      "city": {
+        "description": "城市缓存与编码解析。"
+      },
+      "config": {
+        "description": "管理非敏感配置。"
+      },
+      "doc": {
+        "description": "文档检索与抓取。"
+      }
+    }
+  }
+}
