@@ -6,6 +6,7 @@ describe("city app", () => {
     const output = renderCityRefresh({
       cacheFile: "E:/mock/cache.json",
       cityType: "CITY_TREE_DOMESTIC",
+      cityInterfaceName: "查询所有城市信息",
       nodeCount: 123,
       fetchedAt: 1710000000,
       refreshed: true,
@@ -13,6 +14,7 @@ describe("city app", () => {
 
     expect(output).toContain("cache_file=E:/mock/cache.json");
     expect(output).toContain("city_type=CITY_TREE_DOMESTIC");
+    expect(output).toContain("city_interface_name=查询所有城市信息");
     expect(output).toContain("node_count=123");
     expect(output).toContain("refreshed=true");
   });
@@ -21,6 +23,7 @@ describe("city app", () => {
     const output = renderCityResolve({
       cacheFile: "E:/mock/cache.json",
       cityType: "CITY_TREE_DOMESTIC",
+      cityInterfaceName: "查询所有城市信息",
       refreshed: false,
       results: {
         from: {

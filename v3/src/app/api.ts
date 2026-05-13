@@ -2,23 +2,23 @@ import { readFileSync } from "node:fs";
 import {
   getNonSensitiveValue,
   loadNonSensitiveConfig,
-  loadSensitiveCredentials,
   parseJsonValue,
-  promptAndSaveSensitiveCredentials,
-  resolveSensitiveValue,
+  promptText,
+  saveGatewayToken,
   setNonSensitiveValue,
 } from "../shared/configStore";
-import type { XftCredentials } from "../shared/types";
-import { XftClient } from "../shared/xftClient";
+import { GatewayClient } from "../shared/gatewayClient";
+import { requireGatewayCredentials, resolveGatewayUrl } from "../shared/gatewayConfig";
 
 type ApiOptions = {
-  url?: string;
-  method?: "GET" | "POST";
+  interfaceName?: string;
   queryEntries?: string[];
   bodyEntries?: string[];
   payloadFile?: string;
   timeoutSeconds?: number;
   dryRun?: boolean;
+  url?: string;
+  method?: "GET" | "POST";
   signContentMode?: "raw-body" | "digest-header";
   appid?: string;
   authoritySecret?: string;
@@ -26,6 +26,10 @@ type ApiOptions = {
   cscprjcod?: string;
   cscusrnbr?: string;
   cscusruid?: string;
+};
+
+type ListInterfacesOptions = {
+  timeoutSeconds?: number;
 };
 
 function parseKvPair(text: string): [string, unknown] {
@@ -47,35 +51,51 @@ function loadJsonFile(path?: string): Record<string, unknown> {
   return payload;
 }
 
-async function resolveApiCredentials(options: ApiOptions, config: Record<string, unknown>): Promise<XftCredentials> {
-  const storedCredentials = await loadSensitiveCredentials().catch(() => ({}));
-  const appid = resolveSensitiveValue(storedCredentials, "app-id", options.appid, "XFT_APPID");
-  const authoritySecret = resolveSensitiveValue(storedCredentials, "authority-secret", options.authoritySecret, "XFT_AUTHORITY_SECRET");
-  const cscappuid =
-    options.cscappuid ??
-    (getNonSensitiveValue(config, "cscappuid", "csc-app-uid", "cscAppUid") as string | undefined) ??
-    process.env.XFT_CSCAPPUID ??
-    appid;
-  if (!appid || !authoritySecret) {
-    throw new Error("未找到凭证，请先执行 xft-cli auth，或通过 --appid/--authority-secret 临时传入");
+function assertNoDeprecatedDirectOptions(options: ApiOptions): void {
+  const deprecated = [
+    ["--url", options.url],
+    ["--method", options.method],
+    ["--sign-content-mode", options.signContentMode],
+    ["--appid", options.appid],
+    ["--authority-secret", options.authoritySecret],
+    ["--cscappuid", options.cscappuid],
+    ["--cscprjcod", options.cscprjcod],
+    ["--cscusrnbr", options.cscusrnbr],
+    ["--cscusruid", options.cscusruid],
+  ]
+    .filter(([, value]) => value !== undefined)
+    .map(([flag]) => flag);
+
+  if (deprecated.length) {
+    throw new Error(
+      `不再支持本地直连参数 ${deprecated.join(", ")}。请先在 xft-gateway 配置接口目录，然后使用 --interface-name <接口名> 通过网关调用。`,
+    );
   }
-  if (!cscappuid) {
-    throw new Error("缺少 cscappuid，请通过 --cscappuid、~/.xft_config/config.json 或 XFT_CSCAPPUID 提供");
-  }
-  return {
-    appid,
-    authoritySecret,
-    cscappuid,
-    cscprjcod: (options.cscprjcod ?? getNonSensitiveValue(config, "cscprjcod", "csc-prjcod", "cscPrjCod") ?? process.env.XFT_CSCPRJCOD) as string | undefined,
-    cscusrnbr: (options.cscusrnbr ?? getNonSensitiveValue(config, "cscusrnbr", "csc-usrnbr", "cscUsrNbr") ?? process.env.XFT_CSCUSRNBR) as string | undefined,
-    cscusruid: (options.cscusruid ?? getNonSensitiveValue(config, "cscusruid", "csc-usruid", "cscUsrUid") ?? process.env.XFT_CSCUSRUID) as string | undefined,
-    encryptBody: true,
-    signContentMode: options.signContentMode ?? "raw-body",
-  };
 }
 
 export async function saveAuthCredentials(): Promise<void> {
-  await promptAndSaveSensitiveCredentials();
+  if (!process.stdin.isTTY || !process.stdout.isTTY) {
+    throw new Error("交互式认证需要在终端中运行，请直接执行 xft-cli auth");
+  }
+  const config = loadNonSensitiveConfig();
+  const currentGatewayUrl = resolveGatewayUrl(config) ?? "";
+  const gatewayUrl =
+    (await promptText(`请输入 gatewayUrl${currentGatewayUrl ? ` [${currentGatewayUrl}]` : ""}: `)).trim() ||
+    currentGatewayUrl;
+  if (!gatewayUrl) {
+    throw new Error("gatewayUrl 不能为空");
+  }
+  const email = (await promptText("请输入网关登录邮箱: ")).trim();
+  if (!email) {
+    throw new Error("邮箱不能为空");
+  }
+  const password = (await promptText("请输入网关登录密码: ")).trim();
+  if (!password) {
+    throw new Error("密码不能为空");
+  }
+  const auth = await GatewayClient.authenticate(gatewayUrl, email, password);
+  setNonSensitiveValue("gatewayUrl", auth.gatewayUrl);
+  await saveGatewayToken(auth.token);
 }
 
 export function configSet(key: string, value: string): void {
@@ -84,7 +104,7 @@ export function configSet(key: string, value: string): void {
 
 export function configGet(key?: string): unknown {
   const config = loadNonSensitiveConfig();
-  return key ? config[key] : config;
+  return key ? getNonSensitiveValue(config, key) : config;
 }
 
 export function configList(): string[] {
@@ -92,15 +112,25 @@ export function configList(): string[] {
 }
 
 export async function callApi(options: ApiOptions): Promise<unknown> {
+  assertNoDeprecatedDirectOptions(options);
   const config = loadNonSensitiveConfig();
-  const credentials = await resolveApiCredentials(options, config);
+  const interfaceName = options.interfaceName?.trim();
+  if (!interfaceName) {
+    throw new Error("缺少 --interface-name。可先执行 xft-cli api interfaces 查看当前账号可调用的接口名。");
+  }
+  const credentials = await requireGatewayCredentials(config);
   const body = { ...loadJsonFile(options.payloadFile), ...parseKvPairs(options.bodyEntries) };
   const query = parseKvPairs(options.queryEntries);
-  const method = (options.method ?? "GET").toUpperCase() as "GET" | "POST";
-  const url = options.url ?? (getNonSensitiveValue(config, "url") as string | undefined);
-  if (!url) throw new Error("缺少 --url");
-  const timeout = (options.timeoutSeconds ?? 30) * 1000;
-  const client = new XftClient(credentials, timeout);
-  if (options.dryRun) return client.prepareRequest(method, url, body, query);
-  return client.request(method, url, body, query);
+  const client = new GatewayClient(credentials, (options.timeoutSeconds ?? 30) * 1000);
+  if (options.dryRun) {
+    return client.prepareCall({ interfaceName, query, body }, true);
+  }
+  return client.callXft({ interfaceName, query, body });
+}
+
+export async function listInterfaces(options: ListInterfacesOptions = {}): Promise<unknown> {
+  const config = loadNonSensitiveConfig();
+  const credentials = await requireGatewayCredentials(config);
+  const client = new GatewayClient(credentials, (options.timeoutSeconds ?? 30) * 1000);
+  return client.listInterfaces();
 }

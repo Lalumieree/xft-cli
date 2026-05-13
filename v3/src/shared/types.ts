@@ -23,13 +23,12 @@ export interface FlattenedMenuNode {
   node?: MenuNode;
 }
 
-export interface XftCredentials {
-  appid: string;
-  cscappuid: string;
-  authoritySecret: string;
-  cscprjcod?: string | null;
-  cscusrnbr?: string | null;
-  cscusruid?: string | null;
-  encryptBody: boolean;
-  signContentMode: "raw-body" | "digest-header";
+export interface GatewayCredentials {
+  gatewayUrl: string;
+  token: string;
+}
+
+export interface GatewayInterface {
+  id: string;
+  name: string;
 }

@@ -1,0 +1,3 @@
+[submodule "xft-gateway"]
+	path = xft-gateway
+	url = git@github.com:anranshenxia/xft-gateway.git

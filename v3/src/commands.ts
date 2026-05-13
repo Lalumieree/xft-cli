@@ -1,4 +1,5 @@
 import ApiCallCommand from "./commands/api/call";
+import ApiInterfacesCommand from "./commands/api/interfaces";
 import AuthCommand from "./commands/auth";
 import CityRefreshCommand from "./commands/city/refresh";
 import CityResolveCommand from "./commands/city/resolve";
@@ -10,6 +11,7 @@ import DocFindCommand from "./commands/doc/find";
 
 const commands = {
   "api:call": ApiCallCommand,
+  "api:interfaces": ApiInterfacesCommand,
   auth: AuthCommand,
   "city:refresh": CityRefreshCommand,
   "city:resolve": CityResolveCommand,

@@ -18,10 +18,8 @@ export default class CityResolveCommand extends Command {
     "cache-file": Flags.string({ description: "自定义城市缓存文件路径。" }),
     "ttl-hours": Flags.integer({ default: 168, description: "缓存有效期，单位小时。" }),
     "force-refresh": Flags.boolean({ description: "忽略缓存有效期并尝试刷新城市树。" }),
+    "interface-name": Flags.string({ description: "xft-gateway 中的城市接口名，默认读取配置或使用“查询所有城市信息”。" }),
     timeout: Flags.integer({ default: 30, description: "请求超时时间，单位秒。" }),
-    appid: Flags.string({ description: "临时指定 app-id。" }),
-    "authority-secret": Flags.string({ description: "临时指定 authority-secret。" }),
-    cscappuid: Flags.string({ description: "临时指定 CSCAPPUID。" }),
   };
 
   public async run(): Promise<void> {
@@ -34,10 +32,8 @@ export default class CityResolveCommand extends Command {
       cacheFile: flags["cache-file"],
       ttlHours: flags["ttl-hours"],
       forceRefresh: flags["force-refresh"],
+      interfaceName: flags["interface-name"],
       timeoutSeconds: flags.timeout,
-      appid: flags.appid,
-      authoritySecret: flags["authority-secret"],
-      cscappuid: flags.cscappuid,
     });
     if (this.jsonEnabled()) {
       this.logJson(payload);

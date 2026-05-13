@@ -12,6 +12,7 @@
 - `records[].number` 是员工号，可用于人工校验，但不能直接替代 `empId`。
 - `records[].idRelation.staffId` 是员工序号，也不能直接替代 `empId`。
 - 文档定位与真实调用统一使用 `xft-cli`，不要混用旧命令名。
+- 真实调用统一通过 xft-gateway 接口名执行，不要传接口 URL、HTTP method、CSC 公共参数或薪福通密钥。
 
 ## 推荐流程
 
@@ -25,7 +26,7 @@
 
    - 如需实际调用，统一通过 `xft-cli api call` 执行。
    - 接口名称：`按条件查询企业成员`
-   - 接口地址：`https://api.cmbchina.com/xft-member/openapi/xft-member/member/page/by-condition`
+   - 网关接口名：`按条件查询企业成员`
    - 推荐优先按以下条件查询：
      - `name`
      - `status = ENABLE`
@@ -55,7 +56,7 @@
      - 是否已加入企业
 7. 在真正触发审批动作前，先确认载荷与操作人身份。
 
-   - 对有副作用的审批接口，优先用 `xft-cli api call --dry-run` 检查请求组装结果。
+   - 对有副作用的审批接口，优先用 `xft-cli api call --interface-name <接口名> --dry-run` 检查请求组装结果。
 
 ## 推荐请求示例
 
@@ -119,4 +120,4 @@
 - 同名多条时，不要直接取第一条。
 - `number` 仅作校验，不直接当作 `empId`。
 - `staffId`、`enterpriseUserId`、`number` 都不要替代 `memberId` 传入审批接口。
-- 审批类接口真正执行前，优先先做一次 `xft-cli api call --dry-run`。
+- 审批类接口真正执行前，优先先做一次 `xft-cli api call --interface-name <接口名> --dry-run`。

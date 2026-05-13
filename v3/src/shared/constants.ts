@@ -25,10 +25,14 @@ export const credentialAccount = "master-key";
 export const fetchApi = "https://xft.cmbchina.com/xft-gateway/xft-cust-open-new/xwapi/capi/homepage/doc/obtain-homepage-doc";
 export const referer = "https://xft.cmbchina.com/open/";
 export const origin = "https://xft.cmbchina.com";
-export const cityEndpoint = "https://api.cmbchina.com/itrip/xft-api/v1/common/city";
 export const defaultCityType = "CITY_TREE_DOMESTIC";
+export const defaultGatewayCityInterfaceName = "查询所有城市信息";
 export const defaultTtlHours = 168;
 export const sensitiveConfigKeys = new Set([
+  "gateway-token",
+  "gateway_token",
+  "gatewayToken",
+  "token",
   "appid",
   "app-id",
   "appId",

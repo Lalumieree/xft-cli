@@ -5,6 +5,7 @@ describe("oclif command registry", () => {
   it("exposes the consolidated xft-cli command tree", () => {
     expect(Object.keys(commands).sort()).toEqual([
       "api:call",
+      "api:interfaces",
       "auth",
       "city:refresh",
       "city:resolve",

@@ -1,16 +1,14 @@
 import { resolve } from "node:path";
 import { cityCacheDir, defaultCityType, defaultTtlHours } from "../shared/constants";
 import { ensureCityCache } from "../shared/cityCache";
-import { getNonSensitiveValue, loadNonSensitiveConfig, loadSensitiveCredentials, resolveSensitiveValue } from "../shared/configStore";
-import type { XftCredentials } from "../shared/types";
+import { loadNonSensitiveConfig } from "../shared/configStore";
+import { resolveGatewayCityInterfaceName, resolveGatewayCredentials } from "../shared/gatewayConfig";
 
-type CityCredentialOptions = {
-  appid?: string;
-  authoritySecret?: string;
-  cscappuid?: string;
+type CityGatewayOptions = {
+  interfaceName?: string;
 };
 
-type RefreshCityOptions = CityCredentialOptions & {
+type RefreshCityOptions = CityGatewayOptions & {
   cityType?: string;
   cacheFile?: string;
   ttlHours?: number;
@@ -18,7 +16,7 @@ type RefreshCityOptions = CityCredentialOptions & {
   timeoutSeconds?: number;
 };
 
-type ResolveCityOptions = CityCredentialOptions & {
+type ResolveCityOptions = CityGatewayOptions & {
   names?: string[];
   fromName?: string;
   toName?: string;
@@ -136,31 +134,10 @@ function resolveName(name: string, nodes: Array<Record<string, unknown>>, top: n
   return { query: name, confidence: confidenceLabel(candidates), ambiguous, resolved: ambiguous || !candidates.length ? null : candidates[0], candidates };
 }
 
-async function resolveCityCredentials(options: CityCredentialOptions, config: Record<string, unknown>): Promise<XftCredentials | undefined> {
-  try {
-    const storedCredentials = await loadSensitiveCredentials();
-    const appid = resolveSensitiveValue(storedCredentials, "app-id", options.appid, "XFT_APPID");
-    const authoritySecret = resolveSensitiveValue(storedCredentials, "authority-secret", options.authoritySecret, "XFT_AUTHORITY_SECRET");
-    const cscappuid = options.cscappuid ?? (getNonSensitiveValue(config, "cscappuid", "csc-app-uid", "cscAppUid") as string | undefined) ?? process.env.XFT_CSCAPPUID ?? appid;
-    if (!appid || !authoritySecret || !cscappuid) return undefined;
-    return {
-      appid,
-      authoritySecret,
-      cscappuid,
-      cscprjcod: (getNonSensitiveValue(config, "cscprjcod", "csc-prjcod", "cscPrjCod") ?? process.env.XFT_CSCPRJCOD) as string | undefined,
-      cscusrnbr: (getNonSensitiveValue(config, "cscusrnbr", "csc-usrnbr", "cscUsrNbr") ?? process.env.XFT_CSCUSRNBR) as string | undefined,
-      cscusruid: (getNonSensitiveValue(config, "cscusruid", "csc-usruid", "cscUsrUid") ?? process.env.XFT_CSCUSRUID) as string | undefined,
-      encryptBody: Boolean(getNonSensitiveValue(config, "encryptBody", "encrypt-body") ?? true),
-      signContentMode: ((getNonSensitiveValue(config, "signContentMode", "sign-content-mode") as "raw-body" | "digest-header" | undefined) ?? "raw-body"),
-    };
-  } catch {
-    return undefined;
-  }
-}
-
 export async function refreshCityCache(options: RefreshCityOptions) {
   const config = loadNonSensitiveConfig();
-  const credentials = await resolveCityCredentials(options, config);
+  const credentials = await resolveGatewayCredentials(config);
+  const cityInterfaceName = resolveGatewayCityInterfaceName(config, options.interfaceName);
   const cityType = options.cityType ?? defaultCityType;
   const cacheFile = resolve(options.cacheFile ?? resolve(cityCacheDir, `${cityType.toLowerCase()}.json`));
   const [payload, refreshed] = await ensureCityCache({
@@ -169,15 +146,17 @@ export async function refreshCityCache(options: RefreshCityOptions) {
     ttlHours: options.ttlHours ?? defaultTtlHours,
     forceRefresh: options.force ?? false,
     credentials,
+    cityInterfaceName,
     timeout: (options.timeoutSeconds ?? 30) * 1000,
     allowStale: true,
   });
-  return { cacheFile, cityType: payload.cityType, nodeCount: payload.nodeCount, fetchedAt: payload.fetchedAt, refreshed };
+  return { cacheFile, cityType: payload.cityType, cityInterfaceName, nodeCount: payload.nodeCount, fetchedAt: payload.fetchedAt, refreshed };
 }
 
 export async function resolveCityCodes(options: ResolveCityOptions) {
   const config = loadNonSensitiveConfig();
-  const credentials = await resolveCityCredentials(options, config);
+  const credentials = await resolveGatewayCredentials(config);
+  const cityInterfaceName = resolveGatewayCityInterfaceName(config, options.interfaceName);
   const cacheFile = resolve(options.cacheFile ?? resolve(cityCacheDir, `${defaultCityType.toLowerCase()}.json`));
   const [cachePayload, refreshed] = await ensureCityCache({
     cacheFile,
@@ -185,6 +164,7 @@ export async function resolveCityCodes(options: ResolveCityOptions) {
     ttlHours: options.ttlHours ?? defaultTtlHours,
     forceRefresh: options.forceRefresh ?? false,
     credentials,
+    cityInterfaceName,
     timeout: (options.timeoutSeconds ?? 30) * 1000,
     allowStale: true,
   });
@@ -196,13 +176,14 @@ export async function resolveCityCodes(options: ResolveCityOptions) {
   if (!queries.length) throw new Error("请至少通过 --name、--from-name 或 --to-name 传入一个地名");
   const nodes = flattenCityNodes(cachePayload);
   const results = Object.fromEntries(queries.map(([label, value]) => [label, resolveName(value, nodes, options.top ?? 5)]));
-  return { cacheFile, cityType: cachePayload.cityType ?? defaultCityType, refreshed, results };
+  return { cacheFile, cityType: cachePayload.cityType ?? defaultCityType, cityInterfaceName, refreshed, results };
 }
 
 export function renderCityRefresh(payload: Awaited<ReturnType<typeof refreshCityCache>>): string {
   return [
     `cache_file=${payload.cacheFile}`,
     `city_type=${payload.cityType}`,
+    `city_interface_name=${payload.cityInterfaceName}`,
     `node_count=${payload.nodeCount}`,
     `fetched_at=${payload.fetchedAt}`,
     `refreshed=${String(payload.refreshed).toLowerCase()}`,
@@ -210,7 +191,7 @@ export function renderCityRefresh(payload: Awaited<ReturnType<typeof refreshCity
 }
 
 export function renderCityResolve(payload: Awaited<ReturnType<typeof resolveCityCodes>>): string {
-  const lines = [`cache_file=${payload.cacheFile}`, `city_type=${String(payload.cityType)}`];
+  const lines = [`cache_file=${payload.cacheFile}`, `city_type=${String(payload.cityType)}`, `city_interface_name=${payload.cityInterfaceName}`];
   for (const [label, item] of Object.entries(payload.results)) {
     const value = item as Record<string, unknown>;
     lines.push(`[${label}] query=${value.query} confidence=${value.confidence} ambiguous=${String(value.ambiguous).toLowerCase()}`);

@@ -1,8 +1,8 @@
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
-import { cityEndpoint, defaultCityType, defaultTtlHours } from "./constants";
-import { XftClient } from "./xftClient";
-import type { XftCredentials } from "./types";
+import { defaultCityType, defaultGatewayCityInterfaceName, defaultTtlHours } from "./constants";
+import { GatewayClient } from "./gatewayClient";
+import type { GatewayCredentials } from "./types";
 
 export function cacheIsFresh(cacheFile: string, ttlHours: number): boolean {
   if (!existsSync(cacheFile)) {
@@ -17,29 +17,35 @@ export function cacheIsFresh(cacheFile: string, ttlHours: number): boolean {
 
 export function countCityNodes(node: unknown): number {
   if (Array.isArray(node)) {
-    return node.reduce((sum, item) => sum + countCityNodes(item), 0);
+    return node.reduce<number>((sum, item) => sum + countCityNodes(item), 0);
   }
   if (!node || typeof node !== "object") {
     return 0;
   }
   const record = node as Record<string, unknown>;
   const current = record.code !== undefined ? 1 : 0;
-  return current + ((record.children as unknown[]) ?? []).reduce((sum, item) => sum + countCityNodes(item), 0);
+  const children = Array.isArray(record.children) ? record.children : [];
+  return current + children.reduce<number>((sum, item) => sum + countCityNodes(item), 0);
 }
 
-export async function fetchCityTree(credentials: XftCredentials, cityType: string, timeout: number): Promise<Record<string, unknown>> {
-  const client = new XftClient(credentials, timeout);
-  const result = await client.request("GET", cityEndpoint, {}, { type: cityType });
+export async function fetchCityTree(
+  credentials: GatewayCredentials,
+  cityType: string,
+  timeout: number,
+  interfaceName = defaultGatewayCityInterfaceName,
+): Promise<Record<string, unknown>> {
+  const client = new GatewayClient(credentials, timeout);
+  const result = await client.callXft({ interfaceName, query: { type: cityType }, body: {} });
   const response = result.response as Record<string, unknown>;
   if (response.status_code !== 200) {
-    throw new Error(`获取城市树失败，HTTP ${response.status_code}: ${JSON.stringify(response.decoded_body)}`);
+    throw new Error(`获取城市树失败，HTTP ${response.status_code}: ${JSON.stringify(response.body)}`);
   }
   return {
     cityType,
-    sourceUrl: cityEndpoint,
+    sourceInterfaceName: interfaceName,
     fetchedAt: Math.floor(Date.now() / 1000),
-    nodeCount: countCityNodes(response.decoded_body),
-    data: response.decoded_body,
+    nodeCount: countCityNodes(response.body),
+    data: response.body,
   };
 }
 
@@ -57,7 +63,8 @@ export async function ensureCityCache(options: {
   cityType?: string;
   ttlHours?: number;
   forceRefresh?: boolean;
-  credentials?: XftCredentials;
+  credentials?: GatewayCredentials;
+  cityInterfaceName?: string;
   timeout?: number;
   allowStale?: boolean;
 }): Promise<[Record<string, unknown>, boolean]> {
@@ -67,6 +74,7 @@ export async function ensureCityCache(options: {
     ttlHours = defaultTtlHours,
     forceRefresh = false,
     credentials,
+    cityInterfaceName = defaultGatewayCityInterfaceName,
     timeout = 30_000,
     allowStale = true,
   } = options;
@@ -78,9 +86,9 @@ export async function ensureCityCache(options: {
     if (cachedPayload && allowStale) {
       return [cachedPayload, false];
     }
-    throw new Error("缓存不存在或已过期，且未提供可用于刷新的凭证");
+    throw new Error("缓存不存在或已过期，且未配置网关 token；请先执行 xft-cli auth");
   }
-  const payload = await fetchCityTree(credentials, cityType, timeout);
+  const payload = await fetchCityTree(credentials, cityType, timeout, cityInterfaceName);
   saveCachePayload(cacheFile, payload);
   return [payload, true];
 }

@@ -41,7 +41,7 @@ export function getNonSensitiveValue(config: Record<string, unknown>, ...keys: A
 
 export function setNonSensitiveValue(key: string, value: unknown): void {
   if (sensitiveConfigKeys.has(key)) {
-    throw new Error("敏感字段不能写入 config.json，请使用 -auth 管理 app-id 和 authority-secret");
+    throw new Error("敏感字段不能写入 config.json，请使用 xft-cli auth 管理网关 token");
   }
   const config = loadNonSensitiveConfig();
   config[key] = value;
@@ -76,7 +76,7 @@ export async function loadSensitiveCredentials(): Promise<Record<string, string>
   }
   const masterKey = await getMasterKey();
   if (!masterKey) {
-    throw new Error("检测到敏感凭证文件，但系统钥匙串中缺少解密主密钥，请重新执行 -auth");
+    throw new Error("检测到敏感凭证文件，但系统钥匙串中缺少解密主密钥，请重新执行 xft-cli auth");
   }
   const decrypted = sm4DecryptEcbHex(masterKey, readFileSync(credentialsFile, "utf-8").trim());
   const payload = JSON.parse(decrypted);
@@ -84,7 +84,7 @@ export async function loadSensitiveCredentials(): Promise<Record<string, string>
     throw new Error(`敏感凭证文件内容必须是 JSON 对象: ${credentialsFile}`);
   }
   const result: Record<string, string> = {};
-  for (const key of ["app-id", "authority-secret"]) {
+  for (const key of ["gateway-token"]) {
     const value = payload[key];
     if (typeof value === "string" && value.trim()) {
       result[key] = value.trim();
@@ -93,14 +93,14 @@ export async function loadSensitiveCredentials(): Promise<Record<string, string>
   return result;
 }
 
-export async function saveSensitiveCredentials(appid: string, authoritySecret: string): Promise<void> {
+export async function saveGatewayToken(token: string): Promise<void> {
   ensureConfigDir();
   const masterKey = await ensureMasterKey();
-  const payload = compactJson({ "app-id": appid.trim(), "authority-secret": authoritySecret.trim() });
+  const payload = compactJson({ "gateway-token": token.trim() });
   writeFileSync(credentialsFile, sm4EncryptEcbHex(masterKey, payload), "utf-8");
 }
 
-function prompt(message: string): Promise<string> {
+export function promptText(message: string): Promise<string> {
   return new Promise((resolve) => {
     process.stdout.write(message);
     process.stdin.resume();
@@ -109,31 +109,6 @@ function prompt(message: string): Promise<string> {
       resolve(String(data));
     });
   });
-}
-
-export async function promptAndSaveSensitiveCredentials(): Promise<void> {
-  const existing = await loadSensitiveCredentials().catch(() => ({}));
-  if (!process.stdin.isTTY || !process.stdout.isTTY) {
-    throw new Error("交互式认证需要在终端中运行，请直接执行 -auth");
-  }
-  const appid = (await prompt(`请输入 app-id${existing["app-id"] ? ` [${existing["app-id"]}]` : ""}: `)).trim() || existing["app-id"] || "";
-  if (!appid) {
-    throw new Error("app-id 不能为空");
-  }
-  const authoritySecret = (await prompt("请输入 authority-secret: ")).trim() || existing["authority-secret"] || "";
-  if (!authoritySecret) {
-    throw new Error("authority-secret 不能为空");
-  }
-  await saveSensitiveCredentials(appid, authoritySecret);
-}
-
-export function resolveSensitiveValue(
-  storedCredentials: Record<string, string>,
-  storedKey: string,
-  cliValue: string | undefined,
-  envName: string,
-): string | undefined {
-  return storedCredentials[storedKey] || cliValue || process.env[envName];
 }
 
 export { parseJsonValue };
