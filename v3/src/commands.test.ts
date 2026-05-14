@@ -13,7 +13,6 @@ describe("oclif command registry", () => {
       "config:list",
       "config:set",
       "doc:fetch",
-      "doc:find",
     ]);
   });
 });

@@ -18,7 +18,7 @@
 
 1. 先确认审批接口所需字段。
 
-   - 如需先定位文档，可执行：`xft-cli doc find --query "审批 驳回 empId" --top 5 --json`
+   - 如需先定位文档，先执行 `xft-cli api interfaces`，从有权限接口列表中选择目标审批接口，并使用返回的 `docid` 抓取文档。
    - 例如“审批驳回”接口中：
      - `body.empId`：发起审批操作人的员工编号
    - 结合实际调用验证，应该传企业成员查询结果中的 `memberId`。

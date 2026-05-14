@@ -1,20 +1,6 @@
-import { existsSync } from "node:fs";
 import { homedir } from "node:os";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
-const currentDir = dirname(fileURLToPath(import.meta.url));
-const skillRootCandidates = [
-  currentDir,
-  resolve(currentDir, ".."),
-  resolve(currentDir, "..", "skills", "xft-openapi-caller"),
-  resolve(currentDir, "..", ".."),
-];
-
-export const skillRoot =
-  skillRootCandidates.find((candidate) => existsSync(resolve(candidate, "references", "文档目录.json"))) ??
-  resolve(currentDir, "..", "skills", "xft-openapi-caller");
-export const defaultMenuFile = resolve(skillRoot, "references", "文档目录.json");
 export const configDir = resolve(homedir(), ".xft_config");
 export const configFile = resolve(configDir, "config.json");
 export const credentialsFile = resolve(configDir, "credentials.json.enc");

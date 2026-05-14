@@ -4,7 +4,7 @@ import { listInterfaces } from "../../app/api";
 export default class ApiInterfacesCommand extends Command {
   static override id = "api:interfaces";
   static override summary = "列出网关可调用接口。";
-  static override description = "通过 xft-gateway 查询当前 token 有权限调用的接口名。";
+  static override description = "通过 xft-gateway 查询当前 token 有权限调用的接口，并只输出响应 body.data 内容。";
   static override examples = ["<%= config.bin %> api interfaces"];
   static override flags = {
     timeout: Flags.integer({ default: 30, description: "请求超时时间，单位秒。" }),

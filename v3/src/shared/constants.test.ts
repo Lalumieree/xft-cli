@@ -1,9 +1,9 @@
-import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { defaultMenuFile } from "./constants";
+import { defaultGatewayCityInterfaceName, docsCacheDir } from "./constants";
 
 describe("shared constants", () => {
-  it("resolves the bundled or source menu file path", () => {
-    expect(existsSync(defaultMenuFile)).toBe(true);
+  it("defines cache and gateway defaults", () => {
+    expect(docsCacheDir).toContain("xft_docs");
+    expect(defaultGatewayCityInterfaceName).toBe("查询所有城市信息");
   });
 });

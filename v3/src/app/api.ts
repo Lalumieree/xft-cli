@@ -132,5 +132,5 @@ export async function listInterfaces(options: ListInterfacesOptions = {}): Promi
   const config = loadNonSensitiveConfig();
   const credentials = await requireGatewayCredentials(config);
   const client = new GatewayClient(credentials, (options.timeoutSeconds ?? 30) * 1000);
-  return client.listInterfaces();
+  return (await client.listInterfaces()).data;
 }

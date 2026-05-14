@@ -31,4 +31,5 @@ export interface GatewayCredentials {
 export interface GatewayInterface {
   id: string;
   name: string;
+  docid?: string | number;
 }

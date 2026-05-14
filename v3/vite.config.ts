@@ -16,7 +16,7 @@ function copySkillAssets(): Plugin {
       rmSync(outSkillDir, { recursive: true, force: true });
       mkdirSync(outNpmDir, { recursive: true });
       mkdirSync(outSkillDir, { recursive: true });
-      for (const dirName of ["agents", "best_practice", "references"]) {
+      for (const dirName of ["agents", "best_practice"]) {
         const from = resolve(skillSourceRoot, dirName);
         if (existsSync(from)) {
           cpSync(from, resolve(outNpmDir, dirName), { recursive: true });

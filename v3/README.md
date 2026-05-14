@@ -1,6 +1,6 @@
 # xft-openapi-caller
 
-`xft-openapi-caller` 是一个 Node.js CLI 包，用于匹配 XFT OpenAPI 文档、抓取缓存文档、解析城市编码，并通过 `xft-gateway` 调用 XFT 业务接口。
+`xft-openapi-caller` 是一个 Node.js CLI 包，用于按网关返回的 `docid` 抓取缓存文档、解析城市编码，并通过 `xft-gateway` 调用 XFT 业务接口。
 
 ## Install
 
@@ -14,7 +14,6 @@ npm install -g xft-openapi-caller
 xft-cli --help
 xft-cli auth
 xft-cli config list
-xft-cli doc find --help
 xft-cli doc fetch --help
 xft-cli api interfaces
 xft-cli api call --help
@@ -53,6 +52,8 @@ XFT_GATEWAY_TOKEN=<appwrite-session-secret>
 xft-cli api interfaces
 ```
 
+返回的接口项包含接口名和 `docid`；需要补看文档时，使用该 `docid` 执行 `xft-cli doc fetch --docid <docid>`。
+
 再按网关接口名调用：
 
 ```bash
@@ -84,4 +85,4 @@ XFT_GATEWAY_CITY_INTERFACE_NAME=查询所有城市信息
 - 非敏感配置存储在 `~/.xft_config/config.json`。
 - 网关 token 加密存储在 `~/.xft_config/credentials.json.enc`。
 - 城市缓存文件存储在 `~/.xft_config/.cache`。
-- 文档检索与文档抓取仍使用薪福通开放平台文档站；业务 OpenAPI 调用不再直连薪福通。
+- 文档抓取使用 `xft-cli api interfaces` 返回的 `docid` 访问薪福通开放平台文档站；业务 OpenAPI 调用不再直连薪福通。

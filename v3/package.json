@@ -1,7 +1,7 @@
 {
   "name": "xft-openapi-caller",
-  "version": "1.0.7",
-  "description": "CLI for matching XFT OpenAPI docs, fetching cached documents, resolving city codes, and calling XFT APIs through xft-gateway.",
+  "version": "1.0.8",
+  "description": "CLI for fetching XFT OpenAPI docs by gateway docid, resolving city codes, and calling XFT APIs through xft-gateway.",
   "license": "UNLICENSED",
   "type": "module",
   "repository": {
@@ -60,7 +60,7 @@
         "description": "管理非敏感配置。"
       },
       "doc": {
-        "description": "文档检索与抓取。"
+        "description": "按 docid 抓取文档。"
       }
     }
   }
