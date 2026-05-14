@@ -23,7 +23,7 @@ export function countCityNodes(node: unknown): number {
     return 0;
   }
   const record = node as Record<string, unknown>;
-  const current = record.code !== undefined ? 1 : 0;
+  const current = record.code !== undefined || record.cityCode !== undefined ? 1 : 0;
   const children = Array.isArray(record.children) ? record.children : [];
   return current + children.reduce<number>((sum, item) => sum + countCityNodes(item), 0);
 }

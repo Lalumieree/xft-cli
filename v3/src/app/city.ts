@@ -48,23 +48,35 @@ function makeNgrams(text: string, size: number): Set<string> {
   return new Set(Array.from({ length: text.length - size + 1 }, (_, index) => text.slice(index, index + size)));
 }
 
+function readCityValue(record: Record<string, unknown>, ...keys: string[]): string | undefined {
+  for (const key of keys) {
+    const value = record[key];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value);
+    }
+  }
+  return undefined;
+}
+
 function flattenCityNodes(payload: Record<string, unknown>): Array<Record<string, unknown>> {
   const items: Array<Record<string, unknown>> = [];
   const visit = (node: unknown): void => {
     if (Array.isArray(node)) return void node.forEach(visit);
     if (!node || typeof node !== "object") return;
     const record = node as Record<string, unknown>;
-    if (record.code !== undefined && record.name) {
-      const pathName = String(record.pathName ?? record.name);
+    const code = readCityValue(record, "code", "cityCode");
+    const name = readCityValue(record, "name", "cityName");
+    if (code && name) {
+      const pathName = readCityValue(record, "pathName") ?? name;
       items.push({
-        code: String(record.code),
-        name: String(record.name),
+        code,
+        name,
         pathName,
-        type: String(record.type ?? ""),
-        sourceCode: record.sourceCode,
-        nameNorm: normalizeText(String(record.name)),
+        type: readCityValue(record, "type", "cityType") ?? "",
+        sourceCode: record.sourceCode ?? record.cityPath,
+        nameNorm: normalizeText(name),
         pathNorm: normalizeText(pathName),
-        nameSimple: simplifyText(String(record.name)),
+        nameSimple: simplifyText(name),
         pathSimple: simplifyText(pathName),
         depth: pathName.split("/").filter(Boolean).length,
       });

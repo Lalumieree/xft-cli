@@ -1,7 +1,52 @@
-import { describe, expect, it } from "vitest";
-import { renderCityRefresh, renderCityResolve } from "./city";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { afterEach, describe, expect, it } from "vitest";
+import { renderCityRefresh, renderCityResolve, resolveCityCodes } from "./city";
+
+const tempDirs: string[] = [];
+
+function makeTempDir(): string {
+  const dir = mkdtempSync(join(tmpdir(), "xft-city-test-"));
+  tempDirs.push(dir);
+  return dir;
+}
+
+afterEach(() => {
+  while (tempDirs.length) {
+    rmSync(tempDirs.pop()!, { recursive: true, force: true });
+  }
+});
 
 describe("city app", () => {
+  it("resolves gateway city records with cityCode and cityName fields", async () => {
+    const cacheFile = resolve(makeTempDir(), "city_tree_domestic.json");
+    writeFileSync(
+      cacheFile,
+      JSON.stringify({
+        cityType: "CITY_TREE_DOMESTIC",
+        fetchedAt: 1710000000,
+        nodeCount: 2,
+        data: [
+          { cityCode: "73", cityName: "上海市", cityPath: "CHN,73", pathName: "上海市" },
+          { cityCode: "114", cityName: "福州市", cityPath: "CHN,PROVINCE_35,114", pathName: "福建省/福州市" },
+        ],
+      }),
+      "utf-8",
+    );
+
+    const payload = await resolveCityCodes({
+      fromName: "福州市",
+      toName: "上海市",
+      cacheFile,
+      ttlHours: 24,
+    });
+
+    expect(payload.refreshed).toBe(false);
+    expect(payload.results.from.resolved).toMatchObject({ code: "114", pathName: "福建省/福州市" });
+    expect(payload.results.to.resolved).toMatchObject({ code: "73", pathName: "上海市" });
+  });
+
   it("renders cache refresh status in the expected key=value format", () => {
     const output = renderCityRefresh({
       cacheFile: "E:/mock/cache.json",
